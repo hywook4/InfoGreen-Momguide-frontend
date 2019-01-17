@@ -89,29 +89,21 @@ export const Product=()=>{
            <div className="product_inner">
             <Router>
                 <div className="product_div">
-                    <div className="product-left-div">
+                    <div className="product-top-div">
                         <div className="product-menu">
-                            <div className="product-menu-div">
-                                <i className="fa fa-bars"></i>
-                                <h4>카테고리</h4>
-                            </div>
                             <ul className="product_category">
-                                <li>
-                                    <p>가정용 생활화학제품</p>
-                                    <ul className="prod_ctgy_inner">
-                                        {houseHold.map((d,i)=><li key={i}><Link to={d.path}>{d.name}</Link></li>)}
-                                    </ul>
+                                <li className="prod_ctgy_inner">
+                                    {houseHold.map((d,i)=><li key={i}><Link to={d.path}>{d.name}</Link></li>)}
                                 </li>
-                                <li>
-                                    <p>유아용 화장품</p>
-                                    <ul className="prod_ctgy_inner">
-                                        {cosmetics.map((d,i)=><li key={i}><Link to={d.path}>{d.name}</Link></li>)}
-                                    </ul>
+                            </ul>
+                            <ul className="product_category">
+                                <li className="prod_ctgy_inner">
+                                    {cosmetics.map((d,i)=><li key={i}><Link to={d.path}>{d.name}</Link></li>)}
                                 </li>
                             </ul>
                         </div>
                     </div>
-
+                    
                     <div className="content-info">
                         {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
                     </div> 

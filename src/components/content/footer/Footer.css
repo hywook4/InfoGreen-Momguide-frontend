@@ -1,5 +1,6 @@
 .footer_container{
-    width: 100%;
+	width: 100%;
+	min-width: 980px;
     margin: 0 auto;
     float: left;
     position: relative;
@@ -9,7 +10,7 @@
 	/* background-color:#0c1a1e;
 	 min-height:350px;
 	  font-family: 'Open Sans', sans-serif; */
-	  width: 90%;
+	width: 980px;
     margin: 0 auto;
     padding: 20px 15px;
 	 }

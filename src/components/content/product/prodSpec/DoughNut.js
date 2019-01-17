@@ -3,6 +3,7 @@
 
 import React from 'react';
 import {Doughnut as Dn} from 'react-chartjs-2';
+import './ProdSpec.css'
 
 export const DoughNut = (props)=>{
     var text = props.texts;
@@ -27,31 +28,31 @@ export const DoughNut = (props)=>{
             </div>
 
             <div className="col-md-12 row" style={{margin:'auto',marginTop:'20px'}}>
-                <div className="alpha-icon-info col-md-4" style={{textAlign:'center'}}>
+                <div className="alpha-icon-info col-md-4">
                     <img src={require('../../../../assets/images/icons/iconX.png')} alt=""/>
                     <p style={{fontSize:10}}>{text.x}</p>
 
                 </div>
-                <div className="alpha-icon-info col-md-4" style={{textAlign:'center'}}>
+                <div className="alpha-icon-info col-md-4">
                     <img src={require('../../../../assets/images/icons/iconA.png')} alt=""/>
                     <p style={{fontSize:10}}>{text.a}</p>
                 </div>
-                <div className="alpha-icon-info col-md-4" style={{textAlign:'center'}}>
+                <div className="alpha-icon-info col-md-4">
                     <img src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
                     <br/>
                     <p style={{fontSize:10}}>{text.b}</p>
                 </div>
-                <div className="alpha-icon-info col-md-4" style={{textAlign:'center'}}>
+                <div className="alpha-icon-info col-md-4">
                     <img src={require('../../../../assets/images/icons/iconC.png')} alt=""/>
                     <br/>
                     <p style={{fontSize:10}}>{text.c}</p>
                 </div>
-                <div className="alpha-icon-info col-md-4" style={{textAlign:'center'}}>
+                <div className="alpha-icon-info col-md-4">
                     <img src={require('../../../../assets/images/icons/iconD.png')} alt=""/>
                     <br/>
                     <p style={{fontSize:10}}>{text.d}</p>
                 </div>
-                <div className="alpha-icon-info col-md-4" style={{textAlign:'center'}}>
+                <div className="alpha-icon-info col-md-4">
                     <img src={require('../../../../assets/images/icons/iconF.png')} alt=""/>
                     <br/>
                     <p style={{fontSize:10}}>{text.f}</p>
