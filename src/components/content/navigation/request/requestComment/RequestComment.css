@@ -1,0 +1,53 @@
+.req-cmnt{
+    width: 100%;
+    margin: 50px auto;
+    position: relative;
+    float: left;
+}
+
+.cmnt-desp-container{
+    width: 82%;
+    margin: 50px auto 0;
+    position: relative;
+}
+.cmnt-desp-inr{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.cmnt-desp-inr h2{
+    color: gray;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin: 15px auto;
+    font-size: 23px;
+}
+
+.cmnt-desp-inr p{
+    color: rgb(175, 173, 173);
+    letter-spacing: 1px;
+    font-weight: 100;
+    margin: 0 auto;
+    width: 100%;
+
+}
+
+.cmnt-desp-container hr{
+    border-top: 2px solid rgba(0,0,0,.1);
+}
+
+.cmnt-drpdwn-div{
+    width: 100%;
+    margin: 30px auto 0;
+}
+
+.cmnt-drpdwn-div .rqst-form-inp.form-control{
+    border-radius: 12px;
+    border: 2px solid rgba(0,0,0,.1);
+    /* text-align: center; */
+    font-weight: 300;
+    color: gray;
+    letter-spacing: 1px;
+    outline: 0;
+}

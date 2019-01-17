@@ -1,0 +1,127 @@
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+
+.clearfix{
+    display: table;
+    clear: both;
+}
+
+
+.navbar{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    top: 8px;
+    right: 0;
+    padding: 0px 20px;
+    left: 0;
+    height: 75px;
+    bottom: 0;
+}
+.navbar .navbar_container{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 3%;
+    right: 0;
+    float: left;
+}
+
+.navbar-inner{
+    width: 100px;
+    margin: 0 auto;
+    display: inline-block;
+    float: left;
+}
+.navbar-inner img{
+    width: 100%;
+    margin: 0 auto;
+    float: left;
+}
+.navbar_router{
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    /* float: right; */
+    display: inline-block;
+}
+.navbar_router ul{
+    width: 40%;
+    margin: 0 auto;
+    position: relative;
+    list-style: none;
+    color: gray;
+    display: inline;
+}
+.navbar_router ul li{
+    display: inline-block;
+    color: gray;
+    padding: 0 10px;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+}
+
+.navbar_router ul li a{
+   text-decoration: none;
+    color: gray;
+}
+.navbar_router .nav-item ul li a:hover, .navbar_router .nav-item ul li a:active, .navbar_router .nav-item ul li a:active{
+    color: #32b8a4;
+}
+.navbar_search{
+    display: inline-block;
+    width: 37%;
+    margin: 0 auto;
+    position: relative;
+    left: 10%;
+}
+.navbar_search input{
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: none;
+    padding: 7px;
+    background-color: #E6E6E6;
+    outline: 0;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+.navbar_search input::placeholder{
+    color: #B3B3B3;
+}
+
+.navbar_search i{
+    font-size: 20px;
+    color: #32B8A4;
+    padding-left: 10px;
+}
+
+.header{
+    border: 0px solid;
+    padding: 10px;
+    z-index: 1;
+    box-shadow: 1px 21px 18px rgba(146, 146, 146, 0.2);
+}
+
+
+/* responsive code */
+@media screen and (max-width:1500px){
+    .navbar_search{
+        width: 25%;
+    }
+}
+
+@media screen and (max-width:1300px){
+    .navbar_search{
+        width: 20%;
+    }
+}

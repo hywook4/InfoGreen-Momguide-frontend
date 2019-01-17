@@ -1,0 +1,27 @@
+.about-container {
+    width: 100%;
+    /* margin: 50px auto; */
+    /* float: left; */
+    position: relative;
+    top: 8px;
+    display: table;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.about-container .nav-tabs{
+    padding-left: 15%;
+    background: #f9f7f7;
+    padding-top: 65px;
+}
+
+.about-container .tab-pane{
+    padding-top: 50px;
+    width: 50%;
+    margin: 0 auto;
+}
+
+
+.about-container .tab-pane.about{
+    width: 100%;
+}

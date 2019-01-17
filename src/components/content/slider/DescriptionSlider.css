@@ -1,0 +1,81 @@
+
+
+
+
+
+/* .slidecard{
+    width: 100% !important;
+} */
+
+.borderboxcentermode{
+    border: 2px solid #fff;
+    margin: 25px !important;
+    box-shadow: 1px 1px 7px -3px black;
+   
+}
+
+.cardcolor{
+    border: 2px solid #fff;
+    margin: 0px !important;
+    background-color: #eee;
+}
+
+.slick-prev::before, .slick-next::before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: #c2f0f0 !important;
+}
+.tips-cover-container{
+    width: 100%;
+    margin: 40px auto;
+    position: relative;
+}
+.card-title i.fa.fa-heart.tip-card-hrt{
+    color: gray;
+    font-size: 14px;
+}
+
+button.owl-prev span{
+    position: absolute;
+    font-size: 40px;
+    left: -50px;
+    top: 40%;
+    bottom: 0;
+}
+
+button.owl-next span{
+    position: absolute;
+    font-size: 40px;
+    right: -50px;
+    top: 40%;
+    bottom: 0;
+}
+
+.owl-theme .owl-nav [class*='owl-']:hover{
+    color: #32b8a4 !important;
+}
+
+.owl-theme .owl-dots .owl-dot{
+    display: none !important;
+}
+
+.card-title i.fa.fa-heart.slider-heading-icon{
+    color: #32b8a4;
+}
+
+.slider-heading h4{
+    color: #666666;
+}
+.card-title h5.tip-card-inr-h5{
+    font-size: 16px;
+}
+
+.card-tip-heading h4.tip-slider-desp-h4{
+    font-size: 16px;
+}
+
+.card-tip-heading p.tip-slider-desp-p{
+    font-size: 13px;
+}

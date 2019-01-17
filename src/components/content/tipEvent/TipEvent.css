@@ -1,0 +1,54 @@
+.tipEvent_container{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    float: left;
+}
+
+.tip_container_inner{
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.event_tip{
+    width: 100%;
+    margin: 40px auto;
+    position: relative;
+}
+.tip-heading{
+    width: 100%;
+    margin: 15px auto;
+}
+.tip-heading i{
+    font-size: 20px;
+    color: skyblue;
+    display: inline-block;
+}
+.tip-heading h4{
+    display: inline-block;
+    color: gray;
+    font-size: 20px;
+    padding-left: 25px;
+    letter-spacing: 1.5px
+}
+.col-lg-6.col-md-6.col-sm-12.tip-event-inner{
+    width: 45%;
+    max-width: 45%;
+    margin: 0 auto;
+}
+
+.tip-img{
+    width: 100%;
+    margin: 0 auto;
+    /* height: 300px; */
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 5px 5px 16px 0 grey;
+}
+.img-responsive.adjust{
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 9px;
+    height: 365px;
+    }

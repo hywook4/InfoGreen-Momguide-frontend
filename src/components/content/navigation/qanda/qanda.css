@@ -1,0 +1,68 @@
+.form-section {
+	width: 100%;
+	float: none;
+	max-width: 665px;
+	margin: 0 auto;
+}
+.form-section form textarea {
+	height: 170px;
+	width: 100%;
+	background: #f8f8f8;
+	border: none;
+	margin-bottom: 60px;
+
+	color:#666666;
+	padding:10px;
+		font-size:18px;
+}
+.form-section form input {
+	width: 100%;
+	height: 88px;
+	background: #f8f8f8;
+	border: none;
+	margin-bottom:38px;
+	color:#666666;
+	padding-left:10px;
+	font-size:18px;
+}
+.form-lbl {
+	width: 100%;
+	float: left;
+}
+.form-lbl {
+	width: 100%;
+	float: left;
+	margin-bottom: 40px;
+}
+.form-lbl label:nth-child(2n+1) {
+	background: #f8f8f8;
+	width: 100%;
+	padding: 20px 0px 20px 13px;
+	float: left;
+}
+.form-lbl label {
+	margin-bottom: 0.0rem;
+	background: #fff;
+	width: 100%;
+	float: left;
+	border-bottom: 1px solid #d3d3d3;
+	padding: 20px 0px 20px 13px;
+	color:#666666;
+	font-size:18px;
+}
+.qa-form-section {
+	width: 100%;
+	float: left;
+}
+.form-section span img {
+	margin-bottom: 8px;
+}
+.form-lbl.form-lbl-top label {
+	background: #fff;
+	border-bottom: 2px solid #d3d3d3;
+
+}
+.form-lbl.form-lbl-top
+{
+	margin-bottom: 20px;
+}

@@ -1,0 +1,257 @@
+.category_page{
+    width: 100%;
+    margin: 50px auto;
+    position: relative;
+    float: left;
+}
+
+.category-tabs-div{
+    width: 100%;
+    float: left;
+    margin: 0 auto;
+    position: relative;
+    clear: both;
+}
+.ctgy-heading{
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+    background-color: #f2f2f2;
+    padding: 10px 15px;
+}
+
+.ctgy-heading h4{
+    color: #808080;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    top: 2px;
+
+}
+
+.ctgy-heading i{
+    text-align: right;
+    float: right;
+    position: relative;
+    color: #808080;
+    top: 8px;
+}
+
+.ctgy-tabs{
+    width: 80%;
+    margin: 3px auto;
+    position: relative;
+    background-color: #f2f2f2;
+    padding: 10px 15px;
+}
+.ctgy-tabs .ctgy-chemical-div, .ctgy-tabs .ctgy-cosmetics-div{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    padding: 10px 10px;
+    
+}
+
+.ctgy-cosmetics-div{
+    border-left: 1px solid;
+    border-color: #cccccc;
+    padding-left: 25px !important;
+}
+/* .ctgy-tabs:last-child .ctgy-chemical-div{
+    border-right: 0;
+} */
+.ctgy-chemical-div h4, .ctgy-cosmetics-div h4{
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #4D4D4D;
+    padding: 10px 0px;
+}
+
+ul.nav.nav-pills{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+
+}
+
+ul.nav.nav-pills li{
+    border: 1px solid #a0a0a0;
+    padding: 10px 5px;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 12px;
+    display: table;
+    color: #999999;
+    width: 100%;
+    background-color: white;
+}
+
+ul.nav.nav-pills li a{
+    color: #999999;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+ul.nav.nav-pills li:hover, ul.nav.nav-pills li:active,  ul.nav.nav-pills li:focus{
+    background-color: #32b8a4;
+    color: white;
+    border-color: #32b8a4;
+}
+ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li a:focus{
+    color: white;
+}
+.customPills .activated{
+    background-color: #32b8a4 !important;
+}
+
+
+/* prod ctgy tabs */
+.prod-ctgy-tabs{
+    width: 80%;
+    margin: 50px auto;
+    position: relative;
+}
+.prod-ctgy-inr-div{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    padding: 10px 10px;
+}
+
+.sub-ctgy-div{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    border-bottom: 1px solid #999999;
+}
+
+.sub-ctgy-div h1{
+    display: inline-block;
+    font-size: 20px;
+    color: gray;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+.sub-ctgy-div ul.nav-tabs{
+    display: inline-block;
+    float: right;
+    text-align: right;
+    width: 50%;
+    clear: both;
+    border-bottom: none;
+}
+
+.sub-ctgy-div ul li{
+    display: inline-block;
+    width:15%;
+    text-align: right;
+    color: #4d4d4d;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.sub-ctgy-div ul li a{
+    text-decoration: none;
+    color: #4d4d4d;
+}
+
+.sub-ctgy-div ul li a:hover, .sub-ctgy-div ul li a:active, .sub-ctgy-div ul li a:focus{
+    color: #32b8a4;
+}
+
+.tab-content.prod-ctgy-tabs{
+    width: 100%;
+    margin: 20px auto 30px;
+}
+
+.high-prod-div{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.checkbox-div .custom-control.custom-checkbox.custom-control-inline{
+    width: 15%;
+}
+
+.high-prod-heading label{
+    padding-left: 10px;
+    color: #999999;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 300;
+}
+
+.ctgy-inrimg-div{
+    width: 100%;
+    border: 1px solid #999999;
+    margin: 50px auto;
+    padding: 30px 30px;
+}
+
+.ctgy-img-desp-div{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    /* border: 1px solid #606060; */
+}
+.sub-ctgy-img, .sub-ctgy-desp{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.sub-ctgy-desp p{
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+    font-size: 14px;
+    font-weight: 600;
+    color: gray;
+    letter-spacing: 1px;
+}
+
+.sub-ctgy-desp h4{
+    width: 100%;
+    margin: 10px auto;
+    font-size: 20px;
+    color: #666666;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.sub-ctgy-desp h1{
+    width: 100%;
+    margin: 0 auto;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 26px;
+}
+
+.sub-ctgy-rating{
+    width: 100%;
+    margin: 50px auto 0;
+    position: relative;
+}
+.sub-ctgy-rating{
+    width: 100%;
+    margin: 40px auto 0;
+    position: relative;
+}
+.sub-ctgy-rating p{
+    width: 100%;
+    margin: 0 auto 10px;
+    font-size: 12px;
+    color: gray;
+    padding-left: 15px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}

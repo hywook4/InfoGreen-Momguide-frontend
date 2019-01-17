@@ -1,0 +1,2 @@
+mouse over - product specification page.
+move API calls to FLUX pattern, after the demo day.

@@ -1,0 +1,110 @@
+.loggedin{
+    width: 100%;
+    margin: 50px auto;
+    position: relative;
+    float: left;
+    top: 0;
+    left: 0;
+    overflow-y: hidden;
+    bottom: 0;
+    right: 0;
+}
+.containing-table{
+    width: 100%;
+    height: 100%;
+    display: table;
+    margin: auto;
+}
+.center-align{
+    width: 100%;
+    margin: auto;
+    /* display: table-cell; */
+    /* vertical-align: middle; */
+    /* position: absolute; */
+    /* top: 50%; */
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
+}
+
+.ing-anly{
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    /* position: absolute; */
+    display: table-cell;
+    vertical-align: middle;
+    /* top: 22px; */
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.ing-anly-inr{
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+.log-inr-div{
+    width: 70%;
+    margin: 50px auto;
+    position: relative;
+    text-align: center;
+}
+
+.ingr-anly{
+    width: 90%;
+    margin: 53px auto;
+    position: relative;
+    /* border: 2px solid gray;
+    padding: 20px 10px; */
+    cursor: pointer;
+}
+
+.ingr-anly .inr-ingr{
+    border: 2px solid gray;
+    padding: 20px 10px;
+}
+.ingr-anly h2{
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.ingr-anly p{
+    color: gray;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 14px;
+}
+ .inr-ingr a.ingr-anchor{
+    text-decoration: none;
+    color: gray;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+/* .inr-ingr a.ingr-anchor:hover p, .inr-ingr a.ingr-anchor:focus p, .inr-ingr a.ingr-anchor:active p,
+.inr-ingr a.ingr-anchor:hover h2, .inr-ingr a.ingr-anchor:focus h2, .inr-ingr a.ingr-anchor:active h2{
+    color: #32b8a4;
+    text-decoration: none;
+} */
+/* a .inr-ingr:active, a .inr-ingr:focus, a .inr-ingr:focus{
+    border-color: #32b8a4;
+    color: #32b8a4;
+} */
+.ingr-anly .inr-ingr:active , .ingr-anly .inr-ingr:focus, .ingr-anly .inr-ingr:hover,
+.ingr-anly .inr-ingr:active a.ingr-anchor p, .ingr-anly .inr-ingr:hover a.ingr-anchor p, .ingr-anly .inr-ingr:focus a.ingr-anchor p,
+.ingr-anly .inr-ingr:active a.ingr-anchor h2, .ingr-anly .inr-ingr:hover a.ingr-anchor h2, .ingr-anly .inr-ingr:focus a.ingr-anchor h2 {
+    border-color: #32b8a4;
+    color: #32b8a4;
+}
+
+/* .ingr-anly h2:active, .ingr-anly h2:focus, .ingr-anly h2:hover,
+.ingr-anly h2:active, .ingr-anly p:focus, .ingr-anly p:hover{
+     color: #32b8a4;
+ } */

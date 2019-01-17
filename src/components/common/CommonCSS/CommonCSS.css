@@ -1,0 +1,45 @@
+.productHeading{
+    width: 90%;
+    margin: 0px auto;
+    position: relative;
+}
+
+.rightDiv{
+    width: 100%;
+    position: relative;
+    margin: 0px auto;
+}
+
+.ui.cards>.card {
+    box-shadow: 0px 0px 30px 2px grey;
+}
+
+.ui.card>.content>.header, .ui.cards>.card>.content>.header {
+    box-shadow: none;
+    padding: 0;
+}
+
+.ui.image img {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    object-fit: contain;
+}
+
+.ui.three.cards {
+    width: 100%;
+    
+}
+
+.ui.three.cards .ui.image{
+    width: 100%;
+    background: none !important;
+    padding-top: 100%;
+    position: relative;
+}

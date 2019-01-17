@@ -1,0 +1,26 @@
+.ui.menu .item::before {
+    position: absolute;
+    content: none;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 1px;
+}
+
+.ui.menu {
+    display: flex;
+    /* margin: 1rem 0; */
+    
+    font-weight: 400;
+    border: 0px;
+    box-shadow: 0px;
+    border-radius: .28571429rem;
+    min-height: 2.85714286em;
+}
+
+.pagination-card{
+    width: 30%;
+    margin: 50px auto 120px;
+    position: relative;
+}
+

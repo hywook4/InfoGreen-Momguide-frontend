@@ -1,0 +1,18 @@
+.full_main_page{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.full_main_page .main_inner{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.main_inner_row.row{
+    margin: 0;
+    width: 100%;
+    position: relative;
+}
+ .col-lg-12.col-md-12.col-sm-12.main_inner_col{
+    padding: 0;
+}

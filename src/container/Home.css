@@ -1,0 +1,16 @@
+.main-page{
+    font-family: 'Open Sans', sans-serif;
+    /* background-color: #3d4a6e; */
+    text-transform: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* responsive code */
+/* 992px css */
+@media screen and (max-width:992px){
+    .main-page{
+        height: initial;
+    }
+}
