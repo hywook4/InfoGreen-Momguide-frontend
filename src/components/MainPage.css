@@ -1,5 +1,5 @@
 .full_main_page{
-    width: 100%;
+    min-width: 1200px;
     margin: 0 auto;
     position: relative;
 }
@@ -15,4 +15,5 @@
 }
  .col-lg-12.col-md-12.col-sm-12.main_inner_col{
     padding: 0;
+    
 }

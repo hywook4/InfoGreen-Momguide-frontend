@@ -20,28 +20,28 @@ export class ProductList extends React.Component {
         voteParams.append("category", this.props.category);
         voteParams.append("sort", "vote");
         var products = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, voteParams)
-        this.setState({ productByVote: products.data[0].slice(0, 3) });
+        this.setState({ productByVote: products.data[0].slice(0, 5) });
 
         // Search by number of stars
         const starParams = new URLSearchParams();
         starParams.append("category", this.props.category);
         starParams.append("sort", "star");
         products = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, starParams);
-        this.setState({ productByStar: products.data[0].slice(0, 3) });
+        this.setState({ productByStar: products.data[0].slice(0, 5) });
     }
     
     /* Axios Call Over : Refactoring Required*/
 
     render () {
         return(
-            <div className={styles.productHeading}>
+            <div className="productHeading">
                 <div className="tip-heading">
                     <i style={{color: "red"}} className="fa fa-heart" aria-hidden="true"></i>
                     <h4>{this.props.category} 인기제품</h4>
                 </div>
-                <div className={styles.rightDiv}>
+                <div className="rightDiv">
                     <div className="row">
-                        <Card.Group itemsPerRow={3} stackable={true} doubling={true}>
+                        <Card.Group itemsPerRow={5} stackable={true} doubling={true}>
                             { 
                                 this.state.productByVote.map((product, index) =>
                                 <ProductCard 
@@ -65,7 +65,7 @@ export class ProductList extends React.Component {
                 </div>
                 <div className={styles.rightDiv}>
                     <div className="row">
-                        <Card.Group itemsPerRow={3} stackable={true} doubling={true}>
+                        <Card.Group itemsPerRow={5} stackable={true} doubling={true}>
                             { 
                                 this.state.productByStar.map((product, index) =>
                                 <ProductCard 

@@ -7,8 +7,8 @@ const ProductCard = (props) => {
   <Card>
       <Image href={`product-details/${props.name}`} src={props.src} alt={props.name}/>
       <Card.Content>
-        <Card.Header>{props.name}</Card.Header>
         <Card.Meta>{props.description}</Card.Meta>
+        <Card.Header>{props.name}</Card.Header>
       </Card.Content>
   </Card>
 )};

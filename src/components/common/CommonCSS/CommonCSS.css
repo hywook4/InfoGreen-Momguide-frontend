@@ -43,3 +43,14 @@
     padding-top: 100%;
     position: relative;
 }
+
+.ui.five.cards {
+    width: 100%;
+}
+
+.ui.five.cards .ui.image{
+    width: 100%;
+    background: none !important;
+    padding-top: 100%;
+    position: relative;
+}
