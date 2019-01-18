@@ -87,6 +87,12 @@
 .navbar_router .nav-item ul li a:hover, .navbar_router .nav-item ul li a:active, .navbar_router .nav-item ul li a:active{
     color: #32b8a4;
 }
+
+.navlink:hover{
+    color: #32b8a4;
+}
+
+
 .navbar_search{
     display: inline-block;
     width: 220px;
