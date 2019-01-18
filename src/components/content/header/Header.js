@@ -16,22 +16,22 @@ export const Header = ()=>{
                 </div>
                 <div className="navbar_router">
                     <ul className="navbar_left">
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <Link to="/" className="nav-link">홈</Link>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <Link to="/category" className="nav-link">카테고리</Link>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <Link to="/tips" className="nav-link">꿀팁</Link>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <Link to="/events" className="nav-link">이벤트</Link>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <Link to="/request/loggedin" className="nav-link">문의하기</Link>
                         </li>
-                        <li className="nav-item active">
+                        <li className="nav-item">
                             <Link to="/about" className="nav-link">서비스소개</Link>
                         </li>
                         
