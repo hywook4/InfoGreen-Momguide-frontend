@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {App} from './App';
-import swal from 'sweetalert'; // module to be made available globally , more info here ->https://sweetalert.js.org/guides/#advanced-examples
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));

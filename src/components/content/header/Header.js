@@ -2,7 +2,7 @@ import React from 'react';
 import './Header.css';
 import MOMGUIDE_LOGO_WHITE from '../../../assets/images/MOMGUIDE_LOGO_WHITE.png';
  
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Header = ()=>{
     return(
@@ -12,7 +12,6 @@ export const Header = ()=>{
                     <Link to="/">
                         <img src={MOMGUIDE_LOGO_WHITE} alt=""/>
                     </Link>
-                    {/* <img src={ require('../../assets/images/MOMGUIDE_LOGO_WHITE.png') } /> */}
                 </div>
                 <div className="navbar_router">
                     <ul className="navbar_left">
@@ -48,11 +47,6 @@ export const Header = ()=>{
                             <Link to="/request" className="nav-link">로그인</Link>
                         </li>
                     </ul>
-
-                        
-                   
-                        
-                    
                 </div>
             </div>
 

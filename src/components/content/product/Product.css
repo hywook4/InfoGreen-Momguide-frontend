@@ -1,9 +1,8 @@
 .product{
     width: 100%;
-    margin: 0px auto;
+    margin: 0 auto;
     padding: 30px 0;
     float: left;
-    background-color: #f9f9f9;
 }
 
 .product_inner{
@@ -17,7 +16,6 @@
     margin: 0 auto;
     padding: 15px 10px;
     position: relative;
-    background-color: gray;
 }
 
 
@@ -30,7 +28,6 @@
 .product-content{
     width: 100%;
     float: top;
-    margin-top: 40px;
 }
 
 
@@ -67,11 +64,9 @@ ul.product_category{
     margin: 0 auto;
     border-radius: 5px;
     vertical-align: middle;
-    margin-bottom: 0;
     background-color: white;
-    list-style: none;
     padding: 15px 30px;
-    list-style-type: none;
+    list-style: none none;
     text-align: center;
 }
 
@@ -82,8 +77,7 @@ ul.product_category li {
 
 .prod_ctgy_inner{
     width: 100%;
-    margin: 0 auto;
-    margin-bottom: 5px;
+    margin: 0 auto 5px;
     list-style: none;
 }
 
@@ -153,21 +147,18 @@ li.prod_ctgy_type a:hover, li.prod_ctgy_type a:active, li.prod_ctgy_type a:focus
 
 
 .menu-button{
-    margin: 0 auto;
     text-align: center;
+    margin: -70px auto 0;
 }
 
 .menu-button .circle-button{
-    height: 80px;
-    width: 80px;
     border-radius: 50%;
-    margin: 0 20px;
     display: inline-block;
-    margin-top: 0px;
+    margin: 0 20px 0;
 }
 
 .menu-button .circle-button img{
-    height: 80px;
-    width: 80px;
+    height: 64px;
+    width: 64px;
     object-fit: contain;
 }

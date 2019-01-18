@@ -1,10 +1,21 @@
 import React from 'react';
-import './Product.css';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import { ProductList } from '../../common/ProductList/ProductList';
-import { ProductSearch } from './productSearch/ProductSearch';
+import { Link } from 'react-router-dom';
 
-export class Product extends React.Component {
+export class ProductSearch extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            categorySelect: "household" // household or cosmetics
+        };
+    }
+
+    categorySelect = (category) => {
+        this.setState({
+            categorySelect: category
+        });
+    };
+
     render() {
         const houseHold = [
             {
@@ -87,23 +98,31 @@ export class Product extends React.Component {
         ];
 
         return(
-            <div className="product">
-                <div className="product_inner">
-                    <Router>
-                        <div className="product_div">
-                            <ProductSearch />
-
-                            <div className="product-content">
-                                <div className="content-info">
-                                    {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
-                                </div>
-                                <div className="content-info-below">
-                                    {cosmetics.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
-                                </div>
-                            </div>
-                        </div>
-                    </Router>
-
+            <div className="product-top-div">
+                <div className="product-menu">
+                    <nav className="menu-button">
+                        <a className="circle-button" href="/" onClick={(e) => {
+                            e.preventDefault();
+                            this.categorySelect("household");
+                        }}>
+                            <img src={require(`../../../../assets/images/living_${this.state.categorySelect==='household'?'1':'0'}.png`)} />
+                        </a>
+                        <a className="circle-button" href="/" onClick={(e) => {
+                            e.preventDefault();
+                            this.categorySelect("cosmetic");
+                        }}>
+                            <img src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='household'?'0':'1'}.png`)} />
+                        </a>
+                    </nav>
+                    {
+                        this.state.categorySelect === 'household' ?
+                            (<ul className="product_category">
+                                {houseHold.map((d,i)=><li className="prod_ctgy_type" key={i}><Link to={d.path}>{d.name}</Link></li>)}
+                            </ul>) :
+                            (<ul className="product_category">
+                                {cosmetics.map((d,i)=><li className="prod_ctgy_type" key={i}><Link to={d.path}>{d.name}</Link></li>)}
+                            </ul>)
+                    }
                 </div>
             </div>
         )

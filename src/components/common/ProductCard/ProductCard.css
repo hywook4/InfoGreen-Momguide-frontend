@@ -1,0 +1,17 @@
+.product-card:not(:first-child) {
+    margin-left: 10px;
+}
+.product-card:not(:last-child) {
+    margin-right: 10px;
+}
+
+.product-card {
+    display: inline-block;
+    width: 180px;
+    height: 250px;
+}
+
+.product-card img {
+    width: 150px;
+    height: 150px;
+}

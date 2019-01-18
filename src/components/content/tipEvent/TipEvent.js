@@ -4,11 +4,10 @@ import './TipEvent.css';
 export const TipEvent = ()=>{
     return(
         <div className="tipEvent_container">
-            <div className="tip_container_inner">
-                <div className="event_tip">
-                    <div className="tips">
+            <div className="tips">
+                <div className="tip_container_inner">
+                    <div className="event_tip">
                         <div className="tip-heading">
-                            {/*<i className="fa fa-heart" aria-hidden="true"></i>*/}
                             <h4>꿀팁</h4>
                             <a href="/tips"><div className="tip-event-button">+ 더보기</div></a>
                         </div>
@@ -34,7 +33,11 @@ export const TipEvent = ()=>{
                             </div>
                         </div>
                     </div>
-                    <div className="events">
+                </div>
+            </div>
+            <div className="events">
+                <div className="tip_container_inner">
+                    <div className="event_tip">
                         <div className="tip-heading">
                             {/*<i className="fa fa-heart" aria-hidden="true"></i>*/}
                             <h4>이벤트</h4>
@@ -55,6 +58,6 @@ export const TipEvent = ()=>{
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     )
 }
