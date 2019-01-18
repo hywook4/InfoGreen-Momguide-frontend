@@ -10,14 +10,14 @@
     width: 980px;
     margin: 0 auto;
     position: relative;
-    background-color: skyblue;
+    
 }
 .product-menu{
     width: 100%;
     margin: 0 auto;
     padding: 15px 10px;
     position: relative;
-    background-color: black;
+    background-color: gray;
 }
 
 
@@ -25,6 +25,12 @@
     width: 80%;
     margin: 0 auto;
     float: top;
+}
+
+.product-content{
+    width: 100%;
+    float: top;
+    margin-top: 40px;
 }
 
 
@@ -66,6 +72,7 @@ ul.product_category{
     list-style: none;
     padding: 15px 30px;
     list-style-type: none;
+    text-align: center;
 }
 
 ul.product_category li {
@@ -89,15 +96,11 @@ ul.product_category li {
     margin-bottom: 12px;
 }*/
 
-li.prod_ctgy_inner {
-    color: gray;
-    letter-spacing: 1px;
-    font-size: 14px;
-    padding: 14px 16px;
-    margin-left: 10px;
+.prod_ctgy_type{
+    margin: 0 10px;
 }
 
-li.prod_ctgy_inner a{
+li.prod_ctgy_type a{
     display: block;
     color: gray;
     letter-spacing: 1px;
@@ -106,7 +109,7 @@ li.prod_ctgy_inner a{
     text-decoration: none;
 }
 
-li.prod_ctgy_inner a:hover, li.prod_ctgy_inner a:active, li.prod_ctgy_inner a:focus{
+li.prod_ctgy_type a:hover, li.prod_ctgy_type a:active, li.prod_ctgy_type a:focus{
     color: skyblue;
 }
 
@@ -135,7 +138,7 @@ li.prod_ctgy_inner a:hover, li.prod_ctgy_inner a:active, li.prod_ctgy_inner a:fo
     padding-top: 1%;
     height: 92%;
     display: table; */
-    width: 80%;
+    width: 100%;
     float: bottom;
     text-align: center;
     /* top: -205px; */
@@ -146,4 +149,25 @@ li.prod_ctgy_inner a:hover, li.prod_ctgy_inner a:active, li.prod_ctgy_inner a:fo
     width: 80%;
     margin: 0 auto;
     float: right;
+}
+
+
+.menu-button{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.menu-button .circle-button{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin: 0 20px;
+    display: inline-block;
+    margin-top: 0px;
+}
+
+.menu-button .circle-button img{
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
 }
