@@ -1,16 +1,17 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Card, Image } from 'semantic-ui-react';
+import '../CommonCSS/CommonCSS.css'
 
 const ProductCard = (props) => {
   return(
-  <Card>
+  <div className="ui card">
       <Image href={`product-details/${props.name}`} src={props.src} alt={props.name}/>
       <Card.Content>
         <Card.Meta>{props.description}</Card.Meta>
-        <Card.Header>{props.name}</Card.Header>
+        <div className="ui header">{props.name}</div>
       </Card.Content>
-  </Card>
+  </div>
 )};
 
 export default ProductCard;

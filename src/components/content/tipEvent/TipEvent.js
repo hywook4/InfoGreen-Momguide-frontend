@@ -8,7 +8,7 @@ export const TipEvent = ()=>{
                 <div className="event_tip">
                     <div className="tips">
                         <div className="tip-heading">
-                            <i className="fa fa-heart" aria-hidden="true"></i>
+                            {/*<i className="fa fa-heart" aria-hidden="true"></i>*/}
                             <h4>꿀팁</h4>
                             <a href="/tips"><div className="tip-event-button">+ 더보기</div></a>
                         </div>
@@ -36,7 +36,7 @@ export const TipEvent = ()=>{
                     </div>
                     <div className="events">
                         <div className="tip-heading">
-                            <i className="fa fa-heart" aria-hidden="true"></i>
+                            {/*<i className="fa fa-heart" aria-hidden="true"></i>*/}
                             <h4>이벤트</h4>
                             <a href="/events"><div className="tip-event-button">+ 더보기</div></a>
                         </div>

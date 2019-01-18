@@ -91,26 +91,27 @@ export const Product=()=>{
                 <div className="product_div">
                     <div className="product-top-div">
                         <div className="product-menu">
+                            <nav className="menu-button">
+                                <a className="circle-button"><img src={require(`../../../assets/images/living_0.png`)} href="/"  /> </a>
+                                <a className="circle-button"><img src={require(`../../../assets/images/cosmetic_0.png`)} href="/" /> </a>
+                            </nav>
                             <ul className="product_category">
-                                <li className="prod_ctgy_inner">
-                                    {houseHold.map((d,i)=><li key={i}><Link to={d.path}>{d.name}</Link></li>)}
-                                </li>
+                                {houseHold.map((d,i)=><li className="prod_ctgy_type" key={i}><Link to={d.path}>{d.name}</Link></li>)}
                             </ul>
                             <ul className="product_category">
-                                <li className="prod_ctgy_inner">
-                                    {cosmetics.map((d,i)=><li key={i}><Link to={d.path}>{d.name}</Link></li>)}
-                                </li>
+                                {cosmetics.map((d,i)=><li className="prod_ctgy_type" key={i}><Link to={d.path}>{d.name}</Link></li>)}
                             </ul>
                         </div>
                     </div>
                     
-                    <div className="content-info">
-                        {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
-                    </div> 
-                    <div className="content-info-below">
-                        {cosmetics.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
-                    </div>  
-
+                    <div className="product-content">
+                        <div className="content-info">
+                            {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
+                        </div> 
+                        <div className="content-info-below">
+                            {cosmetics.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
+                        </div>  
+                    </div>
                 </div>
             </Router>    
 

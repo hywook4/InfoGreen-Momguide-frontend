@@ -1,8 +1,9 @@
 .productHeading{
-    width: 90%;
+    width: 100%;
     margin: 0px auto;
     position: relative;
 }
+
 
 .rightDiv{
     width: 100%;
@@ -11,13 +12,31 @@
 }
 
 .ui.cards>.card {
-    box-shadow: 0px 0px 30px 2px grey;
+    /*box-shadow: 0px 0px 30px 2px grey;*/
 }
 
-.ui.card>.content>.header, .ui.cards>.card>.content>.header {
-    box-shadow: none;
-    padding: 0;
+.ui.card>.card>.content{
+    padding: 1px;
 }
+
+.ui.card>.content>.header{
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: bolder;
+    box-shadow: none;
+}
+
+.ui.card>.content>.meta{
+    
+    font-size: 12px;
+}
+
+.ui.card {
+    width: 180px;
+    height: 270px;
+}
+
+
 
 .ui.image img {
     width: 100% !important;
@@ -28,7 +47,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 20px;
+    padding: 10px 10px;
     object-fit: contain;
 }
 
@@ -53,4 +72,40 @@
     background: none !important;
     padding-top: 100%;
     position: relative;
+}
+
+
+
+.product-head{
+    width: 100%;
+    height: auto;
+    margin: 15px auto;
+    padding-bottom: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: gray;
+    display: inline-block;
+}
+
+.product-head i{
+    font-size: 20px;
+    color: skyblue;
+    display: inline-block;
+    float: left;
+    padding-top: 6px;
+}
+
+.product-head h4{
+    display: inline-block;
+    color: gray;
+    font-size: 25px;
+    letter-spacing: 1.5px;
+    float: left;
+}
+
+.product-head p{
+    padding-top: 10px;
+    display: inline-block;
+    color: gray;
+    float: left;
 }

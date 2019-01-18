@@ -35,12 +35,13 @@ export class ProductList extends React.Component {
     render () {
         return(
             <div className="productHeading">
-                <div className="tip-heading">
-                    <i style={{color: "red"}} className="fa fa-heart" aria-hidden="true"></i>
+                <div className="product-head">
+                    {/*<i style={{color: "red"}} className="fa fa-heart" aria-hidden="true"></i>*/} 
                     <h4>{this.props.category} 인기제품</h4>
+                    <p>&emsp;|&emsp;카테고리별 가장 인기 있는 제품입니다. </p>
                 </div>
                 <div className="rightDiv">
-                    <div className="row">
+                    <div>
                         <Card.Group itemsPerRow={5} stackable={true} doubling={true}>
                             { 
                                 this.state.productByVote.map((product, index) =>
@@ -59,12 +60,13 @@ export class ProductList extends React.Component {
                 </div>
                 <br />
                 <br />
-                <div className="tip-heading">
-                    <i style={{color: "red"}} className="fa fa-heart" aria-hidden="true"></i>
+                <div className="product-head">
+                    {/*<i style={{color: "red"}} className="fa fa-heart" aria-hidden="true"></i>*/}
                     <h4>{this.props.category} 성분 좋은 제품</h4>
+                    <p>&emsp;|&emsp;카테고리별 가장 성분이 좋은 제품입니다. </p>
                 </div>
                 <div className={styles.rightDiv}>
-                    <div className="row">
+                    <div>
                         <Card.Group itemsPerRow={5} stackable={true} doubling={true}>
                             { 
                                 this.state.productByStar.map((product, index) =>
