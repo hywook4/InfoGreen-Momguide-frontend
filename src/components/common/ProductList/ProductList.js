@@ -45,6 +45,7 @@ export class ProductList extends React.Component {
                             <ProductCard
                                 payload={product}
                                 key={index}
+                                rank={index+1}
                                 src={`${config.CLIENT_SERVER}/chemical/item_img/${product.image}`}
                                 category={product.category}
                                 name={product.name}
@@ -68,6 +69,7 @@ export class ProductList extends React.Component {
                             <ProductCard
                                 payload={product}
                                 key={index}
+                                rank={index+1}
                                 src={`${config.CLIENT_SERVER}/chemical/item_img/${product.image}`}
                                 category={product.category}
                                 name={product.name}

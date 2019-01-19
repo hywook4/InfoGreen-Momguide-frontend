@@ -32,7 +32,7 @@ const renderHome=()=>{
     )
 };
 
-export const MainPage = ()=>{
+export const MainPage = () => {
     return (
         <div className="full_main_page">
             <div className="main_inner">

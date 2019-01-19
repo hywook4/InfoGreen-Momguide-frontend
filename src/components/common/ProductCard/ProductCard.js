@@ -10,6 +10,7 @@ const ProductCard = (props) => {
                 <img src={props.src} alt={props.name} />
             </a>
             <div className="product-content">
+                <div className={`product-rank ${props.rank >= 4 ? 'product-low-rank' : ''}`}>{props.rank}</div>
                 <div className="product-meta">{props.description}</div>
                 <div className="product-header">{props.name}</div>
             </div>
