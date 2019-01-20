@@ -266,8 +266,11 @@ export class ProdSpec extends React.Component{
                         <div className="row">
                             <div className="col-lg-9 col-md-9 col-sm-12">
                                 <div className="prod_heading">
-                                    <span className="dot"></span>
-                                    <h4>제품 상세 정보 페이지</h4>
+                                    {/* <span className="dot"></span>
+                                        <h4>제품 상세 정보 페이지</h4> */}
+                                    <div className="prod-name-detl">
+                                        카테고리 > 가정용 화학제품 > {this.state.category}
+                                    </div>
                                 </div>
                                 {/* product detail */}
                                 <div className="prod_detail">
@@ -276,9 +279,9 @@ export class ProdSpec extends React.Component{
                                             <img className="img-responsive" src={`${config.CLIENT_SERVER}/chemical/item_img/${this.state.image}`} alt=""/>
                                         </div>
                                     </div> 
-                                    <div className="prod-name-detl" style={{position:'relative',float:'inherit'}}>
+                                    {/* <div className="prod-name-detl" style={{position:'relative',float:'inherit'}}>
                                         <h2>카테고리 > 가정용 화학제품 > {this.state.category}</h2>
-                                    </div>
+                                    </div> */}
 
                                     <div className="prod_desp">
                                         <div className="prod_name">
