@@ -257,31 +257,34 @@ export class ProdSpec extends React.Component{
         return this.state.ingredient_list ?
         ( 
             <React.Fragment>
-            <br />
-            <div className="prod_spec" style={{marginTop:'30px'}}>
-                <div className="prodspec_container">
-                
-                {/* product detail */}
+            <div className="prod-spec"> {/* Outer box contains every componenets */}
+
+                <div className="cate-header"> {/* Category header */}
+                    카테고리 > 가정용 화학제품 > <span style={{color: '#32b8a4', fontWeight: '600'}}>{this.state.category}</span>
+                </div>
+
+                <div className="prod-info">
+                    <div className="color-box"></div>
+                    <div className="prod-outer-img">
+                        <img className="prod-img" src={`${config.CLIENT_SERVER}/chemical/item_img/${this.state.image}`} alt=""/>
+                    </div>
+                </div>
+
+               {/* <div className="prodspec_container">
                     <div className="prodspec_inner">
                         <div className="row">
                             <div className="col-lg-9 col-md-9 col-sm-12">
                                 <div className="prod_heading">
-                                    {/* <span className="dot"></span>
-                                        <h4>제품 상세 정보 페이지</h4> */}
                                     <div className="prod-name-detl">
                                         카테고리 > 가정용 화학제품 > {this.state.category}
                                     </div>
                                 </div>
-                                {/* product detail */}
                                 <div className="prod_detail">
                                     <div className="prod_upr_img">
                                         <div className="prod_img">
                                             <img className="img-responsive" src={`${config.CLIENT_SERVER}/chemical/item_img/${this.state.image}`} alt=""/>
                                         </div>
-                                    </div> 
-                                    {/* <div className="prod-name-detl" style={{position:'relative',float:'inherit'}}>
-                                        <h2>카테고리 > 가정용 화학제품 > {this.state.category}</h2>
-                                    </div> */}
+                                    </div>
 
                                     <div className="prod_desp">
                                         <div className="prod_name">
@@ -293,26 +296,26 @@ export class ProdSpec extends React.Component{
                                         <div className="prod_icons">
                                             <div className="prod_icon_info">
                                                 <i className="fa fa-home" aria-hidden="true"></i>
-                                                {/* <img src={ require('../../../../assets/images/home.svg') } alt=""/> */}
+                                                {/* <img src={ require('../../../../assets/images/home.svg') } alt=""/>
                                                 <p>저장</p>
                                             </div>
                                             <div className="prod_icon_info">
                                                 <i className="fa fa-heart" aria-hidden="true"></i>
-                                                {/* <img src={ require('../../../../assets/images/heart.svg') } alt=""/> */}
+                                                {/* <img src={ require('../../../../assets/images/heart.svg') } alt=""/>
                                                 <p>찜</p>
                                             </div>
                                             <div className="prod_icon_info prod-check-3rd-div">
-                                                {/* <i className="fa fa-share-alt"></i> */}
+                                                {/* <i className="fa fa-share-alt"></i> *
                                                 <a href={`${config.PRODUCT_CHECK_URL}${this.state.name}`}>
                                                     <i className="fa fa-krw" aria-hidden="true"></i>
                                                 </a>
                                                 
-                                                {/* <img src={ require('../../../../assets/images/checkPrice.svg') } alt=""/> */}
+                                                {/* <img src={ require('../../../../assets/images/checkPrice.svg') } alt=""/>
                                                 <p className="check-para">가격정보</p>
                                             </div>
                                             <div className="prod_icon_info">
                                                 <i className="fa fa-share-alt"></i>
-                                                {/* <img src={ require('../../../../assets/images/share.svg') } alt=""/> */}
+                                                {/* <img src={ require('../../../../assets/images/share.svg') } alt=""/>
                                                 <p>공유</p>
                                             </div>
                                         </div>
@@ -320,7 +323,7 @@ export class ProdSpec extends React.Component{
 
                                     </div>
                                 </div>
-                                {/* finish product detail */}
+                                {/* finish product detail
                                 
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12">
@@ -331,7 +334,7 @@ export class ProdSpec extends React.Component{
                                     </div>
                                     <div className="prod-rt_div_inr-1" style={{textAlign:'center'}}>
                                     <img className="img-fluid" style={{maxHeight:'50px',maxWidth:'50px'}} src={selectedEmoji} alt=""/>
-                                        {/* <i className="fa fa-heart" aria-hidden="true"></i> */}
+                                        {/* <i className="fa fa-heart" aria-hidden="true"></i>
                                         <p>{selectedText}</p>
                                     </div>
                                     <div className="prod-rt_div_inr" style={{marginTop:'33px'}}>
@@ -340,35 +343,35 @@ export class ProdSpec extends React.Component{
                                     </div>
                                     <div className="prod-rt_div_inr-1" style={{textAlign:'center'}}>
                                     <img className="img-fluid" src={require('../../../../assets/images/icons/people-icon.png')} alt=""/>
-                                        {/* <i className="fa fa-heart" aria-hidden="true"></i> */}
+                                        {/* <i className="fa fa-heart" aria-hidden="true"></i>
                                         <p>{this.state.open_request}명</p>
                                     </div>
                                 </div>
-                                {/* <div className="prod_addn"> */}
+                                {/* <div className="prod_addn">
                                     <div className="prod_addn_info prod-ingt-info">
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                     <h1>성분구성</h1>
-                                    {/* <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p> */}
+                                    {/* <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
                                     </div>
-                                {/* </div> */}
+                                {/* </div>
                             </div>
                         </div>
                     </div>
-                {/* finish product detIL */}
+                {/* finish product detIL
 
-                {/* PRODUCT specification */}
+                {/* PRODUCT specification
                 { this.state.ingredient_list 
                      && this.state.ingredient_list.total.length>0 ? 
                      this.renderProductTable():
                         <h2 style={{textAlign:'center',color:'#b5b3b3',margin:'40px'}}>제품 정보가 없습니다!</h2>
                 }
-                {/* finish product specification */}
+                {/* finish product specification
                 </div>
-            </div>
-            <div className="row">
+                </div> */}
+            {/* <div className="row">
                 <SecondSection/>
                 <ThirdSection/>
-                <Comments/>
+                <Comments/> */}
             </div>
             </React.Fragment>
         ) : (<div><br/><br/></div>);
