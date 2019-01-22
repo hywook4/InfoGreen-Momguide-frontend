@@ -148,7 +148,7 @@ li.prod_ctgy_type a:hover, li.prod_ctgy_type a:active, li.prod_ctgy_type a:focus
 
 .menu-button{
     text-align: center;
-    margin: -70px auto 0;
+    margin: -85px auto 0;
 }
 
 .menu-button .circle-button{
@@ -158,7 +158,7 @@ li.prod_ctgy_type a:hover, li.prod_ctgy_type a:active, li.prod_ctgy_type a:focus
 }
 
 .menu-button .circle-button img{
-    height: 64px;
-    width: 64px;
+    height: 80px;
+    width: 80px;
     object-fit: contain;
 }
