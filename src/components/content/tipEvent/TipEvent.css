@@ -117,6 +117,7 @@
     text-decoration: none;
     padding-top: 2px;
     line-height: 1.0;
+    margin-top: 8px;
 }
 
 .tip-event-button:hover{
