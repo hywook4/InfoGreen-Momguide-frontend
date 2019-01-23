@@ -14,6 +14,7 @@ import {Tips} from './content/navigation/tips/Tips';
 import {Product} from './content/product/Product';
 import {LoggedIn} from './content/navigation/request/loggedIn/LoggedIn';
 import {RequestComment} from './content/navigation/request/requestComment/RequestComment';
+import {ContactUs} from './content/navigation/request/contactUs/ContactUs';
 import {ViewMore} from './common/ViewMore/ViewMore';
 import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdSpec';
 import {About} from './content/navigation/about/About';
@@ -55,9 +56,9 @@ export const MainPage = () => {
                                         <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
                                         <Route exact path="/tips" component={Tips} />
                                         <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
-
                                         <Route path="/product-details/:name" component={ProductSpecification} />
                                         <Route path="/request/request-comment" component={RequestComment} />
+                                        <Route path="/request/contact-us" component={ContactUs} />
                                         <Route path="/request/loggedin" component={LoggedIn} />
                                     </Switch>
                                 </div>

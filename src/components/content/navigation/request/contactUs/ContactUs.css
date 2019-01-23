@@ -1,0 +1,86 @@
+.req-cmnt{
+    width: 100%;
+    margin: 50px auto;
+    position: relative;
+    float: top;
+}
+
+.cu-container{
+    width: 980px;
+    margin: 0px auto;
+}
+
+.cmnt-desp-container{
+    width: 980px;
+    margin: 50px auto 0;
+    position: relative;
+}
+.cmnt-desp-inr{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.cmnt-desp-inr h2{
+    color: gray;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin: 15px auto;
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.cmnt-desp-inr p{
+    color: rgb(175, 173, 173);
+    letter-spacing: 1px;
+    font-weight: 100;
+    margin: 0 auto;
+    width: 100%;
+    font-size: 14px;
+}
+
+.form-container{
+    width: 100%;
+    border-top-style: solid;
+    border-color: rgb(175, 173, 173);
+    border-width: 2px;
+    margin: 15px auto;
+    padding-top: 35px;
+    padding-bottom: 20px;
+}
+
+hr.line{
+    margin-top: 25px;
+    border-top: 2px solid rgb(175, 173, 173);
+}
+
+.cu-form{
+
+}
+
+.cu-text {
+    width: 100%;
+    height: 350px;
+    border-style: none;
+    background-color: rgb(175, 173, 173);
+    padding: 15px;
+}
+
+input[type=submit]{
+    height: 35px;
+    width: 120px;
+    cursor: pointer;
+    float: right;
+    color: white;
+    background-color: #32b8a4;
+    border-radius: 4px;
+    border: none;
+}
+
+input[type=submit]:hover{
+    color:  #32b8a4;
+    border-style: solid;
+    border-color: #32b8a4;
+    background-color: white;
+    border-width: 1px;
+}
