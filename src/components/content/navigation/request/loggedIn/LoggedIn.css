@@ -1,13 +1,13 @@
 .loggedin{
     width: 100%;
     height: 70vh;
-    margin: 150px auto;
+    margin: 15vh auto;
     position: relative;
     display: inline-block;
 }
 
 .help-row{
-    margin: 100px auto;
+    margin: 5vh auto;
     width: 820px;
     height: 40vh;
     
