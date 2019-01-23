@@ -263,10 +263,43 @@ export class ProdSpec extends React.Component{
                     카테고리 > 가정용 화학제품 > <span style={{color: '#32b8a4', fontWeight: '600'}}>{this.state.category}</span>
                 </div>
 
-                <div className="prod-info">
+                <div className="prod-info"> {/* image + info */}
                     <div className="color-box"></div>
-                    <div className="prod-outer-img">
+                    <div className="prod-outer-img"> {/* product image */}
                         <img className="prod-img" src={`${config.CLIENT_SERVER}/chemical/item_img/${this.state.image}`} alt=""/>
+                    </div>
+                    <div className="prod-texts"> {/* all text container */}
+                        <div className="brand-name">{this.state.brand}</div>
+                        <div className="prod-name">
+                            <h1>{this.state.name}</h1>
+                        </div>
+                        <div className="rating-info"> {/* rating stars and score */}
+                            <RatingRow config={{selected:Math.round(this.state.star),hideSubHeading:true,size:'22px',alignStart:true}}/>
+                            <div className="rating-score">4.0</div>
+                        </div>
+
+                        <hr style={{color: 'gray'}}/>
+
+                        <div className="icons-list">
+                            <div className="icon">
+                                <i className="fa fa-home" aria-hidden="true"></i>
+                                <p style={{fontSize: '9px'}}>우리집 화학제품</p>
+                            </div>
+                            <div className="icon">
+                                <i className="fa fa-heart" aria-hidden="true"></i>
+                                <p style={{fontSize: '9px'}}>찜하기</p>
+                            </div>
+                            <div className="icon">
+                                <a href={`${config.PRODUCT_CHECK_URL}${this.state.name}`}>
+                                    <i className="fa fa-krw" aria-hidden="true"></i>
+                                </a>
+                                <p className="check-para" style={{fontSize: '9px'}}>가격정보</p>
+                            </div>
+                            <div className="icon">
+                                <i className="fa fa-share-alt"></i>
+                                <p style={{fontSize: '9px'}}>링크공유</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

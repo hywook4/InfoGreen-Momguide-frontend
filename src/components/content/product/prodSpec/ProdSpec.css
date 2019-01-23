@@ -1,5 +1,5 @@
 .prod-spec {
-    width: 55%;
+    width: 980px;
     overflow: hidden;
     margin: 20px auto;
 }
@@ -29,9 +29,8 @@
     width: 260px;
     height: 260px;
     background-color: white;
-    position: relative;
-    top: -80px;
-    left: 120px;
+    margin-top: -10%;
+    margin-left: 8%;
     box-shadow: 2px 2px 8px -3px gray;
 }
 
@@ -40,7 +39,74 @@
     height: 200px;
     background-color: white;
     object-fit: contain;
-    position: absolute;
-    top: 30px;
-    left: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.prod-texts {
+    background-color: rgba(120, 120, 120, 0.5); 
+    width: 480px;
+    margin-left: 42%;
+    margin-top: -27%;
+}
+
+.brand-name {
+    font-size: 11px;
+    color: gray;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+.prod-name {
+    font-size: 20px;
+    font-weight: 800;
+    width: 480px;
+    height: 90px;
+}
+
+.rating-info {
+    width: 480px;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.rating-stars {
+    width: 100px;
+    height: 60px;
+    margin-top: 0px;
+    margin-left: 5px;
+    float: left;
+    padding-top: 10px;
+}
+
+.rating-participants {
+    width: 100px;
+    margin-top: 5px;
+    color: gray;
+}
+
+.rating-score {
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    font-size: 40px;
+    font-weight: 300;
+    font-style: italic;
+    float: left;
+}
+
+.icons-list {
+    width: 480px;
+    height: 75px;
+}
+
+.icon {
+    width: 75px;
+    height: 75px;
+    font-size: 35px;
+    color: gray;
+    float: left;
+    padding: auto;
+    vertical-align: middle;
+    text-align: center;
 }
