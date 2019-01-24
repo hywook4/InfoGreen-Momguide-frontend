@@ -1,6 +1,4 @@
 .carousel-inner img {
-    width: 100%;
-    
 }
 
 .slider{
@@ -10,7 +8,6 @@
     float: left;
     position: relative;
     top: 9px;
-    /* height: 100%; */
 }
 
 .slider .slider_inner{
@@ -19,5 +16,4 @@
     margin: 0 auto;
     float: left;
     position: relative;
-    /* height: 100%; */
 }

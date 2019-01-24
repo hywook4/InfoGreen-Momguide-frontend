@@ -30,11 +30,10 @@ const renderHome=()=>{
             <TipEvent/>
         </React.Fragment>
     )
-}
+};
 
-export const MainPage = ()=>{
-    return(
-        
+export const MainPage = () => {
+    return (
         <div className="full_main_page">
             <div className="main_inner">
                 <div className="main_inner_row row">

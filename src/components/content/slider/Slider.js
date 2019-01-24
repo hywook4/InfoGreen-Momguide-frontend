@@ -2,7 +2,6 @@ import React from 'react';
 import '../../../../node_modules/react-bootstrap-carousel/dist/react-bootstrap-carousel.css';
 import './Slider.css';
 
-
 export const Slider = ()=>{
     return (
         <div className="slider">
