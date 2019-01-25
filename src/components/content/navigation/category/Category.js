@@ -136,24 +136,24 @@ export class Category extends React.Component{
     renderRenderChecboxSelector=()=>{
         return(
             <div className="checkbox-div">
-                <div className="check-element">
-                    <input type="checkbox" id="defaultInline1" name="1" onClick={this.onCheck}/>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline1" />
                     <label htmlFor="defaultInline1" className="custom-control-label">성분 공개 제품</label>
                 </div>
-                <div className="check-element">
-                    <input type="checkbox" id="defaultInline2" name="3" onClick={this.onCheck}/>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline2"/>
                     <label htmlFor="defaultInline2" className="custom-control-label">주의 성분 제외</label>
                 </div>
-                <div className="check-element">
-                    <input type="checkbox" id="defaultInline3" name="2" onClick={this.onCheck}/>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline3"/>
                     <label htmlFor="defaultInline3" className="custom-control-label">유해 성분 제외</label>
                 </div>
-                <div className="check-element">
-                    <input type="checkbox" id="defaultInline4" name="4" onClick={this.onCheck}/>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline4"/>
                     <label htmlFor="defaultInline4" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
-                <div className="check-element">
-                    <input type="checkbox" id="defaultInline5" name="5" onClick={this.onCheck}/>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline5"/>
                     <label htmlFor="defaultInline5" className="custom-control-label">친환경 인증 제품</label>
                 </div>
             </div>
@@ -161,7 +161,7 @@ export class Category extends React.Component{
     }
 
 render(){
-        var itemData = (<div style={{padding: '150px', textAlign: 'center'}}>검색된 상품이 없습니다</div>);
+        var itemData = (<h1 style={{padding: '150px', textAlign: 'center', color: 'gray'}}>검색된 상품이 없습니다!</h1>);
         if (this.state.result && this.state.result.length>0) {
             itemData = this.state.result.map((item,i) => <CategoryImg name={item.name} key={(item.name+i)} data={{...item}} />)
         }
@@ -209,24 +209,6 @@ render(){
                                         </div>
                                     </div>
                                 </div>
-                                {/* <div className="tab-content">
-                                    <div id="laundary" className="tab-pane fade in active">
-                                        <h3>HOME</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    </div>
-                                    <div id="fabric" className="tab-pane fade">
-                                        <h3>Menu 1</h3>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                    </div>
-                                    <div id="dishwashing" className="tab-pane fade">
-                                        <h3>Menu 2</h3>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                                    </div>
-                                    <div id="odor" className="tab-pane fade">
-                                        <h3>Menu 3</h3>
-                                        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -244,6 +244,7 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 .checkbox-div{
     width: 100%;
     display: inline-block;
+    margin-bottom: 20px;
 }
 
 .check-element{
@@ -263,8 +264,8 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 .ctgy-inrimg-div{
     width: 100%;
     border: 1px solid #999999;
-    margin: 50px auto;
-    padding: 30px 30px;
+    margin: 25px auto;
+    padding: 30px 10px;
 }
 
 .ctgy-img-desp-div{
