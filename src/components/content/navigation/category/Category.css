@@ -241,8 +241,15 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
     position: relative;
 }
 
-.checkbox-div .custom-control.custom-checkbox.custom-control-inline{
-    width: 15%;
+.checkbox-div{
+    width: 100%;
+    display: inline-block;
+}
+
+.check-element{
+    display: inline-block;
+    min-width: 10px;
+    overflow: hidden;
 }
 
 .high-prod-heading label{
