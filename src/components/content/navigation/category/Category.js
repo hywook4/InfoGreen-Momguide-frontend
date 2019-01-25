@@ -1,21 +1,23 @@
 import React from 'react';
 import './Category.css';
 import {CategoryImg} from '../category/CategoryImg';
+import {CategoryMenu} from '../category/CategoryMenu';
 import config from '../../../../config';
 import axios from 'axios';
 
 export class Category extends React.Component{
-    
     state = {
         search: "",
         sort: "",
-        category: "",
+        category: "세탁세제",
         check: "",
         page:0,
         totalPages: null,
         result: [],
         scrolling: false,
+        sort_focus: "",
     }
+
     componentDidMount=()=>{
         this._mounted = true;
     }
@@ -60,10 +62,14 @@ export class Category extends React.Component{
         this.setState({search: searchText});
     };
 
+    
     onClick = e => {
         const category = e.target.innerHTML;
         const parent = e.target.parentElement;
         const allPills = document.querySelectorAll('.customPills .row .col-sm-4 li');
+
+        console.log(category);
+
         for(let i=0;i<allPills.length;i++){
             allPills[i].classList.remove('activated');
         }
@@ -72,8 +78,13 @@ export class Category extends React.Component{
         this.setState({category})
         this.resetSearchResults(()=>this.search(this.state.search, category, this.state.sort, this.state.check,true))
     }
+    
 
     onSort = e => {
+        const sort_focus = e.target.innerHTML;
+        this.setState({sort_focus});
+        console.log(this.state.sort_focus);
+
         const sort = e.target.name;
         this.setState({sort})
         this.resetSearchResults(()=>this.search(this.state.search, this.state.category, sort, this.state.check,true))
@@ -103,107 +114,18 @@ export class Category extends React.Component{
             totalPages: resp.data[1].total
         });
     }
-
     
-    renderRenderHousHoldSelector=()=>{
-        return(
-            <div className="col-lg-6 col-md-6 col-sm-12">
-                <div className="ctgy-chemical-div">
-                    <h4>가정용 생활화학제품</h4>
-                    <ul className="nav nav-pills customPills">
-                    <div className="row">
-                        <div className="col-sm-4">
-                            <li>
-                                <a data-toggle="pill" href="#laundary" onClick={this.onClick}>세탁세제</a>
-                            </li>
-                        </div>
-                        <div className="col-sm-4">
-                            <li><a data-toggle="pill" href="#fabric" onClick={this.onClick}>섬유유연제</a></li>
-                        </div>
-                        <div className="col-sm-4">
-                            <li><a data-toggle="pill" href="#dishwashing" onClick={this.onClick}>주방세제</a></li>
-                        </div>
-                        <div className="col-sm-4">
-                            <li><a data-toggle="pill" href="#odor" onClick={this.onClick}>탈취제</a></li>
-                        </div>
-                        <div className="col-sm-4">
-                            <li><a data-toggle="pill" href="#other" onClick={this.onClick}>기타세정제</a></li>
-                        </div>
-                    </div>
-                    </ul>
-                </div>
-            </div>
-        )
-    }
-
-
-    renderRenderCosmeticSelector=()=>{
-    return(
-        <div className="col-lg-6 col-md-6 col-sm-12">
-            <div className="ctgy-cosmetics-div">
-                {/* <div className="ctgy-chemical-div"> */}
-                    <h4>유아용 화장품</h4>
-                    <ul className="nav nav-pills customPills">
-                        <div className="row">
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#soap" onClick={this.onClick}>워시</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#lotion" onClick={this.onClick}>로션</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#cream" onClick={this.onClick}>크림</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#oil" onClick={this.onClick}>오일</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#powder" onClick={this.onClick}>파우더</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#hair" onClick={this.onClick}>헤어</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#suncare" onClick={this.onClick}>선케어</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#babywipes" onClick={this.onClick}>물티슈</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#handsanitizer" onClick={this.onClick}>손세정제</a></li>
-                            </div>
-                            <div className="col-sm-4">
-                                <li><a data-toggle="pill" href="#othercosmetics" onClick={this.onClick}>기타화장품</a></li>
-                            </div>
-                </div>
-                    </ul>
-                {/* </div> */}
-            </div>
-        </div>
-    )
-    }
-
-
     renderRenderSortSelector=()=>{
         return(
             <div className="tab-content prod-ctgy-tabs">
                 <div id="other" className="tab-pane active">
                     <div className="sub-ctgy-div">
-                    <h1>{this.state.category}</h1>
-                            <ul className="nav nav-tabs ">
-                                <li className="active">
-                                    <a href="#tab_default_1" data-toggle="tab" name="star" onClick={this.onSort}>
-                                    별점순  </a>
-                                </li>
-                                <li>
-                                    <a href="#tab_default_2" data-toggle="tab" name="vote" onClick={this.onSort}>
-                                    조회순</a>
-                                </li>
-                                <li>
-                                    <a href="#tab_default_3" data-toggle="tab" name="dateTime" onClick={this.onSort}>
-                                    최신순 </a>
-                                </li>
-                            </ul>
+                        <h1>{this.state.category}</h1>
+                        <ul className="nav nav-tabs ">
+                            <li className={this.state.sort_focus==="별점순"?"focused":""}><a href="#tab_default_1" data-toggle="tab" name="star" onClick={this.onSort}>별점순</a></li>
+                            <li className={this.state.sort_focus==="조회순"?"focused":""}><a href="#tab_default_2" data-toggle="tab" name="vote" onClick={this.onSort}>조회순</a></li>
+                            <li className={this.state.sort_focus==="최신순"?"focused":""}><a href="#tab_default_3" data-toggle="tab" name="dateTime" onClick={this.onSort}>최신순</a></li> 
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -244,68 +166,48 @@ render(){
             itemData = this.state.result.map((item,i) => <CategoryImg name={item.name} key={(item.name+i)} data={{...item}} />)
         }
         return (
-            <div className="container">
+            <div className="category-container">
                 <div className="category_page">
-                    <div className="search-div">
-                        <div className="container">
-                        <div className="search_heading">사용 중이신 브랜드명 혹은, 제품명을 검색하여 유해성분이 있는지 찾아보세요</div>
-                            <div className="search_box">
-                                <input 
-                                    type="text"
-                                    placeholder="총 400,000개의 제품..."
-                                    value={this.state.search}
-                                    onChange={this.onChange}
-                                    onKeyUp={this.onKeyBoardPress}
-                                    autoFocus={true}
-                                    ref={c => (this._input = c)}
-                                />
-                                <i className="fa fa-search" aria-hidden="true"></i>
-                            </div>
+                    <div className="category-search">
+                        <div className="category-search-heading">사용 중이신 브랜드명 혹은, 제품명을 검색하여 유해성분이 있는지 찾아보세요</div>
+                        <div className="category-search-box">
+                            <input 
+                                type="text"
+                                placeholder="총 400,000개의 제품..."
+                                value={this.state.search}
+                                onChange={this.onChange}
+                                onKeyUp={this.onKeyBoardPress}
+                                autoFocus={true}
+                                ref={c => (this._input = c)}
+                            />
+                            <i className="fa fa-search" aria-hidden="true"></i>
                         </div>
                     </div>
+
+                    <CategoryMenu onClick={this.onClick}/>
 
                     <div className="category-tabs-div">
                         <div className="row">
                             <div className="col-lg-12 col-md-12 col-sm-12">
-                            {/* ctgy heading */}
-                                <div className="ctgy-heading">
-                                    <h4>카테고리</h4>
-                                    <i className="fa fa-chevron-up"></i>
-                                </div>
-                                {/* finish ctgy heading */}
-                                <div className="ctgy-tabs">
-                                    <div className="row">
-                                    {/* household chemical product */}
-                                        {this.renderRenderHousHoldSelector()}
-                                    {/* finish household chemical product  */}
-                                    {/* cosmetics product */}
-                                        {this.renderRenderCosmeticSelector()}
-                                    {/* finish cosmetics product*/}
-                                        
-                                    </div>
-                                    
-                                </div>
-                                {/* tabs */}
-
                                 <div className="prod-ctgy-tabs">
-                                <div className="prod-ctgy-inr-div">
-                                    {this.renderRenderSortSelector()}
+                                    <div className="prod-ctgy-inr-div">
+                                        {this.renderRenderSortSelector()}
 
-                                    <div className="prod-highest-category">                                       
-                                        <div className="high-prod-div">
-                                            <div className="high-prod-inr-div">
-                                                <div className="high-prod-heading">
-                                                    <div className="tab-content">
-                                                        <div className="tab-pane active" id="tab_default_1">
-                                                            {this.renderRenderChecboxSelector()}
-                                                            {itemData}
+                                        <div className="prod-highest-category">                                       
+                                            <div className="high-prod-div">
+                                                <div className="high-prod-inr-div">
+                                                    <div className="high-prod-heading">
+                                                        <div className="tab-content">
+                                                            <div className="tab-pane active" id="tab_default_1">
+                                                                {this.renderRenderChecboxSelector()}
+                                                                {itemData}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
                                 {/* <div className="tab-content">
                                     <div id="laundary" className="tab-pane fade in active">

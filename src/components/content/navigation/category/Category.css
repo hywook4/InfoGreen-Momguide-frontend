@@ -1,9 +1,61 @@
-.category_page{
+
+.category-container{
     width: 100%;
-    margin: 50px auto;
-    position: relative;
-    float: left;
+    min-height: 100px;
+    overflow: hidden;
 }
+
+.category_page{
+    width: 980px;
+    margin: 70px auto;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.category-search-heading{
+    width: 500px;
+    margin-left: 170px;
+    text-align: left;
+    color: #5f5f5f;
+    margin-bottom: 8px;
+}
+
+.category-search-box {
+    width: 600px;
+    height: 45px;
+    margin: 5px auto;
+    position: relative;
+}
+
+.category-search-box input{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    border-radius: 25px;
+    border: solid;
+    border-width: 2px;
+    border-color: #32B8A4;
+    padding: 15px 55px 15px 30px;
+}
+
+.category-search-box input:focus{
+    outline: none;
+}
+
+.category-search-box input::placeholder {
+    color: #B3B3B3;
+}
+
+.category-search-box i {
+    position: absolute;
+    top: 10px;
+    bottom: 0;
+    right: 25px;
+    font-size: 20px;
+    color: #32B8A4;
+}
+
 
 .category-tabs-div{
     width: 100%;
@@ -113,8 +165,8 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 
 /* prod ctgy tabs */
 .prod-ctgy-tabs{
-    width: 80%;
-    margin: 50px auto;
+    width: 100%;
+    margin: 0px auto;
     position: relative;
 }
 .prod-ctgy-inr-div{
@@ -149,8 +201,9 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 
 .sub-ctgy-div ul li{
     display: inline-block;
-    width:15%;
-    text-align: right;
+    width: 70px;
+    height: 33px;
+    text-align: center;
     color: #4d4d4d;
     font-size: 14px;
     font-weight: 500;
@@ -158,6 +211,7 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 }
 
 .sub-ctgy-div ul li a{
+    width: 70px;
     text-decoration: none;
     color: #4d4d4d;
 }
@@ -165,6 +219,16 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 .sub-ctgy-div ul li a:hover, .sub-ctgy-div ul li a:active, .sub-ctgy-div ul li a:focus{
     color: #32b8a4;
 }
+
+.sub-ctgy-div ul li.focused{
+    border-bottom-style: solid;
+    border-bottom-color: #32b8a4;
+}
+
+.sub-ctgy-div ul li.focused a{
+    color:  #32b8a4;
+}
+
 
 .tab-content.prod-ctgy-tabs{
     width: 100%;
@@ -254,4 +318,24 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
     padding-left: 15px;
     letter-spacing: 1px;
     font-weight: 600;
+}
+
+
+.category-search {
+    width: 100%;
+    height: 90px;
+    margin: 0px auto;
+    margin-top: 50px;
+    padding: 0px 40px;
+    position: relative;
+    float: left;
+    clear: both;
+    text-align: center;
+    background-color: #f9f9f9;
+   
+}
+
+.product-sort{
+    text-align: center;
+    display: inline-block;
 }
