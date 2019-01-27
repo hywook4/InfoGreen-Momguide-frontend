@@ -16,6 +16,7 @@
 .prod-info {
     width: 100%;
     position: relative;
+    margin-bottom: 75px;
 }
 
 .color-box {
@@ -44,7 +45,7 @@
 }
 
 .prod-texts {
-    background-color: rgba(120, 120, 120, 0.5); 
+    background-color: rgba(255, 255, 255, 0); 
     width: 480px;
     margin-left: 42%;
     margin-top: -27%;
@@ -128,7 +129,7 @@
 }
 
 .img-in-table {
-    width: 80px;
+    width: 100px;
     height: 60px;
     float: left;
     line-height: 60px;
@@ -152,4 +153,18 @@
     margin-top: 13.5px;
     margin-bottom: 13.5px;
     margin-right: 5px;
+}
+
+.description-list {
+    width: 480px;
+    font-size: 10px;
+    color: gray;
+    line-height: 20px;
+    padding-left: 20px;
+}
+
+.outer-tap {
+    width: 980px;
+    height: 500px;
+    background: rgba(120, 120, 120, 0.2);
 }

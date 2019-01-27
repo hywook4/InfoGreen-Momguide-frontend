@@ -332,14 +332,24 @@ export class ProdSpec extends React.Component{
                                         <div className="text-in-table" style={{height: '60px'}}>유해 물질 감소, 오염 물질 저감</div>
                                     </div>
                                     <div className="sub-sell" style={{height: '40px'}}>
-                                        베베베
+                                        <div className="img-in-table" style={{color: 'gray', fontSize: '11px'}}>자가검사번호 :</div>
+                                        <div className="text-in-table" style={{height: '60px'}}>0-0000-0000000-0000</div>
                                     </div>
                                 </td>
                             </tr>
                         </table>
                        
+
+                       <ul className="description-list">
+                            <li>성분 정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량에 관한 정보를 전달하지 않습니다.</li>
+                            <li>위 정보들은 제품 자체의 위해성을 뜻하진 않으며, 해당성분의 노출경로나 함량 따라 유해 여부가 달라질 수는 있으니, 참고사항으로 봐주시기 바랍니다.</li>
+                            <li>정보 업데이트 과정에서 크고 작은 오류가 발생할 수 있으니 문제를 발견하시면 문의하기 메뉴를 이용해주세요.</li>
+                            <li>해당 정보를 허가 없이 상업적으로 이용하는 경우, 법적조치를 받을 수 있습니다.</li>
+                       </ul>
                     </div>
                 </div>
+
+                <div className="outer-tap"></div>
 
                {/* <div className="prodspec_container">
                     <div className="prodspec_inner">
