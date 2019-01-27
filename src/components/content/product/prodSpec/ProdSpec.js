@@ -280,7 +280,7 @@ export class ProdSpec extends React.Component{
 
                         <hr style={{color: 'gray'}}/>
 
-                        <div className="icons-list">
+                        <div className="icons-list"> {/* icons list */}
                             <div className="icon">
                                 <i className="fa fa-home" aria-hidden="true"></i>
                                 <p style={{fontSize: '9px'}}>우리집 화학제품</p>
@@ -300,6 +300,44 @@ export class ProdSpec extends React.Component{
                                 <p style={{fontSize: '9px'}}>링크공유</p>
                             </div>
                         </div>
+
+                        
+                        <table className="prod-table">
+                            <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분 공개 여부</td>
+                                <td>
+                                    <div className="img-in-table">
+                                        <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={selectedEmoji} alt=""/>
+                                    </div>
+                                    <div className="text-in-table" style={{height: '60px'}}>{selectedText}</div>
+                                </td>
+                            </tr>
+                            <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분 공개 요청</td>
+                                <td>
+                                    <div className="img-in-table">
+                                        <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/icons/people-icon.png')} alt=""/>
+                                    </div>
+                                    <div className="text-in-table" style={{height: '60px'}}>{this.state.open_request}명</div>
+                                    <button className="req-button">성분 공개 요청하기</button>
+                                </td>
+                            </tr>
+                            <tr style={{height: '100px'}}>
+                                <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>인증정보</td>
+                                <td style={{width: '370px'}}>
+                                    <div className="sub-sell" style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                        <div className="img-in-table">
+                                            <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={selectedEmoji} alt=""/>
+                                        </div>
+                                        <div className="text-in-table" style={{height: '60px'}}>유해 물질 감소, 오염 물질 저감</div>
+                                    </div>
+                                    <div className="sub-sell" style={{height: '40px'}}>
+                                        베베베
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                       
                     </div>
                 </div>
 
