@@ -16,6 +16,7 @@ export class Category extends React.Component{
         result: [],
         scrolling: false,
         sort_focus: "",
+        apiStatus: false
     }
 
     componentDidMount=()=>{
@@ -107,11 +108,15 @@ export class Category extends React.Component{
         if (sort) params.append("sort", sort);
         if (check) params.append("checked", check);
 
+        this.setState({
+            apiStatus: false
+        });
         let resp = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, params)
         this.setState({
             result: [...this.state.result,...resp.data[0]],
             scrolling: false,
-            totalPages: resp.data[1].total
+            totalPages: resp.data[1].total, 
+            apiStatus: true
         });
     }
     
@@ -162,9 +167,15 @@ export class Category extends React.Component{
 
 render(){
         var itemData = (<h1 style={{padding: '150px', textAlign: 'center', color: 'gray'}}>검색된 상품이 없습니다!</h1>);
+    
         if (this.state.result && this.state.result.length>0) {
             itemData = this.state.result.map((item,i) => <CategoryImg name={item.name} key={(item.name+i)} data={{...item}} />)
         }
+
+        if(this.state.apiStatus === false) {
+            itemData = null;
+        }
+       
         return (
             <div className="category-container">
                 <div className="category_page">

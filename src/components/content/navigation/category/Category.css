@@ -265,13 +265,13 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
     width: 100%;
     border: 1px solid #999999;
     margin: 25px auto;
-    padding: 30px 10px;
 }
 
 .ctgy-img-desp-div{
     width: 100%;
     margin: 0 auto;
     position: relative;
+    padding: 10px;
     /* border: 1px solid #606060; */
 }
 .sub-ctgy-img, .sub-ctgy-desp{
@@ -339,8 +339,6 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
     float: left;
     clear: both;
     text-align: center;
-    background-color: #f9f9f9;
-   
 }
 
 .product-sort{

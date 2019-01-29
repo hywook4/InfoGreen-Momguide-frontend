@@ -86,6 +86,7 @@ export class CategoryMenu extends React.Component{
         return (
             <div className="category-menu">
                 <nav className="category-button">
+                    <div className="category-button-back"></div>
                     <a className="circle-button" href="/" onClick={(e) => {
                         e.preventDefault();
                         this.selectCategory("household");
@@ -103,10 +104,14 @@ export class CategoryMenu extends React.Component{
                 {
                     this.state.categorySelect === 'household' ?
                         (<ul className="category-detail">
-                            {households.map((d,i)=><li className="prod-type" key={i}><a href={d.href} key={i} onClick={this.props.onClick}>{d.category}</a></li>)}
+                            {households.map((d,i)=><li className="prod-type" key={i}>
+                                <a href={d.href} className={window.location.hash===d.href?'menu_focused':'menu_not_focused'} key={i} onClick={this.props.onClick}>{d.category}</a>
+                            </li>)}
                         </ul>) :
                         (<ul className="category-detail">
-                            {cosmetics.map((d,i)=><li className="prod-type" key={i}><a href={d.href} key={i} onClick={this.props.onClick}>{d.category}</a></li>)}
+                            {cosmetics.map((d,i)=><li className="prod-type" key={i}>
+                                <a href={d.href} className={window.location.hash===d.href?'menu_focused':'menu_not_focused'} key={i} onClick={this.props.onClick}>{d.category}</a>
+                            </li>)}
                         </ul>)
                 }
             </div>
