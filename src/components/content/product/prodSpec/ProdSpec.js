@@ -36,7 +36,11 @@ const abcdText={
 
 export class ProdSpec extends React.Component{
 
-    state = {ingredient_list: null,modalData:{}}
+    state = {
+        ingredient_list: null,modalData:{},
+        about_tab: true,
+        review_tab: false
+    }
     updateItemInfo = (itemInfo)=>this.setState({...itemInfo.data});
 
     componentWillMount=async ()=> {
@@ -53,10 +57,17 @@ export class ProdSpec extends React.Component{
         this.setState({ingredient_list: res.data});
         console.log('ingredient_list',res.data);
     }
-    
+
+    toggleTap = (is_about_tab) => {
+        this.setState({
+            about_tab: is_about_tab,
+            review_tab: !is_about_tab
+        });
+    }
+
     renderRatings=(cnfg)=><RatingRow config={cnfg} />
 
-    renderEtcSection=()=>{
+    renderSpecialIcons=()=>{
         return (
         <div className="danger-icons-inr">
             <div className="danger-icon-head">
@@ -89,11 +100,12 @@ export class ProdSpec extends React.Component{
      )
     }
 
-    renderDangerIcons=()=>{
+    renderBadIcons=()=>{
         return(
-            <div className="icons-all">
-                <div className="dngr-icon-inr-div">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/skin-irritation.svg')} alt=""/>
+            <div className="ingred-icons">
+                <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>나쁜 성분</div>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require('../../../../assets/images/icons/respiration-toxic.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     {/* <span className="tooltiptext">
                         <div>
@@ -105,24 +117,29 @@ export class ProdSpec extends React.Component{
                         </div>
                     
                     </span> */}
+                    <div>호흡 독성</div>
                 </div>
-                <div className="dngr-icon-inr-div">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/respiration-toxic.svg')} alt=""/>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require('../../../../assets/images/icons/skin-irritant.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
+                    <div>피부 자극</div>
                 </div>
-                <div className="dngr-icon-inr-div">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/development-toxic.svg')} alt=""/>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require('../../../../assets/images/icons/development-toxic.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
+                    <div>발달/생식 독성</div>
                 </div>
-                <div className="dngr-icon-inr-div">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/cancer.svg')} alt=""/>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require('../../../../assets/images/icons/cancer.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
+                    <div>발암성</div>
                 </div>
-                <div className="dngr-icon-inr-div">
-                <img className="img-fluid" src={require('../../../../assets/images/icons/eye-irritation.svg')} alt=""/>
-                {/* <p>Danger</p> */}
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require('../../../../assets/images/icons/eye-irritant.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    {/* <p>Danger</p> */}
+                    <div>눈자극</div>
+                </div>
             </div>
-        </div>
         )
     }
     
@@ -237,7 +254,6 @@ export class ProdSpec extends React.Component{
     }
 
     render=()=>{
-     
         let selectedEmoji = null;
         let selectedText = null;
 
@@ -327,7 +343,7 @@ export class ProdSpec extends React.Component{
                                 <td style={{width: '370px'}}>
                                     <div className="sub-sell" style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
                                         <div className="img-in-table">
-                                            <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={selectedEmoji} alt=""/>
+                                            <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/icons/icon-ef.png')} alt=""/>
                                         </div>
                                         <div className="text-in-table" style={{height: '60px'}}>유해 물질 감소, 오염 물질 저감</div>
                                     </div>
@@ -349,7 +365,22 @@ export class ProdSpec extends React.Component{
                     </div>
                 </div>
 
-                <div className="outer-tap"></div>
+                <div className="ui top attached tabular menu tab-list"> {/* Tap menu bar */}
+                    <a className={`tab-name ${this.state.about_tab ? "active item" : "item"}`} data-tab="about" href="#about" 
+                        onClick={(e) => {e.preventDefault(); this.toggleTap(true)}}>상세 정보</a>
+                    <a className={`tab-name ${this.state.review_tab ? "active item" : "item"}`} data-tab="review" href="#review" 
+                        onClick={(e) => {e.preventDefault(); this.toggleTap(false)}}>리뷰(10개)</a>
+                </div>
+                {/* tap menu contents */}
+                <div className={`ui bottom attached tab segment tab-content ${this.state.about_tab ? "active" : ""}`} data-tab="about" id="about">
+                    <div className="ingred-bad-special">
+                        {this.renderBadIcons()}
+                        
+                    </div>
+                </div>
+                <div className={`ui bottom attached tab segment tab-content ${this.state.review_tab ? "active" : ""}`} data-tab="review" id="review">
+                    Second
+                </div>
 
                {/* <div className="prodspec_container">
                     <div className="prodspec_inner">

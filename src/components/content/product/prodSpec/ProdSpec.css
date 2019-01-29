@@ -72,7 +72,7 @@
 }
 
 .rating-stars {
-    width: 100px;
+    width: 110px;
     height: 60px;
     margin-top: 0px;
     margin-left: 5px;
@@ -163,8 +163,65 @@
     padding-left: 20px;
 }
 
-.outer-tap {
-    width: 980px;
-    height: 500px;
-    background: rgba(120, 120, 120, 0.2);
+.tab-list {
+    height: 40px;
+    margin-top: 0 !important;
 }
+
+.tab-name {
+    width: 200px;
+    font-size: 12px;
+    text-align: center;
+    color: gray !important;
+    display: block !important;
+    background-color: rgba(100, 100, 100, 0.2) !important;
+}
+
+.tab-name.active:first-child {
+    background-color: white !important;
+    color: black !important;
+    box-shadow: 1px 0 5px 1px rgba(100, 100, 100, 0.2) !important;
+}
+
+.tab-name.active:last-child {
+    background-color: white !important;
+    color: black !important;
+    box-shadow: -1px 0 5px 1px rgba(100, 100, 100, 0.2) !important;
+}
+
+.tab-content {
+    border-left: 1px solid white !important;
+    border-right: 1px solid white !important;
+    border-bottom: 1px solid white !important;
+    padding: 0 !important;
+}
+
+#about {
+    margin-bottom: 0;
+}
+
+.ingred-bad-special {
+    width: 980px;
+    height: 90px;
+    margin-bottom: 75px;
+}
+
+.ingred-icons {
+    width: 330px;
+    height: 120px;
+    color: gray;
+    font-size: 10px;
+    float: left;
+}
+
+.ingred-icon {
+    width: 65px;
+    height: 80px;
+    float: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 10px;
+    text-align: center;
+    color: gray
+}
+
