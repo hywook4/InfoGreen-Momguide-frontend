@@ -1,0 +1,32 @@
+.rating-box{
+    margin: 15px auto;
+    display: table;
+}
+
+.rate-star{
+    display: inline-block;
+}
+
+.rate-star i{
+    margin: 0px 1px;
+}
+
+.rate-num{
+    display: inline-block;
+}
+
+.rate-num h4{
+    font-size: 22px;
+    color: black;
+    font-style: italic;
+    font-weight: bold;
+    display: inline-block;
+    margin: 0px 5px;
+}
+
+.rate-num p{
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 900;
+    color: #60b3a2;
+}

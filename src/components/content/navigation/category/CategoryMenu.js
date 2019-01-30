@@ -74,8 +74,8 @@ export class CategoryMenu extends React.Component{
                 href: "#babywipes"
             },
             {
-                category: "손세정제",
-                href: "#handsanitizer"
+                category: "립케어",
+                href: "#lipcare"
             },
             {
                 category: "기타화장품",

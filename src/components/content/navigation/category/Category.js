@@ -69,7 +69,7 @@ export class Category extends React.Component{
         const parent = e.target.parentElement;
         const allPills = document.querySelectorAll('.customPills .row .col-sm-4 li');
 
-        console.log(category);
+        console.log(allPills);
 
         for(let i=0;i<allPills.length;i++){
             allPills[i].classList.remove('activated');
@@ -107,13 +107,17 @@ export class Category extends React.Component{
         if (category) params.append("category", category);
         if (sort) params.append("sort", sort);
         if (check) params.append("checked", check);
+        console.log(params);
 
         this.setState({
             apiStatus: false
         });
         let resp = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, params)
+
+        console.log(resp, resp.data);
+
         this.setState({
-            result: [...this.state.result,...resp.data[0]],
+            result: [...this.state.result,...resp.data[0]], // 기존의 result에 새로운 data들을 추가 ... 전개연산자 
             scrolling: false,
             totalPages: resp.data[1].total, 
             apiStatus: true
@@ -209,8 +213,11 @@ render(){
                                                 <div className="high-prod-inr-div">
                                                     <div className="high-prod-heading">
                                                         <div className="tab-content">
-                                                            <div className="tab-pane active" id="tab_default_1">
+                                                            <div className="checkbox-block">
                                                                 {this.renderRenderChecboxSelector()}
+                                                                
+                                                            </div>
+                                                            <div className="product-card-block">
                                                                 {itemData}
                                                             </div>
                                                         </div>

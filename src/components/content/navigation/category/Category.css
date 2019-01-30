@@ -230,9 +230,19 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 }
 
 
-.tab-content.prod-ctgy-tabs{
+.tab-content{
     width: 100%;
     margin: 20px auto 30px;
+    display: inline-block;
+}
+
+.checkbox-block{
+    width: 100%;
+}
+
+.product-card-block{
+    width: 100%;
+    display: inline-block;
 }
 
 .high-prod-div{
@@ -261,11 +271,7 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
     font-weight: 300;
 }
 
-.ctgy-inrimg-div{
-    width: 100%;
-    border: 1px solid #999999;
-    margin: 25px auto;
-}
+
 
 .ctgy-img-desp-div{
     width: 100%;
