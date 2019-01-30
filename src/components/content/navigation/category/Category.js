@@ -15,55 +15,55 @@ export class Category extends React.Component{
         totalPages: null,
         result: [],
         scrolling: false,
-        sort_focus: "",
+        sortFocus: "",
         apiStatus: false
-    }
+    };
 
     componentDidMount=()=>{
         this._mounted = true;
-    }
+    };
     componentWillUnmount=()=>{
         this._mounted = false;
-    }
+    };
     componentWillMount=()=>{
         this.scrollListener = window.addEventListener('scroll', (e) => {
             this.handleScroll(e)
         });
-    }
+    };
 
     componentDidUpdate(prevProps, prevState) {
         if (window.location.pathname !== "/category") {
             this._input.focus();
         }
-      }
+    }
 
     handleScroll = (e) => {
-        const { scrolling, totalPages, page} = this.state
-        if(!this._mounted || scrolling ||totalPages <= page) return
+        const { scrolling, totalPages, page} = this.state;
+        if(!this._mounted || scrolling ||totalPages <= page) return;
         var lastLi = document.querySelector('.loadedItem:last-child');
-        var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight
-        var pageOffset = window.pageYOffset + window.innerHeight
-        var bottomOffset = 150
+        var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
+        var pageOffset = window.pageYOffset + window.innerHeight;
+        var bottomOffset = 150;
         if (pageOffset > lastLiOffset - bottomOffset) {
             this.setState(prevState => ({
                 page: prevState.page+1,
                 scrolling: true,
-              }), ()=>this.search(this.state.search, this.state.category, this.state.sort, this.state.check))
+            }), ()=>this.search(this.state.search, this.state.category, this.state.sort, this.state.check));
         }
-    }
+    };
 
     onKeyBoardPress = e =>{
-     this.state.search.length>0 && 
-     e.keyCode===13 &&
-     this.resetSearchResults(()=>this.search(this.state.search, this.state.category, this.state.sort, this.state.check))
-    }
+        this.state.search.length>0 &&
+        e.keyCode===13 &&
+        this.resetSearchResults(()=>this.search(this.state.search, this.state.category, this.state.sort, this.state.check));
+    };
 
     onChange = e => {
         const searchText = e.target.value.trimLeft();
         this.setState({search: searchText});
     };
 
-    
+
     onClick = e => {
         const category = e.target.innerHTML;
         const parent = e.target.parentElement;
@@ -76,30 +76,30 @@ export class Category extends React.Component{
         }
         parent.classList.add("activated");
 
-        this.setState({category})
-        this.resetSearchResults(()=>this.search(this.state.search, category, this.state.sort, this.state.check,true))
-    }
-    
+        this.setState({category});
+        this.resetSearchResults(()=>this.search(this.state.search, category, this.state.sort, this.state.check,true));
+    };
+
 
     onSort = e => {
-        const sort_focus = e.target.innerHTML;
-        this.setState({sort_focus});
-        console.log(this.state.sort_focus);
+        const sortFocus = e.target.innerHTML;
+        this.setState({sortFocus});
+        console.log(this.state.sortFocus);
 
         const sort = e.target.name;
-        this.setState({sort})
-        this.resetSearchResults(()=>this.search(this.state.search, this.state.category, sort, this.state.check,true))
-    }
+        this.setState({sort});
+        this.resetSearchResults(()=>this.search(this.state.search, this.state.category, sort, this.state.check,true));
+    };
 
     onCheck = e => {
         const check = e.target.name;
         check === this.state.check ? this.setState({check: null}) : this.setState({check});
         this.resetSearchResults(()=>this.search(this.searchText, this.state.category, this.state.sort, check,true))
-    }
+    };
 
-    resetSearchResults= cb =>this.setState({result:[],page:0,totalPages:null,},cb)
+    resetSearchResults= cb =>this.setState({result:[],page:0,totalPages:null,},cb);
 
-    search=async (searchText, category, sort, check,clearResults)=> {
+    search=async (searchText, category, sort, check, clearResults)=> {
         const params = new URLSearchParams();
         params.append('page',this.state.page);
 
@@ -107,23 +107,22 @@ export class Category extends React.Component{
         if (category) params.append("category", category);
         if (sort) params.append("sort", sort);
         if (check) params.append("checked", check);
-        console.log(params);
 
-        this.setState({
-            apiStatus: false
-        });
-        let resp = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, params)
-
-        console.log(resp, resp.data);
+        if(this.state.page === 0) {
+            this.setState({
+                apiStatus: false
+            });
+        }
+        let resp = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, params);
 
         this.setState({
             result: [...this.state.result,...resp.data[0]], // 기존의 result에 새로운 data들을 추가 ... 전개연산자 
             scrolling: false,
-            totalPages: resp.data[1].total, 
+            totalPages: resp.data[1].total,
             apiStatus: true
         });
-    }
-    
+    };
+
     renderRenderSortSelector=()=>{
         return(
             <div className="tab-content prod-ctgy-tabs">
@@ -131,15 +130,15 @@ export class Category extends React.Component{
                     <div className="sub-ctgy-div">
                         <h1>{this.state.category}</h1>
                         <ul className="nav nav-tabs ">
-                            <li className={this.state.sort_focus==="별점순"?"focused":""}><a href="#tab_default_1" data-toggle="tab" name="star" onClick={this.onSort}>별점순</a></li>
-                            <li className={this.state.sort_focus==="조회순"?"focused":""}><a href="#tab_default_2" data-toggle="tab" name="vote" onClick={this.onSort}>조회순</a></li>
-                            <li className={this.state.sort_focus==="최신순"?"focused":""}><a href="#tab_default_3" data-toggle="tab" name="dateTime" onClick={this.onSort}>최신순</a></li> 
+                            <li className={this.state.sortFocus==="별점순"?"focused":""}><a href="#tab_default_1" data-toggle="tab" name="star" onClick={this.onSort}>별점순</a></li>
+                            <li className={this.state.sortFocus==="조회순"?"focused":""}><a href="#tab_default_2" data-toggle="tab" name="vote" onClick={this.onSort}>조회순</a></li>
+                            <li className={this.state.sortFocus==="최신순"?"focused":""}><a href="#tab_default_3" data-toggle="tab" name="dateTime" onClick={this.onSort}>최신순</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
 
     renderRenderChecboxSelector=()=>{
@@ -166,27 +165,27 @@ export class Category extends React.Component{
                     <label htmlFor="defaultInline5" className="custom-control-label">친환경 인증 제품</label>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
-render(){
+    render(){
         var itemData = (<h1 style={{padding: '150px', textAlign: 'center', color: 'gray'}}>검색된 상품이 없습니다!</h1>);
-    
+
         if (this.state.result && this.state.result.length>0) {
-            itemData = this.state.result.map((item,i) => <CategoryImg name={item.name} key={(item.name+i)} data={{...item}} />)
+            itemData = this.state.result.map((item,i) => <CategoryImg name={item.name} key={(item.name+i)} data={{...item}} />);
         }
 
         if(this.state.apiStatus === false) {
             itemData = null;
         }
-       
+
         return (
             <div className="category-container">
                 <div className="category_page">
                     <div className="category-search">
                         <div className="category-search-heading">사용 중이신 브랜드명 혹은, 제품명을 검색하여 유해성분이 있는지 찾아보세요</div>
                         <div className="category-search-box">
-                            <input 
+                            <input
                                 type="text"
                                 placeholder="총 400,000개의 제품..."
                                 value={this.state.search}
@@ -195,7 +194,7 @@ render(){
                                 autoFocus={true}
                                 ref={c => (this._input = c)}
                             />
-                            <i className="fa fa-search" aria-hidden="true"></i>
+                            <i className="fa fa-search" aria-hidden="true" />
                         </div>
                     </div>
 
@@ -208,14 +207,14 @@ render(){
                                     <div className="prod-ctgy-inr-div">
                                         {this.renderRenderSortSelector()}
 
-                                        <div className="prod-highest-category">                                       
+                                        <div className="prod-highest-category">
                                             <div className="high-prod-div">
                                                 <div className="high-prod-inr-div">
                                                     <div className="high-prod-heading">
                                                         <div className="tab-content">
                                                             <div className="checkbox-block">
                                                                 {this.renderRenderChecboxSelector()}
-                                                                
+
                                                             </div>
                                                             <div className="product-card-block">
                                                                 {itemData}
@@ -232,6 +231,6 @@ render(){
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
