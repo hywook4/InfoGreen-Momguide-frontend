@@ -38,8 +38,8 @@ export class ProdSpec extends React.Component{
 
     state = {
         ingredient_list: null,modalData:{},
-        about_tab: true,
-        review_tab: false
+        aboutTab: true,
+        reviewTab: false
     }
     updateItemInfo = (itemInfo)=>this.setState({...itemInfo.data});
 
@@ -55,13 +55,12 @@ export class ProdSpec extends React.Component{
         params.append("name", itemInfo.data.name);
         var res = await axios.post(`${config.CLIENT_SERVER}/chemical/ingredient_list.php`, params);
         this.setState({ingredient_list: res.data});
-        console.log('ingredient_list',res.data);
     }
 
-    toggleTap = (is_about_tab) => {
+    toggleTap = (isAboutTab) => {
         this.setState({
-            about_tab: is_about_tab,
-            review_tab: !is_about_tab
+            aboutTab: isAboutTab,
+            reviewTab: !isAboutTab
         });
     }
 
@@ -69,41 +68,42 @@ export class ProdSpec extends React.Component{
 
     renderSpecialIcons=()=>{
         return (
-        <div className="danger-icons-inr">
-            <div className="danger-icon-head">
-                <i className="fa fa-heart" aria-hidden="true"></i>
-                <h1>관심성분</h1>
-            </div>   
-            <div className="icons-all">
-                <div className="dngr-icon-inr-div">
-                        <img className="img-fluid" src={require(`../../../../assets/images/etc1_${this.state.etc_1===0?'grey':'red'}.png`)} alt=""/>
-                        {/* <p>Danger</p> */}
-                    </div>
-                <div className="dngr-icon-inr-div">
-                <img className="img-fluid" src={require(`../../../../assets/images/etc2_${this.state.etc_2===0?'grey':'red'}.png`)} alt=""/>
-                        {/* <p>Danger</p> */}
-                    </div>
-                <div className="dngr-icon-inr-div">
-                <img className="img-fluid" src={require(`../../../../assets/images/etc3_${this.state.etc_3===0?'grey':'red'}.png`)} alt=""/>
-                        {/* <p>Danger</p> */}
-                    </div>
-                <div className="dngr-icon-inr-div">
-                <img className="img-fluid" src={require(`../../../../assets/images/etc4_${this.state.etc_4===0?'grey':'red'}.png`)} alt=""/>
-                        {/* <p>Danger</p> */}
-                    </div>
-                <div className="dngr-icon-inr-div">
-                <img className="img-fluid" src={require(`../../../../assets/images/etc5_${this.state.etc_5===0?'grey':'red'}.png`)} alt=""/>
+            <div className="ingred-icons">
+                <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
+                    관심 성분
+                    <img src={require('../../../../assets/images/icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
+                </div>  
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc1_${this.state.etc_1===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc2_${this.state.etc_2===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    {/* <p>Danger</p> */}
+                </div>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc3_${this.state.etc_3===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                        {/* <p>Danger</p> */}
+                </div>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc4_${this.state.etc_4===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                        {/* <p>Danger</p> */}
+                </div>
+                <div className="ingred-icon">
+                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc5_${this.state.etc_5===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                        {/* <p>Danger</p> */}
+                </div>
             </div>
-        </div>
-     )
+        )
     }
 
     renderBadIcons=()=>{
         return(
             <div className="ingred-icons">
-                <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>나쁜 성분</div>
+                <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
+                    나쁜 성분
+                    <img src={require('../../../../assets/images/icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
+                </div>
                 <div className="ingred-icon">
                     <img className="img-fluid" src={require('../../../../assets/images/icons/respiration-toxic.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
@@ -147,55 +147,73 @@ export class ProdSpec extends React.Component{
 
     renderIngredients=()=>{
         return (
-            <div className="ingr-table">
-            <div className="container">
-                  <div className="prod-ingr-ctn">
-                    <div className="prod-ingr-upr-div">
-                        <div className="prod-ingr-tbl-name">
-                            <i className="fa fa-heart" aria-hidden="true"></i>
-                            <h1>전체성분</h1>
-                        </div>
-                        <div className="prod-ingr-tbl">
-                            <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>성분등급</th>
-                                    <th>성분명</th>
-                                    <th style={{textAlign:'center'}}>주의성분여부</th>
-                                    <th style={{textAlign:'center'}}>유해성분여부</th>
-                                </tr>
-                                    {Object.keys(this.state.ingredient_list.total).map(key => 
-                                        <IngredientRow
-                                            key={key}
-                                            data={this.state.ingredient_list.total[key]}
-                                            letter={this.state.ingredient_list.total[key].ewg_rank}
-                                            korName={this.state.ingredient_list.total[key].name}
-                                            engName={this.state.ingredient_list.total[key].name_eng}
-                                            handleClick={this.updateModalData}
-                                        />
-                                    )}
-                            </thead>
-                            </table>
-                            <IngredientModal texts={abcdText} data={this.state.modalData} />
+            <div className="ingred-table">
+                <div className="ingred-table-name">
+                    <span style={{color: 'black', fontSize: '13px', fontWeight: '900'}}>전체 성분 </span>
+                    <span style={{color: 'gray', fontSize: '10px', marginLeft: '10px', marginRight: '10px'}}>|</span>
+                    <span style={{color: 'gray', fontSize: '10px'}}>성분을 클릭하시면 상세 정보를 보실 수 있습니다.</span>                   
+                </div>
+                <table style={{width: "100%"}}>
+                    <thead>
+                        <tr className="ingred-table-head">
+                            <th style={{textAlign:'center'}}>성분</th>
+                            <th>성분명</th>
+                            <th style={{textAlign:'center'}}>주의성분여부</th>
+                            <th style={{textAlign:'center'}}>유해성분여부</th>
+                        </tr>
+                        {Object.keys(this.state.ingredient_list.total).map(key => 
+                            <IngredientRow
+                                key={key}
+                                data={this.state.ingredient_list.total[key]}
+                                letter={this.state.ingredient_list.total[key].ewg_rank}
+                                korName={this.state.ingredient_list.total[key].name}
+                                engName={this.state.ingredient_list.total[key].name_eng}
+                                handleClick={this.updateModalData}
+                            />
+                        )}
+                    </thead>
+                </table>
+                <IngredientModal texts={abcdText} data={this.state.modalData} />
+                {/* <div className="ingred-table-body">
+                    <div className="prod-ingr-ctn">
+                        <div className="prod-ingr-upr-div">
+                            
+                            <div className="prod-ingr-tbl">
+                                <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>성분등급</th>
+                                        <th>성분명</th>
+                                        <th style={{textAlign:'center'}}>주의성분여부</th>
+                                        <th style={{textAlign:'center'}}>유해성분여부</th>
+                                    </tr>
+                                        {Object.keys(this.state.ingredient_list.total).map(key => 
+                                            <IngredientRow
+                                                key={key}
+                                                data={this.state.ingredient_list.total[key]}
+                                                letter={this.state.ingredient_list.total[key].ewg_rank}
+                                                korName={this.state.ingredient_list.total[key].name}
+                                                engName={this.state.ingredient_list.total[key].name_eng}
+                                                handleClick={this.updateModalData}
+                                            />
+                                        )}
+                                </thead>
+                                </table>
+                                <IngredientModal texts={abcdText} data={this.state.modalData} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
-        </div>
-    )
+        )
     }
 
-    renderDougnutAndWarning=()=>{
+    renderDoughnut=()=>{
         return (
             <React.Fragment>
+                <div style={{color: 'black', fontSize: '13px', fontWeight: '900'}}>성분 비율</div>
                 <DoughNut texts={abcdText} data={{...this.state}}/>
-                {/* desp in green */}
-                <div className="desp-green">
-                    <div className="desp-greenery">
-                        <i className="fa fa-heart" aria-hidden="true"></i>
-                        <h1>인증번호</h1>
-                        <p style={{display:'block'}}>{this.state.code?this.state.code:'자가검사번호'}</p>
-                    </div>
+                {/* <div className="doughnut-body">
                     {
                         (this.state.auth_2?
                             <React.Fragment>
@@ -208,7 +226,7 @@ export class ProdSpec extends React.Component{
                             </React.Fragment>:''
                         )
                     }
-                </div>
+                </div> */}
             </React.Fragment>
         )
     }
@@ -349,7 +367,7 @@ export class ProdSpec extends React.Component{
                                     </div>
                                     <div className="sub-sell" style={{height: '40px'}}>
                                         <div className="img-in-table" style={{color: 'gray', fontSize: '11px'}}>자가검사번호 :</div>
-                                        <div className="text-in-table" style={{height: '60px'}}>0-0000-0000000-0000</div>
+                                        <div className="text-in-table">0-0000-0000000-0000</div>
                                     </div>
                                 </td>
                             </tr>
@@ -366,19 +384,23 @@ export class ProdSpec extends React.Component{
                 </div>
 
                 <div className="ui top attached tabular menu tab-list"> {/* Tap menu bar */}
-                    <a className={`tab-name ${this.state.about_tab ? "active item" : "item"}`} data-tab="about" href="#about" 
+                    <a className={`tab-name ${this.state.aboutTab ? "active item" : "item"}`} data-tab="about" href="#about" 
                         onClick={(e) => {e.preventDefault(); this.toggleTap(true)}}>상세 정보</a>
-                    <a className={`tab-name ${this.state.review_tab ? "active item" : "item"}`} data-tab="review" href="#review" 
+                    <a className={`tab-name ${this.state.reviewTab ? "active item" : "item"}`} data-tab="review" href="#review" 
                         onClick={(e) => {e.preventDefault(); this.toggleTap(false)}}>리뷰(10개)</a>
                 </div>
                 {/* tap menu contents */}
-                <div className={`ui bottom attached tab segment tab-content ${this.state.about_tab ? "active" : ""}`} data-tab="about" id="about">
+                <div className={`ui bottom attached tab segment tab-content ${this.state.aboutTab ? "active" : ""}`} data-tab="about" id="about">
                     <div className="ingred-bad-special">
-                        {this.renderBadIcons()}
-                        
+                        {this.renderBadIcons()} {/* Bad icons */}
+                        {this.renderSpecialIcons()} {/* Special icons */}
+                    </div>
+                    {this.renderIngredients()} {/* Ingredient table */}
+                    <div className="doughnut-container"> {/* Ingredient Doughnut */}
+                        {this.renderDoughnut()}
                     </div>
                 </div>
-                <div className={`ui bottom attached tab segment tab-content ${this.state.review_tab ? "active" : ""}`} data-tab="review" id="review">
+                <div className={`ui bottom attached tab segment tab-content ${this.state.reviewTab ? "active" : ""}`} data-tab="review" id="review">
                     Second
                 </div>
 

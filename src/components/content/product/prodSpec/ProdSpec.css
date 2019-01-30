@@ -5,8 +5,9 @@
 }
 
 .cate-header {
+    display: flex;
     height: 40px;
-    line-height: 40px;
+    align-items: center;
     font-size: 10px;
     font-weight: 300;
     color: gray;
@@ -29,6 +30,9 @@
 .prod-outer-img {
     width: 260px;
     height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: white;
     margin-top: -10%;
     margin-left: 8%;
@@ -40,8 +44,6 @@
     height: 200px;
     background-color: white;
     object-fit: contain;
-    margin-top: 30px;
-    margin-left: 30px;
 }
 
 .prod-texts {
@@ -99,6 +101,8 @@
 .icons-list {
     width: 480px;
     height: 75px;
+    display: flex;
+    align-items: center;
 }
 
 .icon {
@@ -108,7 +112,6 @@
     color: gray;
     float: left;
     padding: auto;
-    vertical-align: middle;
     text-align: center;
 }
 
@@ -120,7 +123,6 @@
     border-top: 1px solid rgba(100, 100, 100, 0.2);
     border-bottom: 1px solid rgba(100, 100, 100, 0.2);
     border-width: 1px;
-    vertical-align: middle;
 }
 
 .sub-sell {
@@ -132,14 +134,16 @@
     width: 100px;
     height: 60px;
     float: left;
-    line-height: 60px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .text-in-table {
     float: left;
     font-size: 11px;
-    line-height: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .req-button {
@@ -202,8 +206,8 @@
 
 .ingred-bad-special {
     width: 980px;
-    height: 90px;
-    margin-bottom: 75px;
+    height: 120px;
+    margin-bottom: 65px;
 }
 
 .ingred-icons {
@@ -225,3 +229,119 @@
     color: gray
 }
 
+.ingred-table {
+    width: 600px;
+    background-color: transparent;
+    float: left;
+}
+
+.ingred-table-name {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.ingred-table-head {
+    height: 48px;
+    color: gray;
+    font-size: 10px;
+    border-bottom: 1px solid rgba(100, 100, 100, 0.5);
+    background-color: rgba(100, 100, 100, 0.2);
+}
+
+.letter-icon-cell {
+    width: 60px;
+    text-align: center;
+}
+
+.letter-icon {
+    max-width: 35px;
+    max-height: 35px;
+}
+
+.ingred-name-cell {
+    width: 300px;
+}
+
+.ingred-name-kor {
+    width: 100%;
+    height: 24px;
+    font-size: 12.5px;
+    color: black;
+    display: flex;
+    align-items: flex-end;
+}
+
+.ingred-name-eng {
+    width: 100%;
+    height: 24px;
+    font-size: 10px;
+    color: gray;
+    display: flex;
+    align-items: flex-start;
+}
+
+.caution-icon-cell {
+    width: 120px;
+    text-align: center;
+}
+
+.caution-icon {
+    max-width: 50px;
+    max-height: 35px;
+}
+
+.harm-icon-cell {
+    width: 120px;
+    text-align: center;
+}
+
+.harm-icon {
+    max-width: 50px;
+    max-height: 35px;
+}
+
+.doughnut-container {
+    width: 300px;
+    height: 400px;
+    background: transparent;
+    float: right;
+    margin-top: 40px;
+}
+
+.doughnut-body {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.chart-text-container {
+    width: 100%;
+    font-size: 10px;
+    color: gray;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.chart-text {
+    width: 100px;
+    float: left;
+    text-align: center;
+}
+
+.chart-legend {
+    width: 300px;
+    height: 35px;
+    margin: auto;
+}
+
+.chart-legend-icon {
+    width: 100px;
+    height: 17.5px;
+    float: left;
+}
+
+.chart-legend-text {
+    font-size: 9px;
+    color: gray;
+    margin-left: 3px;
+}

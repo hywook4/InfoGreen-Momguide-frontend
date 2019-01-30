@@ -3,11 +3,11 @@ import React from 'react';
 export class IngredientModal extends React.Component{
     evaluateHeaderIconWithETC=()=>{
         let img = '';
-        img = this.props.data.etc_1?<img src={require('../../../../assets/images/etc1_red.png')} alt=""/>:img;
-        img = this.props.data.etc_2?<img src={require('../../../../assets/images/etc2_red.png')} alt=""/>:img;
-        img = this.props.data.etc_3?<img src={require('../../../../assets/images/etc3_red.png')} alt=""/>:img;
-        img = this.props.data.etc_4?<img src={require('../../../../assets/images/etc4_red.png')} alt=""/>:img;
-        img = this.props.data.etc_5?<img src={require('../../../../assets/images/etc5_red.png')} alt=""/>:img;
+        img = this.props.data.etc_1?<img src={require('../../../../assets/images/icons/etc1_red.png')} alt=""/>:img;
+        img = this.props.data.etc_2?<img src={require('../../../../assets/images/icons/etc2_red.png')} alt=""/>:img;
+        img = this.props.data.etc_3?<img src={require('../../../../assets/images/icons/etc3_red.png')} alt=""/>:img;
+        img = this.props.data.etc_4?<img src={require('../../../../assets/images/icons/etc4_red.png')} alt=""/>:img;
+        img = this.props.data.etc_5?<img src={require('../../../../assets/images/icons/etc5_red.png')} alt=""/>:img;
         return img;
     }
     render=()=>{

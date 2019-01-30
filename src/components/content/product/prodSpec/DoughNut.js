@@ -3,12 +3,12 @@
 
 import React from 'react';
 import {Doughnut as Dn} from 'react-chartjs-2';
-import './ProdSpec.css'
+import './ProdSpec.css';
 
 export const DoughNut = (props)=>{
     var text = props.texts;
     const data = {
-        labels:[text.x,text.a,text.b,text.c,text.d,text.f],
+        labels: [text.x,text.a,text.b,text.c,text.d,text.f],
         datasets: [{
             data: [props.data.ewg_X, props.data.ewg_A, props.data.ewg_B,props.data.ewg_C,props.data.ewg_D,props.data.ewg_F],
             backgroundColor: [
@@ -18,44 +18,45 @@ export const DoughNut = (props)=>{
             '#edb246',
             '#d7ab5f',
             '#d96357'
-            ]
+            ],
         }]
     };
+
     return(
         <React.Fragment>
-            <div>
-                <Dn data={data} options={{responsive: true,circumference:Math.PI,rotation:-Math.PI,legend:{display:false}}}/>
+            <div className="doughnut-body">
+                <Dn data={data} width={257} height={130} options={{maintainAspectRatio: false, responsive: true,circumference:Math.PI,rotation:-Math.PI,legend:{display:false}}}/>
+            </div>
+            <div className="chart-text-container">
+                <div className="chart-text">좋음</div>
+                <div className="chart-text">전체 13개</div>
+                <div className="chart-text">나쁨</div>
             </div>
 
-            <div className="col-md-12 row" style={{margin:'auto',marginTop:'20px'}}>
-                <div className="alpha-icon-info col-md-4">
-                    <img src={require('../../../../assets/images/icons/iconX.png')} alt=""/>
-                    <p style={{fontSize:10}}>{text.x}</p>
-
+            <div className="chart-legend">
+                <div className="chart-legend-icon">
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconX.png')} alt=""/>
+                    <span className="chart-legend-text">{text.x}</span>
                 </div>
-                <div className="alpha-icon-info col-md-4">
-                    <img src={require('../../../../assets/images/icons/iconA.png')} alt=""/>
-                    <p style={{fontSize:10}}>{text.a}</p>
+                <div className="chart-legend-icon">
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconA.png')} alt=""/>
+                    <span className="chart-legend-text">{text.a}</span>
                 </div>
-                <div className="alpha-icon-info col-md-4">
-                    <img src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
-                    <br/>
-                    <p style={{fontSize:10}}>{text.b}</p>
+                <div className="chart-legend-icon">
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
+                    <span className="chart-legend-text">{text.b}</span>
                 </div>
-                <div className="alpha-icon-info col-md-4">
-                    <img src={require('../../../../assets/images/icons/iconC.png')} alt=""/>
-                    <br/>
-                    <p style={{fontSize:10}}>{text.c}</p>
+                <div className="chart-legend-icon">
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconC.png')} alt=""/>
+                    <span className="chart-legend-text">{text.c}</span>
                 </div>
-                <div className="alpha-icon-info col-md-4">
-                    <img src={require('../../../../assets/images/icons/iconD.png')} alt=""/>
-                    <br/>
-                    <p style={{fontSize:10}}>{text.d}</p>
+                <div className="chart-legend-icon">
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconD.png')} alt=""/>
+                    <span className="chart-legend-text">{text.d}</span>
                 </div>
-                <div className="alpha-icon-info col-md-4">
-                    <img src={require('../../../../assets/images/icons/iconF.png')} alt=""/>
-                    <br/>
-                    <p style={{fontSize:10}}>{text.f}</p>
+                <div className="chart-legend-icon">
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconF.png')} alt=""/>
+                    <span className="chart-legend-text">{text.f}</span>
                 </div>
             </div>
         </React.Fragment>
