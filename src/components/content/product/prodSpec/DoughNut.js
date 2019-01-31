@@ -56,7 +56,7 @@ export const DoughNut = (props)=>{
                 </div>
                 <div className="chart-legend-icon">
                     <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconF.png')} alt=""/>
-                    <span className="chart-legend-text">{text.f}</span>
+                    <span className="chart-legend-text"f>{text.f}</span>
                 </div>
             </div>
         </React.Fragment>

@@ -134,11 +134,11 @@ export class ProdSpec extends React.Component{
                     {/* <p>Danger</p> */}
                     <div>발암성</div>
                 </div>
-                <div className="ingred-icon">
+                {/* <div className="ingred-icon">
                     <img className="img-fluid" src={require('../../../../assets/images/icons/eye-irritant.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    {/* <p>Danger</p> 
                     <div>눈자극</div>
-                </div>
+                </div> */}
             </div>
         )
     }
