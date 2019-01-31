@@ -6,6 +6,8 @@ import config from '../../../../config';
 import axios from 'axios';
 
 export class Category extends React.Component{
+
+
     state = {
         search: "",
         sort: "",
@@ -16,7 +18,14 @@ export class Category extends React.Component{
         result: [],
         scrolling: false,
         sortFocus: "",
-        apiStatus: false
+        apiStatus: false,
+        type: ""
+    };
+
+    changeType = (productType) => {
+        this.setState({
+            type: productType
+        });
     };
 
     componentDidMount=()=>{
@@ -142,28 +151,46 @@ export class Category extends React.Component{
 
 
     renderRenderChecboxSelector=()=>{
-        return(
-            <div className="checkbox-div">
+        const check1 = (
+            <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline1" />
-                    <label htmlFor="defaultInline1" className="custom-control-label">성분 공개 제품</label>
+                    <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline2"/>
-                    <label htmlFor="defaultInline2" className="custom-control-label">주의 성분 제외</label>
+                    <label htmlFor="defaultInline2" className="custom-control-label">유해 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline3"/>
-                    <label htmlFor="defaultInline3" className="custom-control-label">유해 성분 제외</label>
+                    <label htmlFor="defaultInline3" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
+            </React.Fragment>
+        )
+
+        const check2 = (
+            <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline4"/>
-                    <label htmlFor="defaultInline4" className="custom-control-label">높은 위험도 성분 제외</label>
+                    <label htmlFor="defaultInline4" className="custom-control-label">친환경 인증 제품</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline5"/>
-                    <label htmlFor="defaultInline5" className="custom-control-label">친환경 인증 제품</label>
+                    <label htmlFor="defaultInline5" className="custom-control-label">성분 공개 제품</label>
                 </div>
+            </React.Fragment>
+        )
+
+
+        return(
+            <div className="checkbox-div">
+                {
+                    this.state.type === "" ? "" : check1
+                }
+                {
+                    this.state.type === "household" ? check2 : ""
+                }
+                
             </div>
         );
     };
@@ -198,7 +225,7 @@ export class Category extends React.Component{
                         </div>
                     </div>
 
-                    <CategoryMenu onClick={this.onClick}/>
+                    <CategoryMenu onClick={this.onClick} changeType={this.changeType}/>
 
                     <div className="category-tabs-div">
                         <div className="row">

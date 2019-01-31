@@ -7,13 +7,15 @@ export class CategoryMenu extends React.Component{
     }
 
     state = {
-        categorySelect: "household", //household or cosmetic
+        categorySelect: "", //household or cosmetic
     }
 
     selectCategory(category){
         this.setState({
             categorySelect: category,
         });
+
+        this.props.changeType(category);
     }
 
     render() {
@@ -97,7 +99,7 @@ export class CategoryMenu extends React.Component{
                         e.preventDefault();
                         this.selectCategory("cosmetic");
                     }}>
-                        <img src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='household'?'0':'1'}.png`)} />
+                        <img src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='cosmetic'?'1':'0'}.png`)} />
                     </a>
                 </nav>
 
@@ -107,12 +109,16 @@ export class CategoryMenu extends React.Component{
                             {households.map((d,i)=><li className="prod-type" key={i}>
                                 <a href={d.href} className={window.location.hash===d.href?'menu_focused':'menu_not_focused'} key={i} onClick={this.props.onClick}>{d.category}</a>
                             </li>)}
-                        </ul>) :
+                        </ul>) : ""
+                        
+                }
+                {
+                    this.state.categorySelect === "cosmetic" ?
                         (<ul className="category-detail">
                             {cosmetics.map((d,i)=><li className="prod-type" key={i}>
                                 <a href={d.href} className={window.location.hash===d.href?'menu_focused':'menu_not_focused'} key={i} onClick={this.props.onClick}>{d.category}</a>
                             </li>)}
-                        </ul>)
+                        </ul>) : ""
                 }
             </div>
             
