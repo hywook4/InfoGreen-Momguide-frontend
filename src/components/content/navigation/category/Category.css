@@ -238,10 +238,12 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 
 .checkbox-block{
     width: 100%;
+    height: 65px;
 }
 
 .product-card-block{
     width: 100%;
+   
     display: inline-block;
 }
 
@@ -253,6 +255,7 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 
 .checkbox-div{
     width: 100%;
+    height: 45px;
     display: inline-block;
     margin-bottom: 20px;
 }

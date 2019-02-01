@@ -53,7 +53,7 @@ ul.category-detail li a {
     padding-bottom: 8px;
 }
 
-ul.category-detail li a:hover, ul.category-detail li a:focus, ul.category-detail li a:active, ul.category-detail li a:checked {
+ul.category-detail li a:hover, ul.category-detail li a:checked {
     color: skyblue;
     text-decoration: none;
     border-bottom-style: solid;

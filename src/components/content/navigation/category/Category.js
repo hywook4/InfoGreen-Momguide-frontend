@@ -11,7 +11,7 @@ export class Category extends React.Component{
     state = {
         search: "",
         sort: "",
-        category: "세탁세제",
+        category: "",
         check: "",
         page:0,
         totalPages: null,
@@ -77,8 +77,6 @@ export class Category extends React.Component{
         const category = e.target.innerHTML;
         const parent = e.target.parentElement;
         const allPills = document.querySelectorAll('.customPills .row .col-sm-4 li');
-
-        console.log(allPills);
 
         for(let i=0;i<allPills.length;i++){
             allPills[i].classList.remove('activated');
@@ -151,7 +149,13 @@ export class Category extends React.Component{
 
 
     renderRenderChecboxSelector=()=>{
-        const check1 = (
+        const checkNothing = (
+            <div className="custom-control custom-checkbox custom-control-inline">
+                    
+            </div>
+        )
+
+        const checkLiving = (
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline1" />
@@ -165,11 +169,6 @@ export class Category extends React.Component{
                     <input type="checkbox" className="custom-control-input" id="defaultInline3"/>
                     <label htmlFor="defaultInline3" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
-            </React.Fragment>
-        )
-
-        const check2 = (
-            <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline4"/>
                     <label htmlFor="defaultInline4" className="custom-control-label">친환경 인증 제품</label>
@@ -179,16 +178,33 @@ export class Category extends React.Component{
                     <label htmlFor="defaultInline5" className="custom-control-label">성분 공개 제품</label>
                 </div>
             </React.Fragment>
-        )
+        );
+
+        const checkCosmetic = (
+            <React.Fragment>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline1" />
+                    <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
+                </div>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline2"/>
+                    <label htmlFor="defaultInline2" className="custom-control-label">높은 위험도 성분 제외</label>
+                </div>
+                <div className="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" className="custom-control-input" id="defaultInline3"/>
+                    <label htmlFor="defaultInline3" className="custom-control-label">중간 위험도 성분 제외</label>
+                </div>
+            </React.Fragment>
+        );
 
 
         return(
             <div className="checkbox-div">
                 {
-                    this.state.type === "" ? "" : check1
+                    this.state.type === "" ? "" : (this.state.type === "household" ? checkLiving : checkCosmetic)
                 }
                 {
-                    this.state.type === "household" ? check2 : ""
+                    
                 }
                 
             </div>

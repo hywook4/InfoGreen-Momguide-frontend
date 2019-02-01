@@ -8,80 +8,103 @@ export class CategoryMenu extends React.Component{
 
     state = {
         categorySelect: "", //household or cosmetic
+        categoryDetail: "",
     }
 
     selectCategory(category){
-        this.setState({
-            categorySelect: category,
-        });
+        if(this.state.categorySelect == category){
+            this.setState({
+                categorySelect: ''
+            });
 
-        this.props.changeType(category);
+            this.props.changeType('');
+        }
+        else{
+            this.setState({
+                categorySelect: category,
+            });
+
+            this.props.changeType(category);
+        }
+    }
+
+    selectDetail(detail){
+        if(this.state.categoryDetail == detail){
+            this.setState({
+                categoryDetail: ''
+            });
+        }
+        else{
+            this.setState({
+                categoryDetail: detail
+            });
+        }
     }
 
     render() {
         const households = [
             {
                 category: "세탁세제",
-                href: "#laundary"
+                detail: "laundary"
             },
             {
                 category: "섬유유연제",
-                href: "#fabric"
+                detail: "fabric"
             },
             {
                 category: "주방세제",
-                href: "#dishwashing"
+                detail: "dishwashing"
             },
             {
                 category: "탈취제",
-                href: "#odor"
+                detail: "odor"
             },
             {
                 category: "기타세정제",
-                href: "#otherhouseholds"
+                detail: "otherhouseholds"
             }
         ]
 
         const cosmetics = [
             {
                 category: "워시",
-                href: "#soap"
+                detail: "soap"
             },
             {
                 category: "로션",
-                href: "#lotion"
+                detail: "lotion"
             },
             {
                 category: "크림",
-                href: "#cream"
+                detail: "cream"
             },
             {
                 category: "오일",
-                href: "#oil"
+                detail: "oil"
             },
             {
                 category: "파우더",
-                href: "#powder"
+                detail: "powder"
             },
             {
                 category: "헤어",
-                href: "#hair"
+                detail: "hair"
             },
             {
                 category: "선케어",
-                href: "#suncare"
+                detail: "suncare"
             },
             {
                 category: "물티슈",
-                href: "#babywipes"
+                detail: "babywipes"
             },
             {
                 category: "립케어",
-                href: "#lipcare"
+                detail: "lipcare"
             },
             {
                 category: "기타화장품",
-                href: "#othercosmetics"
+                detail: "othercosmetics"
             }
         ]
 
@@ -102,12 +125,22 @@ export class CategoryMenu extends React.Component{
                         <img src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='cosmetic'?'1':'0'}.png`)} />
                     </a>
                 </nav>
-
+                {
+                    this.state.categorySelect === '' ?
+                        (<ul className="category-detail">
+                            <li></li>
+                        </ul>) : ""
+                        
+                }
                 {
                     this.state.categorySelect === 'household' ?
                         (<ul className="category-detail">
                             {households.map((d,i)=><li className="prod-type" key={i}>
-                                <a href={d.href} className={window.location.hash===d.href?'menu_focused':'menu_not_focused'} key={i} onClick={this.props.onClick}>{d.category}</a>
+                                <a href={d.detail} className={this.state.categoryDetail===d.detail?'menu_focused':'menu_not_focused'} key={i} onClick={(e) => {
+                                    e.preventDefault();
+                                    this.selectDetail(d.detail);
+                                    this.props.onClick(e);
+                                }}>{d.category}</a>
                             </li>)}
                         </ul>) : ""
                         
@@ -116,7 +149,11 @@ export class CategoryMenu extends React.Component{
                     this.state.categorySelect === "cosmetic" ?
                         (<ul className="category-detail">
                             {cosmetics.map((d,i)=><li className="prod-type" key={i}>
-                                <a href={d.href} className={window.location.hash===d.href?'menu_focused':'menu_not_focused'} key={i} onClick={this.props.onClick}>{d.category}</a>
+                                <a href={d.detail} className={this.state.categoryDetail===d.detail?'menu_focused':'menu_not_focused'} key={i} onClick={(e) => {
+                                    e.preventDefault();
+                                    this.selectDetail(d.detail);
+                                    this.props.onClick(e);
+                                }}>{d.category}</a>
                             </li>)}
                         </ul>) : ""
                 }
