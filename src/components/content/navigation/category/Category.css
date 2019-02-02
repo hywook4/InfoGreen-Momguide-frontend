@@ -158,10 +158,6 @@ ul.nav.nav-pills li:hover, ul.nav.nav-pills li:active,  ul.nav.nav-pills li:focu
 ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li a:focus{
     color: white;
 }
-.customPills .activated{
-    background-color: #32b8a4 !important;
-}
-
 
 /* prod ctgy tabs */
 .prod-ctgy-tabs{

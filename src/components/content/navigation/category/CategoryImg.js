@@ -40,7 +40,7 @@ export class CategoryImg extends React.Component{
                         <div className="card-extra-block">
                         </div>
                         <div className="card-image-block">
-                            <img src={`${config.CLIENT_SERVER}/chemical/item_img/${props.image}`} alt=""/>
+                            <img src={`${process.env.S3_URL}/product-images/${this.props.mainCategory}-product-images/${this.props.data.brand}/${this.props.data.name}.jpg`} alt=""/>
                         </div>
                         <div className="card-extra-block">
                             {Object.keys(appendText).map((key,i)=>{
@@ -67,9 +67,9 @@ export class CategoryImg extends React.Component{
                         </div>
                         <div className="card-star">
                             <ProductRate config={{
-                                selected: Math.round(props.star),
-                                rate: props.star,
-                                participate: 100 // participated people number goes here
+                                selected: parseFloat(props.rateSum / props.rateCount).toFixed(2),
+                                rate: parseFloat(props.rateSum / props.rateCount).toFixed(2),
+                                participate: props.rateCount // participated people number goes here
                             }}
                             />
                         </div>
