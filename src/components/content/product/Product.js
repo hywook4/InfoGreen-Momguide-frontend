@@ -10,79 +10,79 @@ export class Product extends React.Component {
             {
                 path:'/',
                 name:'세탁세제',
-                category:'세탁세제'
+                category:'laundry'
             },
             {
                 path:'/fabric',
                 name:'섬유유연제',
-                category:'섬유유연제'
+                category:'fabric'
             },
             {
                 path:'/dishwashing',
                 name:'주방세제',
-                category:'주방세제'
+                category:'dishwashing'
             },
             {
                 path:'/odor',
                 name:'탈취제',
-                category:'탈취제'
+                category:'odor'
             },
             {
                 path:'/other',
                 name:'기타세정제',
-                category:'기타세정제'
+                category:'other'
             }
         ];
         const cosmetics = [
             {
                 path:'/soap',
                 name:'워시',
-                category:'워시'
+                category:'soap'
             },
             {
                 path:'/lotion',
                 name:'로션',
-                category:'로션'
+                category:'lotion'
             },
             {
                 path:'/cream',
                 name:'크림',
-                category:'크림'
+                category:'cream'
             },
             {
                 path:'/oil',
                 name:'오일',
-                category:'오일'
+                category:'oil'
             },
             {
                 path:'/powder',
                 name:'파우더',
-                category:'파우더'
+                category:'powder'
             },
             {
                 path:'/hair',
                 name:'헤어케어',
-                category:'헤어케어'
+                category:'haircare'
             },
             {
                 path:'/suncare',
                 name:'선케어',
-                category:'선케어'
+                category:'suncare'
             },
             {
                 path:'/babywipes',
                 name:'물티슈',
-                category:'물티슈'
+                category:'tissue'
             },
             {
                 path:'/handsanitizer',
-                name:'손세정제',
-                category:'손세정제'
+                name:'립케어',
+                category:'lipcare'
             },
             {
                 path:'/othercosmetics',
                 name:'기타화장품',
-                category:'기타화장품'
+                category:'other'
             },
         ];
 
@@ -95,10 +95,10 @@ export class Product extends React.Component {
 
                             <div className="product-content">
                                 <div className="content-info">
-                                    {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
+                                    {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList mainCategory={'living'} subCategory={d.category}/>} />)}
                                 </div>
                                 <div className="content-info-below">
-                                    {cosmetics.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList category={d.category}/>} />)}
+                                    {cosmetics.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList mainCategory={'cosmetic'} subCategory={d.category}/>} />)}
                                 </div>
                             </div>
                         </div>
