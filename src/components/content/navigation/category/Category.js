@@ -336,7 +336,7 @@ export class Category extends React.Component{
                                             <div className="high-prod-div">
                                                 <div className="high-prod-inr-div">
                                                     <div className="high-prod-heading">
-                                                        <div className="tab-content">
+                                                        <div className="category-tab-content">
                                                             <div className="checkbox-block">
                                                                 {this.renderRenderChecboxSelector()}
 
