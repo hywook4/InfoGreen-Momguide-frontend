@@ -105,13 +105,19 @@ export class ProductSearch extends React.Component {
                             e.preventDefault();
                             this.categorySelect("household");
                         }}>
-                            <img src={require(`../../../../assets/images/living_${this.state.categorySelect==='household'?'1':'0'}.png`)} />
+                            <img
+                                src={require(`../../../../assets/images/living_${this.state.categorySelect==='household'?'1':'0'}.png`)}
+                                alt="가정용 화학제품"
+                            />
                         </a>
                         <a className="circle-button" href="/" onClick={(e) => {
                             e.preventDefault();
                             this.categorySelect("cosmetic");
                         }}>
-                            <img src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='household'?'0':'1'}.png`)} />
+                            <img
+                                src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='household'?'0':'1'}.png`)}
+                                alt="유아용 화장품"
+                            />
                         </a>
                     </nav>
                     {

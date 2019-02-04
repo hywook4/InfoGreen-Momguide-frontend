@@ -1,9 +1,6 @@
 import React from 'react';
 import './ContactUs.css';
-// import '../loggedIn/LoggedIn.css';
 import '../../../product/prodSpec/ProdSpec.css';
-import {Comments} from '../../../product/prodSpec/CommentsSection';
-
 
 export class ContactUs extends React.Component{
     render=()=>{

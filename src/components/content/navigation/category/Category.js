@@ -2,7 +2,6 @@ import React from 'react';
 import './Category.css';
 import {CategoryImg} from '../category/CategoryImg';
 import {CategoryMenu} from '../category/CategoryMenu';
-import config from '../../../../config';
 import axios from 'axios';
 
 export class Category extends React.Component{
@@ -239,12 +238,6 @@ export class Category extends React.Component{
 
 
     renderRenderChecboxSelector=()=>{
-        const checkNothing = (
-            <div className="custom-control custom-checkbox custom-control-inline">
-                    
-            </div>
-        )
-
         const checkLiving = (
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
@@ -293,7 +286,6 @@ export class Category extends React.Component{
                 {
                     this.state.type === "" ? "" : (this.state.type === "living" ? checkLiving : checkCosmetic)
                 }
-                
             </div>
         );
     };

@@ -1,7 +1,6 @@
 import React from 'react';
 import ProductCard from '../../common/ProductCard/ProductCard';
 import axios from 'axios';
-import config from '../../../config';
 
 import 'semantic-ui-css';
 

@@ -1,9 +1,6 @@
 import React from 'react';
 import './ProdSpec.css';
 import {RatingRow} from './Ratings';
-import {SecondSection} from './SecondSection';
-import {ThirdSection} from './ThirdSection';
-import {Comments} from './CommentsSection';
 import {DoughNut} from './DoughNut';
 import {IngredientModal} from './IngredientModal';
 import {IngredientRow} from './IngredientRow';

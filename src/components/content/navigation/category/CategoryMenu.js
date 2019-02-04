@@ -2,17 +2,16 @@ import React from 'react';
 import './CategoryMenu.css';
 
 export class CategoryMenu extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     state = {
         categorySelect: "", //living or cosmetic
         categoryDetail: "",
-    }
+    };
 
     selectCategory(category){
-        if(this.state.categorySelect == category){
+        if(this.state.categorySelect === category){
+            this.setState({
+                categorySelect: ''
+            });
 
             this.props.changeType('');
         }
@@ -26,8 +25,10 @@ export class CategoryMenu extends React.Component{
     }
 
     selectDetail(detail){
-        if(this.state.categoryDetail == detail){
-            
+        if(this.state.categoryDetail === detail){
+            this.setState({
+                categoryDetail: ''
+            });
         }
         else{
             this.setState({
@@ -112,13 +113,19 @@ export class CategoryMenu extends React.Component{
                         e.preventDefault();
                         this.selectCategory("living");
                     }}>
-                        <img src={require(`../../../../assets/images/living_${this.state.categorySelect==='living'?'1':'0'}.png`)} />
+                        <img
+                            src={require(`../../../../assets/images/living_${this.state.categorySelect==='living'?'1':'0'}.png`)}
+                            alt="가정용 화학제품"
+                        />
                     </a>
                     <a className="circle-button" href ="/" onClick={(e) => {
                         e.preventDefault();
                         this.selectCategory("cosmetic");
                     }}>
-                        <img src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='cosmetic'?'1':'0'}.png`)} />
+                        <img
+                            src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='cosmetic'?'1':'0'}.png`)}
+                            alt="유야용 화장품"
+                        />
                     </a>
                 </nav>
                 {
