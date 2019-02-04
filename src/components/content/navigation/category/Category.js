@@ -184,7 +184,7 @@ export class Category extends React.Component{
         if (sort) queryObject.sort = sort;
         if (page) queryObject.page = page;
 
-        let query = `${process.env.API_URL}/api/category?${this.objectToQuery(queryObject)}`
+        let query = `${process.env.API_URL}/api/product/category?${this.objectToQuery(queryObject)}`
         
         if(this.state.page === 0) {
             this.setState({

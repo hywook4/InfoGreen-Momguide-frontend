@@ -14,18 +14,17 @@ export class ProductList extends React.Component {
     componentDidMount= async ()=> {
         // Search by number of votes
         
-        let products = await axios.get(`${process.env.API_URL}/api/popularRank?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
+        let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
         const newState = ({ productByVote: products.data });
 
         // Search by number of stars
-        products = await axios.get(`${process.env.API_URL}/api/goodIngredientItem?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
+        products = await axios.get(`${process.env.API_URL}/api/product/goodIngredientItem?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
         this.setState({ ...newState, productByIngredient: products.data});
     };
     
     /* Axios Call Over : Refactoring Required*/
 
     render () {
-        console.log(this.state.productByIngredient)
         let s3Url = `${process.env.S3_URL}/product-images/`;
 
         if (this.props.mainCategory === 'living') {
