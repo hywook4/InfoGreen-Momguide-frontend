@@ -1,0 +1,119 @@
+.ctgy-inrimg-div{
+    width: 300px;
+    height: 420px;
+    border: 1px solid #999999;
+    margin-bottom: 20.5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.ctgy-inrimg-div:hover{
+    border: 1px solid #32B8A4;
+    outline: 1px solid #32B8A4
+}
+
+.ctgy-inrimg-div a {
+    text-decoration: none;
+}
+
+.ctgy-inrimg-div a:hover {
+    text-decoration: none;
+}
+
+
+.card-top{
+    width: 100%;
+    height: 60%; 
+}
+
+.card-bottom{
+    width: 100%;
+    height: 40%;
+}
+
+.card-image-block{
+    width: 66%;
+    height: 100%;
+    display: inline-block;
+}
+
+.card-extra-block{
+    width: 17%;
+    height: 100%;
+    display: inline-block;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.card-image-block img{
+    width: 195px;
+    height: 195px;
+    object-fit: contain;
+    display: block;
+    margin-top: 40px;
+}
+
+.card-icon-box{
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.card-icon-box img{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: block;
+}
+
+.card-label{
+    height: 100px;
+    width: 200px;
+    display: table;
+    margin: 0px auto;
+    text-align: center;
+    padding-top: 2px;
+}
+
+.card-label-cell{
+    display: table-row;
+}
+
+.card-category{
+    height: 11px;
+}
+
+.card-category p{
+    font-size: 10px;
+    color: grey;
+}
+
+.card-brand{ 
+    height: 25px;
+}
+
+.card-brand h6{
+    margin-top: 6px;
+    font-size: 13px;
+    text-decoration: underline;
+    color: gray;
+}
+
+.card-name{
+    
+}
+
+.card-name h4{
+    font-size: 19px;
+    font-weight: bold;
+    color: black;
+}
+
+.card-star{
+    height: 65px;
+    width: 230px;
+    margin: 0px auto;
+    border-top: 1px solid gray;
+}
