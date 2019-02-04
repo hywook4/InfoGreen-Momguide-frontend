@@ -8,29 +8,35 @@ import 'semantic-ui-css';
 export class ProductList extends React.Component {
     state = {
         productByVote: [],
-        productByStar: []
+        productByIngredient: []
     };
 
     // This messy part should go through refactoring
     componentDidMount= async ()=> {
         // Search by number of votes
-        const voteParams = new URLSearchParams();
-        voteParams.append("category", this.props.category);
-        voteParams.append("sort", "vote");
-        var products = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, voteParams)
-        this.setState({ productByVote: products.data[0].slice(0, 5) });
+        
+        let products = await axios.get(`${process.env.API_URL}/api/popularRank?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
+        const newState = ({ productByVote: products.data });
 
         // Search by number of stars
-        const starParams = new URLSearchParams();
-        starParams.append("category", this.props.category);
-        starParams.append("sort", "star");
-        products = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, starParams);
-        this.setState({ productByStar: products.data[0].slice(0, 5) });
+        products = await axios.get(`${process.env.API_URL}/api/goodIngredientItem?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
+        this.setState({ ...newState, productByIngredient: products.data});
     };
     
     /* Axios Call Over : Refactoring Required*/
 
     render () {
+        console.log(this.state.productByIngredient)
+        let s3Url = `${process.env.S3_URL}/product-images/`;
+
+        if (this.props.mainCategory === 'living') {
+            s3Url += "living-product-images/";
+        } else {
+            s3Url += "cosmetic-product-images/";
+        }
+
+
+
         return(
             <div className="productHeading">
                 <div className="product-head">
@@ -46,11 +52,9 @@ export class ProductList extends React.Component {
                                 payload={product}
                                 key={index}
                                 rank={index+1}
-                                src={`${config.CLIENT_SERVER}/chemical/item_img/${product.image}`}
-                                category={product.category}
+                                src={encodeURI(`${s3Url}${product.brand}/${product.name}.jpg`.replace(/ /g, '+'))}
                                 name={product.name}
                                 description={product.brand}
-                                rating={product.star}
                             />
                         )}
                     </div>
@@ -65,16 +69,14 @@ export class ProductList extends React.Component {
                 <div className="rightDiv">
                     <div>
                         {
-                            this.state.productByStar.map((product, index) =>
+                            this.state.productByIngredient.map((product, index) =>
                             <ProductCard
                                 payload={product}
                                 key={index}
                                 rank={index+1}
-                                src={`${config.CLIENT_SERVER}/chemical/item_img/${product.image}`}
-                                category={product.category}
+                                src={encodeURI(`${s3Url}${product.brand}/${product.name}.jpg`.replace(/ /g, '+'))}
                                 name={product.name}
                                 description={product.brand}
-                                rating={product.star}
                             />
                         )}
                     </div>
