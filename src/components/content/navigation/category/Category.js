@@ -7,12 +7,17 @@ import axios from 'axios';
 
 export class Category extends React.Component{
 
-
     state = {
         search: "",
         sort: "",
-        category: "",
-        check: "",
+        mainCategory: "",
+        subCategory: "",
+        careCheck: false,
+        harmCheck: false,
+        highDangerCheck: false,
+        ecoCheck: false,
+        ingredientCheck: false,
+        middleDangerCheck: false,
         page:0,
         totalPages: null,
         result: [],
@@ -57,14 +62,29 @@ export class Category extends React.Component{
             this.setState(prevState => ({
                 page: prevState.page+1,
                 scrolling: true,
-            }), ()=>this.search(this.state.search, this.state.category, this.state.sort, this.state.check));
+            }), ()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+                this.state.careCheck,
+                this.state.harmCheck,
+                this.state.highDangerCheck,
+                this.state.ecoCheck,
+                this.state.ingredientCheck,
+                this.state.middleDangerCheck,
+                this.state.page));
         }
+
     };
 
     onKeyBoardPress = e =>{
         this.state.search.length>0 &&
         e.keyCode===13 &&
-        this.resetSearchResults(()=>this.search(this.state.search, this.state.category, this.state.sort, this.state.check));
+        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+            this.state.careCheck,
+            this.state.harmCheck,
+            this.state.highDangerCheck,
+            this.state.ecoCheck,
+            this.state.ingredientCheck,
+            this.state.middleDangerCheck,
+            this.state.page));
     };
 
     onChange = e => {
@@ -73,62 +93,132 @@ export class Category extends React.Component{
     };
 
 
-    onClick = e => {
-        const category = e.target.innerHTML;
-        const parent = e.target.parentElement;
-        const allPills = document.querySelectorAll('.customPills .row .col-sm-4 li');
+    onCategoryClick = (mainCategory, subCategory) => {
 
-        for(let i=0;i<allPills.length;i++){
-            allPills[i].classList.remove('activated');
-        }
-        parent.classList.add("activated");
-
-        this.setState({category});
-        this.resetSearchResults(()=>this.search(this.state.search, category, this.state.sort, this.state.check,true));
+        this.setState({
+            mainCategory: mainCategory,
+            subCategory: subCategory});
+        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+            this.state.careCheck,
+            this.state.harmCheck,
+            this.state.highDangerCheck,
+            this.state.ecoCheck,
+            this.state.ingredientCheck,
+            this.state.middleDangerCheck,
+            this.state.page));
     };
 
 
     onSort = e => {
         const sortFocus = e.target.innerHTML;
         this.setState({sortFocus});
-        console.log(this.state.sortFocus);
 
-        const sort = e.target.name;
-        this.setState({sort});
-        this.resetSearchResults(()=>this.search(this.state.search, this.state.category, sort, this.state.check,true));
+        let sort = e.target.name;
+
+        if (sort === "star") sort = "rate";
+        if (sort === "vote") sort = "view";
+        if (sort === "dateTime") sort = "recent";
+
+        this.setState({sort: sort});
+        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+            this.state.careCheck,
+            this.state.harmCheck,
+            this.state.highDangerCheck,
+            this.state.ecoCheck,
+            this.state.ingredientCheck,
+            this.state.middleDangerCheck,
+            this.state.page));
     };
 
     onCheck = e => {
         const check = e.target.name;
         check === this.state.check ? this.setState({check: null}) : this.setState({check});
-        this.resetSearchResults(()=>this.search(this.searchText, this.state.category, this.state.sort, check,true))
+        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+            this.state.careCheck,
+            this.state.harmCheck,
+            this.state.highDangerCheck,
+            this.state.ecoCheck,
+            this.state.ingredientCheck,
+            this.state.middleDangerCheck,
+            this.state.page));
     };
 
-    resetSearchResults= cb =>this.setState({result:[],page:0,totalPages:null,},cb);
+    resetSearchResults= cb =>this.setState({result:[],page:1,totalPages:null,},cb);
 
-    search=async (searchText, category, sort, check, clearResults)=> {
-        const params = new URLSearchParams();
-        params.append('page',this.state.page);
+    objectToQuery = (obj) => {
+        var str = [];
+        for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+        return str.join("&");
+    }
 
-        if (searchText) params.append("name", searchText);
-        if (category) params.append("category", category);
-        if (sort) params.append("sort", sort);
-        if (check) params.append("checked", check);
+    searchProduct = async (searchText, mainCategory, subCategory, sort, 
+        careCheck,
+        harmCheck,
+        highDangerCheck,
+        ecoCheck,
+        ingredientCheck,
+        middleDangerCheck,
+        page)=> {
+        
+        const queryObject = {};
 
+        if (searchText) queryObject.search = searchText;
+        if (mainCategory) {
+            queryObject.mainCategory = mainCategory;
+            if (mainCategory === "cosmetic") {
+                if (careCheck) queryObject.careExclude = true;
+                if (highDangerCheck) queryObject.highDangerExclude = true;
+                if (middleDangerCheck) queryObject.middleDangerExclude = true;
+            } else {
+                if (careCheck) queryObject.careExclude = true;
+                if (harmCheck) queryObject.harmExclude = true;
+                if (highDangerCheck) queryObject.highDangerExclude = true;
+                if (ecoCheck) queryObject.eco = true;
+                if (ingredientCheck) queryObject.ingredient = true;
+            }
+        }
+
+        if (subCategory) queryObject.subCategory = subCategory;
+        if (sort) queryObject.sort = sort;
+        if (page) queryObject.page = page;
+
+        let query = `${process.env.API_URL}/api/category?${this.objectToQuery(queryObject)}`
+        
         if(this.state.page === 0) {
             this.setState({
                 apiStatus: false
             });
         }
-        let resp = await axios.post(`${config.CLIENT_SERVER}/chemical/items_limit.php`, params);
+        let resp = await axios.get(query);
 
         this.setState({
-            result: [...this.state.result,...resp.data[0]], // 기존의 result에 새로운 data들을 추가 ... 전개연산자 
+            result: [...this.state.result,...resp.data.data], // 기존의 result에 새로운 data들을 추가 ... 전개연산자 
             scrolling: false,
-            totalPages: resp.data[1].total,
+            totalPages: resp.data.totalPages,
             apiStatus: true
         });
     };
+
+    checkChange = (checkName) => {
+        let flag = this.state[checkName];
+        const newObj = {};
+        newObj[checkName] = !flag;
+        this.resetSearchResults(() => {
+            this.setState(newObj, () => {
+                this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+                    this.state.careCheck,
+                    this.state.harmCheck,
+                    this.state.highDangerCheck,
+                    this.state.ecoCheck,
+                    this.state.ingredientCheck,
+                    this.state.middleDangerCheck,
+                    this.state.page)
+            });
+        });
+    }
 
     renderRenderSortSelector=()=>{
         return(
@@ -158,23 +248,23 @@ export class Category extends React.Component{
         const checkLiving = (
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline1" />
+                    <input type="checkbox" className="custom-control-input" id="defaultInline1" onClick={(e)=>this.checkChange("careCheck")}/>
                     <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline2"/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline2" onClick={(e)=>this.checkChange("harmCheck")}/>
                     <label htmlFor="defaultInline2" className="custom-control-label">유해 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline3"/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline3" onClick={(e)=>this.checkChange("highDangerCheck")}/>
                     <label htmlFor="defaultInline3" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline4"/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline4" onClick={(e)=>this.checkChange("ecoCheck")}/>
                     <label htmlFor="defaultInline4" className="custom-control-label">친환경 인증 제품</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline5"/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline5" onClick={(e)=>this.checkChange("ingredientCheck")}/>
                     <label htmlFor="defaultInline5" className="custom-control-label">성분 공개 제품</label>
                 </div>
             </React.Fragment>
@@ -183,15 +273,15 @@ export class Category extends React.Component{
         const checkCosmetic = (
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline1" />
+                    <input type="checkbox" className="custom-control-input" id="defaultInline1" onClick={(e)=>this.checkChange("careCheck")}/>
                     <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline2"/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline2" onClick={(e)=>this.checkChange("highDangerCheck")}/>
                     <label htmlFor="defaultInline2" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline3"/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline3" onClick={(e)=>this.checkChange("middleDangerCheck")}/>
                     <label htmlFor="defaultInline3" className="custom-control-label">중간 위험도 성분 제외</label>
                 </div>
             </React.Fragment>
@@ -201,10 +291,7 @@ export class Category extends React.Component{
         return(
             <div className="checkbox-div">
                 {
-                    this.state.type === "" ? "" : (this.state.type === "household" ? checkLiving : checkCosmetic)
-                }
-                {
-                    
+                    this.state.type === "" ? "" : (this.state.type === "living" ? checkLiving : checkCosmetic)
                 }
                 
             </div>
@@ -212,10 +299,13 @@ export class Category extends React.Component{
     };
 
     render(){
-        var itemData = (<h1 style={{padding: '150px', textAlign: 'center', color: 'gray'}}>검색된 상품이 없습니다!</h1>);
+
+        let itemData = (<h1 style={{padding: '150px', textAlign: 'center', color: 'gray'}}>검색된 상품이 없습니다!</h1>);
 
         if (this.state.result && this.state.result.length>0) {
-            itemData = this.state.result.map((item,i) => <CategoryImg name={item.name} key={(item.name+i)} data={{...item}} />);
+            itemData = this.state.result.map((item,i) => {
+                return (<CategoryImg name={item.name} key={(item.name+i)} mainCategory={this.state.mainCategory} subCategory={this.state.subCategory} data={{...item}} />)
+            });
         }
 
         if(this.state.apiStatus === false) {
@@ -241,7 +331,7 @@ export class Category extends React.Component{
                         </div>
                     </div>
 
-                    <CategoryMenu onClick={this.onClick} changeType={this.changeType}/>
+                    <CategoryMenu onCategoryClick={this.onCategoryClick} changeType={this.changeType}/>
 
                     <div className="category-tabs-div">
                         <div className="row">
