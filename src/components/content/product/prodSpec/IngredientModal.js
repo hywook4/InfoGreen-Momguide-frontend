@@ -3,11 +3,11 @@ import React from 'react';
 export class IngredientModal extends React.Component{
     evaluateHeaderIconWithETC=()=>{
         let img = '';
-        img = this.props.data.etc_1?<img src={require('../../../../assets/images/icons/etc1_red.png')} alt=""/>:img;
-        img = this.props.data.etc_2?<img src={require('../../../../assets/images/icons/etc2_red.png')} alt=""/>:img;
-        img = this.props.data.etc_3?<img src={require('../../../../assets/images/icons/etc3_red.png')} alt=""/>:img;
-        img = this.props.data.etc_4?<img src={require('../../../../assets/images/icons/etc4_red.png')} alt=""/>:img;
-        img = this.props.data.etc_5?<img src={require('../../../../assets/images/icons/etc5_red.png')} alt=""/>:img;
+        img = this.props.data.etc_1?<img src={require('../../../../assets/images/product_spec_icons/etc1_red.png')} alt=""/>:img;
+        img = this.props.data.etc_2?<img src={require('../../../../assets/images/product_spec_icons/etc2_red.png')} alt=""/>:img;
+        img = this.props.data.etc_3?<img src={require('../../../../assets/images/product_spec_icons/etc3_red.png')} alt=""/>:img;
+        img = this.props.data.etc_4?<img src={require('../../../../assets/images/product_spec_icons/etc4_red.png')} alt=""/>:img;
+        img = this.props.data.etc_5?<img src={require('../../../../assets/images/product_spec_icons/etc5_red.png')} alt=""/>:img;
         return img;
     }
     render=()=>{
@@ -31,7 +31,7 @@ export class IngredientModal extends React.Component{
                         <p className="modal-para">EWG 등급</p>
                         <div className="popup-icon-detail">
                             <br/>
-                            <img src={require(`../../../../assets/images/icons/icon${letter}.png`)} alt=""/>
+                            <img src={require(`../../../../assets/images/product_spec_icons/living_grade_${letter}.png`)} alt=""/>
                             <p>{letterSubHeading}</p>
                             <p className="popup-ingr-para">
                             {props.misc && props.misc!=='-1\n' && props.misc} {/* 사용량/사용법에 따라 C-D 등급 */}
@@ -39,8 +39,8 @@ export class IngredientModal extends React.Component{
                         </div>
                         <p className="modal-para">주의성분</p>
                             <div className="popup-icon-level">
-                                {props.epa && props.epa!=='G' && <img style={{width:'27px'}} className="img-responsive icon_img" src={require('../../../../assets/images/icons/epa-usa.png')} alt=""/>}
-                                {props.dsl && <img style={{width:'27px',marginLeft:'5px'}} className="img-responsive icon_img" src={require('../../../../assets/images/dsl.png')} alt=""/>} &nbsp;
+                                {props.epa && props.epa!=='G' && <img style={{width:'27px'}} className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/caution_usa.png')} alt=""/>}
+                                {props.dsl && <img style={{width:'27px',marginLeft:'5px'}} className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/caution_canada.png')} alt=""/>} &nbsp;
                                 {((props.epa && props.epa!=='G')||props.dsl)?'미 환경보호 (EPA): 유해성 논란 성분':' '}
                             </div>
                         <div className="popup-category">
@@ -49,7 +49,7 @@ export class IngredientModal extends React.Component{
                         {
                             props.national_harmful?
                                <div className="popup-icon-level">
-                                    <img style={{width:'27px'}} className="img-responsive icon_img" src={require('../../../../assets/images/warning.png')} alt=""/>
+                                    <img style={{width:'27px'}} className="img-responsive icon_img" src={require('../../../../assets/images/common_icons/warning.png')} alt=""/>
                                     <p>국내 유해화학물질: 유독물질</p>
                                </div>
                             :<div>&nbsp;</div>

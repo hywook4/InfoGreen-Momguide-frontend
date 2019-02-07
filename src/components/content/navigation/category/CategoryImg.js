@@ -9,7 +9,7 @@ const appendText={
     opened:{icon:require('../../../../assets/images/ingredient_open.png'),text:'성분 공개',allowedVals:['1','2'],imgStyle:{width:'35px'}},
     auth_2:{icon:require('../../../../assets/images/nature-friendly.png'),text:'친환경 인증',allowedVals:[true],imgStyle:{width:'27px'}},
     caution:{icon:require('../../../../assets/images/yellow_baby.png'),text:'주의 성분',allowedVals:['1'],imgStyle:{width:'27px'}},
-    harmful:{icon:require('../../../../assets/images/warning.png'),text:'유해 성분',allowedVals:['1'],imgStyle:{width:'20px'}}
+    harmful:{icon:require('../../../../assets/images/common_icons/warning.png'),text:'유해 성분',allowedVals:['1'],imgStyle:{width:'20px'}}
 }
 
 export class CategoryImg extends React.Component{
