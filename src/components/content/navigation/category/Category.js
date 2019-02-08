@@ -4,6 +4,7 @@ import {CategoryImg} from '../category/CategoryImg';
 import {CategoryMenu} from '../category/CategoryMenu';
 import axios from 'axios';
 import { checkServerIdentity } from 'tls';
+import { CategoryUtil } from '../../../../util';
 
 export class Category extends React.Component{
 
@@ -368,7 +369,8 @@ export class Category extends React.Component{
 
         if (this.state.result && this.state.result.length>0) {
             itemData = this.state.result.map((item,i) => {
-                return (<CategoryImg name={item.name} key={(item.name+i)} mainCategory={this.state.mainCategory} subCategory={this.state.subCategory} data={{...item}} />)
+                return (<CategoryImg name={item.name} key={(item.name+i)} mainCategory={this.state.mainCategory?this.state.mainCategory:CategoryUtil.korSubToEngMain(item.category)}
+                                     subCategory={this.state.subCategory} data={{...item}} />)
             });
         }
 
