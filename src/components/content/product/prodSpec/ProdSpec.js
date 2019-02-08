@@ -2,7 +2,7 @@ import React from 'react';
 import './ProdSpec.css';
 import { RatingRow } from './Ratings';
 import { LivingDoughNut, CosmeticDoughNut} from './DoughNut';
-import { IngredientModal } from './IngredientModal';
+import { LivingIngredientModal, CosmeticIngredientModal } from './IngredientModal';
 import { LivingIngredientRow, CosmeticIngredientRow } from './IngredientRow';
 import config from '../../../../config';
 import { CategoryUtil } from '../../../../util';
@@ -67,6 +67,12 @@ export class ProdSpec extends React.Component{
     };
 
     renderSpecialIcons=()=>{
+        const slsSles = this.state.ingredientList.filter((item) => item.slsSles).length > 0;
+        const ammonium = this.state.ingredientList.filter((item) => item.ammonium).length > 0;
+        const scent = this.state.ingredientList.filter((item) => item.scent).length > 0;
+        const color = this.state.ingredientList.filter((item) => item.color).length > 0;
+        const humid = this.state.ingredientList.filter((item) => item.humid).length > 0;
+
         return (
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
@@ -74,23 +80,33 @@ export class ProdSpec extends React.Component{
                     <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
                 </div>  
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc1_${this.state.etc_1===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc1_${slsSles?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc2_${this.state.etc_2===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc2_${ammonium?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc3_${this.state.etc_3===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc3_${scent?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc4_${this.state.etc_4===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc4_${color?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc5_${this.state.etc_5===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc5_${humid?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
             </div>
@@ -98,14 +114,20 @@ export class ProdSpec extends React.Component{
     };
 
     renderBadIcons=()=>{
-        return(
+        const echaBreath = this.state.ingredientList.filter((item) => item.echaBreath !== '').length > 0;
+        const echaSkin = this.state.ingredientList.filter((item) => item.echaSkin !== '').length > 0;
+        const echaDev = this.state.ingredientList.filter((item) => item.echaDev !== '').length > 0;
+        const echaCancer = this.state.ingredientList.filter((item) => item.echaCancer !== '').length > 0;
+        return (
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
                     나쁜 성분
                     <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_respitory.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_respitory${echaBreath?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     {/* <span className="tooltiptext">
                         <div>
@@ -119,25 +141,23 @@ export class ProdSpec extends React.Component{
                     <div>호흡 독성</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_skin.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_skin${echaSkin?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     <div>피부 자극</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_development.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_development${echaDev?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     <div>발달/생식 독성</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_cancer.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_cancer${echaCancer?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     <div>발암성</div>
                 </div>
-                {/* <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/eye-irritant.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> 
-                    <div>눈자극</div>
-                </div> */}
             </div>
         )
     };
@@ -158,8 +178,8 @@ export class ProdSpec extends React.Component{
                         <tr className="ingred-table-head">
                             <th style={{textAlign:'center'}}>성분</th>
                             <th>성분명</th>
-                            {category === 'living' ? (<th style={{textAlign:'center'}}>주의성분여부</th>) : null}
-                            <th style={{textAlign:'center'}}>유해성분여부</th>
+                            <th style={{textAlign:'center'}}>주의성분여부</th>
+                            {category === 'living' ? (<th style={{textAlign:'center'}}>유해성분여부</th>) : null}
                         </tr>
                         {(this.state.ingredientList).map(ingredient => {
                             return category === 'living' ? (
@@ -182,8 +202,12 @@ export class ProdSpec extends React.Component{
                         })}
                     </thead>
                 </table>
-                <IngredientModal texts={text} data={this.state.modalData} />
-                {/* <div className="ingred-table-body">
+                {
+                    category === 'living' ?
+                        (<LivingIngredientModal texts={text} data={this.state.modalData}/>) :
+                        (<CosmeticIngredientModal texts={text} data={this.state.modalData}/>)
+                }
+                        {/* <div className="ingred-table-body">
                     <div className="prod-ingr-ctn">
                         <div className="prod-ingr-upr-div">
                             
@@ -280,85 +304,87 @@ export class ProdSpec extends React.Component{
 
                         <div className="icons-list"> {/* icons list */}
                             <div className="icon">
-                                <i className="fa fa-home" aria-hidden="true"></i>
+                                <i className="fa fa-home" aria-hidden="true" />
                                 <p style={{fontSize: '9px'}}>우리집 화학제품</p>
                             </div>
                             <div className="icon">
-                                <i className="fa fa-heart" aria-hidden="true"></i>
+                                <i className="fa fa-heart" aria-hidden="true" />
                                 <p style={{fontSize: '9px'}}>찜하기</p>
                             </div>
                             <div className="icon">
                                 <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`}>
-                                    <i className="fa fa-krw" aria-hidden="true"></i>
+                                    <i className="fa fa-krw" aria-hidden="true" />
                                 </a>
                                 <p className="check-para" style={{fontSize: '9px'}}>가격정보</p>
                             </div>
                             <div className="icon">
-                                <i className="fa fa-share-alt"></i>
+                                <i className="fa fa-share-alt" />
                                 <p style={{fontSize: '9px'}}>링크공유</p>
                             </div>
                         </div>
 
                         {category === 'living' ?
                             (<table className="prod-table">
-                                <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
-                                    <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분
-                                        공개 여부
-                                    </td>
-                                    <td>
-                                        <div className="img-in-table">
-                                            <img className="img-fluid" style={{maxHeight: '30px', maxWidth: '30px'}}
-                                                 src={selectedEmoji} alt=""/>
-                                        </div>
-                                        <div className="text-in-table" style={{height: '60px'}}>{selectedText}</div>
-                                    </td>
-                                </tr>
-                                <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
-                                    <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분
-                                        공개 요청
-                                    </td>
-                                    <td>
-                                        <div className="img-in-table">
-                                            <img className="img-fluid" style={{maxHeight: '30px', maxWidth: '30px'}}
-                                                 src={require('../../../../assets/images/product_spec_icons/request_people.png')}
-                                                 alt=""/>
-                                        </div>
-                                        <div className="text-in-table" style={{height: '60px'}}>{}명</div>
-                                        <button className="req-button">성분 공개 요청하기</button>
-                                    </td>
-                                </tr>
-                                <tr style={{height: '100px'}}>
-                                    <td style={{
-                                        width: '110px',
-                                        borderRight: '1px solid rgba(100, 100, 100, 0.2)'
-                                    }}>인증정보
-                                    </td>
-                                    <td style={{width: '370px'}}>
-                                        <div className="sub-sell" style={{
-                                            height: '60px',
-                                            borderBottom: '1px solid rgba(100, 100, 100, 0.2)'
-                                        }}>
+                                <tbody>
+                                    <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                        <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분
+                                            공개 여부
+                                        </td>
+                                        <td>
                                             <div className="img-in-table">
-                                                {
-                                                    productData.eco ?
-                                                        (<img className="img-fluid"
-                                                              style={{maxHeight: '30px', maxWidth: '30px'}}
-                                                              src={require('../../../../assets/images/product_spec_icons/eco_friendly.png')}
-                                                              alt=""/>) :
-                                                        null
-                                                }
+                                                <img className="img-fluid" style={{maxHeight: '30px', maxWidth: '30px'}}
+                                                     src={selectedEmoji} alt=""/>
                                             </div>
-                                            <div className="text-in-table"
-                                                 style={{height: '60px'}}>{productData.eco}</div>
-                                        </div>
-                                        <div className="sub-sell" style={{height: '40px'}}>
-                                            <div className="img-in-table"
-                                                 style={{color: 'gray', fontSize: '11px'}}>자가검사번호 :
+                                            <div className="text-in-table" style={{height: '60px'}}>{selectedText}</div>
+                                        </td>
+                                    </tr>
+                                    <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                        <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분
+                                            공개 요청
+                                        </td>
+                                        <td>
+                                            <div className="img-in-table">
+                                                <img className="img-fluid" style={{maxHeight: '30px', maxWidth: '30px'}}
+                                                     src={require('../../../../assets/images/product_spec_icons/request_people.png')}
+                                                     alt=""/>
                                             </div>
-                                            <div className="text-in-table">{productData.testNum}</div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            <div className="text-in-table" style={{height: '60px'}}>{}명</div>
+                                            <button className="req-button">성분 공개 요청하기</button>
+                                        </td>
+                                    </tr>
+                                    <tr style={{height: '100px'}}>
+                                        <td style={{
+                                            width: '110px',
+                                            borderRight: '1px solid rgba(100, 100, 100, 0.2)'
+                                        }}>인증정보
+                                        </td>
+                                        <td style={{width: '370px'}}>
+                                            <div className="sub-sell" style={{
+                                                height: '60px',
+                                                borderBottom: '1px solid rgba(100, 100, 100, 0.2)'
+                                            }}>
+                                                <div className="img-in-table">
+                                                    {
+                                                        productData.eco ?
+                                                            (<img className="img-fluid"
+                                                                  style={{maxHeight: '30px', maxWidth: '30px'}}
+                                                                  src={require('../../../../assets/images/product_spec_icons/eco_friendly.png')}
+                                                                  alt=""/>) :
+                                                            null
+                                                    }
+                                                </div>
+                                                <div className="text-in-table"
+                                                     style={{height: '60px'}}>{productData.eco}</div>
+                                            </div>
+                                            <div className="sub-sell" style={{height: '40px'}}>
+                                                <div className="img-in-table"
+                                                     style={{color: 'gray', fontSize: '11px'}}>자가검사번호 :
+                                                </div>
+                                                <div className="text-in-table">{productData.testNum}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>) :
                             null
                         }

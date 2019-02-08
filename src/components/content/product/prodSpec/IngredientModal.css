@@ -1,9 +1,8 @@
-
 .modal-box{
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 400px;
+    min-width: 400px;
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
@@ -22,13 +21,20 @@
     /* padding-bottom: 0; */
 }
 .modal-custom-header.modal-header img{
-    width: 40px;
     float: left;
+    width: 60px;
+    height: 60px;
 }
 
 .modal-custom-header.modal-header button{
-    position: absolute;
+    width: 60px;
+    height: 60px;
+    font-size: 60px;
     background: none;
+    padding: 0;
+    line-height: 0;
+    top: -15px;
+    right: 15px;
 }
 
 .modal-custom-header.modal-header h5{
@@ -66,6 +72,7 @@ p.modal-para{
     letter-spacing: 1px;
     color: #7d7d7d;
     margin-bottom: 0;
+    text-align: center;
 
 }
 .popup-icon-detail{
@@ -75,7 +82,30 @@ p.modal-para{
 }
 
 .popup-icon-detail img{
-    width: 50px;
+    width: 65px;
+    height: 65px;
+    margin-top: 20px;
+}
+
+.popup-icon-detail img.cosmetic-grade-icon {
+    width: 103px;
+    height: 65px;
+    margin-top: 20px;
+}
+
+.popup-icon-detail p{
+    color: #7d7d7d;
+    margin-top: 5px;
+    margin-bottom: 0;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.popup-icon-detail{
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 10px;
 }
 
 .popup-icon-detail p{
@@ -90,34 +120,7 @@ p.modal-para{
 p.popup-ingr-para{
     color: #bbbbbb;
     font-weight: 500;
-}
-
-.modal-custom-body.modal-body{
-    padding: 0;
-}
-
-.popup-icon-detail{
-    text-align: center;
-    width: 100%;
-    margin: 0 auto 10px;
-}
-
-.popup-icon-detail img{
-    width: 50px;
-}
-
-.popup-icon-detail p{
-    color: #7d7d7d;
-    margin-top: 5px;
-    margin-bottom: 0;
-    letter-spacing: 1px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-p.popup-ingr-para{
-    color: #bbbbbb;
-    font-weight: 500;
+    margin-bottom: 20px;
 }
 
 .modal-custom-body.modal-body{
@@ -131,21 +134,51 @@ p.popup-ingr-para{
 
 .popup-icon-level img{
     width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.popup-icon-level div {
+    display: inline-block;
+    width: 320px;
+    vertical-align: middle;
+}
+
+.popup-icon-level h6 {
+    font-weight: bold;
     display: inline-block;
 }
 
 .popup-icon-level p{
     display: inline-block;
-    font-size: 12px;
+    font-size: 1rem;
     padding-left: 10px;
-    color: gray;
     letter-spacing: 1px;
-
 }
 
 .popup-result{
     width: 100%;
     padding: 10px 15px;
     text-align: center;
-    color: #7d7d7d;
+}
+
+.modal-header-title {
+    width: 250px;
+    margin: 0 auto;
+}
+
+.modal-caution-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-caution-container.end {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.modal-caution-container > h5 {
+    text-align: center;
 }

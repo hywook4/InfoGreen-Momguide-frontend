@@ -65,7 +65,7 @@ export const LivingDoughNut = (props)=>{
                 </div>
                 <div className="chart-legend-icon">
                     <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconF.png')} alt=""/>
-                    <span className="chart-legend-text"f>{text.f}</span>
+                    <span className="chart-legend-text">{text.f}</span>
                 </div>
             </div>
         </React.Fragment>
@@ -102,19 +102,19 @@ export const CosmeticDoughNut = (props)=>{
             </div>
 
             <div className="chart-legend">
-                <div className="chart-legend-icon">
+                <div className="cosmetic-chart-legend-icon">
                     <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconX.png')} alt=""/>
                     <span className="chart-legend-text">{text.x}</span>
                 </div>
-                <div className="chart-legend-icon">
+                <div className="cosmetic-chart-legend-icon">
                     <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconA.png')} alt=""/>
                     <span className="chart-legend-text">{text.a}</span>
                 </div>
-                <div className="chart-legend-icon">
+                <div className="cosmetic-chart-legend-icon">
                     <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
                     <span className="chart-legend-text">{text.b}</span>
                 </div>
-                <div className="chart-legend-icon">
+                <div className="cosmetic-chart-legend-icon">
                     <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconC.png')} alt=""/>
                     <span className="chart-legend-text">{text.c}</span>
                 </div>
