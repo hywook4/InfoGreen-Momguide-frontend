@@ -10,9 +10,9 @@ import axios from 'axios';
 
 const emoji={
     // should be replaced by actual Asset urls to avoid memory overlaods.
-    angry:require('../../../../assets/images/opened-0.png'),
-    okay:require('../../../../assets/images/opened-1.png'),
-    happy:require('../../../../assets/images/opened-2.png')
+    bad:require('../../../../assets/images/product_spec_icons/opened_bad.png'),
+    good:require('../../../../assets/images/product_spec_icons/opened_good.png'),
+    great:require('../../../../assets/images/product_spec_icons/opened_great.png')
 }
 
 const openness={
@@ -68,26 +68,26 @@ export class ProdSpec extends React.Component{
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
                     관심 성분
-                    <img src={require('../../../../assets/images/icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
+                    <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
                 </div>  
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc1_${this.state.etc_1===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc1_${this.state.etc_1===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc2_${this.state.etc_2===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc2_${this.state.etc_2===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc3_${this.state.etc_3===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc3_${this.state.etc_3===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc4_${this.state.etc_4===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc4_${this.state.etc_4===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/icons/etc5_${this.state.etc_5===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc5_${this.state.etc_5===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
             </div>
@@ -99,10 +99,10 @@ export class ProdSpec extends React.Component{
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
                     나쁜 성분
-                    <img src={require('../../../../assets/images/icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
+                    <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/respiration-toxic.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_respitory.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     {/* <span className="tooltiptext">
                         <div>
@@ -112,22 +112,21 @@ export class ProdSpec extends React.Component{
                             <h2><b>Ingredient(C8-16)</b></h2>
                             <p>Alkyl polyglucoside(C8-16)</p>
                         </div>
-                    
                     </span> */}
                     <div>호흡 독성</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/skin-irritant.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_skin.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     <div>피부 자극</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/development-toxic.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_development.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     <div>발달/생식 독성</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/cancer.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_cancer.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     <div>발암성</div>
                 </div>
@@ -228,62 +227,60 @@ export class ProdSpec extends React.Component{
         )
     }
 
-    renderProductTable=()=>{
-        return (
-            <div className="product_table">
-                    <div className="prod-table-container">
-                        <div className="row">
-                            <div className="col-lg-9 col-md-9 col-sm-12">
-                            <div className="prod_addn">
-                                    <div className="prod_addn_info">
-                                        <p>*해당되는 성분의 포함 여부만 알려드려요. 제품 자체의 유해성과는 거리가 있습니다.</p>
-                                    </div>
-                            </div>
+    // renderProductTable=()=>{
+    //     return (
+    //         <div className="product_table">
+    //                 <div className="prod-table-container">
+    //                     <div className="row">
+    //                         <div className="col-lg-9 col-md-9 col-sm-12">
+    //                         <div className="prod_addn">
+    //                                 <div className="prod_addn_info">
+    //                                     <p>*해당되는 성분의 포함 여부만 알려드려요. 제품 자체의 유해성과는 거리가 있습니다.</p>
+    //                                 </div>
+    //                         </div>
 
-                            {/* danger icons */}
-                            <div className="danger-icons">
-                                <div className="danger-icons-inr">
-                                    <div className="danger-icon-head">
-                                        <i className="fa fa-heart" aria-hidden="true"></i>
-                                        <h1>나쁜 성분</h1>
-                                        {/* <p data-tip="dfghj" data-html={true}>Tooltip</p>
-                                        <ReactTooltip html={true} /> */}
-                                    </div>
-                                    {this.renderDangerIcons()}
-                                </div>
-                                {this.renderEtcSection()}
+    //                         {/* danger icons */}
+    //                         <div className="danger-icons">
+    //                             <div className="danger-icons-inr">
+    //                                 <div className="danger-icon-head">
+    //                                     <i className="fa fa-heart" aria-hidden="true"></i>
+    //                                     <h1>나쁜 성분</h1>
+    //                                     {/* <p data-tip="dfghj" data-html={true}>Tooltip</p>
+    //                                     <ReactTooltip html={true} /> */}
+    //                                 </div>
+    //                                 {this.renderDangerIcons()}
+    //                             </div>
+    //                             {this.renderEtcSection()}
                                 
-                            </div>
-                            {/* danger icons div finish */}
-                            {/* ingredients icons */}
-                                {this.renderIngredients()}
-                            {/* finish ingredients icons */}
-                            </div>
-                            <div className="col-lg-3 col-md-3 col-sm-12">
-                                {this.renderDougnutAndWarning()}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        )
-    }
+    //                         </div>
+    //                         {/* danger icons div finish */}
+    //                         {/* ingredients icons */}
+    //                             {this.renderIngredients()}
+    //                         {/* finish ingredients icons */}
+    //                         </div>
+    //                         <div className="col-lg-3 col-md-3 col-sm-12">
+    //                             {this.renderDougnutAndWarning()}
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //     )
+    // }
 
     render=()=>{
         let selectedEmoji = null;
         let selectedText = null;
 
         if(this.state.opened ==='0'){
-            selectedEmoji = emoji.angry;
+            selectedEmoji = emoji.bad;
             selectedText = openness.bad;
         }else if(this.state.opened ==='1'){
-            selectedEmoji = emoji.okay;
+            selectedEmoji = emoji.good;
             selectedText = openness.good;
         }else if(this.state.opened ==='2'){
-            selectedEmoji = emoji.happy;
+            selectedEmoji = emoji.great;
             selectedText = openness.great;
         }
-
-        console.log('SELECTED EMOJI',emoji.angry,this.state.opened,selectedEmoji);
 
         return this.state.ingredient_list ?
         ( 
@@ -347,7 +344,7 @@ export class ProdSpec extends React.Component{
                                 <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분 공개 요청</td>
                                 <td>
                                     <div className="img-in-table">
-                                        <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/icons/people-icon.png')} alt=""/>
+                                        <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/product_spec_icons/request_people.png')} alt=""/>
                                     </div>
                                     <div className="text-in-table" style={{height: '60px'}}>{this.state.open_request}명</div>
                                     <button className="req-button">성분 공개 요청하기</button>
@@ -358,7 +355,7 @@ export class ProdSpec extends React.Component{
                                 <td style={{width: '370px'}}>
                                     <div className="sub-sell" style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
                                         <div className="img-in-table">
-                                            <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/icons/icon-ef.png')} alt=""/>
+                                            <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/product_spec_icons/eco_friendly.png')} alt=""/>
                                         </div>
                                         <div className="text-in-table" style={{height: '60px'}}>유해 물질 감소, 오염 물질 저감</div>
                                     </div>
