@@ -1,0 +1,117 @@
+.logininput-login-part {
+    margin-left: auto;
+    margin-right: auto;
+    width: 320px;
+}
+
+.logininput-id, .logininput-password{
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+}
+
+input {
+    border: 0.7px solid;
+    border-color: rgba(218, 218, 218, 0.5);
+    font-size: 15px;
+    width: 100%;
+    height: 100%;
+}
+.logininput-login-options {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.logininput-save-id-box, .logininput-save-text, .logininput-keep-login-box, .logininput-keep-login-text {
+    display: inline-block;
+}
+.logininput-save-id-box, .logininput-keep-login-box {
+    width: 15px;
+    height: 15px;
+}
+.logininput-save-id-text, .logininput-keep-login-text {
+    height: 15px;
+    font-size: 12px;
+    margin-left: 7px;
+}
+
+.logininput-buttons {
+    width: 320px;
+    height: 60px;
+}
+.logininput-buttons:hover {
+    cursor: pointer;
+}
+
+.logininput-login-button {
+    border: 0px;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    color: white;
+    background-color: #32b8a4;
+    margin-bottom: 10px;
+}
+
+.logininput-password-and-join {
+    margin-top: 5px;
+    width: 320px;
+    height: 40px;
+}
+
+.logininput-find-password {
+    font-size: 12px;
+    background-color: white;
+    border: 0px;
+    float: left;
+}
+
+.logininput-sign-up {
+    font-size: 12px;
+    color: #32b8a4;
+    background-color: white;
+    border: 0px;
+    float: right;
+}
+
+.logininput-find-password:hover, .logininput-sign-up:hover {
+    cursor: pointer;
+}
+
+.logininput-other-login {
+    margin-top: 5px;
+    border: 1px solid rgba(218, 218, 218, 0.5);
+    width: 100%;
+    height: 100%;
+}
+.logininput-images {
+    width: 40px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+
+}
+
+.logininput-login-naver, .logininput-login-facebook, .logininput-login-kakao {
+    border: 0px;
+    width: 268px;
+    height: 100%;
+    font-size: 15px;
+    background-color: white;
+    color: gray; 
+    float: right;
+    padding-left: 0;
+    padding-right: 0;
+}
+.logininput-login-naver:hover, .logininput-login-facebook:hover, .logininput-login-kakao:hover {
+    cursor: pointer;
+}
+.logininput-email-signup {
+    width: 100%;
+    height: 100%;
+    border-color: #32b8a4;
+    color: #32b8a4;
+}

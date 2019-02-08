@@ -44,7 +44,7 @@ export const Header = ()=>{
                             <Link to="/signup" className="nav-link">가입하기</Link>
                         </li>
                         <li className="nav-item active">
-                            <Link to="/request" className="nav-link">로그인</Link>
+                            <Link to="/login" className="nav-link">로그인</Link>
                         </li>
                     </ul>
                 </div>
