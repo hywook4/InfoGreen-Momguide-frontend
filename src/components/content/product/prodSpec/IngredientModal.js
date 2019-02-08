@@ -1,4 +1,5 @@
 import React from 'react';
+import './IngredientModal.css'
 
 export class IngredientModal extends React.Component{
     evaluateHeaderIconWithETC=()=>{
@@ -20,7 +21,7 @@ export class IngredientModal extends React.Component{
         return(
             <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div style={{minWidth:'330px'}} className="modal-custom modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
+                    <div className="modal-box">
                     <div className="modal-custom-header modal-header">
                         {this.evaluateHeaderIconWithETC()}
                         <h5 className="modal-title" id="exampleModalLongTitle">{props.korName}</h5>

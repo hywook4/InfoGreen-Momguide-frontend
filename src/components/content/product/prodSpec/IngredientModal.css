@@ -1,0 +1,151 @@
+
+.modal-box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+
+.modal-custom.modal-dialog.modal-dialog-centered{
+    width: 20%;
+    margin: 0 auto;
+}
+
+.modal-custom-header.modal-header{
+    display: block;
+    /* padding-bottom: 0; */
+}
+.modal-custom-header.modal-header img{
+    width: 40px;
+    float: left;
+}
+
+.modal-custom-header.modal-header button{
+    position: absolute;
+    background: none;
+}
+
+.modal-custom-header.modal-header h5{
+    color: gray;
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    float: left;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+.modal-custom-header.modal-header p{
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    float: left;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #7d7d7d;
+}
+
+.btn{
+    position: relative;
+    top: -50px;
+}
+
+p.modal-para{
+    font-size: 14px;
+    color: gray;
+    background-color: #f7f7f7;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    color: #7d7d7d;
+    margin-bottom: 0;
+
+}
+.popup-icon-detail{
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 10px;
+}
+
+.popup-icon-detail img{
+    width: 50px;
+}
+
+.popup-icon-detail p{
+    color: #7d7d7d;
+    margin-top: 5px;
+    margin-bottom: 0;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+p.popup-ingr-para{
+    color: #bbbbbb;
+    font-weight: 500;
+}
+
+.modal-custom-body.modal-body{
+    padding: 0;
+}
+
+.popup-icon-detail{
+    text-align: center;
+    width: 100%;
+    margin: 0 auto 10px;
+}
+
+.popup-icon-detail img{
+    width: 50px;
+}
+
+.popup-icon-detail p{
+    color: #7d7d7d;
+    margin-top: 5px;
+    margin-bottom: 0;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+p.popup-ingr-para{
+    color: #bbbbbb;
+    font-weight: 500;
+}
+
+.modal-custom-body.modal-body{
+    padding: 0;
+}
+
+.popup-icon-level{
+    width: 100%;
+    padding: 10px 15px;
+}
+
+.popup-icon-level img{
+    width: 40px;
+    display: inline-block;
+}
+
+.popup-icon-level p{
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 10px;
+    color: gray;
+    letter-spacing: 1px;
+
+}
+
+.popup-result{
+    width: 100%;
+    padding: 10px 15px;
+    text-align: center;
+    color: #7d7d7d;
+}
