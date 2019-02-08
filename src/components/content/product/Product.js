@@ -5,6 +5,22 @@ import { ProductList } from '../../common/ProductList/ProductList';
 import { ProductSearch } from './productSearch/ProductSearch';
 
 export class Product extends React.Component {
+
+    state = ({
+        mainCategory: "living",  //living or cosmetic
+        subCategory: "laundry" // 아래 houseHold와 cosmetic 확인 
+    })
+
+    onCategoryClick = (mainCategory, subCategory) => {
+        console.log(mainCategory, subCategory);
+        this.setState({
+            mainCategory: mainCategory,
+            subCategory: subCategory
+        })
+    }
+
+
+
     render() {
         const houseHold = [
             {
@@ -91,14 +107,11 @@ export class Product extends React.Component {
                 <div className="product_inner">
                     <Router>
                         <div className="product_div">
-                            <ProductSearch />
+                            <ProductSearch onCategoryClick={this.onCategoryClick}/>
 
                             <div className="product-content">
                                 <div className="content-info">
-                                    {houseHold.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList mainCategory={'living'} subCategory={d.category}/>} />)}
-                                </div>
-                                <div className="content-info-below">
-                                    {cosmetics.map((d,i)=><Route key={i} path={d.path} exact={true} component={()=><ProductList mainCategory={'cosmetic'} subCategory={d.category}/>} />)}
+                                    <ProductList mainCategory={this.state.mainCategory} subCategory={this.state.subCategory}/>
                                 </div>
                             </div>
                         </div>

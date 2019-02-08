@@ -6,7 +6,8 @@ export class ProductSearch extends React.Component {
         super(props);
 
         this.state = {
-            categorySelect: "household" // household or cosmetics
+            categorySelect: "living", // living or cosmetics
+            subCategory: "laundry"
         };
     }
 
@@ -16,84 +17,79 @@ export class ProductSearch extends React.Component {
         });
     };
 
+    subCategorySelect = (subCategory) => {
+        this.setState({
+            subCategory: subCategory
+        })
+        this.props.onCategoryClick(this.state.categorySelect, subCategory);
+    }
+
+    onClick 
+
+
     render() {
-        const houseHold = [
+        const living = [
             {
-                path:'/',
                 name:'세탁세제',
-                category:'세탁세제'
+                category:'laundry'
             },
             {
-                path:'/fabric',
                 name:'섬유유연제',
-                category:'섬유유연제'
+                category:'fabric'
             },
             {
-                path:'/dishwashing',
                 name:'주방세제',
-                category:'주방세제'
+                category:'dishwashing'
             },
             {
-                path:'/odor',
                 name:'탈취제',
-                category:'탈취제'
+                category:'odor'
             },
             {
-                path:'/other',
                 name:'기타세정제',
-                category:'기타세정제'
+                category:'other'
             }
         ];
         const cosmetics = [
             {
-                path:'/soap',
                 name:'워시',
-                category:'워시'
+                category:'soap'
             },
             {
-                path:'/lotion',
                 name:'로션',
-                category:'로션'
+                category:'lotion'
             },
             {
-                path:'/cream',
                 name:'크림',
-                category:'크림'
+                category:'cream'
             },
             {
-                path:'/oil',
                 name:'오일',
-                category:'오일'
+                category:'oil'
             },
             {
-                path:'/powder',
                 name:'파우더',
-                category:'파우더'
+                category:'powder'
             },
             {
-                path:'/hair',
                 name:'헤어케어',
-                category:'헤어케어'
+                category:'haircare'
             },
             {
-                path:'/suncare',
                 name:'선케어',
-                category:'선케어'
+                category:'suncare'
             },
             {
-                path:'/babywipes',
                 name:'물티슈',
-                category:'물티슈'
+                category:'tissue'
             },
             {
-                path:'/handsanitizer',
-                name:'손세정제',
-                category:'손세정제'
+                name:'립케어',
+                category:'lipcare'
             },
             {
-                path:'/othercosmetics',
                 name:'기타화장품',
-                category:'기타화장품'
+                category:'other'
             },
         ];
 
@@ -103,10 +99,10 @@ export class ProductSearch extends React.Component {
                     <nav className="menu-button">
                         <a className="circle-button" href="/" onClick={(e) => {
                             e.preventDefault();
-                            this.categorySelect("household");
+                            this.categorySelect("living");
                         }}>
                             <img
-                                src={require(`../../../../assets/images/living_${this.state.categorySelect==='household'?'1':'0'}.png`)}
+                                src={require(`../../../../assets/images/living_${this.state.categorySelect==='living'?'1':'0'}.png`)}
                                 alt="가정용 화학제품"
                             />
                         </a>
@@ -115,18 +111,28 @@ export class ProductSearch extends React.Component {
                             this.categorySelect("cosmetic");
                         }}>
                             <img
-                                src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='household'?'0':'1'}.png`)}
+                                src={require(`../../../../assets/images/cosmetic_${this.state.categorySelect==='living'?'0':'1'}.png`)}
                                 alt="유아용 화장품"
                             />
                         </a>
                     </nav>
                     {
-                        this.state.categorySelect === 'household' ?
+                        this.state.categorySelect === 'living' ?
                             (<ul className="product_category">
-                                {houseHold.map((d,i)=><li className="prod_ctgy_type" key={i}><Link to={d.path}>{d.name}</Link></li>)}
+                                {living.map((d,i)=><li className={`prod_ctgy_type ${d.category === this.state.subCategory ? "type_focused" : "" }`} key={i}>
+                                    <Link to={'/'} onClick={(e) => {
+                                    e.preventDefault();
+                                    this.subCategorySelect(d.category);
+                                    }}>{d.name}</Link>
+                                </li>)}
                             </ul>) :
                             (<ul className="product_category">
-                                {cosmetics.map((d,i)=><li className="prod_ctgy_type" key={i}><Link to={d.path}>{d.name}</Link></li>)}
+                                {cosmetics.map((d,i)=><li className={`prod_ctgy_type ${d.category === this.state.subCategory ? "type_focused" : "" }`} key={i}>
+                                    <Link to={'/'} onClick={ (e) => {
+                                    e.preventDefault();
+                                    this.subCategorySelect(d.category);
+                                    }}>{d.name}</Link>
+                                </li>)}
                             </ul>)
                     }
                 </div>
