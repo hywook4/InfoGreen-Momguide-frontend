@@ -45,7 +45,6 @@ export const MainPage = () => {
                                 
                                 <div>
                                     <Switch>
-                                        <Route exact path="/" component={renderHome} />
                                         <Route path="/about" component={About} />
                                         <Route exact path="/category" render={(props) => <Category {...props} />} /> />
                                         <Route path="/category/:search" component={Category} />
@@ -56,10 +55,11 @@ export const MainPage = () => {
                                         <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
                                         <Route exact path="/tips" component={Tips} />
                                         <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
-                                        <Route path="/product-details/:name" component={ProductSpecification} />
+                                        <Route path="/product-details/:category/:id" component={ProductSpecification} />
                                         <Route path="/request/request-comment" component={RequestComment} />
                                         <Route path="/request/contact-us" component={ContactUs} />
                                         <Route path="/request/loggedin" component={LoggedIn} />
+                                        <Route path="/" component={renderHome} />
                                     </Switch>
                                 </div>
                             </React.Fragment>

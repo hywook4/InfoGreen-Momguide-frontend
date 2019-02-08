@@ -17,12 +17,6 @@ export const RatingRow = (props)=>{
     const config = props.config;
     return(
         <div className="rating-stars">
-            {/* { !config.removePadding && 
-                <p className={config.alignStart?'':'col-md-3'} style={{textAlign:'right',lineHeight:'14px'}}>
-                    <span style={{fontSize:14,fontWeight:(!config.hideSubHeading?'bold':'normal')}}>{config.text}</span><br/>
-                    {!config.hideSubHeading && <span style={{fontSize:'14px',color:'rgb(156, 156, 156)'}}>(5명)</span>}
-                </p>
-            } */}
             <div>
                 <i className={`fa fa-star${(config.selected>=1?'':'-o')}`} style={{color:(config.selected>=1?(config.color||'#60b3a2'):'grey'),fontSize:config.size||'20px'}} aria-hidden="true"></i>
                 <i className={`fa fa-star${(config.selected>=2?'':'-o')}`} style={{color:(config.selected>=2?(config.color||'#60b3a2'):'grey'),fontSize:config.size||'20px'}} aria-hidden="true"></i>
@@ -31,9 +25,8 @@ export const RatingRow = (props)=>{
                 <i className={`fa fa-star${(config.selected>=5?'':'-o')}`} style={{color:(config.selected>=5?(config.color||'#60b3a2'):'grey'),fontSize:config.size||'20px'}} aria-hidden="true"></i>
                 <span style={{color:'#ababab',fontWeight:'bold'}}>{config.trailingText}</span>
             </div>
-            {/* <div style={{clear:'both'}}></div> */}
             <div className="rating-participants">
-                <span style={{color: '#32b8a4', fontWeight: '300'}}>5명</span> 참여
+                <span style={{color: '#32b8a4', fontWeight: '300'}}>{config.count}명</span> 참여
             </div>
         </div>    
     )

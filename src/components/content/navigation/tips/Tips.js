@@ -36,7 +36,7 @@ export class Tips extends React.Component {
                             <h5><b>12월 출석체크</b></h5>
                             <p>매일 출석하고 포인트 받자!</p>
                             <h6><Link to='#'>자세히 보기
-                            <i class="fa fa-angle-right"></i>
+                            <i className="fa fa-angle-right"></i>
                             </Link></h6>
                         </div>
                             

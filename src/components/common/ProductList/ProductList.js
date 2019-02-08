@@ -11,7 +11,7 @@ export class ProductList extends React.Component {
     };
 
     // This messy part should go through refactoring
-    componentDidMount= async ()=> {
+    componentDidMount = async ()=> {
         // Search by number of votes
         console.log(this.props.mainCategory, this.props.subCategory);
 
@@ -44,8 +44,6 @@ export class ProductList extends React.Component {
         } else {
             s3Url += "cosmetic-product-images/";
         }
-
-
 
         return(
             <div className="productHeading">
