@@ -13,7 +13,8 @@ export class ProductList extends React.Component {
     // This messy part should go through refactoring
     componentDidMount= async ()=> {
         // Search by number of votes
-        
+        console.log(this.props.mainCategory, this.props.subCategory);
+
         let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
         const newState = ({ productByVote: products.data });
 
@@ -22,6 +23,17 @@ export class ProductList extends React.Component {
         this.setState({ ...newState, productByIngredient: products.data});
     };
     
+    componentWillReceiveProps = async (nextProps) => {
+        console.log("componentWillReceiveProps: " + JSON.stringify(nextProps));
+        
+        let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${nextProps.mainCategory}&subCategory=${nextProps.subCategory}`);
+        const newState = ({ productByVote: products.data });
+
+        // Search by number of stars
+        products = await axios.get(`${process.env.API_URL}/api/product/goodIngredientItem?mainCategory=${nextProps.mainCategory}&subCategory=${nextProps.subCategory}`);
+        this.setState({ ...newState, productByIngredient: products.data});
+    }
+
     /* Axios Call Over : Refactoring Required*/
 
     render () {

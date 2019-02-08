@@ -103,7 +103,11 @@ li.prod_ctgy_type a{
     text-decoration: none;
 }
 
-li.prod_ctgy_type a:hover, li.prod_ctgy_type a:active, li.prod_ctgy_type a:focus{
+li.type_focused a{
+    color: skyblue;
+}
+
+li.prod_ctgy_type a:hover, li.prod_ctgy_type a:focus{
     color: skyblue;
 }
 
