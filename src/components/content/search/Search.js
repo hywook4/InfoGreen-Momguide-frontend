@@ -1,11 +1,14 @@
 import React from 'react';
 import './Search.css';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 
 class Search extends React.Component {
     constructor() {
         super();
         this.state = {
-            search: ""
+            search: "",
+            submitted: false
         };
 
         this.onChange = this.onChange.bind(this);
@@ -16,12 +19,11 @@ class Search extends React.Component {
         console.log(e.keyCode);
 
         const searchText = e.target.value.trimLeft();
+        console.log(searchText);
 
         this.setState({
             search: searchText
         });
-        this.props.searchAction(searchText);
-        this.props.setItemsAction(0, this.props.category, searchText);
     };
 
     onFocus = () => {
@@ -31,7 +33,26 @@ class Search extends React.Component {
         }
     };
 
+    onSearch = () => {
+        console.log('search for : ' + '/category/'+this.state.search);
+        this.setState({
+            submitted: true
+        });
+    }
+
+    onEnter = (e) => {
+        if(e.key === 'Enter'){
+            this.onSearch();
+        }
+    }
+
+
     render() {
+        if (this.state.submitted) {
+            return (
+              <Redirect to={`/category/${this.state.search}`} />
+            )
+        }
 
         return(
             <div className="search-div">
@@ -43,8 +64,9 @@ class Search extends React.Component {
                             placeholder="총 400,000개의 제품..."
                             value={this.state.search}
                             onChange={this.onChange}
+                            onKeyPress={this.onEnter}
                         />
-                        <i className="fa fa-search" aria-hidden="true"></i>
+                        <Link to='' onClick={this.onSearch}><i className="fa fa-search" aria-hidden="true"></i></Link>
                     </div>
                 </div>
             </div>

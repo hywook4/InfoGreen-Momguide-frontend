@@ -10,17 +10,19 @@ export class CategoryMenu extends React.Component{
     selectCategory(category){
         if(this.state.categorySelect === category){
             this.setState({
-                categorySelect: ''
+                categorySelect: '',
+                categoryDetail: ''
             });
-
-            this.props.changeType('');
+            this.props.onCategoryClick('', '');
+            
         }
         else{
             this.setState({
                 categorySelect: category,
+                categoryDetail: ''
             });
-
-            this.props.changeType(category);
+            this.props.onCategoryClick(category, '');
+        
         }
     }
 
@@ -29,6 +31,7 @@ export class CategoryMenu extends React.Component{
             this.setState({
                 categoryDetail: ''
             });
+            this.props.onCategoryClick(this.state.categorySelect, '');
         }
         else{
             this.setState({

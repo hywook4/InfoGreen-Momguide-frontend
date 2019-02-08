@@ -3,6 +3,7 @@ import './Category.css';
 import {CategoryImg} from '../category/CategoryImg';
 import {CategoryMenu} from '../category/CategoryMenu';
 import axios from 'axios';
+import { checkServerIdentity } from 'tls';
 
 export class Category extends React.Component{
 
@@ -26,14 +27,31 @@ export class Category extends React.Component{
         type: ""
     };
 
-    changeType = (productType) => {
-        this.setState({
-            type: productType
-        });
-    };
+    
 
     componentDidMount=()=>{
         this._mounted = true;
+        let search = this.props.match.params.search;
+
+        if(search === undefined){
+            search = '';
+        }
+
+        this.setState({
+            search: search
+        })
+
+        if(search !== ''){
+            //searchProduct
+            console.log(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, this.state.careCheck,
+                this.state.harmCheck, this.state.highDangerCheck, this.state.ecoCheck, this.state.ingredientCheck, this.state.middleDangerCheck, 
+                this.state.page);
+           
+            console.log(`keyword ${search} is delivered`);
+        }
+        else{
+            console.log("no keyword is delivered");
+        }
     };
     componentWillUnmount=()=>{
         this._mounted = false;
@@ -57,11 +75,13 @@ export class Category extends React.Component{
         var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
         var pageOffset = window.pageYOffset + window.innerHeight;
         var bottomOffset = 150;
+
+       
         if (pageOffset > lastLiOffset - bottomOffset) {
             this.setState(prevState => ({
                 page: prevState.page+1,
                 scrolling: true,
-            }), ()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+            }), ()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
                 this.state.careCheck,
                 this.state.harmCheck,
                 this.state.highDangerCheck,
@@ -76,7 +96,7 @@ export class Category extends React.Component{
     onKeyBoardPress = e =>{
         this.state.search.length>0 &&
         e.keyCode===13 &&
-        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
             this.state.careCheck,
             this.state.harmCheck,
             this.state.highDangerCheck,
@@ -87,17 +107,43 @@ export class Category extends React.Component{
     };
 
     onChange = e => {
-        const searchText = e.target.value.trimLeft();
-        this.setState({search: searchText});
+        const search = e.target.value.trimLeft();
+        this.setState({search: search});
     };
 
 
     onCategoryClick = (mainCategory, subCategory) => {
+        if(this.state.mainCategory !== mainCategory){
+            console.log("diffenered");
+            this.setState({
+                careCheck: false,
+                harmCheck: false,
+                highDangerCheck: false,
+                ecoCheck: false,
+                ingredientCheck: false,
+                middleDangerCheck: false
+            })
+        } 
 
         this.setState({
             mainCategory: mainCategory,
             subCategory: subCategory});
-        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+
+        if(mainCategory === ""){
+            this.setState({
+                careCheck: false,
+                harmCheck: false,
+                highDangerCheck: false,
+                ecoCheck: false,
+                ingredientCheck: false,
+                middleDangerCheck: false
+            })
+
+        }
+        
+        console.log(mainCategory, subCategory);
+
+        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
             this.state.careCheck,
             this.state.harmCheck,
             this.state.highDangerCheck,
@@ -105,6 +151,11 @@ export class Category extends React.Component{
             this.state.ingredientCheck,
             this.state.middleDangerCheck,
             this.state.page));
+
+        /*console.log(this.state.search, mainCategory, subCategory, this.state.sort, this.state.careCheck,
+            this.state.harmCheck, this.state.highDangerCheck, this.state.ecoCheck, this.state.ingredientCheck, this.state.middleDangerCheck, 
+            this.state.page);
+        */
     };
 
 
@@ -118,8 +169,9 @@ export class Category extends React.Component{
         if (sort === "vote") sort = "view";
         if (sort === "dateTime") sort = "recent";
 
+
         this.setState({sort: sort});
-        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
             this.state.careCheck,
             this.state.harmCheck,
             this.state.highDangerCheck,
@@ -130,9 +182,11 @@ export class Category extends React.Component{
     };
 
     onCheck = e => {
+
+
         const check = e.target.name;
         check === this.state.check ? this.setState({check: null}) : this.setState({check});
-        this.resetSearchResults(()=>this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
             this.state.careCheck,
             this.state.harmCheck,
             this.state.highDangerCheck,
@@ -152,7 +206,7 @@ export class Category extends React.Component{
         }
         return str.join("&");
     }
-
+    
     searchProduct = async (searchText, mainCategory, subCategory, sort, 
         careCheck,
         harmCheck,
@@ -163,6 +217,9 @@ export class Category extends React.Component{
         page)=> {
         
         const queryObject = {};
+
+        console.log(searchText, mainCategory, subCategory, sort, careCheck, harmCheck, highDangerCheck, ecoCheck,
+            ingredientCheck, middleDangerCheck, page);
 
         if (searchText) queryObject.search = searchText;
         if (mainCategory) {
@@ -193,6 +250,8 @@ export class Category extends React.Component{
         }
         let resp = await axios.get(query);
 
+        console.log(resp.data);
+
         this.setState({
             result: [...this.state.result,...resp.data.data], // 기존의 result에 새로운 data들을 추가 ... 전개연산자 
             scrolling: false,
@@ -202,12 +261,14 @@ export class Category extends React.Component{
     };
 
     checkChange = (checkName) => {
+
+
         let flag = this.state[checkName];
         const newObj = {};
         newObj[checkName] = !flag;
         this.resetSearchResults(() => {
             this.setState(newObj, () => {
-                this.searchProduct(this.state.searchText, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+                this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
                     this.state.careCheck,
                     this.state.harmCheck,
                     this.state.highDangerCheck,
@@ -224,7 +285,10 @@ export class Category extends React.Component{
             <div className="tab-content prod-ctgy-tabs">
                 <div id="other" className="tab-pane active">
                     <div className="sub-ctgy-div">
-                        <h1>{this.state.category}</h1>
+                        <h1>{this.state.search === "" ? "" : this.state.search}
+                            {this.state.mainCategory === "" ? "" : " > " + this.state.mainCategory}
+                            {this.state.subCategory === "" ? "" : " > " + this.state.subCategory}
+                        </h1>
                         <ul className="nav nav-tabs ">
                             <li className={this.state.sortFocus==="별점순"?"focused":""}><a href="#tab_default_1" data-toggle="tab" name="star" onClick={this.onSort}>별점순</a></li>
                             <li className={this.state.sortFocus==="조회순"?"focused":""}><a href="#tab_default_2" data-toggle="tab" name="vote" onClick={this.onSort}>조회순</a></li>
@@ -241,23 +305,28 @@ export class Category extends React.Component{
         const checkLiving = (
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline1" onClick={(e)=>this.checkChange("careCheck")}/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline1" 
+                    onClick={(e)=>this.checkChange("careCheck")} checked={ this.state.careCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline2" onClick={(e)=>this.checkChange("harmCheck")}/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline2" 
+                    onClick={(e)=>this.checkChange("harmCheck")} checked={ this.state.harmCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline2" className="custom-control-label">유해 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline3" onClick={(e)=>this.checkChange("highDangerCheck")}/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline3" 
+                    onClick={(e)=>this.checkChange("highDangerCheck")} checked={ this.state.highDangerCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline3" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline4" onClick={(e)=>this.checkChange("ecoCheck")}/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline4" 
+                    onClick={(e)=>this.checkChange("ecoCheck")} checked={ this.state.ecoCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline4" className="custom-control-label">친환경 인증 제품</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline5" onClick={(e)=>this.checkChange("ingredientCheck")}/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline5" 
+                    onClick={(e)=>this.checkChange("ingredientCheck")} checked={ this.state.ingredientCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline5" className="custom-control-label">성분 공개 제품</label>
                 </div>
             </React.Fragment>
@@ -266,16 +335,19 @@ export class Category extends React.Component{
         const checkCosmetic = (
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline1" onClick={(e)=>this.checkChange("careCheck")}/>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline1" 
+                    onClick={(e)=>this.checkChange("careCheck")} checked={ this.state.careCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline2" onClick={(e)=>this.checkChange("highDangerCheck")}/>
-                    <label htmlFor="defaultInline2" className="custom-control-label">높은 위험도 성분 제외</label>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline3" 
+                    onClick={(e)=>this.checkChange("highDangerCheck")} checked={ this.state.highDangerCheck ? 'checked' : ''}/>
+                    <label htmlFor="defaultInline3" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" className="custom-control-input" id="defaultInline3" onClick={(e)=>this.checkChange("middleDangerCheck")}/>
-                    <label htmlFor="defaultInline3" className="custom-control-label">중간 위험도 성분 제외</label>
+                    <input type="checkbox" className="custom-control-input" id="defaultInline6" 
+                    onClick={(e)=>this.checkChange("middleDangerCheck")} checked={ this.state.middleDangerCheck ? 'checked' : ''}/>
+                    <label htmlFor="defaultInline6" className="custom-control-label">중간 위험도 성분 제외</label>
                 </div>
             </React.Fragment>
         );
@@ -284,7 +356,7 @@ export class Category extends React.Component{
         return(
             <div className="checkbox-div">
                 {
-                    this.state.type === "" ? "" : (this.state.type === "living" ? checkLiving : checkCosmetic)
+                    this.state.mainCategory === "" ? "" : (this.state.mainCategory === "living" ? checkLiving : checkCosmetic)
                 }
             </div>
         );
@@ -323,7 +395,7 @@ export class Category extends React.Component{
                         </div>
                     </div>
 
-                    <CategoryMenu onCategoryClick={this.onCategoryClick} changeType={this.changeType}/>
+                    <CategoryMenu onCategoryClick={this.onCategoryClick}/>
 
                     <div className="category-tabs-div">
                         <div className="row">

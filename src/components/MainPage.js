@@ -47,8 +47,8 @@ export const MainPage = () => {
                                     <Switch>
                                         <Route exact path="/" component={renderHome} />
                                         <Route path="/about" component={About} />
-                                        <Route path="/category" render={(props) => <Category {...props} />} /> />
-                                        <Route path="/category/:search" render={(props) => <Category {...props} />} /> />
+                                        <Route exact path="/category" render={(props) => <Category {...props} />} /> />
+                                        <Route path="/category/:search" component={Category} />
                                         <Route exact path="/request" component={Request} />
                                         <Route path="/signup" component={Signup} />
                                         <Route exact path="/login" component={Login} />

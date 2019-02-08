@@ -162,3 +162,7 @@ li.prod_ctgy_type a:hover, li.prod_ctgy_type a:active, li.prod_ctgy_type a:focus
     width: 80px;
     object-fit: contain;
 }
+
+.rightDiv{
+    min-height: 251px;
+}
