@@ -11,7 +11,7 @@ export class ProductList extends React.Component {
     };
 
     // This messy part should go through refactoring
-    componentDidMount= async ()=> {
+    componentDidMount = async ()=> {
         // Search by number of votes
         
         let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
@@ -32,8 +32,6 @@ export class ProductList extends React.Component {
         } else {
             s3Url += "cosmetic-product-images/";
         }
-
-
 
         return(
             <div className="productHeading">

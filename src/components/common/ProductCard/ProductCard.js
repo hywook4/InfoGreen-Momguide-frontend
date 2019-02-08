@@ -4,9 +4,9 @@ import '../CommonCSS/CommonCSS.css'
 import './ProductCard.css';
 
 const ProductCard = (props) => {
-    return(
+    return (
         <div className="product-card">
-            <a className="product-image" href={`product-details/${props.name}`}>
+            <a className="product-image" href={`product-details/${props.payload.category}/${props.payload.index}`}>
                 <img src={props.src} alt={props.name} />
             </a>
             <div className="product-content">
@@ -15,7 +15,7 @@ const ProductCard = (props) => {
                 <div className="product-header">{props.name}</div>
             </div>
         </div>
-    )
+    );
 };
 
 export default ProductCard;

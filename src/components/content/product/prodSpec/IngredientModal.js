@@ -3,17 +3,19 @@ import React from 'react';
 export class IngredientModal extends React.Component{
     evaluateHeaderIconWithETC=()=>{
         let img = '';
-        img = this.props.data.etc_1?<img src={require('../../../../assets/images/product_spec_icons/etc1_red.png')} alt=""/>:img;
-        img = this.props.data.etc_2?<img src={require('../../../../assets/images/product_spec_icons/etc2_red.png')} alt=""/>:img;
-        img = this.props.data.etc_3?<img src={require('../../../../assets/images/product_spec_icons/etc3_red.png')} alt=""/>:img;
-        img = this.props.data.etc_4?<img src={require('../../../../assets/images/product_spec_icons/etc4_red.png')} alt=""/>:img;
-        img = this.props.data.etc_5?<img src={require('../../../../assets/images/product_spec_icons/etc5_red.png')} alt=""/>:img;
+        img = this.props.data.slsSles?<img src={require('../../../../assets/images/product_spec_icons/etc1_red.png')} alt=""/>:img;
+        img = this.props.data.ammonium?<img src={require('../../../../assets/images/product_spec_icons/etc2_red.png')} alt=""/>:img;
+        img = this.props.data.scent?<img src={require('../../../../assets/images/product_spec_icons/etc3_red.png')} alt=""/>:img;
+        img = this.props.data.color?<img src={require('../../../../assets/images/product_spec_icons/etc4_red.png')} alt=""/>:img;
+        img = this.props.data.humid?<img src={require('../../../../assets/images/product_spec_icons/etc5_red.png')} alt=""/>:img;
         return img;
-    }
+    };
+
     render=()=>{
-        var props = this.props.data;
+        const props = this.props.data;
         console.log('IGMODAL-',props);
-        const letter = props.ewg_rank ? props.ewg_rank : 'X';
+        console.log(this.props);
+        const letter = props.ewg ? props.ewg : 'X';
         const letterSubHeading = this.props.texts[letter.toLowerCase()];
         return(
             <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -21,16 +23,15 @@ export class IngredientModal extends React.Component{
                     <div className="modal-content">
                     <div className="modal-custom-header modal-header">
                         {this.evaluateHeaderIconWithETC()}
-                        <h5 className="modal-title" id="exampleModalLongTitle">{props.name}</h5>
-                        <p style={{width:'100%'}}>{props.name_eng}</p>
+                        <h5 className="modal-title" id="exampleModalLongTitle">{props.korName}</h5>
+                        <p style={{width:'100%'}}>{props.engName}</p>
                         <button type="button" className="close btn" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                            &times;
                         </button>
                     </div>
                     <div className="modal-custom-body modal-body">
                         <p className="modal-para">EWG 등급</p>
                         <div className="popup-icon-detail">
-                            <br/>
                             <img src={require(`../../../../assets/images/product_spec_icons/living_grade_${letter}.png`)} alt=""/>
                             <p>{letterSubHeading}</p>
                             <p className="popup-ingr-para">
@@ -38,11 +39,11 @@ export class IngredientModal extends React.Component{
                             </p> {/* NEEDS TO BE CONFIRMED */}
                         </div>
                         <p className="modal-para">주의성분</p>
-                            <div className="popup-icon-level">
-                                {props.epa && props.epa!=='G' && <img style={{width:'27px'}} className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/caution_usa.png')} alt=""/>}
-                                {props.dsl && <img style={{width:'27px',marginLeft:'5px'}} className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/caution_canada.png')} alt=""/>} &nbsp;
-                                {((props.epa && props.epa!=='G')||props.dsl)?'미 환경보호 (EPA): 유해성 논란 성분':' '}
-                            </div>
+                        <div className="popup-icon-level">
+                            {props.epa && props.epa!=='G' && <img style={{width:'27px'}} className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/caution_usa.png')} alt=""/>}
+                            {props.dsl && <img style={{width:'27px',marginLeft:'5px'}} className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/caution_canada.png')} alt=""/>} &nbsp;
+                            {((props.epa && props.epa!=='G')||props.dsl)?'미 환경보호 (EPA): 유해성 논란 성분':' '}
+                        </div>
                         <div className="popup-category">
                             <p className="modal-para">유해성분</p>
                         </div>
@@ -69,5 +70,5 @@ export class IngredientModal extends React.Component{
                 </div>
             </div>
         )
-    }
+    };
 }

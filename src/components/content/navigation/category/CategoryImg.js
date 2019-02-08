@@ -4,6 +4,7 @@ import config from '../../../../config';
 import Axios from 'axios';
 import './CategoryImg.css'
 import {ProductRate} from './ProductRate'
+import { Link } from 'react-router-dom';
 
 const appendText={
     opened:{icon:require('../../../../assets/images/ingredient_open.png'),text:'성분 공개',allowedVals:['1','2'],imgStyle:{width:'35px'}},
@@ -34,7 +35,7 @@ export class CategoryImg extends React.Component{
 
         return(
             <div className="ctgy-inrimg-div loadedItem">
-                <a href={`/product-details/${props.name}`}>
+                <Link to={`/product-details/${props.category}/${props.index}`}>
 
                     <div className="card-top">
                         <div className="card-extra-block">
@@ -74,7 +75,7 @@ export class CategoryImg extends React.Component{
                             />
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
             
         )
