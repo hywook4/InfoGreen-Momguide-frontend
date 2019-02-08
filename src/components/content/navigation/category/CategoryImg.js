@@ -9,7 +9,7 @@ const appendText={
     ingredient:{icon:require('../../../../assets/images/ingredient_open.png'),text:'성분 공개'},
     eco:{icon:require('../../../../assets/images/nature-friendly.png'),text:'친환경 인증'},
     includeCare:{icon:require('../../../../assets/images/yellow_baby.png'),text:'주의 성분'},
-    includeToxic:{icon:require('../../../../assets/images/warning.png'),text:'유해 성분'}
+    includeToxic:{icon:require('../../../../assets/images/common_icons/warning.png'),text:'유해 성분'}
 }
 
 export class CategoryImg extends React.Component{
