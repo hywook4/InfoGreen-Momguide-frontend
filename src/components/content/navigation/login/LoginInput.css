@@ -40,8 +40,6 @@ input {
 .logininput-buttons {
     width: 320px;
     height: 60px;
-}
-.logininput-buttons:hover {
     cursor: pointer;
 }
 
@@ -53,6 +51,7 @@ input {
     color: white;
     background-color: #32b8a4;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .logininput-password-and-join {
@@ -105,13 +104,13 @@ input {
     float: right;
     padding-left: 0;
     padding-right: 0;
-}
-.logininput-login-naver:hover, .logininput-login-facebook:hover, .logininput-login-kakao:hover {
     cursor: pointer;
 }
+
 .logininput-email-signup {
     width: 100%;
     height: 100%;
     border-color: #32b8a4;
     color: #32b8a4;
+    cursor: pointer;
 }
