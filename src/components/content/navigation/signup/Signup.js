@@ -1,8 +1,235 @@
 import React, { Component } from 'react';
 import './Signup.css';
 import USER_IMAGE from '../../../../assets/images/icons/user-icon.png'
+import axios from 'axios';
+
+function range(start, end) {
+    const len = end-start+1;
+    if(len < 0)
+        return [];
+
+    return [...Array(len).keys()].map((i) => i+start);
+}
+
+function lastDay(year, month) {
+    return new Date(year, month, 0).getDate();
+}
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function validatePassword(password) {
+    var re = /^[A-Za-z0-9]{6,15}$/;
+    var re2 = /^[A-Za-z]*$/;
+    var re3 = /^[0-9]*$/;
+    return !re2.test(password) && !re3.test(password) && re.test(password);
+}
 
 export class Signup extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            ageConfirm: false,
+            serviceTermConfirm: false,
+            privateInfoConfirm: false,
+            advertisementConfirm: false,
+            emailId: '',
+            emailDomain: '',
+            emailDomainDisable: false,
+            emailDuplicateOk: false,
+            emailDuplicateMessage: '',
+            password: '',
+            passwordConfirm: '',
+            profileImage: null,
+            profileImageUrl: USER_IMAGE,
+            nickname: '',
+            nicknameDuplicateOk: false,
+            nicknameDuplicateMessage: '',
+            gender: '',
+            birthYear: '',
+            birthMonth: '',
+            birthDay: '',
+            hasChild: '선택',
+            childBirthYear: '',
+            childBirthMonth: '',
+            childBirthDay: '',
+            name: '',
+            phoneNumberFirst: '010',
+            phoneNumberSecond: '',
+            phoneNumberThird: '',
+            postalCode: '',
+            roadNameAddress: '',
+            addressDetail: '',
+            addressNote: ''
+        };
+    }
+
+    handleRegister = () => {
+        const state = this.state;
+        if(!state.ageConfirm || !state.serviceTermConfirm || !state.privateInfoConfirm) {
+            alert('약관 동의에 체크를 해주세요.');
+            return;
+        }
+        if(!validateEmail(state.emailId + '@' + state.emailDomain)) {
+            alert('이메일 형식을 확인해주세요.');
+            return;
+        }
+        if(!state.emailDuplicateOk) {
+            alert('이메일 중복검사를 해주세요.');
+            return;
+        }
+        if(!validatePassword(state.password)) {
+            alert('비밀번호는 6~15자의 영문, 숫자 조합으로 입력해주세요.');
+            return;
+        }
+        if(state.password !== state.passwordConfirm) {
+            alert('비밀번호를 다시 확인해주세요.');
+            return;
+        }
+        if(state.nickname.length > 6 || state.nickname.length === 0) {
+            alert('닉네임을 6자 이내로 설정해 주세요.');
+            return;
+        }
+        if(!state.nicknameDuplicateOk) {
+            alert('닉네임 중복검사를 해주세요.');
+            return;
+        }
+        if(state.gender === '') {
+            alert('성별을 선택해 주세요.');
+            return;
+        }
+        if(state.birthYear === '' || state.birthMonth === '' || state.birthDay === '') {
+            alert('생년월일을 입력해 주세요.');
+            return;
+        }
+        if(state.hasChild === '선택') {
+            alert('자녀유무를 선택해주세요.');
+            return;
+        }
+        if(state.hasChild === '있음' && (state.childBirthYear === '' || state.childBirthMonth === '' || state.childBirthDay === '')) {
+            alert('자녀생년월일을 입력해주세요.');
+            return;
+        }
+
+        const data = new FormData();
+        // TODO: 홍보 및 마케팅 사용 여부
+        data.append('email', state.emailId + '@' + state.emailDomain);
+        data.append('password', state.password);
+        // TODO: 기본 프로필 사진
+        data.append('image', state.profileImage);
+        data.append('nickName', state.nickname);
+        data.append('gender', state.gender);
+        data.append('memberBirthYear', state.birthYear);
+        data.append('memberBirthMonth', state.birthMonth);
+        data.append('memberBirthDay', state.birthDay);
+        data.append('hasChild', state.hasChild === '있음');
+        if(state.hasChild === '있음') {
+            data.append('childBirthYear', state.childBirthYear);
+            data.append('childBirthMonth', state.childBirthMonth);
+            data.append('childBirthDay', state.childBirthDay);
+        }
+        if(state.name)
+            data.append('name', state.name);
+        if(state.phoneNumberFirst && state.phoneNumberSecond && state.phoneNumberThird)
+            data.append('phoneNum', state.phoneNumberFirst + '-' + state.phoneNumberSecond + '-' + state.phoneNumberThird);
+
+        axios({
+            method: 'post',
+            url: `${process.env.API_URL}/api/auth/register`,
+            data: data,
+            config: {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        }).then((res) => {
+            // TODO: redirect
+            alert('회원가입 성공!');
+        }).catch((res) => {
+            alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
+        });
+    };
+
+    onChange = (name, value, name2=null, value2=null, name3=null, value3=null) => {
+        const newState = {};
+        newState[name] = value;
+        if(name2 !== null && value2 !== null)
+            newState[name2] = value2;
+        if(name3 !== null && value3 !== null)
+            newState[name3] = value3;
+        // TODO: delete console log
+        this.setState(newState, () => {console.log(this.state)});
+    };
+
+    profileImageChange = (event) => {
+        if(this.state.profileImage !== USER_IMAGE)
+            URL.revokeObjectURL(this.state.profileImageUrl);
+
+        this.setState({
+            profileImage: event.target.files[0],
+            profileImageUrl: URL.createObjectURL(event.target.files[0])
+        });
+    };
+
+    onEmailDomainSelectChange = (event) => {
+        if(event.target.value === '직접 입력') {
+            this.setState({
+                emailDomain: '',
+                emailDomainDisable: false,
+                emailDuplicateOk: false,
+                emailDuplicateMessage: ''
+            });
+        } else {
+            this.setState({
+                emailDomain: event.target.value,
+                emailDomainDisable: true,
+                emailDuplicateOk: false,
+                emailDuplicateMessage: ''
+            });
+        }
+    };
+
+    emailDuplicateCheck = () => {
+        axios.get(`${process.env.API_URL}/api/auth/register/checkEmail?email=${this.state.emailId+'@'+this.state.emailDomain}`)
+            .then((res) => {
+                const isDuplicated = res.data.isDuplicated;
+                // TODO
+                const validateOk = validateEmail(this.state.emailId+'@'+this.state.emailDomain);
+                this.setState({
+                    emailDuplicateOk: !isDuplicated,
+                    emailDuplicateMessage: isDuplicated ?
+                        '중복되는 이메일입니다.' : '사용 가능한 이메일입니다.'
+                });
+            });
+    };
+
+    passwordCompare = () => {
+        const {password, passwordConfirm} = this.state;
+        if(password !== '' && passwordConfirm !== '' && password !== passwordConfirm)
+            return 'fail';
+        if(password === '' || passwordConfirm === '')
+            return '';
+        return 'success';
+    };
+
+    nicknameDuplicateCheck = () => {
+        axios.get(`${process.env.API_URL}/api/auth/register/checkNickName?nickName=${this.state.nickname}`)
+            .then((res) => {
+                const isDuplicated = res.data.isDuplicated;
+                // TODO
+                const validateOk = this.state.nickname.length > 0 && this.state.nickname.length <= 6;
+                this.setState({
+                    nicknameDuplicateOk: !isDuplicated,
+                    nicknameDuplicateMessage: isDuplicated ?
+                        '중복되는 닉네임입니다.' : '사용 가능한 닉네임입니다.'
+                });
+            });
+    };
+
     render() {
         return (
             <div className="signup-container">
@@ -21,7 +248,10 @@ export class Signup extends Component {
                             만 14세 이상입니다.
                         </span>
                         <span>
-                            <input type="checkbox" className="signup-agreement-age-box"/>
+                            <input type="checkbox" className="signup-agreement-age-box"
+                                   onChange={(e)=>this.onChange('ageConfirm', e.target.checked)}
+                                   checked={this.state.ageConfirm}
+                            />
                         </span>
                     </div>
                     <div className="signup-agreement-license">
@@ -29,7 +259,10 @@ export class Signup extends Component {
                             이용 약관 (필수)
                         </span>
                         <span>
-                            <input type="checkbox" className="signup-agreement-license-box"/>
+                            <input type="checkbox" className="signup-agreement-license-box"
+                                   onChange={(e) => this.onChange('serviceTermConfirm', e.target.checked)}
+                                   checked={this.state.serviceTermConfirm}
+                            />
                         </span>
                     </div>
                     <div className="signup-agreement-personal-info">
@@ -37,7 +270,10 @@ export class Signup extends Component {
                             개인정보취급방침 (필수)
                         </span>
                         <span>
-                            <input type="checkbox" className="signup-agreement-personal-info-box"/>
+                            <input type="checkbox" className="signup-agreement-personal-info-box"
+                                   onChange={(e) => this.onChange('privateInfoConfirm', e.target.checked)}
+                                   checked={this.state.privateInfoConfirm}
+                            />
                         </span>
                     </div>
                     <div className="signup-agreement-marketing">
@@ -45,7 +281,10 @@ export class Signup extends Component {
                             홍보 및 마케팅 사용(선택)
                         </span>
                         <span>
-                            <input type="checkbox" className="signup-agreement-marketing-box"/>
+                            <input type="checkbox" className="signup-agreement-marketing-box"
+                                   onChange={(e) => this.onChange('advertisementConfirm', e.target.checked)}
+                                   checked={this.state.advertisementConfirm}
+                            />
                         </span>
                     </div>
                 </div>
@@ -60,16 +299,27 @@ export class Signup extends Component {
                         </div>
                         <div className="signup-login-info-email-input">
                             <span className="signup-login-info-email-id">
-                                <input type="text" placeholder="    정확하게 입력해주세요."/>
+                                <input type="text" placeholder="정확하게 입력해주세요."
+                                       onChange={(e) => this.onChange('emailId', e.target.value, 'emailDuplicateOk', false, 'emailDuplicateMessage', '')}
+                                       value={this.state.emailId}
+                                       className={this.state.emailDuplicateMessage ? (this.state.emailDuplicateOk ? 'signup-input-success' : 'signup-input-fail') : ''}
+                                />
                             </span>
                             <span>
                                 @
                             </span>
                             <span className="signup-login-info-email-url">
-                                <input type="text" />
+                                <input type="text"
+                                       onChange={(e) => this.onChange('emailDomain', e.target.value, 'emailDuplicateOk', false, 'emailDuplicateMessage', '')}
+                                       value={this.state.emailDomain}
+                                       disabled={this.state.emailDomainDisable}
+                                       className={this.state.emailDuplicateMessage ? (this.state.emailDuplicateOk ? 'signup-input-success' : 'signup-input-fail') : ''}
+                                />
                             </span>
                             <span>
-                                <select id="signup-login-info-email-url-options">
+                                <select id="signup-login-info-email-url-options"
+                                        onChange={this.onEmailDomainSelectChange}
+                                >
                                     <option>직접 입력</option>
                                     <option>naver.com</option>
                                     <option>gmail.com</option>
@@ -78,9 +328,18 @@ export class Signup extends Component {
                                 </select>
                             </span>
                             <span>
-                                <button type="button" className="signup-login-info-email-check">중복 확인</button>
+                                <button type="button" className="signup-login-info-email-check" onClick={this.emailDuplicateCheck}>
+                                    중복 확인
+                                </button>
                             </span>
                         </div>
+                        {
+                            (this.state.emailDuplicateMessage!=='') ?
+                                (<div className={`signup-message-container ${this.state.emailDuplicateOk ? 'success' : 'fail'}`}>
+                                    {this.state.emailDuplicateMessage}
+                                </div>) :
+                                null
+                        }
                     </div>
                     <div className="signup-login-info-password">
                         <div className="signup-login-info-password-text">
@@ -92,7 +351,10 @@ export class Signup extends Component {
                             </span>
                         </div>
                         <div>
-                            <input type="password" className="signup-login-info-password-input"/>
+                            <input type="password"
+                                   className={"signup-login-info-password-input " + this.passwordCompare()}
+                                   onChange={(e) => this.onChange('password', e.target.value)}
+                            />
                         </div>
                     </div>
                     <div className="signup-login-info-password-check">
@@ -100,10 +362,19 @@ export class Signup extends Component {
                             비밀번호 확인
                         </div>
                         <div>
-                            <input type="password" className="signup-login-info-password-check-input"/>
+                            <input type="password"
+                                   className={"signup-login-info-password-input " + this.passwordCompare()}
+                                   onChange={(e) => this.onChange('passwordConfirm', e.target.value)}
+                            />
                         </div>
                     </div>
-
+                    {
+                        (this.passwordCompare()!=='') ?
+                            (<div className={`signup-message-container ${this.passwordCompare()}`}>
+                                {this.passwordCompare() === 'success' ? '확인되었습니다.' : '비밀번호가 일치하지 않습니다.'}
+                            </div>) :
+                            null
+                    }
                 </div>
                 <div className="signup-profile">
                     <div className="signup-profile-title">
@@ -115,10 +386,14 @@ export class Signup extends Component {
                         </div>
                         <div>
                             <span>
-                                <img src={USER_IMAGE} alt="" id="profile" />
+                                <img src={this.state.profileImageUrl} alt="" id="profile" />
                             </span>
                             <span>
-                                <button type="button" className="signup-profile-change-picture">사진 변경</button>
+                                <input type="file" name="profile-image-input"  id="profile-image-input"
+                                       onChange={this.profileImageChange} />
+                                <label htmlFor="profile-image-input" className="signup-profile-change-picture">
+                                    사진 변경
+                                </label>
                             </span>
                         </div>
                     </div>
@@ -133,12 +408,27 @@ export class Signup extends Component {
                         </div>
                         <div>
                             <span>
-                                <input type="text" className="signup-profile-nickname-input" />
+                                <input type="text" className={"signup-profile-nickname-input " +
+                                    (this.state.nicknameDuplicateMessage ?
+                                    (this.state.nicknameDuplicateOk ? 'signup-input-success' : 'signup-input-fail') : '')}
+                                       onChange={(e) => this.onChange('nickname', e.target.value, 'nicknameDuplicateOk', false, 'nicknameDuplicateMessage', '')}
+                                />
                             </span>
                             <span>
-                                <button type="button" className="signup-profile-nickname-check">중복 확인</button>
+                                <button type="button" className="signup-profile-nickname-check"
+                                        onClick={()=>this.nicknameDuplicateCheck()}
+                                >
+                                    중복 확인
+                                </button>
                             </span>
                         </div>
+                        {
+                            (this.state.nicknameDuplicateMessage!=='') ?
+                                (<div className={`signup-message-container ${this.state.nicknameDuplicateOk ? 'success' : 'fail'}`}>
+                                    {this.state.nicknameDuplicateMessage}
+                                </div>) :
+                                null
+                        }
                     </div>
                     <div className="signup-profile-gender">
                         <div className="signup-profile-gender-text">
@@ -146,10 +436,18 @@ export class Signup extends Component {
                         </div>
                         <div className="signup-profile-gender-buttons">
                             <span>
-                                <button type="button" className="signup-profile-gender-women">여자</button>
+                                <button type="button" className={'signup-profile-gender-select-button'+(this.state.gender==='female'?' selected':'')}
+                                        onClick={()=>this.onChange('gender', 'female')}
+                                >
+                                    여자
+                                </button>
                             </span>
                             <span>
-                                <button type="button" className="signup-profile-gender-men">남자</button>
+                                <button type="button" className={'signup-profile-gender-select-button'+(this.state.gender==='male'?' selected':'')}
+                                        onClick={()=>this.onChange('gender', 'male')}
+                                >
+                                    남자
+                                </button>
                             </span>
                         </div>
                     </div>
@@ -159,67 +457,40 @@ export class Signup extends Component {
                         </div>
                         <div className="signup-profile-birth-select">
                             <span>
-                                <select id="year">
+                                <select id="year"
+                                        onChange={(e)=>this.onChange('birthYear', e.target.value)}
+                                        value={this.state.birthYear}
+                                >
                                     <option></option>
-                                    <option>2010</option>
-                                    <option>2011</option>
-                                    <option>2012</option>
-                                    <option>2013</option>
-                                    <option>2014</option>
-                                    <option>2015</option>
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
+                                    {
+                                        range(1930, new Date().getFullYear()).map((num) => (
+                                            <option key={num}>{num}</option>
+                                        ))
+                                    }
                                 </select>
-                                <select id="month">
+                                <select id="month"
+                                        onChange={(e)=>this.onChange('birthMonth', e.target.value)}
+                                        value={this.state.birthMonth}
+                                >
                                     <option></option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>                            
+                                    {
+                                        this.state.birthYear ?
+                                        range(1, 12).map((num) => (
+                                            <option key={num}>{num}</option>
+                                        )) : null
+                                    }
                                 </select>
-                                <select id="day">
+                                <select id="day"
+                                        onChange={(e)=>this.onChange('birthDay', e.target.value)}
+                                        value={this.state.birthDay}
+                                >
                                     <option></option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
-                                    <option>13</option>
-                                    <option>14</option>
-                                    <option>15</option>
-                                    <option>16</option>
-                                    <option>17</option>
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                    <option>23</option>
-                                    <option>24</option>
-                                    <option>25</option>
-                                    <option>26</option>
-                                    <option>27</option>
-                                    <option>28</option>
-                                    <option>29</option>
-                                    <option>30</option>
-                                    <option>31</option>
+                                    {
+                                        this.state.birthMonth ?
+                                        range(1, lastDay(Number(this.state.birthYear), Number(this.state.birthMonth))).map((num) => (
+                                            <option key={num}>{num}</option>
+                                        )) : null
+                                    }
                                 </select>
                             </span>
                         </div>
@@ -229,7 +500,9 @@ export class Signup extends Component {
                             자녀유무
                         </div>
                         <div className="signup-profile-kids-select">
-                            <select id="kids">
+                            <select id="kids"
+                                    onChange={(e)=>this.onChange('hasChild', e.target.value)}
+                            >
                                 <option>선택</option>
                                 <option>있음</option>
                                 <option>없음</option>
@@ -242,67 +515,42 @@ export class Signup extends Component {
                         </div>
                         <div className="signup-profile-kids-birth-select">
                             <span>
-                                <select id="kids-birth-year">
+                                <select id="kids-birth-year"
+                                        onChange={(e)=>this.onChange('childBirthYear', e.target.value)}
+                                        value={this.state.childBirthYear}
+                                >
                                     <option></option>
-                                    <option>2010</option>
-                                    <option>2011</option>
-                                    <option>2012</option>
-                                    <option>2013</option>
-                                    <option>2014</option>
-                                    <option>2015</option>
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
+                                    {
+                                        this.state.hasChild === '있음' ?
+                                        range(1990, new Date().getFullYear()).map((num) => (
+                                            <option key={num}>{num}</option>
+                                        )) :
+                                            null
+                                    }
                                 </select>
-                                <select id="kids-birth-month">
+                                <select id="kids-birth-month"
+                                        onChange={(e)=>this.onChange('childBirthMonth', e.target.value)}
+                                        value={this.state.childBirthMonth}
+                                >
                                     <option></option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>                            
+                                    {
+                                        this.state.childBirthYear ?
+                                            range(1, 12).map((num) => (
+                                                <option key={num}>{num}</option>
+                                            )) : null
+                                    }
                                 </select>
-                                <select id="kids-birth-day">
+                                <select id="kids-birth-day"
+                                        onChange={(e)=>this.onChange('childBirthDay', e.target.value)}
+                                        value={this.state.childBirthDay}
+                                >
                                     <option></option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
-                                    <option>13</option>
-                                    <option>14</option>
-                                    <option>15</option>
-                                    <option>16</option>
-                                    <option>17</option>
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                    <option>23</option>
-                                    <option>24</option>
-                                    <option>25</option>
-                                    <option>26</option>
-                                    <option>27</option>
-                                    <option>28</option>
-                                    <option>29</option>
-                                    <option>30</option>
-                                    <option>31</option>
+                                    {
+                                        this.state.childBirthMonth ?
+                                            range(1, lastDay(Number(this.state.childBirthYear), Number(this.state.childBirthMonth))).map((num) => (
+                                                <option key={num}>{num}</option>
+                                            )) : null
+                                    }
                                 </select>
                             </span>
                         </div>
@@ -318,7 +566,10 @@ export class Signup extends Component {
                             실명
                         </div>
                         <div>
-                            <input type="text"  className="signup-optional-info-name-input" />
+                            <input type="text"  className="signup-optional-info-name-input"
+                                   onChange={(e)=>this.onChange('name', e.target.value)}
+                                   value={this.state.name}
+                            />
                         </div>
                     </div>
                     <div className="signup-optional-info-phone">
@@ -327,7 +578,10 @@ export class Signup extends Component {
                         </div>
                         <div className="signup-optional-info-phone-input">
                             <span>
-                                <select id="phone">
+                                <select id="phone"
+                                        onChange={(e)=>this.onChange('phoneNumberFirst', e.target.value)}
+                                        value={this.state.phoneNumberFirst}
+                                >
                                     <option>010</option>
                                     <option>011</option>
                                     <option>017</option>
@@ -339,17 +593,26 @@ export class Signup extends Component {
                                 -
                             </span>
                             <span>
-                                <input type="text" className="signup-optional-info-phone-middle" />
+                                <input type="text" className="signup-optional-info-phone-middle"
+                                       onChange={(e)=>this.onChange('phoneNumberSecond', e.target.value)}
+                                       value={this.state.phoneNumberSecond}
+                                />
                             </span>
                             <span>
                                 -
                             </span>
                             <span>
-                            <input type="text" className="signup-optional-info-phone-last" />
+                            <input type="text" className="signup-optional-info-phone-last"
+                                   onChange={(e)=>this.onChange('phoneNumberThird', e.target.value)}
+                                   value={this.state.phoneNumberThird}
+                            />
                             </span>
                         </div>
                     </div>
                 </div>
+                <button className="signup-register-button" onClick={()=>this.handleRegister()}>
+                    회원가입
+                </button>
             </div>
         );
     }

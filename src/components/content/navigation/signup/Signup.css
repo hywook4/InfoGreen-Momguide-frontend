@@ -15,6 +15,10 @@
     height: 100%;
     overflow-y: hidden;
 }
+.signup-container input {
+    padding-left: 10px;
+}
+
 .signup-banner {
     background-image: url("../../../../assets/images/banner.png");
     background-size: cover;
@@ -94,9 +98,22 @@
     border: 0.7px solid rgba(218, 218, 218, 0.5);
 }
 
-.signup-login-info-email-id input{
-    color: rgba(218, 218, 218, 0.5);
+.signup-login-info-email-id input.signup-input-success, .signup-login-info-email-url input.signup-input-success{
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid green;
 }
+
+.signup-login-info-email-id input.signup-input-fail, .signup-login-info-email-url input.signup-input-fail{
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid red;
+}
+
+.signup-login-info-email-id input::placeholder{
+    color: rgba(170, 170, 170, 1);
+}
+
 .signup-login-info-email-url {
     margin-right: 10px;
 }
@@ -129,7 +146,20 @@ select#signup-login-info-email-url-options {
     width: 135px;
     height: 40px;
     border-radius: 10px;
+    border: none;
     background-color: rgba(218, 218, 218, 0.5);
+}
+
+.signup-message-container {
+
+}
+
+.signup-message-container.success {
+    color: green;
+}
+
+.signup-message-container.fail {
+    color: red;
 }
 
 .signup-login-info-password-text {
@@ -137,7 +167,7 @@ select#signup-login-info-email-url-options {
 }
 
 .signup-login-info-password-text span:last-child {
-    color: rgba(218, 218, 218, 1);
+    color: rgba(170, 170, 170, 1);
 }
 
 .signup-login-info-password-input {
@@ -148,12 +178,12 @@ select#signup-login-info-email-url-options {
     border: 0.7px solid rgba(218, 218, 218, 0.5);
 }
 
-.signup-login-info-password-check-input {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    width: 360px;
-    height: 40px;
-    border: 0.7px solid rgba(218, 218, 218, 0.5);
+.signup-login-info-password-input.success {
+    border: 0.7px solid green;
+}
+
+.signup-login-info-password-input.fail {
+    border: 0.7px solid red;
 }
 
 .signup-profile-picture-text {
@@ -166,12 +196,24 @@ img#profile {
     width: 80px;
     height: 80px;
     margin-right: 20px;
+    border-radius: 50%;
+    border: 0.5px solid #32B8A4;
+}
+#profile-image-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 .signup-profile-change-picture {
     width: 135px;
     height: 40px;
     border-radius: 10px;
     background-color: rgba(218, 218, 218, 0.5);
+    text-align: center;
+    line-height: 2.8;
 }
 
 .signup-profile-nickname {
@@ -186,7 +228,7 @@ img#profile {
 }
 
 .signup-profile-nickname-text span:last-child {
-    color: rgba(218, 218, 218, 1);
+    color: rgba(170, 170, 170, 1);
 }
 
 .signup-profile-nickname-input {
@@ -196,10 +238,19 @@ img#profile {
     margin-right: 15px;
 }
 
+.signup-profile-nickname-input.signup-input-success {
+    border: 0.7px solid green;
+}
+
+.signup-profile-nickname-input.signup-input-fail {
+    border: 0.7px solid red;
+}
+
 .signup-profile-nickname-check {
     width: 135px;
     height: 40px;
     border-radius: 10px;
+    border: none;
     background-color: rgba(218, 218, 218, 0.5);
 }
 
@@ -218,13 +269,26 @@ img#profile {
     margin-left: 10px;
 }
 
-.signup-profile-gender-women, .signup-profile-gender-men {
+.signup-profile-gender-select-button {
     width: 135px;
     height: 40px;
-    border: 2px solid rgba(218, 218, 218, 0.5);
-    color: rgba(218, 218, 218, 0.5);
+    border: 2px solid rgba(170, 170, 170, 0.5);
+    color: rgba(170, 170, 170, 1);
     border-radius: 10px;
     background-color: white;
+}
+
+.signup-profile-gender-select-button:hover {
+    cursor: pointer;
+}
+
+.signup-profile-gender-select-button:focus {
+    outline: none;
+}
+
+.signup-profile-gender-select-button.selected {
+    color: green;
+    border-color: green;
 }
 
 .signup-profile-birth, .signup-profile-kids{
@@ -278,4 +342,19 @@ select#phone {
     margin-left: 5px;
     margin-right: 5px;
     border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-register-button {
+    margin-top: 40px;
+    width: 100%;
+    height: 50px;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+    background-color: #32B8A4;
+}
+
+.signup-register-button:hover {
+    cursor: pointer;
 }
