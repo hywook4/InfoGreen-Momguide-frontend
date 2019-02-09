@@ -5,7 +5,6 @@ export class Signup extends React.Component{
     render(){
         return(
             <div className="container">
-           
                <div className="login-container">
                     <div>
                         <div className="login-btn">

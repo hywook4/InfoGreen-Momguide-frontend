@@ -55,7 +55,9 @@ class LoginInput extends Component {
                     <button type="button" className="logininput-login-button">로그인</button>
                 </div>
                 <div className="logininput-password-and-join">
-                    <span className="logininput-find-password">비밀번호 찾기</span>
+                    <Link to="/login/findpassword">
+                        <span className="logininput-find-password">비밀번호 찾기</span>
+                    </Link>
                     <Link to="/signup">
                         <span className="logininput-sign-up">회원가입</span>
                     </Link>

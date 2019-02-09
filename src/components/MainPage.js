@@ -7,6 +7,7 @@ import Search from './content/search/Search';
 import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
 import {Login} from './content/navigation/login/Login';
+import {FindPassword} from './content/navigation/login/FindPassword';
 import {Signup} from './content/navigation/signup/Signup';
 import {Request} from './content/navigation/request/Request';
 import {TipEvent} from './content/tipEvent/TipEvent';
@@ -52,6 +53,7 @@ export const MainPage = () => {
                                         <Route exact path="/request" component={Request} />
                                         <Route path="/signup" component={Signup} />
                                         <Route exact path="/login" component={Login} />
+                                        <Route path="/login/findpassword" component={FindPassword} />
                                         <Route exact path="/events" component={Events} />
                                         <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
                                         <Route exact path="/tips" component={Tips} />
@@ -60,6 +62,7 @@ export const MainPage = () => {
                                         <Route path="/request/request-comment" component={RequestComment} />
                                         <Route path="/request/contact-us" component={ContactUs} />
                                         <Route path="/request/loggedin" component={LoggedIn} />
+                                        <Route path="/findpassword" component={FindPassword} />
                                     </Switch>
                                 </div>
                             </React.Fragment>
