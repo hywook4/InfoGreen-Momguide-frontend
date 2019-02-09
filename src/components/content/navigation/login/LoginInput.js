@@ -4,8 +4,37 @@ import NAVER_LOGIN from '../../../../assets/images/naver.svg';
 import FACEBOOK_LOGIN from '../../../../assets/images/facebook.svg';
 import KAKAO_LOGIN from '../../../../assets/images/kakao.svg';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions';
+
 class LoginInput extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: '',
+            password: '',
+            keepLogin: true,
+            saveId: true
+        }
+    }
+
+
+    handleEmailChange = (e) => {
+        const {value} = e.target;
+        this.setState({
+            email: value
+        });
+    }
+
+    handlePwChange = (e) => {
+        const {value} = e.target;
+        this.setState({
+            password: value
+        });
+    }
 
     handleCheck = (e) => {
         const target = e.target;
@@ -16,29 +45,115 @@ class LoginInput extends Component {
         }
         if(option === true) {
             target.checked = true;
+            this.setState({
+                keepLogin: target.checked
+            });
+
         } else if(option === false) {
             target.checked = false;
+            this.setState({
+                keepLogin: target.checked
+            });
+        }
+    }
+
+    handleLoginClick = (e) => {
+
+        const { handleLogin } = this.props;
+        if(this.state.email === '' || this.state.password === '') {
+            alert('이메일 또는 비밀번호를 입력해주세요.');
+            return;
+        }
+
+        if(this.state.keepLogin === true) {
+            axios({
+                method: 'post',
+                url: process.env.API_URL + '/api/auth/login', 
+                data: {
+                    email: this.state.email,
+                    password: this.state.password    
+                }
+            })
+            .then((res) => {
+                if('error' in res.data) {
+                    alert('이메일 또는 비밀번호를 확인해주세요.');
+                    console.log(res.error);
+                    this.setState({
+                        email: '',
+                        password: ''
+                    });
+                    return;
+                }
+
+                localStorage.setItem("loginToken", res.data.token)
+                if('token' in res.data) {
+                    handleLogin(res.data.token);
+                }
+            }).catch((err) => {
+                alert('유효하지 않은 로그인입니다.');
+                console.log(err);
+                this.setState({
+                    email: '',
+                    passowrd: ''
+                });
+                return;
+            });
+        } else if (this.state.keepLogin === false) {
+            axios({
+                method: 'post',
+                url: process.env.API_URL + '/api/auth/login', 
+                data: {
+                    email: this.state.email,
+                    password: this.state.password    
+                }
+            })
+            .then((res) => {
+                if('error' in res.data) {
+                    alert('이메일 또는 비밀번호를 확인해주세요.');
+                    console.log(res.error);
+                    this.setState({
+                        email: '',
+                        password: ''
+                    });
+                    return;
+                }
+                if('token' in res.data) {
+
+                }
+            }).catch((err) => {
+                alert('유효하지 않은 로그인입니다.');
+                console.log(err);
+                this.setState({
+                    email: '',
+                    passowrd: ''
+                });
+                return;
+            });
         }
     }
 
     render() {
         const {
+            handleEmailChange,
+            handlePwChange,
             handleCheck,
+            handleLoginClick
         } = this;
+
         return (
             <div className="logininput-login-part">
                 <div className="logininput-id">
-                    <input type="text" placeholder="아이디를 입력하세요."/>
+                    <input type="text" placeholder="아이디를 입력하세요." onChange={handleEmailChange}/>
                 </div>
                 <div className="logininput-password">
-                    <input type="password" placeholder="비밀번호를 입력하세요."/>
+                    <input type="password" placeholder="비밀번호를 입력하세요." onChange={handlePwChange}/>
                 </div>
                 <div>
                     <div className="logininput-login-options">
                         <div className="logininput-keep-login-box">
                             <input type="checkbox" id="keep" onClick={handleCheck}/>
                         </div>
-                        <label for="keep" className="logininput-keep-login-text">
+                        <label htmlFor="keep" className="logininput-keep-login-text">
                             로그인 유지
                         </label>
                     </div>
@@ -46,13 +161,13 @@ class LoginInput extends Component {
                         <div className="logininput-save-id-box">
                             <input type="checkbox" id="save"/>
                         </div>
-                        <label for="save" className="logininput-save-id-text">
+                        <label htmlFor="save" className="logininput-save-id-text">
                             아이디 저장
                         </label>
                     </div>
                 </div>
                 <div className="logininput-buttons">
-                    <button type="button" className="logininput-login-button">로그인</button>
+                    <button type="button" className="logininput-login-button" onClick={handleLoginClick}>로그인</button>
                 </div>
                 <div className="logininput-password-and-join">
                     <Link to="/login/findpassword">
@@ -100,4 +215,23 @@ class LoginInput extends Component {
     }
 }
 
-export default LoginInput;
+const mapStateToProps = (state) => {
+    return ({
+        userInfo: state.auth.userInfo,
+        token: state.auth.token
+    });
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        storeInfo: (info) => {
+            return dispatch(actions.storeInfo());
+        },
+        handleLogin: (token) => {
+            return dispatch(actions.login(token));
+        }
+    });
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginInput);
