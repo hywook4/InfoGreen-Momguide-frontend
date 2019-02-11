@@ -1,0 +1,162 @@
+.myproduct-container{
+    width: 100%;
+    min-height: 600px;
+    background-color: lightgoldenrodyellow;
+}
+
+.myproduct-header{
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid gray;
+}
+
+.header-checkbox{
+    width: 45px;
+    height: 100%;
+    display: inline-block;
+    border-right: 1px solid black;
+    padding: 12px 15px;
+}
+
+.header-type{
+    width: 120px;
+    height: 100%;
+    display: inline-block;
+    border-right: 1px solid black;
+    vertical-align: top;
+    padding: 10px 1px;
+}
+
+.header-type select{
+    background: none;
+    border: none;
+    color: skyblue;
+}
+
+.header-type select:focus{
+    border: none;
+}
+
+.header-name{
+    width: 260px;
+    height: 100%;
+    display: inline-block;
+    border-right: 1px solid black;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    color: gray;
+}
+
+.header-info{
+    width: 260px;
+    height: 100%;
+    display: inline-block;
+    border-right: 1px solid black;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    color: gray;
+}
+
+.header-delete{
+    width: 60px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    color: gray;
+}
+
+.myproduct-card-box{
+    width: 100%;
+    min-height: 1000px;
+}
+
+.myproduct-card{
+    width: 100%;
+    height: 100px;
+    border-bottom: 1px solid gray;
+}
+
+.card-checkbox{
+    width: 45px;
+    height: 100%;
+    border-right: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+    padding: 40px 15px;
+}
+
+.card-image{
+    height: 100%;
+    width: 120px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px 25px;
+    border-right: 1px solid black;
+}
+
+.myproduct-img{
+    height: 70px;
+    width: 70px;
+}
+
+.myproduct-img img{
+    height: 70px;
+    width: 70px;
+    object-fit: contain;
+}
+
+.card-name{
+    height: 100%;
+    width: 370px;
+    display: inline-block;
+    border-right: 1px solid black;
+    padding: 25px 0px;
+}
+
+.card-name p{
+    color: gray;
+    font-size: 11px;
+    margin-bottom: 5px;
+
+}
+
+.card-name h5{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.card-info{
+    width: 160px;
+    height: 100%;
+    display: inline-block;
+    border-right: 1px solid black;
+    vertical-align: top;
+    padding: 30px 0px;
+}
+
+.card-info-icon{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 4px;
+}
+
+.card-info-icon img{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: inline-block;
+}
+
+.card-delete{
+    width: 55px;
+    height: 100%;
+    display: inline-block;
+    border-right: 1px solid black;
+    vertical-align: top;
+    padding: 40px 0px;
+}

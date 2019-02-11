@@ -4,12 +4,14 @@ import './MyProfile.css';
 export class FollowCard extends React.Component{
 
     state = ({
-       
+    
     })
 
 
     componentDidMount=()=>{
-        
+        this.setState({
+            tab: this.props.tab
+        })
     };
 
     cancelFollow = () => {
@@ -30,10 +32,10 @@ export class FollowCard extends React.Component{
                 <div className="follow-info-box">
                     <div className="follow-info">{data.age}</div>
                     <div className="follow-info">{data.sex}</div>
-                    <div className="follow-info">자녀{data.childAge}세</div>
+                    <div className="follow-info">자녀{data.childAge}세 {this.state.tab}</div>
                 </div>
-                <div className="follow-cancel">
-                    <a onClick={this.cancelFollow}><div className="cancel-button">취소하기</div></a>
+                <div className="follow-cancel"> 
+                        <div className="cancel-button" onClick={this.cancelFollow}>취소하기</div>
                 </div>
             </div>
         )

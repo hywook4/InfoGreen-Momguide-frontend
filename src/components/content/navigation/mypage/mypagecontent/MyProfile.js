@@ -137,7 +137,7 @@ export class MyProfile extends React.Component{
         return(
             <React.Fragment>
                 <div className="profile-card">
-                    <div className="profile-img"><img>{/*here goes profile pic*/}</img></div>
+                    <div className="profile-img"><img alt="">{/*here goes profile pic*/}</img></div>
                     <div className="profile-info-box">
                         <div className="profile-nickname">NickName</div>
                         <div className="profile-info">Year</div>
@@ -148,27 +148,23 @@ export class MyProfile extends React.Component{
                 <div className="follow-container">
                     <div className="follow-tab-box">
                         <div className="follow-tabs">
-                            <a onClick={()=> this.changeTab("팔로워")}>
-                                <div className={`tab ${this.state.tab === "팔로워" ? "tab-selected":""}`}>
-                                    <h1>24</h1>
-                                    <p>팔로워</p>
-                                </div>
-                            </a>
-                            <a onClick={() => this.changeTab("팔로윙")}>
-                                <div className={`tab ${this.state.tab === "팔로윙" ? "tab-selected":""}`}>
-                                    <h1>30</h1>
-                                    <p>팔로잉</p>
-                                </div>
-                            </a>
+                            <div className={`tab ${this.state.tab === "팔로워" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로워")}>
+                                <h1>24</h1>
+                                <p>팔로워</p>
+                            </div>
+                            <div className={`tab ${this.state.tab === "팔로잉" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로잉")}>
+                                <h1>30</h1>
+                                <p>팔로잉</p>
+                            </div>
                         </div>
                     </div>
                     <div className="follow-card-box">
                         { this.state.tab === "팔로워" ? 
-                            dummyFollower.map((d, i) => <FollowCard data={d} key={i} /> ) :
-                            dummyFollowee.map((d, i) => <FollowCard data={d} key={i} /> )
+                            dummyFollower.map((d, i) => <FollowCard data={d} tab={this.state.tab} key={i} /> ) :
+                            dummyFollowee.map((d, i) => <FollowCard data={d} tab={this.state.tab} key={i} /> )
                         }
 
-                        <a onClick={this.addCards}><div className="more-follow-card">더보기</div></a>
+                        <div className="more-follow-card" onClick={this.addCards}>더보기</div>
                     </div>
                 </div>
             </React.Fragment>
