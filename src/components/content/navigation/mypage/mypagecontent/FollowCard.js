@@ -1,0 +1,42 @@
+import React from 'react';
+import './MyProfile.css';
+
+export class FollowCard extends React.Component{
+
+    state = ({
+       
+    })
+
+
+    componentDidMount=()=>{
+        
+    };
+
+    cancelFollow = () => {
+        console.log(this.props.data.nickName + " 의 팔로윙이 취소됩니다");
+    }
+   
+    userInfo = () => {
+        console.log(this.props.data.nickName +" 의 정보를 보러 갑니다");
+    }
+
+    render(){
+        const data = this.props.data;
+
+        return(
+            <div className="follow-card">
+                <div className="follow-img-box"><div className="follow-img"></div></div>
+                <div className="follow-nickname"><a onClick={this.userInfo}>{data.nickName}</a></div>
+                <div className="follow-info-box">
+                    <div className="follow-info">{data.age}</div>
+                    <div className="follow-info">{data.sex}</div>
+                    <div className="follow-info">자녀{data.childAge}세</div>
+                </div>
+                <div className="follow-cancel">
+                    <a onClick={this.cancelFollow}><div className="cancel-button">취소하기</div></a>
+                </div>
+            </div>
+        )
+        
+    }
+}

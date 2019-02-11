@@ -4,8 +4,9 @@ import {Link} from 'react-router-dom';
 
 export class MyPageMenu extends React.Component{
 
+
     state = {
-        
+        currentPage: "내 프로필"
     };
 
     
@@ -13,6 +14,13 @@ export class MyPageMenu extends React.Component{
     componentDidMount=()=>{
         
     };
+
+    changePage = (page) => {
+        this.setState({
+            currentPage: page
+        })
+        this.props.changeHeader(page);
+    }
 
 
     render(){
@@ -33,7 +41,7 @@ export class MyPageMenu extends React.Component{
                 menu:'우리집 화학제품'
             },
             {
-                path:'/dib-product',
+                path:'/dib-products',
                 menu:'찜한 제품'
             }
         ]
@@ -63,19 +71,22 @@ export class MyPageMenu extends React.Component{
                     <li className="mypage-category-box">
                         <p>나의 계정</p>
                         <ul className="mypage-category-list">
-                            {myAccount.map((d,i)=><li key={i}><Link to={'/mypage' + d.path}>{d.menu}</Link></li>)}
+                            {myAccount.map((d,i)=><li key={i}><Link to={'/mypage' + d.path} 
+                            onClick={(e) => this.changePage(d.menu)}>{d.menu}</Link></li>)}
                         </ul>
                     </li>
                     <li className="mypage-category-box">
                         <p>나의 관심</p>
                         <ul className="mypage-category-list">
-                            {myInterest.map((d,i)=><li key={i}><Link to={'/mypage' + d.path}>{d.menu}</Link></li>)}
+                            {myInterest.map((d,i)=><li key={i}><Link to={'/mypage' + d.path}
+                            onClick={(e) => this.changePage(d.menu)}>{d.menu}</Link></li>)}
                         </ul>
                     </li>
                     <li className="mypage-category-box">
                         <p>나의 활동</p>
                         <ul className="mypage-category-list">
-                            {myActivity.map((d,i)=><li key={i}><Link to={'/mypage' + d.path}>{d.menu}</Link></li>)}
+                            {myActivity.map((d,i)=><li key={i}><Link to={'/mypage' + d.path}
+                            onClick={(e) => this.changePage(d.menu)}>{d.menu}</Link></li>)}
                         </ul>
                     </li>
                 </ul>
