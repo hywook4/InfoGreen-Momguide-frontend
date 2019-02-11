@@ -1,0 +1,132 @@
+.mypage-container{
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.mypage-page{
+    width: 980px;
+    margin: 8px auto;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.banner {
+    background-image: url("../../../../assets/images/banner.png");
+    background-size: cover;
+    width: 980px;
+    height: 110px;
+    background-position: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-size: 25px;
+}
+
+.mypage-box{
+    width: 980px;
+    min-height: 100px;
+    overflow: hidden;
+    margin: 30px auto;
+    
+}
+
+
+/* menu style 
+//////////////////////////////////
+//////////////////////////////////
+*/
+
+.mypage-menu{
+    width: 165px;
+    height: 505px;
+    border: 1px solid gray;
+    float: left;
+    margin-top: 35px;
+}
+
+ul.mypage-category{
+    /* width: 60%; */
+    margin: 0 auto;
+    display: table;
+    width: 165px;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 0;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+
+li.mypage-category-box{
+    width: 100%;
+    border-bottom: 1px solid gray;
+    padding-bottom: 16px;
+}
+
+ul.mypage-category-list{
+    
+    list-style-type: none;
+    padding-left: 35px;
+}
+
+ul.mypage-category-list li{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+ul.mypage-category-list li a{
+    color: gray;
+    font-size: 12px;
+}
+
+ul.mypage-category li p{
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: black;
+    letter-spacing: 1px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* contents style
+//////////////////////////////////
+//////////////////////////////////
+*/
+
+.mypage-content{
+    width: 750px;
+    min-height: 100px;
+    overflow: hidden;
+    float: right;
+}
+
+.content-header{
+    min-height: 35px;
+    overflow: hidden;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+
+.content-header h2{
+    font-size: 18px;
+    color: black;
+    float: left;
+    font-weight: bold;
+}
+
+.content-header p{
+    margin-top: 10px;
+    font-size: 10px;
+    color: gray;
+    float: right;
+}
+
+.content-body{
+    min-height: 40px;
+    overflow: hidden;
+    width: 100%;
+}

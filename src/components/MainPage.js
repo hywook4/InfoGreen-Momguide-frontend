@@ -18,6 +18,8 @@ import {ContactUs} from './content/navigation/request/contactUs/ContactUs';
 import {ViewMore} from './common/ViewMore/ViewMore';
 import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdSpec';
 import {About} from './content/navigation/about/About';
+import {MyPage} from './content/navigation/mypage/MyPage';
+
 
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
@@ -60,6 +62,7 @@ export const MainPage = () => {
                                         <Route path="/request/request-comment" component={RequestComment} />
                                         <Route path="/request/contact-us" component={ContactUs} />
                                         <Route path="/request/loggedin" component={LoggedIn} />
+                                        <Route path="/mypage" component={MyPage} />
                                     </Switch>
                                 </div>
                             </React.Fragment>
