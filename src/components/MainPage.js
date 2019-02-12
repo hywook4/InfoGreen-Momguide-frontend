@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './MainPage.css';
-import {Header} from './content/header/Header';
+import Header from './content/header/Header';
 import {Slider} from './content/slider/Slider';
 import {Footer} from './content/footer/Footer';
 import Search from './content/search/Search';
@@ -23,11 +23,6 @@ import history from '../history/history';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Router, Route, Switch} from "react-router-dom"
 
-import axios from 'axios';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
-
-
 const renderHome=()=>{
     return (
         <React.Fragment>
@@ -38,7 +33,6 @@ const renderHome=()=>{
         </React.Fragment>
     )
 };
-
 export class MainPage extends Component {
     render () {
         return (

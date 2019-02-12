@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Header.css';
 import MOMGUIDE_LOGO_WHITE from '../../../assets/images/MOMGUIDE_LOGO_WHITE.png';
- 
-import { Link } from "react-router-dom";
+import USER_ALARM from '../../../assets/images/alarm_on.png';
 
-export const Header = ()=>{
-    
-    return(
-        <div className="navbar header">
+import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+class Header extends Component {
+    render() {
+        console.log(this.props.userNickName + '\ndebug');
+        const loginTab =
+            ((localStorage.getItem('loginToken') !== '') ?
+                (<div className="profile-tab">
+                    <li className="header-user-profile">
+                        <img src={this.props.userPhotoUrl} alt="" id="profile" />
+                    </li>
+                    <li className="header-user-nickname">
+                        {this.props.userNickName}
+                    </li>
+                    <li className="header-user-alarm">
+                        <img src={USER_ALARM} alt="" id="alram" />
+                    </li>
+                </div>) :
+                (<div className="header-signup-and-login">
+                    <li className="nav-item active">
+                        <Link to="/login" className="nav-link">로그인</Link>
+                    </li>
+                    <li className="nav-item active">
+                        <Link to="/signup" className="nav-link">가입하기</Link>
+                    </li>
+                </div>)
+                );
+        return(
+            <div className="navbar header">
             <div className="navbar_container">
                 <div className="navbar-inner">
                     <Link to="/">
@@ -41,18 +65,24 @@ export const Header = ()=>{
                             <input type="text" placeholder="검색하기" onFocus={function () {window.location.replace("/category");}}/>
                             <i className="fa fa-search" aria-hidden="true"></i>
                         </li>
-                        <li className="nav-item active">
-                            <Link to="/signup" className="nav-link">가입하기</Link>
-                        </li>
-                        <li className="nav-item active">
-                            <Link to="/login" className="nav-link">로그인</Link>
-                        </li>
+                        {loginTab}
                     </ul>
                 </div>
             </div>
-
-        </div>
- 
-    )
-
+            </div>
+        )
+        
+    }
 };
+
+const mapStateToProps = (state) => {
+    console.log(state.auth.userNickName);
+    return({
+        userNickName: state.auth.userNickName,
+        userPhotoUrl: state.auth.userPhoto
+    });
+}
+
+const mapDispatchToProps = null;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

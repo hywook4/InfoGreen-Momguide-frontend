@@ -19,7 +19,10 @@ export default (state=initialState, action) => {
         case types.LOGOUT:
             return {
                 ...state,
-                userInfo: null,
+                userIndex: null,
+                userEmail: null,
+                userNickName: null,
+                userPhoto: null,
                 token: ''
             };
         default:

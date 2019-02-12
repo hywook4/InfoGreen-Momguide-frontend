@@ -118,7 +118,7 @@ class LoginInput extends Component {
                     return;
                 }
                 if('token' in res.data) {
-
+                    handleLogin(res.data.token);
                 }
             }).catch((err) => {
                 alert('유효하지 않은 로그인입니다.');
@@ -215,12 +215,7 @@ class LoginInput extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return ({
-        userInfo: state.auth.userInfo,
-        token: state.auth.token
-    });
-}
+const mapStateToProps = null;
 
 const mapDispatchToProps = (dispatch) => {
     return ({

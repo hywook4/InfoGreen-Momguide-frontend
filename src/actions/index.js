@@ -9,7 +9,6 @@ export const storeInfo = (info) => ({
 
 export const login = (token) => {
     return (dispatch) => {
-        console.log(token);
         axios({
             method: 'get',
             url: process.env.API_URL + '/api/auth/info', 
