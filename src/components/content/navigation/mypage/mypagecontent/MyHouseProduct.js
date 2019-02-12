@@ -7,8 +7,9 @@ export class MyHouseProduct extends React.Component{
 
     state = ({
         mainCategory: "living",
-        deleteList: []
-    })
+        deleteList: [ false, false, false, false, false, false, false, false, false, false ], 
+        checkAll: false
+    });
 
 
     componentDidMount=()=>{
@@ -18,9 +19,39 @@ export class MyHouseProduct extends React.Component{
     changeType = (e) => {
         this.setState({
             mainCategory: e.target.value
-        })
+        });
 
-        // 다시 api 요청을 보내서 값을 받고 리렌더링 
+        // TODO : 다시 api 요청을 보내서 값을 받고 리렌더링 (큰 카테고리 변경)
+    }
+
+    changeCheckAll = (e) => {
+        let newList;
+        if(this.state.checkAll){
+            newList = [ false, false, false, false, false, false, false, false, false, false ];
+            this.setState({
+                checkAll: !this.state.checkAll,
+                deleteList: newList
+            })
+        } else{
+            newList = [ true, true, true, true, true, true, true, true, true, true ];
+            this.setState({
+                checkAll: !this.state.checkAll,
+                deleteList: newList
+            })
+        }
+    }
+
+    changeCardCheck = (index) => {
+        let newList = this.state.deleteList;
+        newList[index] = !newList[index];
+        this.setState({
+            deleteList: newList
+        })
+    }
+
+    deleteChecked = () => {
+        //TODO : deleteList에 true 되어있는 제품들 삭제하기
+        console.log("delete " + this.state.deleteList);
     }
 
    
@@ -88,7 +119,7 @@ export class MyHouseProduct extends React.Component{
             <div className="myproduct-container">
                 <div className="myproduct-header">
                     <div className="header-checkbox">
-                        <input type="checkbox"/>
+                        <input type="checkbox" onChange={this.changeCheckAll} checked={this.state.checkAll ? "checked" : ""}/>
                     </div>
                     <div className="header-type">
                         <select onChange={this.changeType}>
@@ -100,14 +131,23 @@ export class MyHouseProduct extends React.Component{
                     <div className="header-info">주요 정보</div>
                     <div className="header-delete">관리</div>
                 </div>
-
                 <div className="myproduct-card-box">
                     {
-                        dummyData.map((d, i)=> <MyProductCard mainCategory={this.state.mainCategory} data={d} key={i}/>)
+                        // TODO : 현재 카테고리에 따라 알맞는 배열을 map 시키기
+                        dummyData.map((d, i)=> <MyProductCard mainCategory={this.state.mainCategory} data={d} key={i} 
+                        index={i} check={this.state.deleteList[i]} changeCardCheck={this.changeCardCheck}/>)
+                        
                     }
-
+                    <div className="myproduct-bottom">
+                        <div className="bottom-element">
+                            &#10004; 선택상품을
+                        </div>
+                        <div className="all-delete">
+                            <div className="cancel-button" onClick={this.deleteChecked}>삭제하기</div>
+                        </div>
+                    </div>
                 </div>
-            
+                
             </div>
         )
     }

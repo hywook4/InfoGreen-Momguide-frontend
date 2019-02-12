@@ -14,26 +14,35 @@ export class MyProductCard extends React.Component{
     state = ({
         mainCategory: "",
         check: false,
-
+        index: 0
     })
 
 
     componentDidMount=()=>{
         this.setState({
-            mainCategory: this.props.mainCategory
+            mainCategory: this.props.mainCategory,
+            check: this.props.check,
+            index: this.props.index
         })
         console.log(this.props.mainCategory);
+        console.log(this.props.index);
+        console.log(this.props.check);
     };
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if(nextProps.check !== prevState.check){
+            return { check: nextProps.check };
+        }
+        return null;
+    }
 
     deleteProduct = () => {
         console.log("delete product " + this.props.data.name);
+        //TODO : 해당하는 제품 삭제 요청 보내긴
     }
 
     changeCheck = (e) => {
-        this.setState({
-            check: !this.state.check
-        })
-        console.log(this.state.check);
+        this.props.changeCardCheck(this.state.index);
     }
 
     render(){
@@ -42,7 +51,7 @@ export class MyProductCard extends React.Component{
         return(
             <div className="myproduct-card">
                 <div className="card-checkbox">
-                    <input type="checkbox" onChange={this.changeCheck}/>
+                    <input type="checkbox" onChange={this.changeCheck} checked={this.state.check ? "checked" : ""}/>
                 </div>
                 <div className="card-image">
                     <div className="myproduct-img">
@@ -87,7 +96,7 @@ export class MyProductCard extends React.Component{
                     })}
                 </div>
                 <div className="card-delete">
-                    <div className="cancel-button" onClick={this.deleteProduct}>취소하기</div>
+                    <div className="cancel-button" onClick={this.deleteProduct}>삭제하기</div>
                 </div>
             </div>
         )
