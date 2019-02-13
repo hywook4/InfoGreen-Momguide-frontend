@@ -1,5 +1,5 @@
 import React from 'react';
-import './MyHouseProduct.css';
+import './MyProducts.css';
 
 
 const appendText={
@@ -58,7 +58,7 @@ export class MyProductCard extends React.Component{
                     <img src={`${process.env.S3_URL}/product-images/${this.props.mainCategory}-product-images/${data.brand}/${data.name}.jpg`} alt=""/>
                     </div>
                 </div>
-                <div className="card-name">
+                <div className="myproduct-card-name">
                     <p>{data.brand}</p>
                     <h5>{data.name}</h5>
                 </div>
@@ -96,7 +96,19 @@ export class MyProductCard extends React.Component{
                     })}
                 </div>
                 <div className="card-delete">
-                    <div className="cancel-button" onClick={this.deleteProduct}>삭제하기</div>
+                    <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>
+                </div>
+                <div class="modal fade" id="deleteModal" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                {/*<button type="button" class="close" data-dismiss="modal">&times;</button>*/}
+                                <h6 class="myproduct-delete-confirm">삭제하시겠습니까?</h6>
+                                <button type="button" class="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
+                                <button type="button" class="delete-btn btn-default" data-dismiss="modal"  onClick={this.deleteProduct}>삭제하기</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

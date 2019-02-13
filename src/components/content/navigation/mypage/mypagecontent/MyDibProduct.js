@@ -7,7 +7,7 @@ import { MyProductCard } from './MyProductCard'
 const maxProductNum = 10;
 const dummyProductNum = 257; // dummy 제품 갯수 
 
-export class MyHouseProduct extends React.Component{
+export class MyDibProduct extends React.Component{
 
     state = ({
         mainCategory: "living",
@@ -20,7 +20,7 @@ export class MyHouseProduct extends React.Component{
 
 
     componentDidMount=()=>{
-        // TODO : 우리집 가정제품의 데이터를 해당 페이지에 맞게 가져오기, 총 가정제품의 수 가져오기 , maxPAge 수 계산해서 넣어주기 
+        // TODO : 찜한 제품의 데이터를 해당 페이지에 맞게 가져오기, 총 가정제품의 수 가져오기 , maxPAge 수 계산해서 넣어주기 
 
         let productNum = dummyProductNum; // 가정제품 갯수 넣어줄곳 
         

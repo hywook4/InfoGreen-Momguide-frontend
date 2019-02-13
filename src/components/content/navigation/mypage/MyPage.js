@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import { MyProfile } from './mypagecontent/MyProfile';
 import { ProfileModify } from './mypagecontent/ProfileModify';
 import { MyHouseProduct }  from './mypagecontent/MyHouseProduct'
+import { MyDibProduct } from './mypagecontent/MyDibProduct'
 
 
 export class MyPage extends React.Component{
@@ -43,18 +44,16 @@ export class MyPage extends React.Component{
                                 <p>홈  >  마이페이지  >  {this.state.currentPage}</p>
                             </div>
                             <div className="content-body">
-                                <Router>
-                                    <Switch>
-                                        <Route path="/mypage/my-profile" component={MyProfile} /> 
-                                        <Route path="/mypage/profile-modify" component={ProfileModify} /> 
-                                        <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 
-                                        <Route path="/mypage/dib-products" component={<h1>찝제</h1>} /> 
-                                        <Route path="/mypage/my-review" component={<h1>리뷰</h1>} /> 
-                                        <Route path="/mypage/ingredient-open-request" component={<h1>열어라</h1>} /> 
-                                        <Route path="/mypage/ingredient-analysis-request" component={<h1>야 </h1>} /> 
-                                        <Route path="/mypage/my-help" component={<h1>도와줘</h1>} /> 
-                                    </Switch>
-                                </Router>
+                                <Switch>
+                                    <Route path="/mypage/my-profile" component={MyProfile} /> 
+                                    <Route path="/mypage/profile-modify" component={ProfileModify} /> 
+                                    <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 
+                                    <Route path="/mypage/dib-products" component={MyDibProduct} /> 
+                                    <Route path="/mypage/my-review" component={<h1>리뷰</h1>} /> 
+                                    <Route path="/mypage/ingredient-open-request" component={<h1>열어라</h1>} /> 
+                                    <Route path="/mypage/ingredient-analysis-request" component={<h1>야 </h1>} /> 
+                                    <Route path="/mypage/my-help" component={<h1>도와줘</h1>} /> 
+                                </Switch>
                             </div>
                         </div>
                     </div>
