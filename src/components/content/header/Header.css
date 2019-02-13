@@ -136,7 +136,8 @@
     height: 35px;
     font-size: 15px;
     color: black;
-    
+    position: absolute;
+    top: 5px;
     
 }
 .header-user-alarm {
