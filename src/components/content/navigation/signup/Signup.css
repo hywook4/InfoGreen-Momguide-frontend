@@ -358,3 +358,53 @@ select#phone {
 .signup-register-button:hover {
     cursor: pointer;
 }
+
+button.signup-button-remove-css {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+button.signup-button-remove-css:focus {
+    outline: none;
+}
+
+.signup-address-remove-button {
+    margin-left: 10px;
+    font-size: 20px;
+    color: red;
+}
+
+.signup-address-remove-button:hover {
+    cursor: pointer;
+}
+
+.signup-optional-info-address {
+    margin-top: 15px;
+}
+
+.signup-optional-info-address .signup-address-zip-code {
+    width: 200px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-optional-info-address .signup-address-detail1 {
+    width: 500px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-optional-info-address .signup-address-detail2 {
+    width: 240px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-optional-info-address .signup-address-detail2:first-child {
+    margin-right: 20px;
+}

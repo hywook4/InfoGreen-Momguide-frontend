@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Signup.css';
 import USER_IMAGE from '../../../../assets/images/icons/user-icon.png'
 import axios from 'axios';
+import { RoadNameAddress } from '../../../common/RoadNameAddress/RoadNameAddress';
+import $ from 'jquery';
 
 function range(start, end) {
     const len = end-start+1;
@@ -28,9 +30,20 @@ function validatePassword(password) {
 }
 
 export class Signup extends Component {
+    setDefaultImage = async () => {
+        let response = await fetch(USER_IMAGE);
+        let data = await response.blob();
+        let metadata = {
+            type: 'image/png'
+        };
+        let file = new File([data], "test.png", metadata);
+        this.state.profileImage = file;
+    };
 
     constructor(props) {
         super(props);
+
+        this.setDefaultImage();
 
         this.state = {
             ageConfirm: false,
@@ -61,12 +74,23 @@ export class Signup extends Component {
             phoneNumberFirst: '010',
             phoneNumberSecond: '',
             phoneNumberThird: '',
-            postalCode: '',
+            zipCode: '',
             roadNameAddress: '',
             addressDetail: '',
-            addressNote: ''
+            addressNote: '',
         };
     }
+
+    setAddress = (zipCode, roadNameAddress) => {
+        this.setState({
+            zipCode: zipCode,
+            roadNameAddress: roadNameAddress
+        }, () => {
+            $('#roadNameAddress').modal('toggle');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+    };
 
     handleRegister = () => {
         const state = this.state;
@@ -116,10 +140,9 @@ export class Signup extends Component {
         }
 
         const data = new FormData();
-        // TODO: 홍보 및 마케팅 사용 여부
+        data.append('mailed', this.state.advertisementConfirm);
         data.append('email', state.emailId + '@' + state.emailDomain);
         data.append('password', state.password);
-        // TODO: 기본 프로필 사진
         data.append('image', state.profileImage);
         data.append('nickName', state.nickname);
         data.append('gender', state.gender);
@@ -135,7 +158,13 @@ export class Signup extends Component {
         if(state.name)
             data.append('name', state.name);
         if(state.phoneNumberFirst && state.phoneNumberSecond && state.phoneNumberThird)
-            data.append('phoneNum', state.phoneNumberFirst + '-' + state.phoneNumberSecond + '-' + state.phoneNumberThird);
+            data.append('phoneNum', state.phoneNumberFirst + state.phoneNumberSecond + state.phoneNumberThird);
+        if(state.zipCode) {
+            data.append('postalCode', state.zipCode);
+            data.append('addressRoad', state.roadNameAddress);
+            data.append('addressSpec', state.addressDetail);
+            data.append('addressEtc', state.addressNote);
+        }
 
         axios({
             method: 'post',
@@ -147,7 +176,6 @@ export class Signup extends Component {
                 }
             }
         }).then((res) => {
-            // TODO: redirect
             alert('회원가입 성공!');
         }).catch((res) => {
             alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
@@ -161,8 +189,7 @@ export class Signup extends Component {
             newState[name2] = value2;
         if(name3 !== null && value3 !== null)
             newState[name3] = value3;
-        // TODO: delete console log
-        this.setState(newState, () => {console.log(this.state)});
+        this.setState(newState);
     };
 
     profileImageChange = (event) => {
@@ -197,12 +224,12 @@ export class Signup extends Component {
         axios.get(`${process.env.API_URL}/api/auth/register/checkEmail?email=${this.state.emailId+'@'+this.state.emailDomain}`)
             .then((res) => {
                 const isDuplicated = res.data.isDuplicated;
-                // TODO
                 const validateOk = validateEmail(this.state.emailId+'@'+this.state.emailDomain);
                 this.setState({
-                    emailDuplicateOk: !isDuplicated,
-                    emailDuplicateMessage: isDuplicated ?
-                        '중복되는 이메일입니다.' : '사용 가능한 이메일입니다.'
+                    emailDuplicateOk: !isDuplicated && validateOk,
+                    emailDuplicateMessage: validateOk ?
+                        (isDuplicated ? '중복되는 이메일입니다.' : '사용 가능한 이메일입니다.') :
+                        '올바른 이메일 형식이 아닙니다.'
                 });
             });
     };
@@ -220,12 +247,12 @@ export class Signup extends Component {
         axios.get(`${process.env.API_URL}/api/auth/register/checkNickName?nickName=${this.state.nickname}`)
             .then((res) => {
                 const isDuplicated = res.data.isDuplicated;
-                // TODO
                 const validateOk = this.state.nickname.length > 0 && this.state.nickname.length <= 6;
                 this.setState({
-                    nicknameDuplicateOk: !isDuplicated,
-                    nicknameDuplicateMessage: isDuplicated ?
-                        '중복되는 닉네임입니다.' : '사용 가능한 닉네임입니다.'
+                    nicknameDuplicateOk: !isDuplicated && validateOk,
+                    nicknameDuplicateMessage: validateOk ?
+                        (isDuplicated ? '중복되는 닉네임입니다.' : '사용 가능한 닉네임입니다.') :
+                        '올바른 닉네임 형식이 아닙니다.'
                 });
             });
     };
@@ -519,7 +546,7 @@ export class Signup extends Component {
                                         onChange={(e)=>this.onChange('childBirthYear', e.target.value)}
                                         value={this.state.childBirthYear}
                                 >
-                                    <option></option>
+                                    <option/>
                                     {
                                         this.state.hasChild === '있음' ?
                                         range(1990, new Date().getFullYear()).map((num) => (
@@ -532,7 +559,7 @@ export class Signup extends Component {
                                         onChange={(e)=>this.onChange('childBirthMonth', e.target.value)}
                                         value={this.state.childBirthMonth}
                                 >
-                                    <option></option>
+                                    <option/>
                                     {
                                         this.state.childBirthYear ?
                                             range(1, 12).map((num) => (
@@ -544,7 +571,7 @@ export class Signup extends Component {
                                         onChange={(e)=>this.onChange('childBirthDay', e.target.value)}
                                         value={this.state.childBirthDay}
                                 >
-                                    <option></option>
+                                    <option/>
                                     {
                                         this.state.childBirthMonth ?
                                             range(1, lastDay(Number(this.state.childBirthYear), Number(this.state.childBirthMonth))).map((num) => (
@@ -609,7 +636,37 @@ export class Signup extends Component {
                             </span>
                         </div>
                     </div>
+                    <div className="signup-optional-info-phone">
+                        <div className="signup-optional-info-phone-text">
+                            주소
+                        </div>
+                        <div className="signup-optional-info-address">
+                            <button data-toggle="modal" data-target="#roadNameAddress" className="signup-button-remove-css">
+                                <input placeholder={"우편번호"} disabled={true} value={this.state.zipCode} className="signup-address-zip-code"/>
+                            </button>
+                            {this.state.zipCode ? (<i onClick={() => {
+                                this.setState({
+                                    zipCode: '',
+                                    roadNameAddress: ''
+                                });
+                            }} className="fas fa-times signup-address-remove-button"/>) : null}
+                        </div>
+                        <div className="signup-optional-info-address">
+                            <button data-toggle="modal" data-target="#roadNameAddress" className="signup-button-remove-css">
+                                <input placeholder={"도로명 주소 예) 서울특별시 마포구 성암로 301"} value={this.state.roadNameAddress} disabled={true} className="signup-address-detail1"/>
+                            </button>
+                        </div>
+                        <div className="signup-optional-info-address">
+                            <input placeholder={"상세 주소 예) 105동 203호"} className="signup-address-detail2"
+                                   onChange={(e)=>this.onChange('addressDetail', e.target.value)}
+                            />
+                            <input placeholder={"참고 항목 예) (상암동)"} className="signup-address-detail2"
+                                   onChange={(e)=>this.onChange('addressNote', e.target.value)}
+                            />
+                        </div>
+                    </div>
                 </div>
+                <RoadNameAddress modalID="roadNameAddress" setAddress={this.setAddress}/>
                 <button className="signup-register-button" onClick={()=>this.handleRegister()}>
                     회원가입
                 </button>
