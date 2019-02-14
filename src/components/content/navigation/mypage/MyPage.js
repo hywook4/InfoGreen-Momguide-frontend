@@ -46,7 +46,7 @@ export class MyPage extends React.Component{
                             </div>
                             <div className="content-body">
                                 <Switch>
-                                    <Route path="/mypage" component={MyProfile} />
+                                    <Route exact path="/mypage" component={MyProfile} />
                                     <Route path="/mypage/my-profile" component={MyProfile} /> 
                                     <Route path="/mypage/profile-modify" component={ProfileModify} /> 
                                     <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 

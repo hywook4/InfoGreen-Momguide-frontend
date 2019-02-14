@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+
 export class MyPageMenu extends React.Component{
 
 
@@ -11,7 +12,15 @@ export class MyPageMenu extends React.Component{
     
 
     componentDidMount=()=>{
+        let path = window.location.href.split("/");
+        path = path.pop();
         
+        let currentPage = this.getCurrentPage(path);
+        console.log(currentPage);
+        this.setState({
+            currentPage: currentPage
+        })
+        this.props.changeHeader(currentPage);
     };
 
     changePage = (page) => {
@@ -21,6 +30,38 @@ export class MyPageMenu extends React.Component{
         this.props.changeHeader(page);
     }
 
+    getCurrentPage = (path) => {
+        let currentPage;
+        switch(path){
+            case 'my-profile':
+                currentPage = '내 프로필';
+                break;
+            case 'profile-modify':
+                currentPage = '프로필 수정';
+                break;
+            case 'my-house-products':
+                currentPage = '우리집 화학제품';
+                break;
+            case 'dib-products':
+                currentPage = '찜한 제품';
+                break;
+            case 'my-review':
+                currentPage = '리뷰';
+                break;
+            case 'ingredient-open-request':
+                currentPage = '성분 공개 요청';
+                break;
+            case 'ingredient-analysis-request':
+                currentPage = '성분 분석 요청';
+                break;
+            case 'my-help':
+                currentPage = '1:1 문의하기';
+                break;
+            default:
+                break;
+        }
+        return currentPage;
+    }
 
     render(){
         const myAccount = [
