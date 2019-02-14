@@ -28,7 +28,7 @@ export class FollowCard extends React.Component{
         return(
             <div className="follow-card">
                 <div className="follow-img-box"><div className="follow-img"></div></div>
-                <div className="follow-nickname"><a onClick={this.userInfo}>{data.nickName}</a></div>
+                <div className="follow-nickname"><div onClick={this.userInfo}>{data.nickName}</div></div>
                 <div className="follow-info-box">
                     <div className="follow-info">{data.age}</div>
                     <div className="follow-info">{data.sex}</div>

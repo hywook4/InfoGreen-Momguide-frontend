@@ -3,7 +3,7 @@ import './Category.css';
 import {CategoryImg} from '../category/CategoryImg';
 import {CategoryMenu} from '../category/CategoryMenu';
 import axios from 'axios';
-import { checkServerIdentity } from 'tls';
+//import { checkServerIdentity } from 'tls';
 
 export class Category extends React.Component{
 

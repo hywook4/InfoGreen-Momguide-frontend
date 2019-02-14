@@ -63,6 +63,8 @@ export class CategoryImg extends React.Component{
                                         if(props.includeToxic) iconFlag = true;
                                         break;
 
+                                    default:
+                                        break;
                                 }
                                 if(iconFlag){
                                     return (

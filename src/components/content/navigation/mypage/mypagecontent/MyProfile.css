@@ -115,6 +115,7 @@
     vertical-align: top;
     line-height: 100px;
     margin-right: 20px;
+    cursor: pointer;
 }
 
 .follow-nickname a{

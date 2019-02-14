@@ -1,6 +1,5 @@
 import React from 'react';
 import './MyPage.css';
-import axios from 'axios';
 
 import { MyPageMenu } from './MyPageMenu';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
@@ -47,11 +46,11 @@ export class MyPage extends React.Component{
                             </div>
                             <div className="content-body">
                                 <Switch>
+                                    <Route path="/mypage" component={MyProfile} />
                                     <Route path="/mypage/my-profile" component={MyProfile} /> 
                                     <Route path="/mypage/profile-modify" component={ProfileModify} /> 
                                     <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 
                                     <Route path="/mypage/dib-products" component={MyDibProduct} /> 
-                                    <Route path="/mypage/my-review" component={<h1>리뷰</h1>} /> 
                                     <Route path="/mypage/ingredient-open-request" component={OpenRequest} /> 
                                     <Route path="/mypage/ingredient-analysis-request" component={MyIngredientRequest} /> 
                                     <Route path="/mypage/my-help" component={MyHelpRequest} /> 

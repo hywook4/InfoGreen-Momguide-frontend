@@ -75,7 +75,7 @@ export class MyIngredientRequest extends React.Component{
     }
 
     createPagination = () => {
-        let pagination = []
+        let pagination = [];
 
         let currentPage = this.state.currentPage;
         let maxPage = this.state.maxPage;
@@ -88,9 +88,9 @@ export class MyIngredientRequest extends React.Component{
 
         for(let i = start; i<= end ; i++){
             if(i === currentPage){
-                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} value={i}>{i}</div>);
+                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
             } else{
-                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)}>{i}</div>);
+                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
             }
             
         }
@@ -174,14 +174,14 @@ export class MyIngredientRequest extends React.Component{
                 </div>
 
 
-                <div class="modal fade" id="deleteCheckedModal" role="dialog">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-body">
+                <div className="modal fade" id="deleteCheckedModal" role="dialog">
+                    <div className="modal-dialog modal-sm">
+                        <div className="modal-content">
+                            <div className="modal-body">
                                 {/*<button type="button" class="close" data-dismiss="modal">&times;</button>*/}
-                                <h6 class="myproduct-delete-confirm">삭제하시겠습니까?</h6>
-                                <button type="button" class="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
-                                <button type="button" class="delete-btn btn-default" data-dismiss="modal" onClick={this.deleteChecked}>삭제하기</button>
+                                <h6 className="myproduct-delete-confirm">삭제하시겠습니까?</h6>
+                                <button type="button" className="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
+                                <button type="button" className="delete-btn btn-default" data-dismiss="modal" onClick={this.deleteChecked}>삭제하기</button>
                             </div>
                         </div>
                     </div>

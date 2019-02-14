@@ -55,6 +55,9 @@ export class OpenRequestCard extends React.Component{
                                 case 'includeToxic':   
                                     if(data.includeToxic) iconFlag = true;
                                     break;
+                                
+                                default:
+                                    break;
                             }
                             if(iconFlag){
                                 return (

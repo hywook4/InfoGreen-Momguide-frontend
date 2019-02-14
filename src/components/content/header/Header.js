@@ -19,7 +19,7 @@ export class Header extends React.Component{
     }
 
     onSearch = () => {
-        console.log('search for : ' + '/category/'+this.state.search);
+        
         this.setState({
             submitted: true
         });

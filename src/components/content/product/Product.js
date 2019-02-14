@@ -1,6 +1,6 @@
 import React from 'react';
 import './Product.css';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router } from 'react-router-dom';
 import { ProductList } from '../../common/ProductList/ProductList';
 import { ProductSearch } from './productSearch/ProductSearch';
 
@@ -22,7 +22,7 @@ export class Product extends React.Component {
 
 
     render() {
-        const houseHold = [
+        /*const houseHold = [
             {
                 path:'/',
                 name:'세탁세제',
@@ -101,7 +101,7 @@ export class Product extends React.Component {
                 category:'other'
             },
         ];
-
+        */
         return(
             <div className="product">
                 <div className="product_inner">

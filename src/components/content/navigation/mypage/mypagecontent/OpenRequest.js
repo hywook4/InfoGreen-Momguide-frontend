@@ -56,9 +56,9 @@ export class OpenRequest extends React.Component{
 
         for(let i = start; i<= end ; i++){
             if(i === currentPage){
-                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} value={i}>{i}</div>);
+                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
             } else{
-                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)}>{i}</div>);
+                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
             }
             
         }

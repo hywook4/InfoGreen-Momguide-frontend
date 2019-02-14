@@ -8,4 +8,4 @@ export const Paginate = () =>
     </div>
 
 
-// export default Paginate;
+//export default Paginate;
