@@ -9,14 +9,14 @@
     border-bottom: 1px solid gray;
 }
 
-.header-checkbox{
+.myproduct-header-checkbox{
     width: 45px;
     height: 100%;
     display: inline-block;
     padding: 12px 15px;
 }
 
-.header-type{
+.myproduct-header-type{
     width: 120px;
     height: 100%;
     display: inline-block;
@@ -25,17 +25,17 @@
     font-size: 12px;
 }
 
-.header-type select{
+.myproduct-header-type select{
     background: none;
     border: none;
     color: skyblue;
 }
 
-.header-type select:focus{
+.myproduct-header-type select:focus{
     border: none;
 }
 
-.header-name{
+.myproduct-header-name{
     width: 260px;
     height: 100%;
     display: inline-block;
@@ -47,7 +47,7 @@
     padding-right: 40px;
 }
 
-.header-info{
+.myproduct-header-info{
     width: 270px;
     height: 100%;
     display: inline-block;
@@ -59,7 +59,7 @@
     padding-left: 40px;
 }
 
-.header-delete{
+.myproduct-header-delete{
     width: 55px;
     height: 100%;
     display: inline-block;
@@ -81,7 +81,7 @@
     border-bottom: 1px solid gray;
 }
 
-.card-checkbox{
+.myproduct-card-checkbox{
     width: 45px;
     height: 100%;
     display: inline-block;
@@ -89,7 +89,7 @@
     padding: 40px 15px;
 }
 
-.card-image{
+.myproduct-card-image{
     height: 100%;
     width: 120px;
     display: inline-block;
@@ -126,7 +126,7 @@
     font-weight: bold;
 }
 
-.card-info{
+.myproduct-card-info{
     width: 180px;
     height: 100%;
     display: inline-block;
@@ -134,21 +134,21 @@
     padding: 30px 0px;
 }
 
-.card-info-icon{
+.myproduct-card-info-icon{
     width: 30px;
     height: 30px;
     display: inline-block;
     margin: 4px;
 }
 
-.card-info-icon img{
+.myproduct-card-info-icon img{
     width: 30px;
     height: 30px;
     object-fit: contain;
     display: inline-block;
 }
 
-.card-delete{
+.myproduct-card-delete{
     width: 55px;
     height: 100%;
     display: inline-block;

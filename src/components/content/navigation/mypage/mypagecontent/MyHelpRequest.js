@@ -1,37 +1,35 @@
 import React from 'react';
-import './MyProducts.css';
-import config from '../../../../../config';
+import './MyHelpRequest.css';
 
-import { MyProductCard } from './MyProductCard'
+import { MyHelpCard } from './MyHelpCard'
 
-const maxProductNum = config.MAX_LIST_NUM;
-const dummyProductNum = 257; // dummy 제품 갯수 
+const maxListNum = 10;
+const dummyListNum = 257; // dummy 제품 갯수 
 
-export class MyHouseProduct extends React.Component{
+export class MyHelpRequest extends React.Component{
 
     state = ({
-        mainCategory: "living",
         deleteList: [ false, false, false, false, false, false, false, false, false, false ], 
         checkAll: false,
         currentPage: 1,
-        numOfProduct: 0,
+        numOfRequest: 0,
         maxPage: 0
     });
 
 
     componentDidMount=()=>{
-        // TODO : 우리집 가정제품의 데이터를 해당 페이지에 맞게 가져오기, 총 가정제품의 수 가져오기 , maxPAge 수 계산해서 넣어주기 
+        // TODO : 문의한 데이터 수 가져오기, 현재 페이지에 맞게 문의 데이터 가져오기
 
-        let productNum = dummyProductNum; // 가정제품 갯수 넣어줄곳 
+        let listNum = dummyListNum; // 가정제품 갯수 넣어줄곳 
         
         let pageNum = 0;  // 페이지 최대 수 
 
-        if(productNum===0){
+        if(listNum===0){
             pageNum = 1;
-        } else if(productNum % maxProductNum === 0){
-            pageNum = Math.floor(productNum/maxProductNum);
+        } else if(listNum % maxListNum === 0){
+            pageNum = Math.floor(listNum/maxListNum);
         } else{
-            pageNum = Math.floor(productNum/maxProductNum) + 1;
+            pageNum = Math.floor(listNum/maxListNum) + 1;
         }
 
         this.setState({
@@ -39,24 +37,17 @@ export class MyHouseProduct extends React.Component{
         })
     };
 
-    changeType = (e) => {
-        this.setState({
-            mainCategory: e.target.value
-        });
-
-        // TODO : 다시 api 요청을 보내서 값을 받고 리렌더링 (큰 카테고리 변경)
-    }
 
     changeCheckAll = (e) => {
         let newList;
         if(this.state.checkAll){
-            newList = [ false, false, false, false, false, false, false, false, false, false ];
+            newList = [ false, false, false, false, false, false ];
             this.setState({
                 checkAll: !this.state.checkAll,
                 deleteList: newList
             })
         } else{
-            newList = [ true, true, true, true, true, true, true, true, true, true ];
+            newList = [ true, true, true, true, true, true ];
             this.setState({
                 checkAll: !this.state.checkAll,
                 deleteList: newList
@@ -118,91 +109,55 @@ export class MyHouseProduct extends React.Component{
     }
    
     render(){
-
-        const dummyData = [
+        const dummy = [
             {
-                index: 38,
-                name: '무첨가EM가루비누',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: '',
-                permit: '',
-                eco: 'df',
-                foreignCertificate: '',
-                viewNum: 46,
-                rateCount: 56,
-                rateSum: 200,
-                includeDanger: false,
-                includeToxic: true,
-                includeCare: true,
+                date: "12-12-12",
+                title: "이거슨 문의1",
+                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
+                answered: true
             },
             {
-                index: 33,
-                name: '강청 산소계 표백제',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: 'F-A03B-O001001-A160',
-                permit: '',
-                eco: '',
-                foreignCertificate: '',
-                viewNum: 24,
-                rateCount: 34,
-                rateSum: 130,
-                includeDanger: false,
-                includeToxic: false,
-                includeCare: false,
+                date: "12-12-12",
+                title: "이거슨 문의1",
+                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
+                answered: false
             },
             {
-                index: 34,
-                name: '강청 순천연 가루비누',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: '',
-                permit: '',
-                eco: '',
-                foreignCertificate: '',
-                viewNum: 28,
-                rateCount: 5,
-                rateSum: 20,
-                includeDanger: false,
-                includeToxic: false,
-                includeCare: false,
-            }
+                date: "12-12-12",
+                title: "이거슨 문의1",
+                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
+                answered: false
+            },
+            {
+                date: "12-12-12",
+                title: "이거슨 문의1",
+                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
+                answered: true
+            },
         ]
 
 
         return(
-            <div className="myproduct-container">
-                <div className="myproduct-header">
-                    <div className="myproduct-header-checkbox">
+            <div className="myhelp-container">
+                <div className="myhelp-header">
+                    <div className="myhelp-header-checkbox">
                         <input type="checkbox" onChange={this.changeCheckAll} checked={this.state.checkAll ? "checked" : ""}/>
                     </div>
-                    <div className="myproduct-header-type">
-                        <select onChange={this.changeType}>
-                            <option value="living">가정용 화학제품</option>
-                            <option value="cosmetic">유아용 화장품</option>
-                        </select>
-                    </div>   
-                    <div className="myproduct-header-name">제품명</div>
-                    <div className="myproduct-header-info">주요 정보</div>
-                    <div className="myproduct-header-delete">관리</div>
+
+                    <div className="myhelp-header-title">문의내용</div>
+                    <div className="myhelp-header-answer">답변</div>
+                    <div className="myhelp-header-delete">관리</div>
                 </div>
-                <div className="myproduct-card-box">
+                <div className="myhelp-card-box">
                     {
-                        // TODO : 현재 카테고리에 따라 알맞는 배열을 map 시키기
-                        dummyData.map((d, i)=> <MyProductCard mainCategory={this.state.mainCategory} data={d} key={i} 
-                        index={i} check={this.state.deleteList[i]} changeCardCheck={this.changeCardCheck}/>)
-                        
+                        dummy.map((d, i) => <MyHelpCard data={d} key={i} index={i} check={this.state.deleteList[i]} 
+                        changeCardCheck={this.changeCardCheck}/>)
                     }
-                    <div className="myproduct-bottom">
+                        
+                    
+                    <div className="myhelp-bottom">
                         <div className="bottom-element">
-                            &#10004; 선택상품을
+                            &#10004; 선택문의를
                         </div>
                         <div className="all-delete">
                             <div className="cancel-button" data-toggle="modal" data-target="#deleteCheckedModal">삭제하기</div>

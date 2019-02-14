@@ -50,19 +50,19 @@ export class MyProductCard extends React.Component{
 
         return(
             <div className="myproduct-card">
-                <div className="card-checkbox">
+                <div className="myproduct-card-checkbox">
                     <input type="checkbox" onChange={this.changeCheck} checked={this.state.check ? "checked" : ""}/>
                 </div>
-                <div className="card-image">
+                <div className="myproduct-card-image">
                     <div className="myproduct-img">
-                    <img src={`${process.env.S3_URL}/product-images/${this.props.mainCategory}-product-images/${data.brand}/${data.name}.jpg`} alt=""/>
+                        <img src={`${process.env.S3_URL}/product-images/${this.props.mainCategory}-product-images/${data.brand}/${data.name}.jpg`} alt=""/>
                     </div>
                 </div>
                 <div className="myproduct-card-name">
                     <p>{data.brand}</p>
                     <h5>{data.name}</h5>
                 </div>
-                <div className="card-info">
+                <div className="myproduct-card-info">
                     {Object.keys(appendText).map((key,i)=>{
                         let toReturn = '';
                         let iconFlag = false;
@@ -85,7 +85,7 @@ export class MyProductCard extends React.Component{
                         }
                         if(iconFlag){
                             return (
-                                <div key={i} className="card-info-icon">
+                                <div key={i} className="myproduct-card-info-icon">
                                     <img src={appendText[key].icon} alt="" />
                                 </div> 
                             )
@@ -95,17 +95,17 @@ export class MyProductCard extends React.Component{
                         }
                     })}
                 </div>
-                <div className="card-delete">
+                <div className="myproduct-card-delete">
                     <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>
                 </div>
-                <div class="modal fade" id="deleteModal" role="dialog">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-body">
+                <div className="modal fade" id="deleteModal" role="dialog">
+                    <div className="modal-dialog modal-sm">
+                        <div className="modal-content">
+                            <div className="modal-body">
                                 {/*<button type="button" class="close" data-dismiss="modal">&times;</button>*/}
-                                <h6 class="myproduct-delete-confirm">삭제하시겠습니까?</h6>
-                                <button type="button" class="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
-                                <button type="button" class="delete-btn btn-default" data-dismiss="modal"  onClick={this.deleteProduct}>삭제하기</button>
+                                <h6 className="myproduct-delete-confirm">삭제하시겠습니까?</h6>
+                                <button type="button" className="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
+                                <button type="button" className="delete-btn btn-default" data-dismiss="modal"  onClick={this.deleteProduct}>삭제하기</button>
                             </div>
                         </div>
                     </div>

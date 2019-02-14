@@ -1,10 +1,10 @@
 import React from 'react';
 import './MyProducts.css';
+import config from '../../../../../config';
 
 import { MyProductCard } from './MyProductCard'
 
-
-const maxProductNum = 10;
+const maxProductNum = config.MAX_LIST_NUM;
 const dummyProductNum = 257; // dummy 제품 갯수 
 
 export class MyDibProduct extends React.Component{
@@ -97,9 +97,9 @@ export class MyDibProduct extends React.Component{
 
         for(let i = start; i<= end ; i++){
             if(i === currentPage){
-                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} value={i}>{i}</div>);
+                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
             } else{
-                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)}>{i}</div>);
+                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
             }
             
         }
@@ -180,18 +180,18 @@ export class MyDibProduct extends React.Component{
         return(
             <div className="myproduct-container">
                 <div className="myproduct-header">
-                    <div className="header-checkbox">
+                    <div className="myproduct-header-checkbox">
                         <input type="checkbox" onChange={this.changeCheckAll} checked={this.state.checkAll ? "checked" : ""}/>
                     </div>
-                    <div className="header-type">
+                    <div className="myproduct-header-type">
                         <select onChange={this.changeType}>
                             <option value="living">가정용 화학제품</option>
                             <option value="cosmetic">유아용 화장품</option>
                         </select>
                     </div>   
-                    <div className="header-name">제품명</div>
-                    <div className="header-info">주요 정보</div>
-                    <div className="header-delete">관리</div>
+                    <div className="myproduct-header-name">제품명</div>
+                    <div className="myproduct-header-info">주요 정보</div>
+                    <div className="myproduct-header-delete">관리</div>
                 </div>
                 <div className="myproduct-card-box">
                     {
@@ -219,14 +219,14 @@ export class MyDibProduct extends React.Component{
                 </div>
 
 
-                <div class="modal fade" id="deleteCheckedModal" role="dialog">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-body">
+                <div className="modal fade" id="deleteCheckedModal" role="dialog">
+                    <div className="modal-dialog modal-sm">
+                        <div className="modal-content">
+                            <div className="modal-body">
                                 {/*<button type="button" class="close" data-dismiss="modal">&times;</button>*/}
-                                <h6 class="myproduct-delete-confirm">삭제하시겠습니까?</h6>
-                                <button type="button" class="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
-                                <button type="button" class="delete-btn btn-default" data-dismiss="modal" onClick={this.deleteChecked}>삭제하기</button>
+                                <h6 className="myproduct-delete-confirm">삭제하시겠습니까?</h6>
+                                <button type="button" className="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
+                                <button type="button" className="delete-btn btn-default" data-dismiss="modal" onClick={this.deleteChecked}>삭제하기</button>
                             </div>
                         </div>
                     </div>

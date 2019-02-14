@@ -9,6 +9,9 @@ import { MyProfile } from './mypagecontent/MyProfile';
 import { ProfileModify } from './mypagecontent/ProfileModify';
 import { MyHouseProduct }  from './mypagecontent/MyHouseProduct'
 import { MyDibProduct } from './mypagecontent/MyDibProduct'
+import { OpenRequest } from './mypagecontent/OpenRequest'
+import { MyHelpRequest } from './mypagecontent/MyHelpRequest'
+import { MyIngredientRequest } from './mypagecontent/MyIngredientRequest'
 
 
 export class MyPage extends React.Component{
@@ -19,7 +22,6 @@ export class MyPage extends React.Component{
 
    
     componentDidMount=()=>{
-        
     };
 
     changeHeader = (head) => {
@@ -50,9 +52,9 @@ export class MyPage extends React.Component{
                                     <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 
                                     <Route path="/mypage/dib-products" component={MyDibProduct} /> 
                                     <Route path="/mypage/my-review" component={<h1>리뷰</h1>} /> 
-                                    <Route path="/mypage/ingredient-open-request" component={<h1>열어라</h1>} /> 
-                                    <Route path="/mypage/ingredient-analysis-request" component={<h1>야 </h1>} /> 
-                                    <Route path="/mypage/my-help" component={<h1>도와줘</h1>} /> 
+                                    <Route path="/mypage/ingredient-open-request" component={OpenRequest} /> 
+                                    <Route path="/mypage/ingredient-analysis-request" component={MyIngredientRequest} /> 
+                                    <Route path="/mypage/my-help" component={MyHelpRequest} /> 
                                 </Switch>
                             </div>
                         </div>
