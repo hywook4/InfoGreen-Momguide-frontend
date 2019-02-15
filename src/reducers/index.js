@@ -1,8 +1,2 @@
-export const initialState = {
-    userIndex: null,
-    userEmail: '',
-    userNickName: '',
-    userPhoto: '',
-    token: ''
-};
+export const initialState = {};
 export {default as auth} from './auth';

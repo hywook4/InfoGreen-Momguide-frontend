@@ -14,7 +14,7 @@ export default (state=initialState, action) => {
         case types.LOGIN:
             return {
                 ...state,
-                token: action.token
+                token: action.token,
             };
         case types.LOGOUT:
             return {

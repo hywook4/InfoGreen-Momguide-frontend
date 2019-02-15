@@ -5,14 +5,23 @@ import {Home} from './container/Home';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 
+// localStorage.removeItem('loginToken');
+// localStorage.removeItem('userEmail');
+// sessionStorage.removeItem('loginToken');
+// localStorage.setItem('isLogin', false);
+console.log('Login Token: ' + localStorage.getItem('loginToken'));
+console.log('User Email:' + localStorage.getItem('userEmail'));
+
 class App extends React.Component {
     constructor(props) {
         super(props);
-        const token = localStorage.getItem("loginToken");
-
-        if (token !== null) {
-            console.log(token);
-            props.handleLogin(token);
+        const localToken = localStorage.getItem("loginToken");
+        const sessionToken = sessionStorage.getItem("loginToken");
+        if (localToken !== null) {
+            props.handleLogin(localToken);
+        } else if (sessionToken !== null) {
+            console.log('debug 3');
+            props.handleLogin(sessionToken);
         }
     }
     render() {

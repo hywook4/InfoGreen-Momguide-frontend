@@ -7,9 +7,18 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 class Header extends Component {
     render() {
-        console.log(this.props.userNickName + '\ndebug');
+        console.log(localStorage.getItem('loginToken') + 'debug 1');
+        console.log(sessionStorage.getItem('loginToken') + 'debug 2');
         const loginTab =
-            ((localStorage.getItem('loginToken') !== '') ?
+            ((localStorage.getItem('loginToken') === null) && (sessionStorage.getItem('loginToken') === null) ?
+                (<div className="header-signup-and-login">
+                    <li className="nav-item active">
+                        <Link to="/login" className="nav-link">로그인</Link>
+                    </li>
+                    <li className="nav-item active">
+                        <Link to="/signup" className="nav-link">가입하기</Link>
+                    </li>
+                </div>) :
                 (<div className="profile-tab">
                     <li className="header-user-profile">
                         <img src={this.props.userPhotoUrl} alt="" id="profile" />
@@ -20,16 +29,8 @@ class Header extends Component {
                     <li className="header-user-alarm">
                         <img src={USER_ALARM} alt="" id="alram" />
                     </li>
-                </div>) :
-                (<div className="header-signup-and-login">
-                    <li className="nav-item active">
-                        <Link to="/login" className="nav-link">로그인</Link>
-                    </li>
-                    <li className="nav-item active">
-                        <Link to="/signup" className="nav-link">가입하기</Link>
-                    </li>
-                </div>)
-                );
+                </div>
+            ));
         return(
             <div className="navbar header">
             <div className="navbar_container">
@@ -76,10 +77,10 @@ class Header extends Component {
 };
 
 const mapStateToProps = (state) => {
-    console.log(state.auth.userNickName);
     return({
         userNickName: state.auth.userNickName,
-        userPhotoUrl: state.auth.userPhoto
+        userPhotoUrl: state.auth.userPhoto,
+        isLogin: state.auth.isLogin
     });
 }
 
