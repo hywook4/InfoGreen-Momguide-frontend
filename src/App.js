@@ -9,8 +9,8 @@ import * as actions from './actions';
 // localStorage.removeItem('userEmail');
 // sessionStorage.removeItem('loginToken');
 // localStorage.setItem('isLogin', false);
-console.log('Login Token: ' + localStorage.getItem('loginToken'));
-console.log('User Email:' + localStorage.getItem('userEmail'));
+// console.log('Login Token: ' + localStorage.getItem('loginToken'));
+// console.log('User Email:' + localStorage.getItem('userEmail'));
 
 class App extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class App extends React.Component {
         if (localToken !== null) {
             props.handleLogin(localToken);
         } else if (sessionToken !== null) {
-            console.log('debug 3');
+            // console.log('debug 3');
             props.handleLogin(sessionToken);
         }
     }

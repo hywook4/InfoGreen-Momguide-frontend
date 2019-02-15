@@ -17,7 +17,7 @@ export const login = (token) => {
             })
             .then((infoResult) => 
             {
-                console.log('Login success');
+                // console.log('Login success');
                 const data = infoResult;
                 dispatch(storeInfo(data));
                 history.push('/');

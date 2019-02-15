@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 class Header extends Component {
     render() {
-        console.log(localStorage.getItem('loginToken') + 'debug 1');
-        console.log(sessionStorage.getItem('loginToken') + 'debug 2');
+        // console.log(localStorage.getItem('loginToken') + 'debug 1');
+        // console.log(sessionStorage.getItem('loginToken') + 'debug 2');
         const loginTab =
             ((localStorage.getItem('loginToken') === null) && (sessionStorage.getItem('loginToken') === null) ?
                 (<div className="header-signup-and-login">

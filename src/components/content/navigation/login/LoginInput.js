@@ -110,7 +110,7 @@ class LoginInput extends Component {
                 handleLogin(res.data.token);
             }
         }).catch((err) => {
-            console.log('debug1');
+            // console.log('debug1');
             alert('유효하지 않은 로그인입니다.');
             console.log(err);
             this.setState({
