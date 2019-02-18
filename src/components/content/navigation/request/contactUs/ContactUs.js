@@ -13,7 +13,7 @@ export class ContactUs extends React.Component{
     submitRequest = (e) => {
         let content = document.getElementById(this.state.content).value;
         let file = document.getElementById(this.state.file).value; //TODO: 파일을 받는건지 확인
-        //TODO : 유효성 검사 및 파일, 내용 전송하기
+        //TODO : 유효성 검사 및 파일, 내용 전송하기, 유저의 정보도 같이 포함 
         console.log(content);
         console.log(file);
     }
