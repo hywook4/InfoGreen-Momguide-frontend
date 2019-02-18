@@ -1,14 +1,96 @@
-.req-cmnt{
+.contactus-container{
     width: 100%;
-    margin: 50px auto;
+    margin: 10px auto;
     position: relative;
     float: top;
 }
 
-.cu-container{
+.contactus-page{
     width: 980px;
     margin: 0px auto;
 }
+
+.contactus-description{
+    width: 100%;
+    height: 65px;
+    padding-top: 25px;
+    border-bottom: 1px solid gray;
+}
+
+.contactus-description h6{
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+}
+
+.contactus-subdescription{
+    width: 100%;
+    height: 100px;
+    padding-top: 14px;
+}
+
+.contactus-subdescription p {
+    font-size: 12px;
+    color: gray;
+    margin: 1px 0px;
+}
+
+.contactus-title { 
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid black;
+    padding-top: 15px;
+}
+
+.contactus-title h4{
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+}
+
+.contactus-content{
+    width: 100%;
+    height: 400px;
+    margin: 25px 0px;
+    border: 1px solid gray;
+    padding: 20px 15px;
+    border-radius: 5px;
+}
+
+.contactus-content:focus, .contactus-content:active {
+    outline: none;
+    border: 2px solid #32b8a4;
+    border-radius: 5px;
+}
+
+.contactus-file-box{
+    width: 100%;
+    margin: 25px 0px;
+}
+
+.contactus-file {
+    color: gray;
+}
+
+.contactus-button{
+    width: 100%;
+    height: 80px;
+    background-color:#32b8a4;
+    color: white;
+    border-color: #32b8a4;
+    outline: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 25px;
+    margin: 50px auto;
+}
+
+.contactus-button:active, .contactus-button:focus{
+    outline: none;
+    border: none;
+}
+
 
 .cmnt-desp-container{
     width: 980px;

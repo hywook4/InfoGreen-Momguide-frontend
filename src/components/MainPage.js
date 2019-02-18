@@ -8,7 +8,6 @@ import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
 import {Login} from './content/navigation/login/Login';
 import {Signup} from './content/navigation/signup/Signup';
-import {Request} from './content/navigation/request/Request';
 import {TipEvent} from './content/tipEvent/TipEvent';
 import {Tips} from './content/navigation/tips/Tips';
 import {Product} from './content/product/Product';
@@ -51,7 +50,6 @@ export const MainPage = () => {
                                         <Route path="/about" component={About} />
                                         <Route exact path="/category" render={(props) => <Category {...props} />} /> />
                                         <Route path="/category/:search" component={Category} />
-                                        <Route exact path="/request" component={Request} />
                                         <Route path="/signup" component={Signup} />
                                         <Route exact path="/login" component={Login} />
                                         <Route exact path="/events" component={Events} />
@@ -59,9 +57,9 @@ export const MainPage = () => {
                                         <Route exact path="/tips" component={Tips} />
                                         <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
                                         <Route path="/product-details/:name" component={ProductSpecification} />
+                                        <Route path="/request/loggedin" component={LoggedIn} />
                                         <Route path="/request/request-comment" component={RequestComment} />
                                         <Route path="/request/contact-us" component={ContactUs} />
-                                        <Route path="/request/loggedin" component={LoggedIn} />
                                         <Route path="/mypage" component={MyPage} />
                                     </Switch>
                                 </div>
