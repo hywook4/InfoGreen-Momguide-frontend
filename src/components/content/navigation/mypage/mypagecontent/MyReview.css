@@ -1,0 +1,190 @@
+.my-review-container {
+    margin-top: 20px;
+}
+
+.my-review-title {
+    height: 70px;
+}
+
+.my-review-title span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.my-review-title span:last-child {
+    margin-left: 20px;
+}
+
+.my-review-title img {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+}
+
+.my-review-title h6 {
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.my-review-detail-container {
+    margin-top: 40px;
+}
+
+.my-review-detail-header {
+    border-bottom: 1px solid #7d7d7d;
+    padding-bottom: 10px;
+}
+
+.my-review-detail-header-boundary {
+    font-size:  1rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+}
+
+.my-review-detail-header-inline {
+    display: inline;
+}
+
+.my-review-detail-header-inline.second-line {
+    margin-left: 95px;
+}
+
+h6.my-review-detail-header-inline {
+    font-size: 12px;
+    margin-left: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    line-height: 1.5;
+}
+
+.my-review-detail-content {
+    margin-top: 20px;
+}
+
+.my-review-star {
+    color: grey;
+    font-size: 35px !important;
+    margin-right: 5px;
+}
+
+.my-review-star.selected {
+    color: #60b3a2;
+}
+
+.my-review-use-period-select {
+    -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background-position: 97% center;
+    background-repeat: no-repeat;
+    border: 1px solid #AAA;
+    color: #555;
+    font-size: inherit;
+    overflow: hidden;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 215px;
+    height: 40px;
+}
+
+.my-review-textarea {
+    width: 100%;
+    height: 500px;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.my-review-upload-text {
+    color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.my-review-upload-image-label {
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-block;
+}
+
+.my-review-upload-red-x {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: red;
+}
+
+.my-review-additional-review-container {
+    border-collapse: collapse;
+    border-radius: 10px;
+    border-style: hidden;
+    overflow: hidden;
+
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.my-review-additional-review-container.success {
+    border: 1px solid #32B8A4;
+}
+
+.my-review-additional-review-container.fail {
+    border: 1px solid red;
+}
+
+.my-review-additional-review-content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.my-review-additional-review-duration {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 100%;
+    color: white;
+    text-align: center;
+    width: 100px;
+}
+
+.my-review-additional-review-duration > span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.my-review-additional-review-duration.success {
+    background-image: linear-gradient(to right, rgba(50,200,164,1), rgba(50,200,164,0.3));
+}
+
+.my-review-additional-review-duration.fail {
+    background-image: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 0, 0.3));
+}
+
+.my-review-additional-review-detail {
+    padding: 20px;
+    width: 600px;
+}
+
+.my-review-additional-review-icon {
+    padding: 20px;
+}
+
+input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.my-review-correct-button {
+    width: 100%;
+    color: white !important;
+}
