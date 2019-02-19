@@ -66,6 +66,10 @@ h6.my-review-detail-header-inline {
     margin-right: 5px;
 }
 
+.my-review-star:hover {
+    cursor: pointer;
+}
+
 .my-review-star.selected {
     color: #60b3a2;
 }
@@ -89,6 +93,51 @@ h6.my-review-detail-header-inline {
     white-space: nowrap;
     width: 215px;
     height: 40px;
+}
+
+.my-review-detail-bar {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.my-review-detail-bar-header {
+    display: inline-block;
+    width: 70px;
+}
+
+.my-review-detail-bar-line {
+    height: 3px;
+    width: 100px;
+    margin-left: -1px;
+}
+
+.my-review-detail-bar-circle:not(.selected) + .my-review-detail-bar-line:not(.selected) {
+    width: 107px;
+}
+
+.my-review-detail-bar-line.selected {
+    height: 5px;
+    width: 96px;
+    z-index: 1;
+}
+
+.my-review-detail-bar-circle:first-child {
+    margin-left: 10px;
+}
+
+.my-review-detail-bar-circle {
+    height: 12px;
+    width: 12px;
+}
+
+.my-review-detail-bar-circle:hover {
+    cursor: pointer;
+}
+
+.my-review-detail-bar-circle.selected {
+    height: 23px;
+    width: 23px;
+    z-index: 1;
 }
 
 .my-review-textarea {

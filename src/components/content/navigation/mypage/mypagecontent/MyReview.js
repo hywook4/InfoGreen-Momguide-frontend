@@ -1,5 +1,9 @@
 import React from 'react';
 import './MyReview.css';
+import greenCircle from '../../../../../assets/images/common_icons/green_circle.png';
+import greenLine from '../../../../../assets/images/common_icons/green_line.png';
+import grayCircle from '../../../../../assets/images/common_icons/gray_circle.png';
+import grayLine from '../../../../../assets/images/common_icons/gray_line.png';
 
 export class MyReview extends React.Component {
     // TODO: api 요청에 따라 state 수정
@@ -69,11 +73,11 @@ export class MyReview extends React.Component {
                         <h3>1. 별점</h3>
                     </div>
                     <div className="my-review-detail-content">
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 1 ? ' selected' : '-o')}`} aria-hidden="true" />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 2 ? ' selected' : '-o')}`} aria-hidden="true" />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 3 ? ' selected' : '-o')}`} aria-hidden="true" />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 4 ? ' selected' : '-o')}`} aria-hidden="true" />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" />
+                        <i className={`my-review-star fa fa-star${(this.state.rating >= 1 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 1)}/>
+                        <i className={`my-review-star fa fa-star${(this.state.rating >= 2 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 2)} />
+                        <i className={`my-review-star fa fa-star${(this.state.rating >= 3 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 3)} />
+                        <i className={`my-review-star fa fa-star${(this.state.rating >= 4 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 4)} />
+                        <i className={`my-review-star fa fa-star${(this.state.rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 5)} />
                     </div>
                 </div>
                 <div className="my-review-detail-container">
@@ -97,9 +101,77 @@ export class MyReview extends React.Component {
                         <h3>3. 세부 항목</h3>
                     </div>
                     <div className="my-review-detail-content">
-                        <div>
-                            <span>기능력</span>
-                            <span></span>
+                        <div className="my-review-detail-bar">
+                            <span className="my-review-detail-bar-header">기능력</span>
+                            <span>
+                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('functionality', 1)}/>
+                                {this.state.functionality >= 2 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.functionality >= 2 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('functionality', 2)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('functionality', 2)} />)}
+                                {this.state.functionality >= 3 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.functionality >= 3 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('functionality', 3)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('functionality', 3)} />)}
+                            </span>
+                        </div>
+                        <div className="my-review-detail-bar">
+                            <span className="my-review-detail-bar-header">저자극성</span>
+                            <span>
+                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 1)}/>
+                                {this.state.nonIrritating >= 2 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.nonIrritating >= 2 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 2)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 2)} />)}
+                                {this.state.nonIrritating >= 3 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.nonIrritating >= 3 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 3)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 3)} />)}
+                            </span>
+                        </div>
+                        <div className="my-review-detail-bar">
+                            <span className="my-review-detail-bar-header">제품향</span>
+                            <span>
+                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('sent', 1)}/>
+                                {this.state.sent >= 2 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.sent >= 2 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('sent', 2)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('sent', 2)} />)}
+                                {this.state.sent >= 3 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.sent >= 3 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('sent', 3)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('sent', 3)} />)}
+                            </span>
+                        </div>
+                        <div className="my-review-detail-bar">
+                            <span className="my-review-detail-bar-header">가성비</span>
+                            <span>
+                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 1)}/>
+                                {this.state.costEffectiveness >= 2 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.costEffectiveness >= 2 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 2)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 2)} />)}
+                                {this.state.costEffectiveness >= 3 ?
+                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
+                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
+                                {this.state.costEffectiveness >= 3 ?
+                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 3)} />) :
+                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 3)} />)}
+                            </span>
                         </div>
                     </div>
                 </div>
