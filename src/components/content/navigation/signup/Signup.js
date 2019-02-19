@@ -23,7 +23,7 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-    var re = /^[A-Za-z0-9]{6,15}$/;
+    var re = /^.{6,15}$/;
     var re2 = /^[A-Za-z]*$/;
     var re3 = /^[0-9]*$/;
     return !re2.test(password) && !re3.test(password) && re.test(password);
@@ -114,6 +114,11 @@ export class Signup extends Component {
             alert('비밀번호를 다시 확인해주세요.');
             return;
         }
+        const extension = state.profileImage.name.substring(state.profileImage.name.length - 3);
+        if(!(extension === 'png' || extension === 'jpg' || extension === 'gif')) {
+            alert('프로필 사진은 png, jpg, gif 파일 중 하나로 올려주세요.');
+            return;
+        }
         if(state.nickname.length > 6 || state.nickname.length === 0) {
             alert('닉네임을 6자 이내로 설정해 주세요.');
             return;
@@ -176,6 +181,10 @@ export class Signup extends Component {
                 }
             }
         }).then((res) => {
+            if('error' in res.data) {
+                alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
+                return;
+            }
             alert('회원가입 성공!');
         }).catch((res) => {
             alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
@@ -561,7 +570,7 @@ export class Signup extends Component {
                                 >
                                     <option/>
                                     {
-                                        this.state.childBirthYear ?
+                                        this.state.hasChild === '있음' && this.state.childBirthYear ?
                                             range(1, 12).map((num) => (
                                                 <option key={num}>{num}</option>
                                             )) : null
@@ -573,7 +582,7 @@ export class Signup extends Component {
                                 >
                                     <option/>
                                     {
-                                        this.state.childBirthMonth ?
+                                        this.state.hasChild === '있음' && this.state.childBirthMonth ?
                                             range(1, lastDay(Number(this.state.childBirthYear), Number(this.state.childBirthMonth))).map((num) => (
                                                 <option key={num}>{num}</option>
                                             )) : null
