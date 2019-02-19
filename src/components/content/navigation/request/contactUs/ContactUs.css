@@ -1,86 +1,93 @@
-.req-cmnt{
+.contactus-container{
     width: 100%;
-    margin: 50px auto;
+    margin: 10px auto;
     position: relative;
     float: top;
 }
 
-.cu-container{
+.contactus-page{
     width: 980px;
     margin: 0px auto;
 }
 
-.cmnt-desp-container{
-    width: 980px;
-    margin: 50px auto 0;
-    position: relative;
-}
-.cmnt-desp-inr{
+.contactus-description{
     width: 100%;
-    margin: 0 auto;
-    position: relative;
+    height: 65px;
+    padding-top: 25px;
+    border-bottom: 1px solid gray;
 }
 
-.cmnt-desp-inr h2{
+.contactus-description h6{
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+}
+
+.contactus-subdescription{
+    width: 100%;
+    height: 100px;
+    padding-top: 14px;
+}
+
+.contactus-subdescription p {
+    font-size: 12px;
     color: gray;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin: 15px auto;
-    font-size: 24px;
-    margin-bottom: 25px;
+    margin: 1px 0px;
 }
 
-.cmnt-desp-inr p{
-    color: rgb(175, 173, 173);
-    letter-spacing: 1px;
-    font-weight: 100;
-    margin: 0 auto;
+.contactus-title { 
     width: 100%;
-    font-size: 14px;
+    height: 50px;
+    border-bottom: 1px solid black;
+    padding-top: 15px;
 }
 
-.form-container{
+.contactus-title h4{
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+}
+
+.contactus-content{
     width: 100%;
-    border-top-style: solid;
-    border-color: rgb(175, 173, 173);
-    border-width: 2px;
-    margin: 15px auto;
-    padding-top: 35px;
-    padding-bottom: 20px;
+    height: 400px;
+    margin: 25px 0px;
+    border: 1px solid gray;
+    padding: 20px 15px;
+    border-radius: 5px;
 }
 
-hr.line{
-    margin-top: 25px;
-    border-top: 2px solid rgb(175, 173, 173);
+.contactus-content:focus, .contactus-content:active {
+    outline: none;
+    border: 2px solid #32b8a4;
+    border-radius: 5px;
 }
 
-.cu-form{
-
-}
-
-.cu-text {
+.contactus-file-box{
     width: 100%;
-    height: 350px;
-    border-style: none;
-    background-color: rgb(175, 173, 173);
-    padding: 15px;
+    margin: 25px 0px;
 }
 
-input[type=submit]{
-    height: 35px;
-    width: 120px;
-    cursor: pointer;
-    float: right;
+.contactus-file {
+    color: gray;
+}
+
+.contactus-button{
+    width: 100%;
+    height: 80px;
+    background-color:#32b8a4;
     color: white;
-    background-color: #32b8a4;
-    border-radius: 4px;
+    border-color: #32b8a4;
+    outline: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 25px;
+    margin: 50px auto;
+}
+
+.contactus-button:active, .contactus-button:focus{
+    outline: none;
     border: none;
 }
 
-input[type=submit]:hover{
-    color:  #32b8a4;
-    border-style: solid;
-    border-color: #32b8a4;
-    background-color: white;
-    border-width: 1px;
-}
