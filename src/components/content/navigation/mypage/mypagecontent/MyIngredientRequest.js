@@ -111,24 +111,28 @@ export class MyIngredientRequest extends React.Component{
     render(){
         const dummy = [
             {
+                index: 0,
                 date: "12-12-12",
                 title: "이거슨 문의1",
                 content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼asdfasdfasdfasdfasdfasdfsadfasdfasdf",
                 answered: true
             },
             {
+                index: 1,
                 date: "12-12-12",
                 title: "이거슨 문의1",
                 content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
                 answered: false
             },
             {
+                index: 2,
                 date: "12-12-12",
                 title: "이거슨 문의1",
                 content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
                 answered: false
             },
             {
+                index: 3,
                 date: "12-12-12",
                 title: "이거슨 문의1",
                 content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",

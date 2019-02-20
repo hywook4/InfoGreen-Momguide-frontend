@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './MyIngredientRequest.css';
 
 
@@ -61,7 +62,9 @@ export class MyIngredientCard extends React.Component{
                 <div className="myingredient-card-answer">
                     {
                         data.answered ? 
-                        <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button> : // TODO : 누르면 상세 링크연결
+                        <Link to={`ingredient-analysis-request/${this.props.index}`}>
+                            <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button>
+                        </Link> : // TODO : 누르면 상세 링크연결
                         <button type="button" className="myhelp-answer-off">답변&nbsp;중</button>
                     }
                 </div>
@@ -69,7 +72,9 @@ export class MyIngredientCard extends React.Component{
                     {
                         data.answered ? 
                         "" :
-                        <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
+                        <Link to={`ingredient-analysis-request/${this.props.index}`}>
+                            <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
+                        </Link>
                     }
                     
                     <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>

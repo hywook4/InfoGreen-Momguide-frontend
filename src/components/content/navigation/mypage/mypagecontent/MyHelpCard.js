@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './MyHelpRequest.css';
 
 
@@ -56,7 +57,9 @@ export class MyHelpCard extends React.Component{
                 <div className="myhelp-card-answer">
                     {
                         data.answered ? 
-                        <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button> : // TODO : 누르면 상세 링크연결
+                        <Link to={`my-help/${this.props.index}`}>
+                            <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button>
+                        </Link> : 
                         <button type="button" className="myhelp-answer-off">답변&nbsp;중</button>
                     }
                 </div>
@@ -64,7 +67,9 @@ export class MyHelpCard extends React.Component{
                     {
                         data.answered ? 
                         "" :
-                        <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
+                        <Link to={`my-help/${this.props.index}`}>
+                            <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
+                        </Link>       
                     }
                     
                     <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>

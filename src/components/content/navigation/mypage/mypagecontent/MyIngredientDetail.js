@@ -8,7 +8,7 @@ export class MyIngredientDetail extends React.Component{
         type: true,
         title: "요넥스",
         content: "야이거 분석해",
-        answer: ""
+        answer: "asdf"
     }
 
     componentDidMount=()=>{
