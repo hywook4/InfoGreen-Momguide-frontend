@@ -99,6 +99,7 @@ class LoginInput extends Component {
 
             if('token' in res.data) {
                 handleLogin(res.data.token);
+                history.push('/');
             }
         })
         .catch((err) => {

@@ -15,12 +15,12 @@ import * as actions from './actions';
 class App extends React.Component {
     constructor(props) {
         super(props);
+
         const localToken = localStorage.getItem("loginToken");
         const sessionToken = sessionStorage.getItem("loginToken");
         if (localToken !== null) {
             props.handleLogin(localToken);
         } else if (sessionToken !== null) {
-            // console.log('debug 3');
             props.handleLogin(sessionToken);
         }
     }
@@ -28,7 +28,6 @@ class App extends React.Component {
         return (
                 <Home/>
         )
-        
     }
 }
 
@@ -39,6 +38,6 @@ const mapDispatchToProps = (dispatch) => {
             return dispatch(actions.login(token));
         }
     })
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

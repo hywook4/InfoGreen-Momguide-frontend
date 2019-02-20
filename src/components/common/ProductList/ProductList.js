@@ -24,8 +24,6 @@ export class ProductList extends React.Component {
     };
     
     componentWillReceiveProps = async (nextProps) => {
-        console.log("componentWillReceiveProps: " + JSON.stringify(nextProps));
-        
         let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${nextProps.mainCategory}&subCategory=${nextProps.subCategory}`);
         const newState = ({ productByVote: products.data });
 

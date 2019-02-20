@@ -12,7 +12,6 @@ export class Product extends React.Component {
     });
 
     onCategoryClick = (mainCategory, subCategory) => {
-        console.log(mainCategory, subCategory);
         this.setState({
             mainCategory: mainCategory,
             subCategory: subCategory
@@ -105,18 +104,15 @@ export class Product extends React.Component {
         return(
             <div className="product">
                 <div className="product_inner">
-                    <Router>
-                        <div className="product_div">
-                            <ProductSearch onCategoryClick={this.onCategoryClick}/>
+                    <div className="product_div">
+                        <ProductSearch onCategoryClick={this.onCategoryClick}/>
 
-                            <div className="product-content">
-                                <div className="content-info">
-                                    <ProductList mainCategory={this.state.mainCategory} subCategory={this.state.subCategory}/>
-                                </div>
+                        <div className="product-content">
+                            <div className="content-info">
+                                <ProductList mainCategory={this.state.mainCategory} subCategory={this.state.subCategory}/>
                             </div>
                         </div>
-                    </Router>
-
+                    </div>
                 </div>
             </div>
         )

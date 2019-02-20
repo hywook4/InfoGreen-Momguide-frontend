@@ -49,7 +49,7 @@ export class MainPage extends Component {
                                         <Switch>
                                             <Route exact path="/" component={renderHome} />
                                             <Route path="/about" component={About} />
-                                            <Route path="/category" render={(props) => <Category {...props} />} /> />
+                                            <Route exact path="/category" render={(props) => <Category {...props} />} /> />
                                             <Route path="/category/:search" render={(props) => <Category {...props} />} /> />
                                             <Route exact path="/request" component={Request} />
                                             <Route path="/signup" component={Signup} />
@@ -60,7 +60,7 @@ export class MainPage extends Component {
                                             <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
                                             <Route exact path="/tips" component={Tips} />
                                             <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
-                                            <Route path="/product-details/:name" component={ProductSpecification} />
+                                            <Route path="/product-details/:category/:id" component={ProductSpecification} />
                                             <Route path="/request/request-comment" component={RequestComment} />
                                             <Route path="/request/contact-us" component={ContactUs} />
                                             <Route path="/request/loggedin" component={LoggedIn} />

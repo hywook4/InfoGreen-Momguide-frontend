@@ -20,7 +20,6 @@ export const login = (token) => {
                 // console.log('Login success');
                 const data = infoResult;
                 dispatch(storeInfo(data));
-                history.push('/');
             })
             .catch((err) => {
                 console.log(err);
