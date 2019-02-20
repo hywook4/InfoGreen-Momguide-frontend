@@ -1,6 +1,6 @@
 import React from 'react';
 import './Product.css';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import { ProductList } from '../../common/ProductList/ProductList';
 import { ProductSearch } from './productSearch/ProductSearch';
 
@@ -9,7 +9,7 @@ export class Product extends React.Component {
     state = ({
         mainCategory: "living",  //living or cosmetic
         subCategory: "laundry" // 아래 houseHold와 cosmetic 확인 
-    })
+    });
 
     onCategoryClick = (mainCategory, subCategory) => {
         console.log(mainCategory, subCategory);
@@ -17,12 +17,12 @@ export class Product extends React.Component {
             mainCategory: mainCategory,
             subCategory: subCategory
         })
-    }
+    };
 
 
 
     render() {
-        const houseHold = [
+/*        const houseHold = [
             {
                 path:'/',
                 name:'세탁세제',
@@ -100,7 +100,7 @@ export class Product extends React.Component {
                 name:'기타화장품',
                 category:'other'
             },
-        ];
+        ];*/
 
         return(
             <div className="product">
