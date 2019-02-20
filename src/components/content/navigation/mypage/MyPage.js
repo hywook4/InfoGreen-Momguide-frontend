@@ -11,6 +11,8 @@ import { MyDibProduct } from './mypagecontent/MyDibProduct'
 import { OpenRequest } from './mypagecontent/OpenRequest'
 import { MyHelpRequest } from './mypagecontent/MyHelpRequest'
 import { MyIngredientRequest } from './mypagecontent/MyIngredientRequest'
+import { MyHelpDetail } from './mypagecontent/MyHelpDetail'
+import { MyIngredientDetail } from './mypagecontent/MyIngredientDetail'
 
 
 export class MyPage extends React.Component{
@@ -52,8 +54,10 @@ export class MyPage extends React.Component{
                                     <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 
                                     <Route path="/mypage/dib-products" component={MyDibProduct} /> 
                                     <Route path="/mypage/ingredient-open-request" component={OpenRequest} /> 
-                                    <Route path="/mypage/ingredient-analysis-request" component={MyIngredientRequest} /> 
-                                    <Route path="/mypage/my-help" component={MyHelpRequest} /> 
+                                    <Route exact path="/mypage/ingredient-analysis-request" component={MyIngredientRequest} /> 
+                                    <Route path="/mypage/ingredient-analysis-request" component={MyIngredientDetail} /> 
+                                    <Route exact path="/mypage/my-help" component={MyHelpRequest} /> 
+                                    <Route path="/mypage/my-help" component={MyHelpDetail} /> 
                                 </Switch>
                             </div>
                         </div>

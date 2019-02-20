@@ -41,8 +41,7 @@ export class RequestComment extends React.Component{
                     </div>
                     <div className="ing-request-info">
                         <select className="ing-request-type" id="product-type">
-                            <option value="" selected="selected" disabled>종류</option>
-                            <option value="생활화학제품">생활화학제품</option>
+                            <option value="생활화학제품" selected="selected">생활화학제품</option>
                             <option value="유아용화장품">유아용화장품</option>
                         </select>
                         <textarea className="ing-request-name" placeholder="브랜드 혹은 제품이름을 입력하세요." id="product-name"/>
