@@ -28,14 +28,14 @@ class LoginInput extends Component {
         this.setState({
             email: value
         });
-    }
+    };
 
     handlePwChange = (e) => {
         const {value} = e.target;
         this.setState({
             password: value
         });
-    }
+    };
 
     handleKeepLoginCheck = (e) => {
         const target = e.target;
@@ -56,14 +56,14 @@ class LoginInput extends Component {
                 keepLogin: target.checked
             });
         }
-    }
+    };
     
     handleSaveEmailCheck = (e) => {
         const value = e.target.checked;
         this.setState({
             saveId: value
         });
-    }
+    };
 
     handleLoginClick = (e) => {
 
@@ -141,10 +141,12 @@ class LoginInput extends Component {
         return (
             <div className="logininput-login-part">
                 <div className="logininput-id" >
-                    <input id="emailinput" type="text" defaultValue={emailDefault} placeholder="아이디를 입력하세요." onChange={handleEmailChange}/>
+                    <input id="emailinput" type="text" defaultValue={emailDefault} className="logininput-input"
+                           placeholder="아이디를 입력하세요." onChange={handleEmailChange}/>
                 </div>
                 <div className="logininput-password">
-                    <input type="password" placeholder="비밀번호를 입력하세요." onChange={handlePwChange}/>
+                    <input type="password" placeholder="비밀번호를 입력하세요." className="logininput-input"
+                           onChange={handlePwChange}/>
                 </div>
                 <div>
                     <div className="logininput-login-options">
