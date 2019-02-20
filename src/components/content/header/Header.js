@@ -4,9 +4,8 @@ import MOMGUIDE_LOGO_WHITE from '../../../assets/images/MOMGUIDE_LOGO_WHITE.png'
 import USER_ALARM from '../../../assets/images/alarm_on.png';
 
 import { Link } from "react-router-dom";
-            this.onSearch();
-        if(e.key === 'Enter'){
 import { connect } from 'react-redux';
+
 class Header extends Component {
     render() {
         // console.log(localStorage.getItem('loginToken') + 'debug 1');
