@@ -1,85 +1,135 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Tips.css';
-
-import {StaticCard} from '../../../common/staticCard/StaticCard';
-import Search from '../../search/Search';
-import {Paginate} from '../../navigation/tips/pagination/Pagination';
-import axios from 'axios';
-import { Card } from 'semantic-ui-react';
 
 export class Tips extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            tips: [],
-        }
-    }
-    
+        super(props);
 
-    componentWillMount() {
-        axios.post("http://13.125.89.0/chemical/tip.php")
-            .then(res => {
-                this.setState({tips: res.data});
-            })
+        // TODO
+        this.state = {
+            tips: [{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                date: '2018-10-12',
+                end: true
+            }],
+            currentPage: 1,
+            totalPage: 2
+        };
     }
+
+    // TODO
+    loadNextPage = () => {
+        this.setState({
+            currentPage: this.state.currentPage + 1
+        })
+    };
     
     render() {
+        const moreButton = (
+            <button className="tips-more-button" onClick={() => {this.loadNextPage()}}>
+                더보기
+            </button>
+        );
+
         return (
-            <div className="container-fluid">
-                <div className="row"  style={{marginTop:8}}>
-                    <div className="col-sm-1">
+            <div className="tips-container">
+                <div className="tips-header">
+                    <div className="tips-bottom-left">
+                        꿀팁
                     </div>
-    
-                    <div className="col-md-2 tipsBannnerOne">
-                        <div className="tip-bnr-inr" style={{position: 'absolute', bottom: 15}}>
-                            <h5><b>12월 출석체크</b></h5>
-                            <p>매일 출석하고 포인트 받자!</p>
-                            <h6><Link to='#'>자세히 보기
-                            <i className="fa fa-angle-right"></i>
-                            </Link></h6>
-                        </div>
-                            
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerTwo">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerThree">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerFour">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerFive">
-                    </div>
-    
-                    <div className="col-sm-1">
-                    </div>
-    
                 </div>
-                <div className="row">
-                    <div className="col-md-12" style={{marginTop: 50, marginRight: 50}}>
-                        <Search />
-                    </div>
-                </div> 
                 <div className="tips-card-container">
-                    <Card.Group itemsPerRow={2} stackable={true}>
-                        {this.state.tips.map((tip) => 
-                            <StaticCard
-                                payload={tip}
-                                index={tip.index_number}
-                                section={"tips"}
-                                image={tip.image}
-                                thumbnail={`http://13.125.89.0/chemical/event_tip_thumbnail/${tip.thumbnail}`}
-                                name={tip.title}
-                                description={tip.content}
-                            />
-                        )}
-                    </Card.Group>
-                    
-                    <Paginate />
+                    {this.state.tips.map((item, i) => {
+                        return (
+                            <Link to="/tips/123">
+                                <div className="tips-card-item" key={i}>
+                                    {item.end ? null : <div className="tips-top-right">D-Day</div>}
+                                    <div className="tips-card-item-image-container">
+                                        {item.end ? <div className="tips-end">종료된 이벤트 입니다.</div> : null}
+                                        <img src={item.image} alt="tips" />
+                                    </div>
+                                    <div>
+                                        <h5>{item.title}</h5>
+                                        <h6>{item.contents}</h6>
+                                    </div>
+                                    <div className="tips-bottom-right">
+                                        {item.date}
+                                    </div>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
+                {this.state.currentPage < this.state.totalPage ? moreButton : null}
             </div>
         )
     }
