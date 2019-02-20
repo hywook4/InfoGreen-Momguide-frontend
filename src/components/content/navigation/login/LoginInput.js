@@ -224,9 +224,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        storeInfo: (info) => {
-            return dispatch(actions.storeInfo());
-        },
         handleLogin: (token) => {
             return dispatch(actions.login(token));
         }
