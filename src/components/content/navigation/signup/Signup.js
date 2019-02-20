@@ -435,7 +435,7 @@ export class Signup extends Component {
                         </div>
                         <div>
                             <span>
-                                <img src={this.state.profileImageUrl} alt="" id="profile" />
+                                <img src={this.state.profileImageUrl} alt="" id="signup-profile" />
                             </span>
                             <span>
                                 <input type="file" name="profile-image-input"  id="profile-image-input"

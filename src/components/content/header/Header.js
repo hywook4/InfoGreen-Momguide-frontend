@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
     render() {
-        // console.log(localStorage.getItem('loginToken') + 'debug 1');
-        // console.log(sessionStorage.getItem('loginToken') + 'debug 2');
         const loginTab =
             ((localStorage.getItem('loginToken') === null) && (sessionStorage.getItem('loginToken') === null) ?
                 (<div className="header-signup-and-login">
@@ -22,13 +20,13 @@ class Header extends Component {
                 </div>) :
                 (<div className="profile-tab">
                     <li className="header-user-profile">
-                        <img src={this.props.userPhotoUrl} alt="" id="profile" />
+                        <img src={this.props.userPhotoUrl} alt="" id="header-profile" />
                     </li>
                     <li className="header-user-nickname">
                         {this.props.userNickName}
                     </li>
                     <li className="header-user-alarm">
-                        <img src={USER_ALARM} alt="" id="alram" />
+                        <img src={USER_ALARM} alt="" id="header-alarm" />
                     </li>
                 </div>
             ));
@@ -65,7 +63,7 @@ class Header extends Component {
                     <ul className="navbar_right">
                         <li className="navbar_search">
                             <input type="text" placeholder="검색하기" onFocus={function () {window.location.replace("/category");}}/>
-                            <i className="fa fa-search" aria-hidden="true"></i>
+                            <i className="fa fa-search" aria-hidden="true" />
                         </li>
                         {loginTab}
                     </ul>
@@ -75,7 +73,7 @@ class Header extends Component {
         )
         
     }
-};
+}
 
 const mapStateToProps = (state) => {
     return({
@@ -83,7 +81,7 @@ const mapStateToProps = (state) => {
         userPhotoUrl: state.auth.userPhoto,
         isLogin: state.auth.isLogin
     });
-}
+};
 
 const mapDispatchToProps = null;
 
