@@ -9,6 +9,7 @@ import {Events} from './content/navigation/events/Events';
 import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
 import {Signup} from './content/navigation/signup/Signup';
+import {SignupOk} from './content/navigation/signup/SignupOk';
 import {Request} from './content/navigation/request/Request';
 import {TipEvent} from './content/tipEvent/TipEvent';
 import {Tips} from './content/navigation/tips/Tips';
@@ -52,6 +53,7 @@ export class MainPage extends Component {
                                             <Route path="/category/:search" render={(props) => <Category {...props} />} /> />
                                             <Route exact path="/request" component={Request} />
                                             <Route path="/signup" component={Signup} />
+                                            <Route path="/signup-ok" component={SignupOk} />
                                             <Route exact path="/login" component={Login} />
                                             <Route path="/login/findpassword" component={FindPassword} />
                                             <Route exact path="/events" component={Events} />
