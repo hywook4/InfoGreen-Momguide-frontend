@@ -8,12 +8,11 @@ export const storeInfo = (info) => ({
 
 export const login = (token) => {
     return (dispatch) => {
-        console.log(token);
         if(token !== null) {
             axios({
                 method: 'get',
                 url: process.env.API_URL + '/api/auth/info', 
-                headers: {token: 'Bearer ' + token}
+                headers: {Authorization: 'Bearer ' + token}
             })
             .then((infoResult) => {
                 const data = infoResult;

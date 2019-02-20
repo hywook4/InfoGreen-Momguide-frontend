@@ -48,7 +48,7 @@ class App extends React.Component {
 
         // 1시간 마다 refresh
         setTimeout(() => {
-            this.tokenRefreshRequest(false)
+            this.tokenRefreshRequest(false);
         }, 60*60*1000);
     };
 
