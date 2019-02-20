@@ -82,15 +82,6 @@ class LoginInput extends Component {
             }
         })
         .then((res) => {
-            if('error' in res.data) {
-                alert('이메일 또는 비밀번호를 확인해주세요.');
-                console.log(res.error);
-                this.setState({
-                    email: '',
-                    password: ''
-                });
-                return;
-            }
             if (this.state.keepLogin === true) {
                 localStorage.setItem('loginToken', res.data.token);
                 sessionStorage.removeItem('loginToken');
@@ -109,15 +100,23 @@ class LoginInput extends Component {
             if('token' in res.data) {
                 handleLogin(res.data.token);
             }
-        }).catch((err) => {
-            // console.log('debug1');
-            alert('유효하지 않은 로그인입니다.');
-            console.log(err);
-            this.setState({
-                email: '',
-                passowrd: ''
-            });
-            return;
+        })
+        .catch((err) => {
+            if(err.response.status === 400) {
+                alert('이메일과 비밀번호를 입력해주세요.');
+                return;
+            } else if(err.response.status === 424) {
+                if(err.response.data.error === 'hash compilation failed') {
+                    alert('hash compilation failed');
+                    return;
+                } else if (err.response.data.error === 'no member') {
+                    alert('없는 계정입니다. 이메일을 다시 확인해주세요.');
+                    return;
+                }
+            } else if (err.response.status === 403) {
+                alert('비밀번호를 다시 확인해주세요.');
+                return;
+            }
         });
     }
 
