@@ -56,7 +56,7 @@ export class FindPassword extends Component {
         } = this;
         return (
             <div className="findpassword-container">
-                <img src={CONCEPT_BANNER} alt=""></img>
+                <img src={CONCEPT_BANNER} alt="" className="findpassword-banner-image" />
                 <div className="findpassword-text">
                     비밀번호 찾기
                 </div>
