@@ -1,7 +1,7 @@
 import React from 'react';
 import './Request.css';
 import '../login/Login.css';
-import {LoginSignupProfile} from '../login/LoginSignupProfile';
+
 import {RequestTabs} from '../request/RequestTabs';
 
 
@@ -11,8 +11,6 @@ export class Request extends React.Component{
             <div className="container">
            
                 <div className="login-container">
-                 
-                    <LoginSignupProfile/>
                     <div className="request-setting">
                         <i className="fa fa-gear"></i>
                         <p>수정하기</p>
