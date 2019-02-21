@@ -1,3 +1,4 @@
 import CategoryUtil from './CategoryUtil';
+import TokenUtil from './TokenUtil';
 
-export { CategoryUtil };
+export { CategoryUtil, TokenUtil };

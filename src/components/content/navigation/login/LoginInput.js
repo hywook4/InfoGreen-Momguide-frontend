@@ -8,6 +8,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';
 import history from '../../../../history/history';
+import $ from 'jquery';
 
 class LoginInput extends Component {
 
@@ -98,8 +99,11 @@ class LoginInput extends Component {
             }
 
             if('token' in res.data) {
+                if(this.props.modalId) {
+                    $(`#${this.props.modalId}`).modal('hide');
+                }
                 handleLogin(res.data.token);
-                history.push('/');
+                history.push(this.props.nextPath);
             }
         })
         .catch((err) => {
