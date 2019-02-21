@@ -5,30 +5,7 @@ import axios from 'axios';
 import { RoadNameAddress } from '../../../common/RoadNameAddress/RoadNameAddress';
 import $ from 'jquery';
 import history from '../../../../history/history';
-
-function range(start, end) {
-    const len = end-start+1;
-    if(len < 0)
-        return [];
-
-    return [...Array(len).keys()].map((i) => i+start);
-}
-
-function lastDay(year, month) {
-    return new Date(year, month, 0).getDate();
-}
-
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
-
-function validatePassword(password) {
-    var re = /^.{6,15}$/;
-    var re2 = /^[A-Za-z]*$/;
-    var re3 = /^[0-9]*$/;
-    return !re2.test(password) && !re3.test(password) && re.test(password);
-}
+import { CommonUtil } from '../../../../util';
 
 export class Signup extends Component {
     setDefaultImage = async () => {
@@ -102,7 +79,7 @@ export class Signup extends Component {
             alert('약관 동의에 체크를 해주세요.');
             return;
         }
-        if(!validateEmail(state.emailId + '@' + state.emailDomain)) {
+        if(!CommonUtil.validateEmail(state.emailId + '@' + state.emailDomain)) {
             alert('이메일 형식을 확인해주세요.');
             return;
         }
@@ -110,7 +87,7 @@ export class Signup extends Component {
             alert('이메일 중복검사를 해주세요.');
             return;
         }
-        if(!validatePassword(state.password)) {
+        if(!CommonUtil.validatePassword(state.password)) {
             alert('비밀번호는 6~15자의 영문, 숫자 조합으로 입력해주세요.');
             return;
         }
@@ -246,7 +223,7 @@ export class Signup extends Component {
         axios.get(`${process.env.API_URL}/api/auth/register/checkEmail?email=${this.state.emailId+'@'+this.state.emailDomain}`)
             .then((res) => {
                 const isDuplicated = res.data.isDuplicated;
-                const validateOk = validateEmail(this.state.emailId+'@'+this.state.emailDomain);
+                const validateOk = CommonUtil.validateEmail(this.state.emailId+'@'+this.state.emailDomain);
                 this.setState({
                     emailDuplicateOk: !isDuplicated && validateOk,
                     emailDuplicateMessage: validateOk ?
@@ -512,7 +489,7 @@ export class Signup extends Component {
                                 >
                                     <option></option>
                                     {
-                                        range(1930, new Date().getFullYear()).map((num) => (
+                                        CommonUtil.range(1930, new Date().getFullYear()).map((num) => (
                                             <option key={num}>{num}</option>
                                         ))
                                     }
@@ -524,7 +501,7 @@ export class Signup extends Component {
                                     <option></option>
                                     {
                                         this.state.birthYear ?
-                                        range(1, 12).map((num) => (
+                                        CommonUtil.range(1, 12).map((num) => (
                                             <option key={num}>{num}</option>
                                         )) : null
                                     }
@@ -536,7 +513,7 @@ export class Signup extends Component {
                                     <option></option>
                                     {
                                         this.state.birthMonth ?
-                                        range(1, lastDay(Number(this.state.birthYear), Number(this.state.birthMonth))).map((num) => (
+                                        CommonUtil.range(1, CommonUtil.lastDay(Number(this.state.birthYear), Number(this.state.birthMonth))).map((num) => (
                                             <option key={num}>{num}</option>
                                         )) : null
                                     }
@@ -571,7 +548,7 @@ export class Signup extends Component {
                                     <option/>
                                     {
                                         this.state.hasChild === '있음' ?
-                                        range(1990, new Date().getFullYear()).map((num) => (
+                                        CommonUtil.range(1990, new Date().getFullYear()).map((num) => (
                                             <option key={num}>{num}</option>
                                         )) :
                                             null
@@ -584,7 +561,7 @@ export class Signup extends Component {
                                     <option/>
                                     {
                                         this.state.hasChild === '있음' && this.state.childBirthYear ?
-                                            range(1, 12).map((num) => (
+                                            CommonUtil.range(1, 12).map((num) => (
                                                 <option key={num}>{num}</option>
                                             )) : null
                                     }
@@ -596,7 +573,7 @@ export class Signup extends Component {
                                     <option/>
                                     {
                                         this.state.hasChild === '있음' && this.state.childBirthMonth ?
-                                            range(1, lastDay(Number(this.state.childBirthYear), Number(this.state.childBirthMonth))).map((num) => (
+                                            CommonUtil.range(1, CommonUtil.lastDay(Number(this.state.childBirthYear), Number(this.state.childBirthMonth))).map((num) => (
                                                 <option key={num}>{num}</option>
                                             )) : null
                                     }
