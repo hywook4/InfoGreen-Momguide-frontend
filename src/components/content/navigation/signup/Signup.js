@@ -438,6 +438,7 @@ export class Signup extends Component {
                                     (this.state.nicknameDuplicateMessage ?
                                     (this.state.nicknameDuplicateOk ? 'signup-input-success' : 'signup-input-fail') : '')}
                                        onChange={(e) => this.onChange('nickname', e.target.value, 'nicknameDuplicateOk', false, 'nicknameDuplicateMessage', '')}
+                                       value={this.state.nickname}
                                 />
                             </span>
                             <span>
@@ -528,6 +529,7 @@ export class Signup extends Component {
                         <div className="signup-profile-kids-select">
                             <select id="kids"
                                     onChange={(e)=>this.onChange('hasChild', e.target.value)}
+                                    value={this.state.hasChild}
                             >
                                 <option>선택</option>
                                 <option>있음</option>
