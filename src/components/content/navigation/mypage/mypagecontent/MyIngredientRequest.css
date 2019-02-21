@@ -1,0 +1,197 @@
+.myingredient-container{
+    width: 100%;
+    min-height: 600px;
+}
+
+.myingredient-header{
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid gray;
+}
+
+.myingredient-header-checkbox{
+    width: 45px;
+    height: 100%;
+    display: inline-block;
+    padding: 12px 15px;
+}
+
+.myingredient-header-title{
+    width: 450px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    
+}
+
+.myingredient-header-answer{
+    width: 200px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    
+}
+
+.myingredient-header-delete{
+    width: 55px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+}
+
+.myingredient-card-box{
+    width: 100%;
+    min-height: 1000px;
+}
+
+.myingredient-bottom{
+    width: 100%;
+    height: 50px;
+    
+}
+
+
+.myingredient-card{
+    width: 100%;
+    height: 160px;
+    border-bottom: 1px solid gray;
+}
+
+.myingredient-card-checkbox{
+    width: 45px;
+    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 40px 15px;
+}
+
+.myingredient-card-image{
+    height: 100px;
+    width: 80px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px 5px;
+}
+
+.myingredient-img{
+    height: 70px;
+    width: 70px;
+}
+
+.myingredient-img img{
+    height: 70px;
+    width: 70px;
+    object-fit: contain;
+}
+
+.myingredient-card-title{
+    height: 100px;
+    width: 400px;
+    display: inline-block;
+    padding: 12px 25px;
+}
+
+.myingredient-card-title p{
+    color: gray;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.myingredient-card-title h5{
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.myingredient-card-title h6{
+    font-size: 11px;
+    color: gray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: underline;
+}
+
+.myingredient-card-answer{
+    width: 170px;
+    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 40px;
+}
+
+.myingredient-answer-on{
+    width: 130px;
+    height: 50px;
+    background-color:#32b8a4;
+    color: white;
+    border-color: #32b8a4;
+    outline: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    margin: 0px auto;
+}
+
+.myingredient-answer-on:active, .myhelp-answer-on:focus {
+    outline: none;
+    border: none;
+}
+
+.myingredient-answer-off{
+    width: 130px;
+    height: 50px;
+    color: #c6cbd1;
+    border: 2px solid #c6cbd1;
+    background-color: white;
+    outline: 0;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 0px auto;
+}
+
+.myingredient-answer-off:active, .myhelp-answer-off:focus {
+    outline: none;
+    border: 2px solid #c6cbd1;
+}
+
+.myingredient-card-delete{
+    width: 55px;
+    height: 100px;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 55px;
+}
+
+.myingredient-card-content {
+    width: 100%;
+    height: 60px;
+    padding-left: 50px;
+    padding-right: 270px;
+    padding-top: 10px;
+}
+
+.myingredient-card-content h6{
+    font-size: 12px;
+    color: gray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: underline;
+    
+}

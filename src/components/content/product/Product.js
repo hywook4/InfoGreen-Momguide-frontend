@@ -1,6 +1,5 @@
 import React from 'react';
 import './Product.css';
-import {BrowserRouter as Router} from 'react-router-dom';
 import { ProductList } from '../../common/ProductList/ProductList';
 import { ProductSearch } from './productSearch/ProductSearch';
 
@@ -100,7 +99,6 @@ export class Product extends React.Component {
                 category:'other'
             },
         ];*/
-
         return(
             <div className="product">
                 <div className="product_inner">

@@ -1,54 +1,50 @@
-.contactus-container{
+.myhelp-detail-container{
     width: 100%;
     margin: 10px auto;
     position: relative;
     float: top;
 }
 
-.contactus-page{
-    width: 980px;
-    margin: 0px auto;
-}
 
-.contactus-description{
+.myhelp-detail-description{
     width: 100%;
     height: 65px;
     padding-top: 25px;
     border-bottom: 1px solid gray;
 }
 
-.contactus-description h6{
+.myhelp-detail-description h6{
     font-size: 12px;
     color: black;
     font-weight: bold;
 }
 
-.contactus-subdescription{
+.myhelp-detail-subdescription{
     width: 100%;
     height: 100px;
     padding-top: 14px;
 }
 
-.contactus-subdescription p {
+.myhelp-detail-subdescription p {
     font-size: 12px;
     color: gray;
     margin: 1px 0px;
 }
 
-.contactus-title { 
+.myhelp-detail-title { 
     width: 100%;
     height: 50px;
     border-bottom: 1px solid black;
     padding-top: 15px;
 }
 
-.contactus-title h4{
+.myhelp-detail-title h4{
     font-size: 18px;
     color: black;
     font-weight: bold;
 }
 
-.contactus-content{
+.myhelp-detail-content{
     width: 100%;
     height: 400px;
     margin: 25px 0px;
@@ -57,22 +53,21 @@
     border-radius: 5px;
 }
 
-.contactus-content:focus, .contactus-content:active {
+.myhelp-detail-content:focus, .myhelp-detail-content:active {
     outline: none;
-    border: 2px solid #32b8a4;
-    border-radius: 5px;
+
 }
 
-.contactus-file-box{
+.myhelp-detail-file-box{
     width: 100%;
     margin: 25px 0px;
 }
 
-.contactus-file {
+.myhelp-detail-file {
     color: gray;
 }
 
-.contactus-button{
+.myhelp-detail-button{
     width: 100%;
     height: 80px;
     background-color:#32b8a4;
@@ -86,8 +81,16 @@
     margin: 50px auto;
 }
 
-.contactus-button:active, .contactus-button:focus{
+.myhelp-detail-button:active, .myhelp-detail-button:focus{
     outline: none;
     border: none;
 }
 
+.myhelp-detail-answer{
+    width: 100%;
+    height: 230px;
+    margin: 25px 0px;
+    border: 1px solid gray;
+    padding: 20px 15px;
+    border-radius: 5px;
+}

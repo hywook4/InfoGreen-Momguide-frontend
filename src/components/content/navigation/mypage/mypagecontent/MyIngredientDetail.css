@@ -1,4 +1,4 @@
-.ing-request-container{
+.ing-detail-container{
     width: 100%;
     margin: 10px auto;
     position: relative;
@@ -6,56 +6,51 @@
 }
 
 
-.ing-request-page{
-    width: 980px;
-    margin: 0px auto;
-}
-
-.ing-request-description{
+.ing-detail-description{
     width: 100%;
     height: 65px;
     padding-top: 25px;
     border-bottom: 1px solid gray;
 }
 
-.ing-request-description h6{
+.ing-detail-description h6{
     font-size: 12px;
     color: black;
     font-weight: bold;
 }
 
-.ing-request-subdescription{
+.ing-detail-subdescription{
     width: 100%;
     height: 120px;
     padding-top: 14px;
 }
 
-.ing-request-subdescription p {
+.ing-detail-subdescription p {
     font-size: 12px;
     color: gray;
     margin: 1px 0px;
 }
 
-.ing-request-title { 
+.ing-detail-title { 
     width: 100%;
     height: 50px;
     border-bottom: 1px solid black;
     padding-top: 15px;
 }
 
-.ing-request-title h4{
+.ing-detail-title h4{
     font-size: 18px;
     color: black;
     font-weight: bold;
 }
 
-.ing-request-info{
+.ing-detail-info{
     width: 100%;
     height: 100px;
     padding: 20px 0px;
 }
 
-.ing-request-type{
+.ing-detail-type{
     display: inline-block;
     width: 170px;
     height: 40px;
@@ -66,14 +61,14 @@
     font-size: 12px;
 }
 
-.ing-request-type:focus, .ing-request-type:active{
+.ing-detail-type:focus, .ing-detail-type:active{
     outline: none;
 }
 
-.ing-request-name{
+.ing-detail-name{
     display: inline-block;
     height: 40px;
-    width: 780px;
+    width: 550px;
     border: 1px solid lightgray;
     color: gray;
     margin-left: 25px;
@@ -83,11 +78,11 @@
     font-size: 12px;
 }
 
-.ing-request-name:focus, .ing-request-name:active{
+.ing-detail-name:focus, .ing-detail-name:active{
     outline: none;
 }
 
-.ing-request-content{
+.ing-detail-content{
     width: 100%;
     height: 230px;
     margin: 25px 0px;
@@ -96,23 +91,21 @@
     border-radius: 5px;
 }
 
-.ing-request-content:focus, .ing-request-content:active {
+.ing-detail-content:focus, .ing-detail-content:active {
     outline: none;
-    border: 2px solid #32b8a4;
-    border-radius: 5px;
 }
 
-.ing-request-file-box{
+.ing-detail-file-box{
     width: 100%;
     margin: 25px 0px;
 }
 
-.ing-request-file {
+.ing-detail-file {
     color: gray;
 }
 
 
-.ing-request-button{
+.ing-detail-button{
     width: 100%;
     height: 80px;
     background-color:#32b8a4;
@@ -126,8 +119,20 @@
     margin: 50px auto;
 }
 
-.ing-request-button:active, .ing-request-button:focus{
+.ing-detail-button:active, .ing-detail-button:focus{
     outline: none;
     border: none;
 }
 
+.ing-detail-answer{
+    width: 100%;
+    height: 230px;
+    margin: 25px 0px;
+    border: 1px solid gray;
+    padding: 20px 15px;
+    border-radius: 5px;
+}
+
+.ing-detail-answer.focus, .ing-detail-answer.active{
+    outline: none;
+}
