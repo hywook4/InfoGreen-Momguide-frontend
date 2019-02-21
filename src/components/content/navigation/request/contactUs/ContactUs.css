@@ -68,8 +68,35 @@
     margin: 25px 0px;
 }
 
-.contactus-file {
-    color: gray;
+.contactus-upload-text {
+    color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.contactus-upload-image-label {
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-block;
+}
+
+.contactus-upload-red-x {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: red;
+}
+
+.contactus-file-invisible {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
 }
 
 .contactus-button{
