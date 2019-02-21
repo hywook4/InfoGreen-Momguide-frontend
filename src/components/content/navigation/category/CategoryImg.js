@@ -4,6 +4,7 @@ import config from '../../../../config';
 import Axios from 'axios';
 import './CategoryImg.css'
 import {ProductRate} from './ProductRate'
+import { Link } from 'react-router-dom';
 
 const appendText={
     ingredient:{icon:require('../../../../assets/images/ingredient_open.png'),text:'성분 공개'},
@@ -13,8 +14,8 @@ const appendText={
 }
 
 export class CategoryImg extends React.Component{
-    state={details:{}}
-    componentDidMount= async ()=>{
+    state={details:{}};
+    componentDidMount = async ()=>{
         this._ismounted = true;
 
         const params = new URLSearchParams();
@@ -22,19 +23,18 @@ export class CategoryImg extends React.Component{
         let resp = await Axios.post(`${config.CLIENT_SERVER}/chemical/item_info.php`, params);
             this._ismounted && this.setState({details: resp.data}) 
             // Above USAGE OF _ismounted probable ANTI pattern, should move to flux implementation asap after the demo
-                
-            
-    }
+    };
 
     componentWillUnmount=()=>{
         this._ismounted = false; // <-- probable ANTI pattern, should move to flux implementation asap after the demo
-    }
+    };
+
     render=() =>{
         let props = this.props.data;
         console.log(props);
         return(
             <div className="ctgy-inrimg-div loadedItem">
-                <a href={`/product-details/${props.name}`}>
+                <Link to={`/product-details/${props.category}/${props.index}`}>
 
                     <div className="card-top">
                         <div className="card-extra-block">
@@ -96,7 +96,7 @@ export class CategoryImg extends React.Component{
                             />
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
             
         )

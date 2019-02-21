@@ -1,10 +1,11 @@
 import React from 'react';
 import './ProdSpec.css';
-import {RatingRow} from './Ratings';
-import {DoughNut} from './DoughNut';
-import {IngredientModal} from './IngredientModal';
-import {IngredientRow} from './IngredientRow';
+import { RatingRow } from './Ratings';
+import { LivingDoughNut, CosmeticDoughNut} from './DoughNut';
+import { LivingIngredientModal, CosmeticIngredientModal } from './IngredientModal';
+import { LivingIngredientRow, CosmeticIngredientRow } from './IngredientRow';
 import config from '../../../../config';
+import { CategoryUtil } from '../../../../util';
 
 import axios from 'axios';
 
@@ -13,57 +14,65 @@ const emoji={
     bad:require('../../../../assets/images/product_spec_icons/opened_bad.png'),
     good:require('../../../../assets/images/product_spec_icons/opened_good.png'),
     great:require('../../../../assets/images/product_spec_icons/opened_great.png')
-}
+};
 
 const openness={
     bad:'성분 공개가\n되어있지 않습니다',
     good:'성분 공개가\n되어 있습니다',
     great: '성분 공개가\n잘되어 있어요!'
-}
+};
 
-const abcdText={
+const livingText={
     x:'정보없음 (중간위험)',
     a:'매우 낮은 위험',
     b:'낮은 위험',
     c:'높은 위험',
     d:'높은 위험',
-    e:'',
     f:'매우 높은 위험'
-}
+};
+
+const cosmeticText = {
+    x:'정보없음 (중간위험)',
+    a:'낮은 위험',
+    b:'중간 위험',
+    c: '매우 높은 위험'
+};
 
 export class ProdSpec extends React.Component{
 
     state = {
-        ingredient_list: null,modalData:{},
+        ingredientList: null,
+        modalData:{},
         aboutTab: true,
-        reviewTab: false
-    }
-    updateItemInfo = (itemInfo)=>this.setState({...itemInfo.data});
+        reviewTab: false,
+        productData: null
+    };
 
-    componentWillMount=async ()=> {
-        const name = this.props.match.params.name;
+    componentDidMount = async ()=> {
+        const id = this.props.match.params.id;
+        const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
 
-        var params = new URLSearchParams();
-        params.append('name', `${name}`);
-        var itemInfo = await axios.post(`${config.CLIENT_SERVER}/chemical/item_info.php`, params);
-        this.updateItemInfo(itemInfo);
-
-        params = new URLSearchParams();
-        params.append("name", itemInfo.data.name);
-        var res = await axios.post(`${config.CLIENT_SERVER}/chemical/ingredient_list.php`, params);
-        this.setState({ingredient_list: res.data});
-    }
+        let res = await axios.get(`${process.env.API_URL}/api/product/details?category=${category}&productId=${id}`);
+        this.setState({
+            productData: res.data.product,
+            ingredientList: res.data.ingredient
+        });
+    };
 
     toggleTap = (isAboutTab) => {
         this.setState({
             aboutTab: isAboutTab,
             reviewTab: !isAboutTab
         });
-    }
-
-    renderRatings=(cnfg)=><RatingRow config={cnfg} />
+    };
 
     renderSpecialIcons=()=>{
+        const slsSles = this.state.ingredientList.filter((item) => item.slsSles).length > 0;
+        const ammonium = this.state.ingredientList.filter((item) => item.ammonium).length > 0;
+        const scent = this.state.ingredientList.filter((item) => item.scent).length > 0;
+        const color = this.state.ingredientList.filter((item) => item.color).length > 0;
+        const humid = this.state.ingredientList.filter((item) => item.humid).length > 0;
+
         return (
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
@@ -71,38 +80,54 @@ export class ProdSpec extends React.Component{
                     <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
                 </div>  
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc1_${this.state.etc_1===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc1_${slsSles?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc2_${this.state.etc_2===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc2_${ammonium?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc3_${this.state.etc_3===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc3_${scent?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc4_${this.state.etc_4===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc4_${color?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require(`../../../../assets/images/product_spec_icons/etc5_${this.state.etc_5===0?'grey':'red'}.png`)} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/etc5_${humid?'red':'grey'}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                         {/* <p>Danger</p> */}
                 </div>
             </div>
         )
-    }
+    };
 
     renderBadIcons=()=>{
-        return(
+        const echaBreath = this.state.ingredientList.filter((item) => item.echaBreath !== '').length > 0;
+        const echaSkin = this.state.ingredientList.filter((item) => item.echaSkin !== '').length > 0;
+        const echaDev = this.state.ingredientList.filter((item) => item.echaDev !== '').length > 0;
+        const echaCancer = this.state.ingredientList.filter((item) => item.echaCancer !== '').length > 0;
+        return (
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
                     나쁜 성분
                     <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_respitory.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_respitory${echaBreath?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     {/* <p>Danger</p> */}
                     {/* <span className="tooltiptext">
                         <div>
@@ -116,32 +141,31 @@ export class ProdSpec extends React.Component{
                     <div>호흡 독성</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_skin.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_skin${echaSkin?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     <div>피부 자극</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_development.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_development${echaDev?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     <div>발달/생식 독성</div>
                 </div>
                 <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/product_spec_icons/ingred_cancer.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
+                    <img className="img-fluid"
+                         src={require(`../../../../assets/images/product_spec_icons/ingred_cancer${echaCancer?'_true':''}.png`)}
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
                     <div>발암성</div>
                 </div>
-                {/* <div className="ingred-icon">
-                    <img className="img-fluid" src={require('../../../../assets/images/icons/eye-irritant.png')} style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> 
-                    <div>눈자극</div>
-                </div> */}
             </div>
         )
-    }
+    };
     
-    updateModalData=(item)=>this.setState({modalData:item})
+    updateModalData=(item)=>this.setState({modalData:item});
 
-    renderIngredients=()=>{
+    renderIngredients=(category)=>{
+        const text = (category==='living') ? livingText : cosmeticText;
         return (
             <div className="ingred-table">
                 <div className="ingred-table-name">
@@ -155,22 +179,35 @@ export class ProdSpec extends React.Component{
                             <th style={{textAlign:'center'}}>성분</th>
                             <th>성분명</th>
                             <th style={{textAlign:'center'}}>주의성분여부</th>
-                            <th style={{textAlign:'center'}}>유해성분여부</th>
+                            {category === 'living' ? (<th style={{textAlign:'center'}}>유해성분여부</th>) : null}
                         </tr>
-                        {Object.keys(this.state.ingredient_list.total).map(key => 
-                            <IngredientRow
-                                key={key}
-                                data={this.state.ingredient_list.total[key]}
-                                letter={this.state.ingredient_list.total[key].ewg_rank}
-                                korName={this.state.ingredient_list.total[key].name}
-                                engName={this.state.ingredient_list.total[key].name_eng}
-                                handleClick={this.updateModalData}
-                            />
-                        )}
+                        {(this.state.ingredientList).map(ingredient => {
+                            return category === 'living' ? (
+                                <LivingIngredientRow
+                                    key={ingredient.index}
+                                    data={ingredient}
+                                    letter={ingredient.ewg}
+                                    korName={ingredient.korName}
+                                    engName={ingredient.engName}
+                                    handleClick={this.updateModalData}
+                                />) : (
+                                <CosmeticIngredientRow
+                                    key={ingredient.index}
+                                    data={ingredient}
+                                    letter={ingredient.ewg}
+                                    korName={ingredient.name}
+                                    engName={ingredient.engName}
+                                    handleClick={this.updateModalData}
+                                />);
+                        })}
                     </thead>
                 </table>
-                <IngredientModal texts={abcdText} data={this.state.modalData} />
-                {/* <div className="ingred-table-body">
+                {
+                    category === 'living' ?
+                        (<LivingIngredientModal texts={text} data={this.state.modalData}/>) :
+                        (<CosmeticIngredientModal texts={text} data={this.state.modalData}/>)
+                }
+                        {/* <div className="ingred-table-body">
                     <div className="prod-ingr-ctn">
                         <div className="prod-ingr-upr-div">
                             
@@ -202,170 +239,155 @@ export class ProdSpec extends React.Component{
                 </div> */}
             </div>
         )
-    }
+    };
 
-    renderDoughnut=()=>{
+    renderDoughnut = (category) => {
+        const text = (category==='living') ? livingText : cosmeticText;
         return (
             <React.Fragment>
                 <div style={{color: 'black', fontSize: '13px', fontWeight: '900'}}>성분 비율</div>
-                <DoughNut texts={abcdText} data={{...this.state}}/>
-                {/* <div className="doughnut-body">
-                    {
-                        (this.state.auth_2?
-                            <React.Fragment>
-                                <div className="desp-greenery-img">
-                                    <img src={require('../../../../assets/images/nature-friendly.png')} alt=""/>
-                                </div>
-                                <div className="desp-greenery-rslt">
-                                    <h1>{this.state.auth_2}</h1>
-                                </div>
-                            </React.Fragment>:''
-                        )
-                    }
-                </div> */}
+                {
+                    category==='living' ?
+                    (<LivingDoughNut texts={text} data={{...this.state}}/>) :
+                    (<CosmeticDoughNut texts={text} data={{...this.state}}/>)
+                }
             </React.Fragment>
         )
-    }
+    };
 
-    // renderProductTable=()=>{
-    //     return (
-    //         <div className="product_table">
-    //                 <div className="prod-table-container">
-    //                     <div className="row">
-    //                         <div className="col-lg-9 col-md-9 col-sm-12">
-    //                         <div className="prod_addn">
-    //                                 <div className="prod_addn_info">
-    //                                     <p>*해당되는 성분의 포함 여부만 알려드려요. 제품 자체의 유해성과는 거리가 있습니다.</p>
-    //                                 </div>
-    //                         </div>
+    render = () => {
+        const productData = this.state.productData;
+        if(productData === null) {
+            return (<div><br/><br/></div>);
+        }
 
-    //                         {/* danger icons */}
-    //                         <div className="danger-icons">
-    //                             <div className="danger-icons-inr">
-    //                                 <div className="danger-icon-head">
-    //                                     <i className="fa fa-heart" aria-hidden="true"></i>
-    //                                     <h1>나쁜 성분</h1>
-    //                                     {/* <p data-tip="dfghj" data-html={true}>Tooltip</p>
-    //                                     <ReactTooltip html={true} /> */}
-    //                                 </div>
-    //                                 {this.renderDangerIcons()}
-    //                             </div>
-    //                             {this.renderEtcSection()}
-                                
-    //                         </div>
-    //                         {/* danger icons div finish */}
-    //                         {/* ingredients icons */}
-    //                             {this.renderIngredients()}
-    //                         {/* finish ingredients icons */}
-    //                         </div>
-    //                         <div className="col-lg-3 col-md-3 col-sm-12">
-    //                             {this.renderDougnutAndWarning()}
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //     )
-    // }
+        const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
 
-    render=()=>{
         let selectedEmoji = null;
         let selectedText = null;
 
-        if(this.state.opened ==='0'){
+        if(productData.ingredient ==='X'){
             selectedEmoji = emoji.bad;
             selectedText = openness.bad;
-        }else if(this.state.opened ==='1'){
+        } else if(productData.ingredient ==='△'){
             selectedEmoji = emoji.good;
             selectedText = openness.good;
-        }else if(this.state.opened ==='2'){
+        } else if(productData.ingredient ==='O'){
             selectedEmoji = emoji.great;
             selectedText = openness.great;
         }
 
-        return this.state.ingredient_list ?
-        ( 
-            <React.Fragment>
+        return (<React.Fragment>
             <div className="prod-spec"> {/* Outer box contains every componenets */}
-
                 <div className="cate-header"> {/* Category header */}
-                    카테고리 > 가정용 화학제품 > <span style={{color: '#32b8a4', fontWeight: '600'}}>{this.state.category}</span>
+                    카테고리 > {category==='living' ? '가정용 화학제품' : '유야용 화장품'} > <span style={{color: '#32b8a4', fontWeight: '600'}}>{productData.category}</span>
                 </div>
 
                 <div className="prod-info"> {/* image + info */}
                     <div className="color-box"></div>
                     <div className="prod-outer-img"> {/* product image */}
-                        <img className="prod-img" src={`${config.CLIENT_SERVER}/chemical/item_img/${this.state.image}`} alt=""/>
+                        <img className="prod-img"
+                             src={`${process.env.S3_URL}/product-images/${CategoryUtil.korSubToEngMain(productData.category)}-product-images/${productData.brand}/${productData.name}.jpg`}
+                             alt=""/>
                     </div>
                     <div className="prod-texts"> {/* all text container */}
-                        <div className="brand-name">{this.state.brand}</div>
+                        <div className="brand-name">{productData.brand}</div>
                         <div className="prod-name">
-                            <h1>{this.state.name}</h1>
+                            <h1>{productData.name}</h1>
                         </div>
                         <div className="rating-info"> {/* rating stars and score */}
-                            <RatingRow config={{selected:Math.round(this.state.star),hideSubHeading:true,size:'22px',alignStart:true}}/>
-                            <div className="rating-score">4.0</div>
+                            <RatingRow config={{selected:Math.round(productData.rateSum/productData.rateCount*100)/100,hideSubHeading:true,size:'22px',alignStart:true,count:productData.rateCount}}/>
+                            <div className="rating-score">{Math.round(productData.rateSum/productData.rateCount*100)/100}</div>
                         </div>
 
                         <hr style={{color: 'gray'}}/>
 
                         <div className="icons-list"> {/* icons list */}
                             <div className="icon">
-                                <i className="fa fa-home" aria-hidden="true"></i>
+                                <i className="fa fa-home" aria-hidden="true" />
                                 <p style={{fontSize: '9px'}}>우리집 화학제품</p>
                             </div>
                             <div className="icon">
-                                <i className="fa fa-heart" aria-hidden="true"></i>
+                                <i className="fa fa-heart" aria-hidden="true" />
                                 <p style={{fontSize: '9px'}}>찜하기</p>
                             </div>
                             <div className="icon">
-                                <a href={`${config.PRODUCT_CHECK_URL}${this.state.name}`}>
-                                    <i className="fa fa-krw" aria-hidden="true"></i>
+                                <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`}>
+                                    <i className="fa fa-krw" aria-hidden="true" />
                                 </a>
                                 <p className="check-para" style={{fontSize: '9px'}}>가격정보</p>
                             </div>
                             <div className="icon">
-                                <i className="fa fa-share-alt"></i>
+                                <i className="fa fa-share-alt" />
                                 <p style={{fontSize: '9px'}}>링크공유</p>
                             </div>
                         </div>
 
-                        
-                        <table className="prod-table">
-                            <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
-                                <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분 공개 여부</td>
-                                <td>
-                                    <div className="img-in-table">
-                                        <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={selectedEmoji} alt=""/>
-                                    </div>
-                                    <div className="text-in-table" style={{height: '60px'}}>{selectedText}</div>
-                                </td>
-                            </tr>
-                            <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
-                                <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분 공개 요청</td>
-                                <td>
-                                    <div className="img-in-table">
-                                        <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/product_spec_icons/request_people.png')} alt=""/>
-                                    </div>
-                                    <div className="text-in-table" style={{height: '60px'}}>{this.state.open_request}명</div>
-                                    <button className="req-button">성분 공개 요청하기</button>
-                                </td>
-                            </tr>
-                            <tr style={{height: '100px'}}>
-                                <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>인증정보</td>
-                                <td style={{width: '370px'}}>
-                                    <div className="sub-sell" style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
-                                        <div className="img-in-table">
-                                            <img className="img-fluid" style={{maxHeight:'30px',maxWidth:'30px'}} src={require('../../../../assets/images/product_spec_icons/eco_friendly.png')} alt=""/>
-                                        </div>
-                                        <div className="text-in-table" style={{height: '60px'}}>유해 물질 감소, 오염 물질 저감</div>
-                                    </div>
-                                    <div className="sub-sell" style={{height: '40px'}}>
-                                        <div className="img-in-table" style={{color: 'gray', fontSize: '11px'}}>자가검사번호 :</div>
-                                        <div className="text-in-table">0-0000-0000000-0000</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        {category === 'living' ?
+                            (<table className="prod-table">
+                                <tbody>
+                                    <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                        <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분
+                                            공개 여부
+                                        </td>
+                                        <td>
+                                            <div className="img-in-table">
+                                                <img className="img-fluid" style={{maxHeight: '30px', maxWidth: '30px'}}
+                                                     src={selectedEmoji} alt=""/>
+                                            </div>
+                                            <div className="text-in-table" style={{height: '60px'}}>{selectedText}</div>
+                                        </td>
+                                    </tr>
+                                    <tr style={{height: '60px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
+                                        <td style={{width: '110px', borderRight: '1px solid rgba(100, 100, 100, 0.2)'}}>성분
+                                            공개 요청
+                                        </td>
+                                        <td>
+                                            <div className="img-in-table">
+                                                <img className="img-fluid" style={{maxHeight: '30px', maxWidth: '30px'}}
+                                                     src={require('../../../../assets/images/product_spec_icons/request_people.png')}
+                                                     alt=""/>
+                                            </div>
+                                            <div className="text-in-table" style={{height: '60px'}}>{}명</div>
+                                            <button className="req-button">성분 공개 요청하기</button>
+                                        </td>
+                                    </tr>
+                                    <tr style={{height: '100px'}}>
+                                        <td style={{
+                                            width: '110px',
+                                            borderRight: '1px solid rgba(100, 100, 100, 0.2)'
+                                        }}>인증정보
+                                        </td>
+                                        <td style={{width: '370px'}}>
+                                            <div className="sub-sell" style={{
+                                                height: '60px',
+                                                borderBottom: '1px solid rgba(100, 100, 100, 0.2)'
+                                            }}>
+                                                <div className="img-in-table">
+                                                    {
+                                                        productData.eco ?
+                                                            (<img className="img-fluid"
+                                                                  style={{maxHeight: '30px', maxWidth: '30px'}}
+                                                                  src={require('../../../../assets/images/product_spec_icons/eco_friendly.png')}
+                                                                  alt=""/>) :
+                                                            null
+                                                    }
+                                                </div>
+                                                <div className="text-in-table"
+                                                     style={{height: '60px'}}>{productData.eco}</div>
+                                            </div>
+                                            <div className="sub-sell" style={{height: '40px'}}>
+                                                <div className="img-in-table"
+                                                     style={{color: 'gray', fontSize: '11px'}}>자가검사번호 :
+                                                </div>
+                                                <div className="text-in-table">{productData.testNum}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>) :
+                            null
+                        }
                        
 
                        <ul className="description-list">
@@ -389,9 +411,9 @@ export class ProdSpec extends React.Component{
                         {this.renderBadIcons()} {/* Bad icons */}
                         {this.renderSpecialIcons()} {/* Special icons */}
                     </div>
-                    {this.renderIngredients()} {/* Ingredient table */}
+                    {this.renderIngredients(category)} {/* Ingredient table */}
                     <div className="doughnut-container"> {/* Ingredient Doughnut */}
-                        {this.renderDoughnut()}
+                        {this.renderDoughnut(category)}
                     </div>
                 </div>
                 <div className={`ui bottom attached tab segment tab-content ${this.state.reviewTab ? "active" : ""}`} data-tab="review" id="review">
@@ -502,6 +524,6 @@ export class ProdSpec extends React.Component{
                 <Comments/> */}
             </div>
             </React.Fragment>
-        ) : (<div><br/><br/></div>);
+        );
     };
 }

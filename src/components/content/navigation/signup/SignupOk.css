@@ -1,0 +1,65 @@
+.signup-ok-container {
+    width: 980px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+    position: relative;
+    top: 10px;
+    display: table;
+    height: 100%;
+    overflow-y: hidden;
+    text-align: center;
+}
+.signup-ok-container input {
+    padding-left: 10px;
+}
+
+.signup-ok-banner {
+    background-image: url("../../../../assets/images/banner.png");
+    background-size: cover;
+    width: 980px;
+    height: 110px;
+    background-position: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+}
+
+.signup-ok-banner-text {
+    font-size: 25px;
+    font-family: designhouseOTFBold;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+}
+
+.signup-ok-container h1 {
+    font-size: 30px;
+    margin-top: 50px;
+}
+
+.signup-ok-detail {
+    margin-top: 30px;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.signup-ok-detail > span {
+    color: #32B8A4;
+}
+
+.signup-ok-button {
+    width: 500px;
+    height: 80px;
+    margin-top: 50px;
+    font-size: 30px;
+
+    color: white;
+    background-color: #32B8A4;
+    border: none;
+}
+
+.signup-ok-button:hover {
+    cursor: pointer;
+}

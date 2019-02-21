@@ -1,0 +1,410 @@
+@font-face {
+    font-family: "designhouseOTFBold";
+    src: url("../../../../assets/font/designhouseOTFBold.otf") format("opentype");
+    font-style: normal;
+    font-weight: normal;
+}
+.signup-container {
+    width: 980px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+    /* float: left; */
+    position: relative;
+    top: 10px;
+    display: table;
+    height: 100%;
+    overflow-y: hidden;
+}
+.signup-container input {
+    padding-left: 10px;
+}
+
+.signup-banner {
+    background-image: url("../../../../assets/images/banner.png");
+    background-size: cover;
+    width: 980px;
+    height: 110px;
+    background-position: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+}
+
+.signup-banner-text {
+    font-size: 25px;
+    font-family: designhouseOTFBold;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 10px;
+}
+
+.signup-agreement, .signup-login-info, .signup-profile, .signup-optional-info {
+    width: 100%;
+    margin-top: 25px;
+}
+.signup-agreement-title, .signup-login-info-title, .signup-profile-title, .signup-optional-info-title {
+    font-size: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.signup-agreement-age, .signup-agreement-license, .signup-agreement-personal-info, .signup-agreement-marketing {
+    font-size: 13px;
+    text-decoration: underline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.signup-agreement-age-box, .signup-agreement-license-box, .signup-agreement-personal-info-box, .signup-agreement-marketing-box {
+    float: right;
+}
+.signup-agreement-age {
+    border-bottom: 1px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-agreement-marketing {
+    color: rgb(128,128,128);
+}
+
+.signup-login-info-email-part {
+    border-bottom: 1px solid rgba(218, 218, 218, 0.5);
+    padding-bottom: 45px;
+    margin-bottom: 40px;
+}
+.signup-login-info-email-part, .signup-login-info-email-input {
+    margin-top: 15px;
+}
+
+.signup-login-info-email-part div:first-child {
+    font-size: 13px;
+}
+
+.signup-login-info-email-input span:nth-child(2) {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.signup-login-info-email-id, .signup-login-info-email-url {
+    width: 280px;
+    height: 40px;
+}
+
+.signup-login-info-email-id input, .signup-login-info-email-url input{
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-login-info-email-id input.signup-input-success, .signup-login-info-email-url input.signup-input-success{
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid green;
+}
+
+.signup-login-info-email-id input.signup-input-fail, .signup-login-info-email-url input.signup-input-fail{
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid red;
+}
+
+.signup-login-info-email-id input::placeholder{
+    color: rgba(170, 170, 170, 1);
+}
+
+.signup-login-info-email-url {
+    margin-right: 10px;
+}
+select#signup-login-info-email-url-options {
+    -webkit-appearance: button;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+    background-position: 97% center;
+    background-repeat: no-repeat;
+    border: 1px solid #AAA;
+    color: #555;
+    font-size: inherit;
+    overflow: hidden;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 215px;
+    height: 40px;
+}
+
+.signup-login-info-email-input span:nth-child(4) {
+    margin-right: 20px;
+}
+
+.signup-login-info-email-check {
+    width: 135px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(218, 218, 218, 0.5);
+}
+
+.signup-message-container {
+
+}
+
+.signup-message-container.success {
+    color: green;
+}
+
+.signup-message-container.fail {
+    color: red;
+}
+
+.signup-login-info-password-text {
+    font-size: 13px;
+}
+
+.signup-login-info-password-text span:last-child {
+    color: rgba(170, 170, 170, 1);
+}
+
+.signup-login-info-password-input {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 360px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-login-info-password-input.success {
+    border: 0.7px solid green;
+}
+
+.signup-login-info-password-input.fail {
+    border: 0.7px solid red;
+}
+
+.signup-profile-picture-text {
+    font-size: 13px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+img#signup-profile {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    border-radius: 50%;
+    border: 0.5px solid #32B8A4;
+}
+#profile-image-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.signup-profile-change-picture {
+    width: 135px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: rgba(218, 218, 218, 0.5);
+    text-align: center;
+    line-height: 2.8;
+}
+
+.signup-profile-nickname {
+    margin-top: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-profile-nickname-text {
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.signup-profile-nickname-text span:last-child {
+    color: rgba(170, 170, 170, 1);
+}
+
+.signup-profile-nickname-input {
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+    margin-right: 15px;
+}
+
+.signup-profile-nickname-input.signup-input-success {
+    border: 0.7px solid green;
+}
+
+.signup-profile-nickname-input.signup-input-fail {
+    border: 0.7px solid red;
+}
+
+.signup-profile-nickname-check {
+    width: 135px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(218, 218, 218, 0.5);
+}
+
+.signup-profile-gender {
+    margin-top: 15px;
+    border-bottom: 1px solid rgba(218, 218, 218, 0.5);
+    padding-bottom: 20px;    
+}
+
+.signup-profile-gender-text {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.signup-profile-gender-buttons span:last-child {
+    margin-left: 10px;
+}
+
+.signup-profile-gender-select-button {
+    width: 135px;
+    height: 40px;
+    border: 2px solid rgba(170, 170, 170, 0.5);
+    color: rgba(170, 170, 170, 1);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.signup-profile-gender-select-button:hover {
+    cursor: pointer;
+}
+
+.signup-profile-gender-select-button:focus {
+    outline: none;
+}
+
+.signup-profile-gender-select-button.selected {
+    color: green;
+    border-color: green;
+}
+
+.signup-profile-birth, .signup-profile-kids{
+    margin-top: 15px;
+    border-bottom: 1px solid rgba(218, 218, 218, 0.5);
+    padding-bottom: 20px;   
+}
+
+.signup-profile-birth-text, .signup-profile-kids-text, .signup-profile-kids-birth-text {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+select#year, select#month, select#day, select#kids, select#kids-birth-year, select#kids-birth-month, select#kids-birth-day {
+    width: 210px;
+    height: 40px;
+    margin-right: 30px;
+}
+
+.signup-profile-kids-birth {
+    margin-top: 15px;
+    border-bottom: 30px;
+}
+
+.signup-optional-info-name, .signup-optional-info-phone {
+    margin-top: 15px;
+    border-bottom: 1px solid rgba(218, 218, 218, 0.5);
+    padding-bottom: 20px; 
+}
+
+.signup-optional-info-name-text, .signup-optional-info-phone-text {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.signup-optional-info-name-input {
+    width: 280px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+select#phone {
+    width: 180px;
+    height: 40px;
+    margin-right: 5px;
+}
+
+.signup-optional-info-phone-middle, .signup-optional-info-phone-last {
+    width: 180px;
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-register-button {
+    margin-top: 40px;
+    width: 100%;
+    height: 50px;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 15px;
+    background-color: #32B8A4;
+}
+
+.signup-register-button:hover {
+    cursor: pointer;
+}
+
+button.signup-button-remove-css {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+button.signup-button-remove-css:focus {
+    outline: none;
+}
+
+.signup-address-remove-button {
+    margin-left: 10px;
+    font-size: 20px;
+    color: red;
+}
+
+.signup-address-remove-button:hover {
+    cursor: pointer;
+}
+
+.signup-optional-info-address {
+    margin-top: 15px;
+}
+
+.signup-optional-info-address .signup-address-zip-code {
+    width: 200px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-optional-info-address .signup-address-detail1 {
+    width: 500px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-optional-info-address .signup-address-detail2 {
+    width: 240px;
+    height: 40px;
+    border: 0.7px solid rgba(218, 218, 218, 0.5);
+}
+
+.signup-optional-info-address .signup-address-detail2:first-child {
+    margin-right: 20px;
+}

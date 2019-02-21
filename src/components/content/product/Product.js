@@ -1,6 +1,5 @@
 import React from 'react';
 import './Product.css';
-import {BrowserRouter as Router } from 'react-router-dom';
 import { ProductList } from '../../common/ProductList/ProductList';
 import { ProductSearch } from './productSearch/ProductSearch';
 
@@ -9,20 +8,19 @@ export class Product extends React.Component {
     state = ({
         mainCategory: "living",  //living or cosmetic
         subCategory: "laundry" // 아래 houseHold와 cosmetic 확인 
-    })
+    });
 
     onCategoryClick = (mainCategory, subCategory) => {
-        console.log(mainCategory, subCategory);
         this.setState({
             mainCategory: mainCategory,
             subCategory: subCategory
         })
-    }
+    };
 
 
 
     render() {
-        /*const houseHold = [
+/*        const houseHold = [
             {
                 path:'/',
                 name:'세탁세제',
@@ -100,23 +98,19 @@ export class Product extends React.Component {
                 name:'기타화장품',
                 category:'other'
             },
-        ];
-        */
+        ];*/
         return(
             <div className="product">
                 <div className="product_inner">
-                    <Router>
-                        <div className="product_div">
-                            <ProductSearch onCategoryClick={this.onCategoryClick}/>
+                    <div className="product_div">
+                        <ProductSearch onCategoryClick={this.onCategoryClick}/>
 
-                            <div className="product-content">
-                                <div className="content-info">
-                                    <ProductList mainCategory={this.state.mainCategory} subCategory={this.state.subCategory}/>
-                                </div>
+                        <div className="product-content">
+                            <div className="content-info">
+                                <ProductList mainCategory={this.state.mainCategory} subCategory={this.state.subCategory}/>
                             </div>
                         </div>
-                    </Router>
-
+                    </div>
                 </div>
             </div>
         )

@@ -1,0 +1,70 @@
+.modal-title {
+    width: 100%;
+    padding-left: 20px;
+}
+
+.modal-body {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-body .modal-search-keyword {
+    margin-left: 20px;
+    width: 400px;
+    height: 40px;
+    border: 0.7px solid rgba(170, 170, 170, 0.5);
+}
+
+.modal-body .modal-search-keyword:focus {
+    outline: none;
+}
+
+.modal-body .search-button {
+    margin-left: 15px;
+    font-size: 20px;
+}
+
+.modal-body .search-button:hover {
+    cursor: pointer;
+}
+
+.road-name-address-data-container {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.road-name-address-data-container table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+
+.road-name-address-data {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.road-name-address-data:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.road-name-address-page-container {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.road-name-address-page-container h6 {
+    display: inline-block;
+    font-size: 15px;
+}
+
+.road-name-address-page-container h6:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.road-name-address-page-container h6.selected {
+    font-weight: bold;
+}

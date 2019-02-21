@@ -11,7 +11,7 @@ export class ProductList extends React.Component {
     };
 
     // This messy part should go through refactoring
-    componentDidMount= async ()=> {
+    componentDidMount = async ()=> {
         // Search by number of votes
         console.log(this.props.mainCategory, this.props.subCategory);
 
@@ -24,8 +24,6 @@ export class ProductList extends React.Component {
     };
     
     componentWillReceiveProps = async (nextProps) => {
-        console.log("componentWillReceiveProps: " + JSON.stringify(nextProps));
-        
         let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${nextProps.mainCategory}&subCategory=${nextProps.subCategory}`);
         const newState = ({ productByVote: products.data });
 
@@ -44,8 +42,6 @@ export class ProductList extends React.Component {
         } else {
             s3Url += "cosmetic-product-images/";
         }
-
-
 
         return(
             <div className="productHeading">

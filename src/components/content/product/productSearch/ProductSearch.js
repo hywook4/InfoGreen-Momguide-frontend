@@ -20,12 +20,9 @@ export class ProductSearch extends React.Component {
     subCategorySelect = (subCategory) => {
         this.setState({
             subCategory: subCategory
-        })
+        });
         this.props.onCategoryClick(this.state.categorySelect, subCategory);
-    }
-
-    onClick 
-
+    };
 
     render() {
         const living = [

@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 
 import {StaticCard} from '../../../common/staticCard/StaticCard';
 import Search from '../../search/Search';
-import {Paginate} from '../../navigation/tips/pagination/Pagination';
 import axios from 'axios';
 import { Card } from 'semantic-ui-react';
 
@@ -76,8 +75,6 @@ export class Events extends React.Component {
                             />
                         )}
                     </Card.Group>
-                    
-                    <Paginate />
                 </div>
             </div>
         )

@@ -1,14 +1,13 @@
 import React from 'react';
 import './Search.css';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom'
+import history from '../../../history/history';
 
 class Search extends React.Component {
     constructor() {
         super();
         this.state = {
             search: "",
-            submitted: false
         };
 
         this.onChange = this.onChange.bind(this);
@@ -16,10 +15,7 @@ class Search extends React.Component {
     }
 
     onChange = e => {
-        console.log(e.keyCode);
-
         const searchText = e.target.value.trimLeft();
-        console.log(searchText);
 
         this.setState({
             search: searchText
@@ -27,33 +23,23 @@ class Search extends React.Component {
     };
 
     onFocus = () => {
-        
         if (window.location.pathname !== "/category") {
             window.location.replace("/category");
         }
     };
 
     onSearch = () => {
-        
-        this.setState({
-            submitted: true
-        });
-    }
+        history.push(`/category/${this.state.search}`);
+    };
 
     onEnter = (e) => {
         if(e.key === 'Enter'){
             this.onSearch();
         }
-    }
+    };
 
 
     render() {
-        if (this.state.submitted) {
-            return (
-              <Redirect to={`/category/${this.state.search}`} />
-            )
-        }
-
         return(
             <div className="search-div">
                 <div className="search_container">
@@ -66,7 +52,7 @@ class Search extends React.Component {
                             onChange={this.onChange}
                             onKeyPress={this.onEnter}
                         />
-                        <Link to='' onClick={this.onSearch}><i className="fa fa-search" aria-hidden="true"></i></Link>
+                        <Link to='' onClick={this.onSearch}><i className="fa fa-search" aria-hidden="true"/></Link>
                     </div>
                 </div>
             </div>
