@@ -45,7 +45,8 @@ export class ProdSpec extends React.Component{
         modalData:{},
         aboutTab: true,
         reviewTab: false,
-        productData: null
+        productData: null,
+        ingredientRequestNum: 0
     };
 
     componentDidMount = async ()=> {
@@ -56,6 +57,11 @@ export class ProdSpec extends React.Component{
         this.setState({
             productData: res.data.product,
             ingredientList: res.data.ingredient
+        });
+
+        res = await axios.get(`${process.env.API_URL}/api/ask/countIngredOpen?productIndex=${res.data.product.index}`);
+        this.setState({
+            ingredientRequestNum: res.data.totalNum
         });
     };
 
@@ -83,31 +89,26 @@ export class ProdSpec extends React.Component{
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc1_${slsSles?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc2_${ammonium?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc3_${scent?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                        {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc4_${color?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                        {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc5_${humid?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                        {/* <p>Danger</p> */}
                 </div>
             </div>
         )
@@ -128,16 +129,6 @@ export class ProdSpec extends React.Component{
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/ingred_respitory${echaBreath?'_true':''}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
-                    {/* <span className="tooltiptext">
-                        <div>
-                            <img src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
-                        </div>
-                        <div>
-                            <h2><b>Ingredient(C8-16)</b></h2>
-                            <p>Alkyl polyglucoside(C8-16)</p>
-                        </div>
-                    </span> */}
                     <div>호흡 독성</div>
                 </div>
                 <div className="ingred-icon">
@@ -207,36 +198,6 @@ export class ProdSpec extends React.Component{
                         (<LivingIngredientModal texts={text} data={this.state.modalData}/>) :
                         (<CosmeticIngredientModal texts={text} data={this.state.modalData}/>)
                 }
-                        {/* <div className="ingred-table-body">
-                    <div className="prod-ingr-ctn">
-                        <div className="prod-ingr-upr-div">
-                            
-                            <div className="prod-ingr-tbl">
-                                <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>성분등급</th>
-                                        <th>성분명</th>
-                                        <th style={{textAlign:'center'}}>주의성분여부</th>
-                                        <th style={{textAlign:'center'}}>유해성분여부</th>
-                                    </tr>
-                                        {Object.keys(this.state.ingredient_list.total).map(key => 
-                                            <IngredientRow
-                                                key={key}
-                                                data={this.state.ingredient_list.total[key]}
-                                                letter={this.state.ingredient_list.total[key].ewg_rank}
-                                                korName={this.state.ingredient_list.total[key].name}
-                                                engName={this.state.ingredient_list.total[key].name_eng}
-                                                handleClick={this.updateModalData}
-                                            />
-                                        )}
-                                </thead>
-                                </table>
-                                <IngredientModal texts={abcdText} data={this.state.modalData} />
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         )
     };
@@ -348,7 +309,7 @@ export class ProdSpec extends React.Component{
                                                      src={require('../../../../assets/images/product_spec_icons/request_people.png')}
                                                      alt=""/>
                                             </div>
-                                            <div className="text-in-table" style={{height: '60px'}}>{}명</div>
+                                            <div className="text-in-table" style={{height: '60px'}}>{this.state.ingredientRequestNum}명</div>
                                             <button className="req-button">성분 공개 요청하기</button>
                                         </td>
                                     </tr>
