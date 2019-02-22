@@ -22,7 +22,6 @@ class LoginInput extends Component {
         }
     }
 
-
     handleEmailChange = (e) => {
         const {value} = e.target;
         this.setState({
@@ -106,12 +105,11 @@ class LoginInput extends Component {
                 alert('이메일과 비밀번호를 입력해주세요.');
                 return;
             } else if(err.response.status === 424) {
-                if(err.response.data.error === 'hash compilation failed') {
-                    alert('hash compilation failed');
-                    return;
-                } else if (err.response.data.error === 'no member') {
+                if (err.response.data.error === 'no member') {
                     alert('없는 계정입니다. 이메일을 다시 확인해주세요.');
                     return;
+                } else {
+                    alert('알 수 없는 에러가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
                 }
             } else if (err.response.status === 403) {
                 alert('비밀번호를 다시 확인해주세요.');

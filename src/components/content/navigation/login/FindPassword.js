@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './FindPassword.css';
 import CONCEPT_BANNER from '../../../../assets/images/banner.png';
 import axios from 'axios';
+import { readSync } from 'fs';
 
 export class FindPassword extends Component {
     constructor(props) {
@@ -37,10 +38,11 @@ export class FindPassword extends Component {
             }
             if('token' in res.data) {
                 if(res.data.token !== null) {
+                    console.log('Bearer ' + res.data.token);
                     axios({
                         method: 'get',
                         url: process.env.API_URL + '/api/auth/info', 
-                        headers: {token: 'Bearer ' + res.data.token}
+                        headers: {Authorization: 'Bearer ' + res.data.token}
                     }).then((result) => {
                         const userNickName = result.data.nickName;
                         alert(userNickName + '님의 등록된 메일 주소로 비밀번호 재설정 링크를 전송하였습니다.\n등록된 메일을 확인해 주세요.');
