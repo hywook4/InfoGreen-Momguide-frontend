@@ -8,6 +8,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../../../../actions';
 import history from '../../../../history/history';
+import $ from 'jquery';
 
 class LoginInput extends Component {
 
@@ -27,14 +28,14 @@ class LoginInput extends Component {
         this.setState({
             email: value
         });
-    }
+    };
 
     handlePwChange = (e) => {
         const {value} = e.target;
         this.setState({
             password: value
         });
-    }
+    };
 
     handleKeepLoginCheck = (e) => {
         const target = e.target;
@@ -55,14 +56,14 @@ class LoginInput extends Component {
                 keepLogin: target.checked
             });
         }
-    }
+    };
     
     handleSaveEmailCheck = (e) => {
         const value = e.target.checked;
         this.setState({
             saveId: value
         });
-    }
+    };
 
     handleLoginClick = (e) => {
 
@@ -97,7 +98,11 @@ class LoginInput extends Component {
             }
 
             if('token' in res.data) {
+                if(this.props.modalId) {
+                    $(`#${this.props.modalId}`).modal('hide');
+                }
                 handleLogin(res.data.token);
+                history.push(this.props.nextPath);
             }
         })
         .catch((err) => {
@@ -139,10 +144,12 @@ class LoginInput extends Component {
         return (
             <div className="logininput-login-part">
                 <div className="logininput-id" >
-                    <input id="emailinput" type="text" defaultValue={emailDefault} placeholder="아이디를 입력하세요." onChange={handleEmailChange}/>
+                    <input id="emailinput" type="text" defaultValue={emailDefault} className="logininput-input"
+                           placeholder="아이디를 입력하세요." onChange={handleEmailChange}/>
                 </div>
                 <div className="logininput-password">
-                    <input type="password" placeholder="비밀번호를 입력하세요." onChange={handlePwChange}/>
+                    <input type="password" placeholder="비밀번호를 입력하세요." className="logininput-input"
+                           onChange={handlePwChange}/>
                 </div>
                 <div>
                     <div className="logininput-login-options">
@@ -219,9 +226,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        storeInfo: (info) => {
-            return dispatch(actions.storeInfo());
-        },
         handleLogin: (token) => {
             return dispatch(actions.login(token));
         }

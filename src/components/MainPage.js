@@ -10,7 +10,7 @@ import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
 import {ResetPassword} from './content/resetPassword/ResetPassword';
 import {Signup} from './content/navigation/signup/Signup';
-import {Request} from './content/navigation/request/Request';
+import {SignupOk} from './content/navigation/signup/SignupOk';
 import {TipEvent} from './content/tipEvent/TipEvent';
 import {Tips} from './content/navigation/tips/Tips';
 import {Product} from './content/product/Product';
@@ -20,6 +20,7 @@ import {ContactUs} from './content/navigation/request/contactUs/ContactUs';
 import {ViewMore} from './common/ViewMore/ViewMore';
 import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdSpec';
 import {About} from './content/navigation/about/About';
+import {MyPage} from './content/navigation/mypage/MyPage';
 import history from '../history/history';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Router, Route, Switch} from "react-router-dom"
@@ -34,6 +35,7 @@ const renderHome=()=>{
         </React.Fragment>
     )
 };
+
 export class MainPage extends Component {
     render () {
         return (
@@ -49,22 +51,23 @@ export class MainPage extends Component {
                                         <Switch>
                                             <Route exact path="/" component={renderHome} />
                                             <Route path="/about" component={About} />
-                                            <Route path="/category" render={(props) => <Category {...props} />} /> />
+                                            <Route exact path="/category" render={(props) => <Category {...props} />} /> />
                                             <Route path="/category/:search" render={(props) => <Category {...props} />} /> />
-                                            <Route exact path="/request" component={Request} />
                                             <Route path="/signup" component={Signup} />
+                                            <Route path="/signup-ok" component={SignupOk} />
                                             <Route exact path="/login" component={Login} />
                                             <Route path="/login/findpassword" component={FindPassword} />
                                             <Route exact path="/events" component={Events} />
                                             <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
                                             <Route exact path="/tips" component={Tips} />
                                             <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
-                                            <Route path="/product-details/:name" component={ProductSpecification} />
+                                            <Route path="/product-details/:category/:id" component={ProductSpecification} />
                                             <Route path="/request/request-comment" component={RequestComment} />
                                             <Route path="/request/contact-us" component={ContactUs} />
                                             <Route path="/request/loggedin" component={LoggedIn} />
                                             <Route path="/findpassword" component={FindPassword} />
                                             <Route path="/passwordReset" component={ResetPassword} />
+                                            <Route path="/mypage" component={MyPage} />
                                         </Switch>
                                     </div>
                                 </React.Fragment>

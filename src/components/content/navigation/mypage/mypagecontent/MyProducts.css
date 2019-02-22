@@ -1,0 +1,283 @@
+.myproduct-container{
+    width: 100%;
+    min-height: 600px;
+}
+
+.myproduct-header{
+    width: 100%;
+    height: 45px;
+    border-bottom: 1px solid gray;
+}
+
+.myproduct-header-checkbox{
+    width: 45px;
+    height: 100%;
+    display: inline-block;
+    padding: 12px 15px;
+}
+
+.myproduct-header-type{
+    width: 120px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 8px;
+    font-size: 12px;
+}
+
+.myproduct-header-type select{
+    background: none;
+    border: none;
+    color: skyblue;
+}
+
+.myproduct-header-type select:focus{
+    border: none;
+}
+
+.myproduct-header-name{
+    width: 260px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    padding-right: 40px;
+}
+
+.myproduct-header-info{
+    width: 270px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    padding-left: 40px;
+}
+
+.myproduct-header-delete{
+    width: 55px;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+}
+
+.myproduct-card-box{
+    width: 100%;
+    min-height: 1000px;
+}
+
+.myproduct-card{
+    width: 100%;
+    height: 100px;
+    border-bottom: 1px solid gray;
+}
+
+.myproduct-card-checkbox{
+    width: 45px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 40px 15px;
+}
+
+.myproduct-card-image{
+    height: 100%;
+    width: 120px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px 20px;
+}
+
+.myproduct-img{
+    height: 70px;
+    width: 70px;
+}
+
+.myproduct-img img{
+    height: 70px;
+    width: 70px;
+    object-fit: contain;
+}
+
+.myproduct-card-name{
+    height: 100%;
+    width: 350px;
+    display: inline-block;
+    padding: 25px 0px;
+}
+
+.myproduct-card-name p{
+    color: gray;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.myproduct-card-name h5{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.myproduct-card-info{
+    width: 180px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 30px 0px;
+}
+
+.myproduct-card-info-icon{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 4px;
+}
+
+.myproduct-card-info-icon img{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    display: inline-block;
+}
+
+.myproduct-card-delete{
+    width: 55px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 40px 0px;
+}
+
+.myproduct-bottom{
+    width: 100%;
+    height: 50px;
+    
+}
+
+.bottom-element{
+    height: 100%;
+    width: 695px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: right;
+    font-size: 10px;
+    line-height: 50px;
+    padding-right: 15px;
+    font-weight: bold;
+}
+
+.all-delete{
+    width: 55px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px 0px;
+}
+
+.delete-popup{
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(0, -50%) !important;
+}
+
+.myproduct-delete-confirm{
+    color: gray;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+}
+
+button.delete-btn{
+    display: inline-block;
+    color: white;
+    background-color: #32b8a4;
+    border-color: #32b8a4;
+    font-size: 16px;
+    letter-spacing: 1px;
+    outline: 0;
+    padding: 10px 20px;
+    top: 0;
+    border-radius: 10px;
+    margin: 0px auto;
+    cursor: pointer;
+    border: none;
+    margin: 0px 5%;
+}
+
+button.cancel-btn{
+    display: inline-block;
+    color: white;
+    background-color: gray;
+    border-color: gray;
+    font-size: 16px;
+    letter-spacing: 1px;
+    outline: 0;
+    padding: 10px 20px;
+    top: 0;
+    border-radius: 10px;
+    margin: 0px auto;
+    cursor: pointer;
+    border: none;
+    margin: 0px 5%;
+}
+
+button.delete-btn:focus, button.cancel-btn:focus {
+    outline: none;
+}
+
+button.delete-btn:active, button.cancel-btn:active{
+    border: none;
+}
+
+.myproduct-pagination-box{
+    margin-top: 25px;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+}
+
+.myproduct-pagination{
+    display: table;
+    margin: 0px auto;
+}
+
+.pagination-scroll-button{
+    display: table-cell;
+    width: 20px;
+    height: 25px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    color: lightslategray;
+}
+
+.pagination-button{
+    display: table-cell;
+    width: 45px;
+    height: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    color: lightgray;
+    border-right: 1px solid lightgray;
+}
+
+.pagination-focused{
+    color: #32b8a4;
+}

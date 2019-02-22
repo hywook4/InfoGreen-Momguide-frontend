@@ -10,7 +10,8 @@
     overflow-y: hidden;
     
 }
-img {
+
+img.login-banner-image {
     width: 355px;
     height: 40px;
     display: block;

@@ -14,8 +14,8 @@ const appendText={
 }
 
 export class CategoryImg extends React.Component{
-    state={details:{}}
-    componentDidMount= async ()=>{
+    state={details:{}};
+    componentDidMount = async ()=>{
         this._ismounted = true;
 
         const params = new URLSearchParams();
@@ -23,13 +23,12 @@ export class CategoryImg extends React.Component{
         let resp = await Axios.post(`${config.CLIENT_SERVER}/chemical/item_info.php`, params);
             this._ismounted && this.setState({details: resp.data}) 
             // Above USAGE OF _ismounted probable ANTI pattern, should move to flux implementation asap after the demo
-                
-            
-    }
+    };
 
     componentWillUnmount=()=>{
         this._ismounted = false; // <-- probable ANTI pattern, should move to flux implementation asap after the demo
-    }
+    };
+
     render=() =>{
         let props = this.props.data;
         console.log(props);
@@ -64,6 +63,8 @@ export class CategoryImg extends React.Component{
                                         if(props.includeToxic) iconFlag = true;
                                         break;
 
+                                    default:
+                                        break;
                                 }
                                 if(iconFlag){
                                     return (

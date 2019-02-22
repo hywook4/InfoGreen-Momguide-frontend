@@ -1,6 +1,5 @@
 import * as types from './ActionTypes';
 import axios from 'axios';
-import history from '../history/history';
 
 export const storeInfo = (info) => ({
     type: types.STOREINFO,
@@ -15,12 +14,9 @@ export const login = (token) => {
                 url: process.env.API_URL + '/api/auth/info', 
                 headers: {Authorization: 'Bearer ' + token}
             })
-            .then((infoResult) => 
-            {
-                // console.log('Login success');
+            .then((infoResult) => {
                 const data = infoResult;
                 dispatch(storeInfo(data));
-                history.push('/');
             })
             .catch((err) => {
                 console.log(err);
@@ -30,6 +26,12 @@ export const login = (token) => {
     }
 };
 
-export const logout = () => ({
-    type: types.LOGOUT
-});
+export const logout = () => {
+    return (dispatch) => {
+        dispatch({
+            type: types.LOGOUT
+        });
+        localStorage.removeItem('loginToken');
+        sessionStorage.removeItem('loginToken');
+    }
+};

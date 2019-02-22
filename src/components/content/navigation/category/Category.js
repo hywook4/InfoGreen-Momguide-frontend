@@ -3,7 +3,6 @@ import './Category.css';
 import {CategoryImg} from '../category/CategoryImg';
 import {CategoryMenu} from '../category/CategoryMenu';
 import axios from 'axios';
-import { checkServerIdentity } from 'tls';
 import { CategoryUtil } from '../../../../util';
 
 export class Category extends React.Component{
@@ -28,8 +27,6 @@ export class Category extends React.Component{
         type: ""
     };
 
-    
-
     componentDidMount=()=>{
         this._mounted = true;
         let search = this.props.match.params.search;
@@ -40,23 +37,24 @@ export class Category extends React.Component{
 
         this.setState({
             search: search
-        })
+        });
 
-        if(search !== ''){
-            //searchProduct
-            console.log(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, this.state.careCheck,
-                this.state.harmCheck, this.state.highDangerCheck, this.state.ecoCheck, this.state.ingredientCheck, this.state.middleDangerCheck, 
-                this.state.page);
-           
-            console.log(`keyword ${search} is delivered`);
-        }
-        else{
-            console.log("no keyword is delivered");
+        if(search !== '') {
+            this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort,
+                this.state.careCheck,
+                this.state.harmCheck,
+                this.state.highDangerCheck,
+                this.state.ecoCheck,
+                this.state.ingredientCheck,
+                this.state.middleDangerCheck,
+                this.state.page));
         }
     };
+
     componentWillUnmount=()=>{
         this._mounted = false;
     };
+
     componentWillMount=()=>{
         this.scrollListener = window.addEventListener('scroll', (e) => {
             this.handleScroll(e)
@@ -72,12 +70,11 @@ export class Category extends React.Component{
     handleScroll = (e) => {
         const { scrolling, totalPages, page} = this.state;
         if(!this._mounted || scrolling ||totalPages <= page) return;
-        var lastLi = document.querySelector('.loadedItem:last-child');
-        var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
-        var pageOffset = window.pageYOffset + window.innerHeight;
-        var bottomOffset = 150;
+        const lastLi = document.querySelector('.loadedItem:last-child');
+        const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
+        const pageOffset = window.pageYOffset + window.innerHeight;
+        const bottomOffset = 150;
 
-       
         if (pageOffset > lastLiOffset - bottomOffset) {
             this.setState(prevState => ({
                 page: prevState.page+1,
@@ -97,7 +94,7 @@ export class Category extends React.Component{
     onKeyBoardPress = e =>{
         this.state.search.length>0 &&
         e.keyCode===13 &&
-        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
+        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort,
             this.state.careCheck,
             this.state.harmCheck,
             this.state.highDangerCheck,
@@ -142,7 +139,6 @@ export class Category extends React.Component{
 
         }
         
-        console.log(mainCategory, subCategory);
 
         this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort, 
             this.state.careCheck,
@@ -206,7 +202,7 @@ export class Category extends React.Component{
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         }
         return str.join("&");
-    }
+    };
     
     searchProduct = async (searchText, mainCategory, subCategory, sort, 
         careCheck,
@@ -218,9 +214,6 @@ export class Category extends React.Component{
         page)=> {
         
         const queryObject = {};
-
-        console.log(searchText, mainCategory, subCategory, sort, careCheck, harmCheck, highDangerCheck, ecoCheck,
-            ingredientCheck, middleDangerCheck, page);
 
         if (searchText) queryObject.search = searchText;
         if (mainCategory) {
@@ -242,7 +235,7 @@ export class Category extends React.Component{
         if (sort) queryObject.sort = sort;
         if (page) queryObject.page = page;
 
-        let query = `${process.env.API_URL}/api/product/category?${this.objectToQuery(queryObject)}`
+        let query = `${process.env.API_URL}/api/product/category?${this.objectToQuery(queryObject)}`;
         
         if(this.state.page === 0) {
             this.setState({
@@ -250,8 +243,6 @@ export class Category extends React.Component{
             });
         }
         let resp = await axios.get(query);
-
-        console.log(resp.data);
 
         this.setState({
             result: [...this.state.result,...resp.data.data], // 기존의 result에 새로운 data들을 추가 ... 전개연산자 

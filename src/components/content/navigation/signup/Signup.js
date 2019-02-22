@@ -4,6 +4,7 @@ import USER_IMAGE from '../../../../assets/images/icons/user-icon.png'
 import axios from 'axios';
 import { RoadNameAddress } from '../../../common/RoadNameAddress/RoadNameAddress';
 import $ from 'jquery';
+import history from '../../../../history/history';
 
 function range(start, end) {
     const len = end-start+1;
@@ -18,7 +19,7 @@ function lastDay(year, month) {
 }
 
 function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
 
@@ -37,7 +38,10 @@ export class Signup extends Component {
             type: 'image/png'
         };
         let file = new File([data], "test.png", metadata);
-        this.state.profileImage = file;
+        this.setState({
+            profileImage: file,
+            profileImageUrl: USER_IMAGE
+        });
     };
 
     constructor(props) {
@@ -185,7 +189,12 @@ export class Signup extends Component {
                 alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
                 return;
             }
-            alert('회원가입 성공!');
+            history.push({
+                pathname: '/signup-ok',
+                state: {
+                    email: state.emailId + '@' + state.emailDomain
+                }
+            });
         }).catch((res) => {
             alert('회원가입에 실패하였습니다. 관리자에게 문의해주세요.');
         });
@@ -205,10 +214,14 @@ export class Signup extends Component {
         if(this.state.profileImage !== USER_IMAGE)
             URL.revokeObjectURL(this.state.profileImageUrl);
 
-        this.setState({
-            profileImage: event.target.files[0],
-            profileImageUrl: URL.createObjectURL(event.target.files[0])
-        });
+        if(event.target.files.length === 0) {
+            this.setDefaultImage();
+        } else {
+            this.setState({
+                profileImage: event.target.files[0],
+                profileImageUrl: URL.createObjectURL(event.target.files[0])
+            });
+        }
     };
 
     onEmailDomainSelectChange = (event) => {
@@ -422,7 +435,7 @@ export class Signup extends Component {
                         </div>
                         <div>
                             <span>
-                                <img src={this.state.profileImageUrl} alt="" id="profile" />
+                                <img src={this.state.profileImageUrl} alt="" id="signup-profile" />
                             </span>
                             <span>
                                 <input type="file" name="profile-image-input"  id="profile-image-input"
