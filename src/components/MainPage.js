@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './MainPage.css';
+import './common/CommonCSS/Comment.css'
 import Header from './content/header/Header';
 import {Slider} from './content/slider/Slider';
 import {Footer} from './content/footer/Footer';
 import Search from './content/search/Search';
 import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
+import {EventDetail} from './content/navigation/events/EventDetail';
 import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
 import {Signup} from './content/navigation/signup/Signup';
@@ -57,7 +59,7 @@ export class MainPage extends Component {
                                             <Route exact path="/login" component={Login} />
                                             <Route path="/login/findpassword" component={FindPassword} />
                                             <Route exact path="/events" component={Events} />
-                                            <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
+                                            <Route path="/events/:id" render={(props) => <EventDetail {...props} section={"events"} />} />
                                             <Route exact path="/tips" component={Tips} />
                                             <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
                                             <Route path="/product-details/:category/:id" component={ProductSpecification} />

@@ -143,6 +143,50 @@ export class Events extends React.Component {
             </button>
         );
 
+        const eventCards = (
+            this.state.events.map((item, i) => {
+                return (
+                    <Link to="/events/123">
+                        <div className="events-card-item" key={i}>
+                            {item.end ? null : <div className="events-top-right">D-Day</div> /* TODO : 날짜 계산하기 */}
+                            <div className="events-card-item-image-container">
+                                {item.end ? <div className="events-end">종료된 이벤트 입니다.</div> : null}
+                                <img src={item.image} alt="events" />
+                            </div>
+                            <div className="events-bottom-left">
+                                <h5>{item.title}</h5>
+                                <h6>{item.contents}</h6>
+                            </div>
+                            <div className="events-bottom-right">
+                                {item.startDate + " ~ " + item.endDate}
+                            </div>
+                        </div>
+                    </Link>
+                );
+            })
+        )
+
+        const winnerCards = (
+            this.state.events.map((item, i) => {
+                return (
+                    <Link to="/events/123">
+                        <div className="events-card-item" key={i}>
+                            <div className="events-card-item-image-container">
+                                <img src={item.image} alt="events" />
+                            </div>
+                            <div className="events-bottom-left">
+                                <h5>{item.title}</h5>
+                                <h6>{item.contents}</h6>
+                            </div>
+                            <div className="events-bottom-right">
+                                {item.startDate + " ~ " + item.endDate}
+                            </div>
+                        </div>
+                    </Link>
+                );
+            })
+        )
+
         return (
             <div className="events-container">
                 <div className="events-header">
@@ -168,45 +212,9 @@ export class Events extends React.Component {
 
                     {
                         this.state.currentTab === "events" ? 
-                        this.state.events.map((item, i) => {
-                        return (
-                            <Link to="/events/123">
-                                <div className="events-card-item" key={i}>
-                                    {item.end ? null : <div className="events-top-right">D-Day</div> /* TODO : 날짜 계산하기 */}
-                                    <div className="events-card-item-image-container">
-                                        {item.end ? <div className="events-end">종료된 이벤트 입니다.</div> : null}
-                                        <img src={item.image} alt="events" />
-                                    </div>
-                                    <div className="events-bottom-left">
-                                        <h5>{item.title}</h5>
-                                        <h6>{item.contents}</h6>
-                                    </div>
-                                    <div className="events-bottom-right">
-                                        {item.startDate + " ~ " + item.endDate}
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                        }) :
-                        this.state.events.map((item, i) => {
-                            return (
-                                <Link to="/events/123">
-                                    <div className="events-card-item" key={i}>
-                                        <div className="events-card-item-image-container">
-                                            <img src={item.image} alt="events" />
-                                        </div>
-                                        <div className="events-bottom-left">
-                                            <h5>{item.title}</h5>
-                                            <h6>{item.contents}</h6>
-                                        </div>
-                                        <div className="events-bottom-right">
-                                            {item.startDate + " ~ " + item.endDate}
-                                        </div>
-                                    </div>
-                                </Link>
-                            );
-                            })
+                        eventCards : winnerCards
                     }
+                        
                 </div>
                 {this.state.currentPage < this.state.totalPage ? moreButton : null}
             </div>
