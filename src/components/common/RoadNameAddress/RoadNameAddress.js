@@ -1,14 +1,7 @@
 import React from 'react';
 import './RoadNameAddress.css';
 import axios from 'axios';
-
-function range(start, end) {
-    const len = end-start+1;
-    if(len < 0)
-        return [];
-
-    return [...Array(len).keys()].map((i) => i+start);
-}
+import { CommonUtil } from '../../../util';
 
 export class RoadNameAddress extends React.Component {
     constructor(props) {
@@ -116,7 +109,7 @@ export class RoadNameAddress extends React.Component {
         const pageContainer = (this.state.totalPage === null) ?
             (null) :
             (<div className="road-name-address-page-container">
-                {range(start, end).map((num, i) => {
+                {CommonUtil.range(start, end).map((num, i) => {
                     return i === 0 ? (<span key={i}><h6 className={num===this.state.currentPage?'selected':''} onClick={()=>this.handlePageMove(num)}>{num}</h6></span>)
                         : (<span key={i}> | <h6 className={num===this.state.currentPage?'selected':''} onClick={()=>this.handlePageMove(num)}>{num}</h6></span>);
                 })}
