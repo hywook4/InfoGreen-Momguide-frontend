@@ -35,6 +35,12 @@ class ProfileModify extends React.Component{
     constructor(props) {
         super(props);
 
+        if(!this.props.location.state || !this.props.location.state.authentication) {
+            alert('정상적이지 않은 접근입니다.');
+            history.push('/');
+            return;
+        }
+
         this.state = {
             emailId: '',
             emailDomain: '',
@@ -128,6 +134,8 @@ class ProfileModify extends React.Component{
     };
 
     componentDidMount = () => {
+        if(!this.props.location.state || !this.props.location.state.authentication)
+            return;
         this.init();
     };
 
@@ -291,6 +299,9 @@ class ProfileModify extends React.Component{
     };
 
     render() {
+        if(!this.props.location.state || !this.props.location.state.authentication)
+            return null;
+
         return (
             <div className="profile-modify-container">
                 <div className="profile-modify-login-info">
