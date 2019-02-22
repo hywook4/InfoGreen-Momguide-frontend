@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './MainPage.css';
-import './common/CommonCSS/Comment.css'
+import './common/CommentCard/Comment.css'
 import Header from './content/header/Header';
 import {Slider} from './content/slider/Slider';
 import {Footer} from './content/footer/Footer';

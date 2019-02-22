@@ -80,7 +80,24 @@ export class EventDetail extends React.Component {
                         <div className="comment-sort-selected" style={{marginRight: '20px'}}>최신순</div>
                     </div>
                     <div className="comment-list-box">
-
+                        <div className="comment-card">
+                            <div className="comment-profile-img">
+                                <img src='https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg' alt="profile-pic"/>
+                            </div>
+                            <div className="comment-content">
+                                <div className="comment-user-profile">
+                                    <p>닉네임들어감</p>
+                                    <div>성별</div>
+                                    <div>20대</div>
+                                    <div>자녀5~7세</div>
+                                    <span>2018.02.03 12:00</span>
+                                </div>
+                                <textarea className="comment-text" maxLength="300" value="sadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsf"/>
+                                <p className="comment-subcomment-fold">댓글 접기</p>
+                            </div>
+                            <div className="comment-icon-buttons">
+                            </div>
+                        </div>
                     </div>
                 
                 </div>
