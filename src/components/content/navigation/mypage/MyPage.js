@@ -5,7 +5,7 @@ import { MyPageMenu } from './MyPageMenu';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 
 import { MyProfile } from './mypagecontent/MyProfile';
-import { ProfileModify } from './mypagecontent/ProfileModify';
+import ProfileModify from './mypagecontent/ProfileModify';
 
 import { MyHouseProduct }  from './mypagecontent/MyHouseProduct'
 import { MyDibProduct } from './mypagecontent/MyDibProduct'

@@ -660,9 +660,11 @@ export class Signup extends Component {
                         <div className="signup-optional-info-address">
                             <input placeholder={"상세 주소 예) 105동 203호"} className="signup-address-detail2"
                                    onChange={(e)=>this.onChange('addressDetail', e.target.value)}
+                                   value={this.state.addressDetail}
                             />
                             <input placeholder={"참고 항목 예) (상암동)"} className="signup-address-detail2"
                                    onChange={(e)=>this.onChange('addressNote', e.target.value)}
+                                   value={this.state.addressNote}
                             />
                         </div>
                     </div>

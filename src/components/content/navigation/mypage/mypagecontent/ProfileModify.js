@@ -6,8 +6,19 @@ import { RoadNameAddress } from '../../../../common/RoadNameAddress/RoadNameAddr
 import $ from 'jquery';
 import history from '../../../../../history/history';
 import { CommonUtil, TokenUtil } from '../../../../../util';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../../../../actions';
 
-export class ProfileModify extends React.Component{
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleLogin: (token) => {
+            return dispatch(actions.login(token));
+        }
+    };
+};
+
+class ProfileModify extends React.Component{
     setDefaultImage = async () => {
         let response = await fetch(USER_IMAGE);
         let data = await response.blob();
@@ -19,20 +30,6 @@ export class ProfileModify extends React.Component{
             profileImage: file,
             profileImageUrl: USER_IMAGE
         });
-    };
-
-    setUrlImage = async (link) => {
-        const request = new XMLHttpRequest();
-        request.open('GET', link, true);
-        request.responseType = 'blob';
-        request.onload = function() {
-            const reader = new FileReader();
-            reader.readAsDataURL(request.response);
-            reader.onload =  function(e){
-                console.log('DataURL:', e.target.result);
-            };
-        };
-        request.send();
     };
 
     constructor(props) {
@@ -62,10 +59,12 @@ export class ProfileModify extends React.Component{
             roadNameAddress: '',
             addressDetail: '',
             addressNote: '',
+
+            defaultNickname: ''
         };
     }
 
-    componentDidMount = async () => {
+    init = async () => {
         const token = TokenUtil.getLoginToken();
         if(token === null) {
             alert("권한이 없습니다.");
@@ -102,14 +101,15 @@ export class ProfileModify extends React.Component{
             if(data.addressEtd)
                 addressState['addressNote'] = data.addressEtd;
 
-            this.setUrlImage(data.photoUrl);
             this.setState({
                 ...phoneState,
                 ...addressState,
                 emailId: emailArray[0],
                 emailDomain: emailArray[1],
+                profileImageUrl: data.photoUrl,
                 nickname: data.nickName,
                 nicknameDuplicateOk: true,
+                nicknameDuplicateMessage: '',
                 gender: data.gender,
                 birthYear: data.memberBirthYear,
                 birthMonth: data.memberBirthMonth,
@@ -119,10 +119,107 @@ export class ProfileModify extends React.Component{
                 childBirthMonth: data.childBirthMonth,
                 childBirthDay: data.childBirthDay,
                 name: data.name,
-            })
+
+                defaultNickname: data.nickName
+            });
         } catch(error) {
             alert("에러가 발생하였습니다.");
         }
+    };
+
+    componentDidMount = () => {
+        this.init();
+    };
+
+    handleRegister = () => {
+        const state = this.state;
+        if(state.profileImage) {
+            const extension = state.profileImage.name.substring(state.profileImage.name.length - 3);
+            if (!(extension === 'png' || extension === 'jpg' || extension === 'gif')) {
+                alert('프로필 사진은 png, jpg, gif 파일 중 하나로 올려주세요.');
+                return;
+            }
+        }
+        if(state.nickname.length > 6 || state.nickname.length === 0) {
+            alert('닉네임을 6자 이내로 설정해 주세요.');
+            return;
+        }
+        if(!state.nicknameDuplicateOk) {
+            alert('닉네임 중복검사를 해주세요.');
+            return;
+        }
+        if(state.gender === '') {
+            alert('성별을 선택해 주세요.');
+            return;
+        }
+        if(state.birthYear === '' || state.birthMonth === '' || state.birthDay === '') {
+            alert('생년월일을 입력해 주세요.');
+            return;
+        }
+        if(state.hasChild === '있음' && (state.childBirthYear === '' || state.childBirthMonth === '' || state.childBirthDay === '')) {
+            alert('자녀생년월일을 입력해주세요.');
+            return;
+        }
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert('정상적이지 않은 접근입니다.');
+            return;
+        }
+
+        const headers = TokenUtil.getTokenRequestHeader(token);
+        const data = new FormData();
+        if(state.profileImage) {
+            data.append('image', state.profileImage);
+            data.append('isImageChanged', 'true');
+        } else {
+            data.append('isImageChanged', 'false');
+        }
+        data.append('nickName', state.nickname);
+        data.append('gender', state.gender);
+        data.append('memberBirthYear', state.birthYear);
+        data.append('memberBirthMonth', state.birthMonth);
+        data.append('memberBirthDay', state.birthDay);
+        data.append('hasChild', state.hasChild === '있음');
+        if(state.hasChild === '있음') {
+            data.append('childBirthYear', state.childBirthYear);
+            data.append('childBirthMonth', state.childBirthMonth);
+            data.append('childBirthDay', state.childBirthDay);
+        }
+        if(state.name)
+            data.append('name', state.name);
+        if(state.phoneNumberFirst && state.phoneNumberSecond && state.phoneNumberThird)
+            data.append('phoneNum', state.phoneNumberFirst + state.phoneNumberSecond + state.phoneNumberThird);
+        if(state.zipCode) {
+            data.append('postalCode', state.zipCode);
+            data.append('addressRoad', state.roadNameAddress);
+            data.append('addressSpec', state.addressDetail);
+            data.append('addressEtc', state.addressNote);
+        }
+
+        axios({
+            method: 'put',
+            url: `${process.env.API_URL}/api/auth/editProfile/edit`,
+            data: data,
+            headers: headers
+        }).then((res) => {
+            if('error' in res.data) {
+                alert('정상적이지 않은 접근입니다.');
+                return;
+            }
+            alert('정상적으로 수정되었습니다.');
+            const token = res.data.token;
+            this.props.handleLogin(token);
+            if(localStorage.getItem('loginToken')) {
+                localStorage.setItem('loginToken', token);
+            } else {
+                sessionStorage.setItem('loginToken', token);
+            }
+            this.init();
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        }).catch((err) => {
+            alert('정보 수정에 실패하였습니다. 관리자에게 문의해주세요.');
+        });
     };
 
     setAddress = (zipCode, roadNameAddress) => {
@@ -146,6 +243,18 @@ export class ProfileModify extends React.Component{
         this.setState(newState);
     };
 
+    onNicknameChange = (e) => {
+        if(this.state.defaultNickname === e.target.value) {
+            this.setState({
+                nickname: e.target.value,
+                nicknameDuplicateOk: true,
+                nicknameCuplicateMessage: ''
+            });
+        } else {
+            this.onChange('nickname', e.target.value, 'nicknameDuplicateOk', false, 'nicknameDuplicateMessage', '');
+        }
+    };
+
     profileImageChange = (event) => {
         if(this.state.profileImage !== USER_IMAGE)
             URL.revokeObjectURL(this.state.profileImageUrl);
@@ -161,6 +270,13 @@ export class ProfileModify extends React.Component{
     };
 
     nicknameDuplicateCheck = () => {
+        if(this.state.nickname === this.state.defaultNickname) {
+            this.setState({
+                nicknameDuplicateMessage: '현재 닉네임과 동일합니다.'
+            });
+            return;
+        }
+
         axios.get(`${process.env.API_URL}/api/auth/register/checkNickName?nickName=${this.state.nickname}`)
             .then((res) => {
                 const isDuplicated = res.data.isDuplicated;
@@ -188,9 +304,8 @@ export class ProfileModify extends React.Component{
                         <div className="profile-modify-login-info-email-input">
                             <span className="profile-modify-login-info-email-id">
                                 <input type="text" placeholder="정확하게 입력해주세요."
-                                       onChange={(e) => this.onChange('emailId', e.target.value, 'emailDuplicateOk', false, 'emailDuplicateMessage', '')}
                                        value={this.state.emailId}
-                                       className={this.state.emailDuplicateMessage ? (this.state.emailDuplicateOk ? 'profile-modify-input-success' : 'profile-modify-input-fail') : ''}
+                                       disabled={true}
                                 />
                             </span>
                             <span>
@@ -198,10 +313,8 @@ export class ProfileModify extends React.Component{
                             </span>
                             <span className="profile-modify-login-info-email-url">
                                 <input type="text"
-                                       onChange={(e) => this.onChange('emailDomain', e.target.value, 'emailDuplicateOk', false, 'emailDuplicateMessage', '')}
                                        value={this.state.emailDomain}
-                                       disabled={this.state.emailDomainDisable}
-                                       className={this.state.emailDuplicateMessage ? (this.state.emailDuplicateOk ? 'profile-modify-input-success' : 'profile-modify-input-fail') : ''}
+                                       disabled={true}
                                 />
                             </span>
                         </div>
@@ -216,10 +329,12 @@ export class ProfileModify extends React.Component{
                             </span>
                         </div>
                         <div>
-                            <input type="password"
-                                   className="profile-modify-login-info-password-input"
-                                   onChange={(e) => this.onChange('password', e.target.value)}
-                            />
+                            {/* TODO: after merging password reset */}
+                            <Link to="/">
+                                <button className="profile-modify-password-change">
+                                    비밀번호 변경
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -258,7 +373,7 @@ export class ProfileModify extends React.Component{
                                 <input type="text" className={"profile-modify-profile-nickname-input " +
                                     (this.state.nicknameDuplicateMessage ?
                                         (this.state.nicknameDuplicateOk ? 'profile-modify-input-success' : 'profile-modify-input-fail') : '')}
-                                       onChange={(e) => this.onChange('nickname', e.target.value, 'nicknameDuplicateOk', false, 'nicknameDuplicateMessage', '')}
+                                       onChange={this.onNicknameChange}
                                        value={this.state.nickname}
                                 />
                             </span>
@@ -352,7 +467,6 @@ export class ProfileModify extends React.Component{
                                     onChange={(e)=>this.onChange('hasChild', e.target.value)}
                                     value={this.state.hasChild}
                             >
-                                <option>선택</option>
                                 <option>있음</option>
                                 <option>없음</option>
                             </select>
@@ -481,9 +595,11 @@ export class ProfileModify extends React.Component{
                         <div className="profile-modify-optional-info-address">
                             <input placeholder={"상세 주소 예) 105동 203호"} className="profile-modify-address-detail2"
                                    onChange={(e)=>this.onChange('addressDetail', e.target.value)}
+                                   value={this.state.addressDetail}
                             />
                             <input placeholder={"참고 항목 예) (상암동)"} className="profile-modify-address-detail2"
                                    onChange={(e)=>this.onChange('addressNote', e.target.value)}
+                                   value={this.state.addressNote}
                             />
                         </div>
                     </div>
@@ -496,3 +612,5 @@ export class ProfileModify extends React.Component{
         );
     }
 }
+
+export default connect(null, mapDispatchToProps)(ProfileModify);
