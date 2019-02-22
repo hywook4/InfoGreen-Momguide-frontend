@@ -36,6 +36,7 @@ class App extends React.Component {
                     this.props.handleLogin(token);
                 }
 
+                // setTimeout(()=>this.props.handleLogout(), 3000);
                 if(localToken) {
                     localStorage.setItem('loginToken', token);
                 } else {
