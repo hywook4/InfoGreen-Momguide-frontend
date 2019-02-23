@@ -22,7 +22,9 @@ export class EventDetail extends React.Component {
             likes: 10,
             loggedIn: true,
             commentPage: 1,
-            totalCommentPage: 2
+            totalCommentPage: 2,
+            myComment: "",
+            sortBy : "최신순"
         };
     }
 
@@ -78,15 +80,35 @@ export class EventDetail extends React.Component {
             comments: dummy
         })
     }
+    
+    changeComment = (e) => {
+        this.setState({
+            myComment: e.target.value
+        })
+    }
+
+    submitComment = () => {
+        //TODO : 나의 댓글 추가 요청하기
+        console.log(this.state.myComment);
+    }
 
     loadNextPage = () => {
         console.log("more page");
         this.setState({
-            commentPage: this.state.commentPage
+            commentPage: this.state.commentPage + 1
         })
         //TODO : 기존 리스트에 새로받은 값들 추가해주기
     };
 
+    changeSort = (sort) => {
+        this.setState({
+            sortBy: sort
+        })
+    }
+
+    onApply = () => {
+        console.log("이벤트 신청하기");
+    }
     
     render() {
         const moreButton = (
@@ -124,7 +146,7 @@ export class EventDetail extends React.Component {
                 <div className="event-detail-button-box">
                     {
                         this.state.loggedIn ? 
-                        <button type="button" className="event-detail-button" >신청하기</button> :
+                        <button type="button" className="event-detail-button" onClick={this.onApply}>신청하기</button> :
                         <button type="button" className="event-detail-button" >로그인</button>
                     }
                 </div>
@@ -138,18 +160,18 @@ export class EventDetail extends React.Component {
                             <div>25세</div>
                             <div>자녀 7세</div>
                         </div>
-                        <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300"/>
-                        <button type="button" className="comment-write-button">등록</button>
+                        <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" onChange={this.changeComment}/>
+                        <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
                     </div>
                     <div className="comment-list-header">
                         <div className="comment-number">
                             댓글&nbsp;&nbsp;<span>100</span>개
                         </div>
-                        <div className="comment-sort">추천수</div>
-                        <div className="comment-sort-selected" style={{marginRight: '20px'}}>최신순</div>
+                        <div className={this.state.sortBy ==="최신순" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("추천수")}}>추천수</div>
+                        <div className={this.state.sortBy ==="최신순" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("최신순")}} style={{marginRight: '20px'}}>최신순</div>
                     </div>
 
-                    
+
                     <div className="comment-list-box">
                         {
                             this.state.comments.map((data, index)=>{

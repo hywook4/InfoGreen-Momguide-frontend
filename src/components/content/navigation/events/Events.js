@@ -146,8 +146,8 @@ export class Events extends React.Component {
         const eventCards = (
             this.state.events.map((item, i) => {
                 return (
-                    <Link to="/events/123">
-                        <div className="events-card-item" key={i}>
+                    <Link to="/events/123" key={i}>
+                        <div className="events-card-item" >
                             {item.end ? null : <div className="events-top-right">D-Day</div> /* TODO : 날짜 계산하기 */}
                             <div className="events-card-item-image-container">
                                 {item.end ? <div className="events-end">종료된 이벤트 입니다.</div> : null}
@@ -169,8 +169,8 @@ export class Events extends React.Component {
         const winnerCards = (
             this.state.events.map((item, i) => {
                 return (
-                    <Link to="/events/123">
-                        <div className="events-card-item" key={i}>
+                    <Link to="/events/123" key={i}>
+                        <div className="events-card-item" >
                             <div className="events-card-item-image-container">
                                 <img src={item.image} alt="events" />
                             </div>
@@ -197,8 +197,8 @@ export class Events extends React.Component {
                 <div className="events-navigation-container">
                     <div className={`events-navigation-button ${this.state.currentTab==="events" ? "events-navigation-selected" : ""}`} 
                     onClick={(e)=>{this.changeTab("events");}}>
-                        <select className="events-category" onChange={this.changeCategory}>
-                            <option selected value="전체 이벤트">전체 이벤트</option>
+                        <select className="events-category" onChange={this.changeCategory} defaultValue="전체 이벤트">
+                            <option value="전체 이벤트">전체 이벤트</option>
                             <option value="진행중인 이벤트">진행중인 이벤트</option>
                             <option value="지난 이벤트">지난 이벤트</option>
                         </select>

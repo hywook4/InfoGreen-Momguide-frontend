@@ -91,6 +91,7 @@ button.comment-write-button{
     font-size: 15px;
     color: gray;
     float: right;
+    cursor: pointer;
 }
 
 .comment-sort-selected{
@@ -98,6 +99,7 @@ button.comment-write-button{
     font-size: 15px;
     color: #32b8a4;
     float: right;
+    cursor: pointer;
 }
 
 .comment-number span{
@@ -180,6 +182,10 @@ button.comment-write-button{
     outline:none;
 }
 
+.comment-text:disabled{
+    background-color: transparent;
+}
+
 .comment-subcomment-fold{
     display: inline-block;
     cursor: pointer;
@@ -238,7 +244,7 @@ button.comment-write-button{
 }
 
 .subcomment-top{
-    width: 93%;
+    width: 865px;
     margin: 0px auto;
     height: 30px;
 }
@@ -268,7 +274,7 @@ button.comment-write-button{
 }
 
 .subcomment-middle{
-    width: 93%;
+    width: 865px;
     margin: 0px auto;
     min-height: 60px;
 }
@@ -286,8 +292,12 @@ button.comment-write-button{
     outline: none;
 }
 
+.subcomment-middle textarea:disabled{
+    background-color: white;
+}
+
 .subcomment-bottom{
-    width: 93%;
+    width: 865px;
     margin: 0px auto;
     height: 25px;
 }
@@ -367,4 +377,41 @@ button.comment-write-button{
 .subcomment-close-button i{
     font-size: 15px;
     font-weight: 900;
+}
+
+.subcomment-write-box{
+    width: 100%;
+    min-height: 60px;
+    background-color: lightgray;
+}
+
+.subcomment-write{
+    width: 865px;
+    height: 60px;
+    margin: 0px auto;
+    background-color: black;
+}
+
+
+textarea.subcomment-write-content{
+    display: inline-block;
+    width: 800px;
+    height: 100%;
+    border: 1px solid gray;
+    padding: 5px 5px;
+    border-right: none;
+    resize: none;
+    font-size: 12px;
+}
+
+button.subcomment-write-submit{
+    display: inline-block;
+    width: 65px;
+    height: 100%;
+    vertical-align: top;
+    background-color:#32b8a4;
+    color: white;
+    outline: 0;
+    border: none;
+    cursor: pointer;
 }

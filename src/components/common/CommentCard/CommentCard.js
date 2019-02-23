@@ -56,7 +56,8 @@ export class CommentCard extends React.Component {
             ],
             totalSubcommentPage: 5,
             subcommentPage: 1,
-            subcommentOpen: false
+            subcommentOpen: false,
+            mySubcomment: ""
         }
     }
 
@@ -72,6 +73,18 @@ export class CommentCard extends React.Component {
         this.setState({
             subcommentPage: this.state.subcommentPage + 1
         })
+    }
+
+    changeSubcomment = (e) => {
+        this.setState({
+            mySubcomment: e.target.value
+        })
+    }
+
+    subcommentSubmit = () => {
+        //TODO 해당하는 리뷰에 댓글 달기 요청 및 재
+        console.log(this.state.mySubcomment);
+
     }
 
     render() {
@@ -96,7 +109,7 @@ export class CommentCard extends React.Component {
                                 <span>{data.date}</span>
                             </div>
                             <div className="subcomment-middle">
-                                <textarea value={data.content}/>
+                                <textarea defaultValue={data.content} disabled/>
                             </div>
                             <div className="subcomment-bottom">
                                 <div className="subcomment-bottom-icons">
@@ -126,7 +139,7 @@ export class CommentCard extends React.Component {
                         <div>자녀{profile.childAge}세</div>
                         <span>{profile.date}</span>
                     </div>
-                    <textarea className="comment-text" maxLength="300" value={profile.content}/>
+                    <textarea className="comment-text" maxLength="300" defaultValue={profile.content} disabled/>
                     {
                         this.state.subcommentOpen ? 
                         <p className="comment-subcomment-fold" onClick={this.foldSubcomment}>댓글 접기</p> :
@@ -153,7 +166,15 @@ export class CommentCard extends React.Component {
                         null
                     }
                     {
-                        
+                        this.state.subcommentOpen ?
+                        <div className="subcomment-write-box">
+                            <div className="subcomment-write">
+                                {/*TODO: 로그인 여부에 따라 placeholder 바꾸기 및 버튼 활성화*/}
+                                <textarea className="subcomment-write-content" onChange={this.changeSubcomment} placeholder="댓글을 입력하세요. (최대 300자)"/>
+                                <button className="subcomment-write-submit" onClick={this.subcommentSubmit}>등록</button>
+                            </div>
+                        </div> :
+                        null
                     }
                     {
                         this.state.subcommentOpen ?
