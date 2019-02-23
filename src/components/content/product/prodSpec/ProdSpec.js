@@ -5,7 +5,7 @@ import { LivingDoughNut, CosmeticDoughNut} from './DoughNut';
 import { LivingIngredientModal, CosmeticIngredientModal } from './IngredientModal';
 import { LivingIngredientRow, CosmeticIngredientRow } from './IngredientRow';
 import config from '../../../../config';
-import { CategoryUtil } from '../../../../util';
+import { CategoryUtil, TokenUtil } from '../../../../util';
 
 import axios from 'axios';
 
@@ -45,7 +45,14 @@ export class ProdSpec extends React.Component{
         modalData:{},
         aboutTab: true,
         reviewTab: false,
-        productData: null
+        productData: null,
+        ingredientRequestNum: 0,
+
+        login: false,
+        myHouseSelected: false,
+        myCosmeticSelected: false,
+        likeSelected: false,
+        ingredientRequest: false
     };
 
     componentDidMount = async ()=> {
@@ -57,6 +64,143 @@ export class ProdSpec extends React.Component{
             productData: res.data.product,
             ingredientList: res.data.ingredient
         });
+
+        res = await axios.get(`${process.env.API_URL}/api/ask/countIngredOpen?productIndex=${res.data.product.index}`);
+        this.setState({
+            ingredientRequestNum: res.data.totalNum
+        });
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return;
+        const headers = TokenUtil.getTokenRequestHeader(token);
+        this.setState({login: true});
+
+        try {
+            res = await axios.get(`${process.env.API_URL}/api/auth/checkHomeLike?productIndex=${id}&isCosmetic=${category==='cosmetic'?'true':'false'}`, {
+                headers: headers
+            });
+            if(category === 'living') {
+                this.setState({
+                    myHouseSelected: res.data.home,
+                    likeSelected: res.data.like
+                });
+            } else {
+                this.setState({
+                    myCosmeticSelected: res.data.home,
+                    likeSelected: res.data.like
+                });
+            }
+        } catch(e) {
+        }
+
+        res = await axios.get(`${process.env.API_URL}/api/ask/checkIngredOpen?productIndex=${id}`, {
+            headers: headers
+        });
+
+        this.setState({
+            ingredientRequest: res.data.check
+        });
+    };
+
+    houseAndLikeToggle = async (category, id) => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return;
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        if(category === 'living') {
+            const selected = this.state.myHouseSelected;
+
+            if(!selected) {
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${process.env.API_URL}/api/auth/addHomeLiving`,
+                        headers: headers,
+                        data: {
+                            productIndex: id
+                        }
+                    });
+
+                    this.setState({myHouseSelected: !selected});
+                } catch(e) {}
+            } else {
+                try {
+                    await axios({
+                        method: 'delete',
+                        url: `${process.env.API_URL}/api/auth/cancelHomeLiving`,
+                        headers: headers,
+                        data: {
+                            productIndex: id
+                        }
+                    });
+
+                    this.setState({myHouseSelected: !selected});
+                } catch(e) {}
+            }
+        } else if(category === 'cosmetic') {
+            const selected = this.state.myCosmeticSelected;
+
+            if(!selected) {
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${process.env.API_URL}/api/auth/addHomeCosmetic`,
+                        headers: headers,
+                        data: {
+                            productIndex: id
+                        }
+                    });
+
+                    this.setState({myCosmeticSelected: !selected});
+                } catch(e) {}
+            } else {
+                try {
+                    await axios({
+                        method: 'delete',
+                        url: `${process.env.API_URL}/api/auth/cancelHomeCosmetic`,
+                        headers: headers,
+                        data: {
+                            productIndex: id
+                        }
+                    });
+
+                    this.setState({myCosmeticSelected: !selected});
+                } catch(e) {}
+            }
+        } else if(category === 'like') {
+            const selected = this.state.likeSelected;
+            const objectCategory = CategoryUtil.korSubToEngMain(this.props.match.params.category);
+
+            if(!selected) {
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${process.env.API_URL}/api/auth/addLike${objectCategory==='living'?'Living':'Cosmetic'}`,
+                        headers: headers,
+                        data: {
+                            productIndex: id
+                        }
+                    });
+
+                    this.setState({likeSelected: !selected});
+                } catch(e) {}
+            } else {
+                try {
+                    await axios({
+                        method: 'delete',
+                        url: `${process.env.API_URL}/api/auth/cancelLike${objectCategory==='living'?'Living':'Cosmetic'}`,
+                        headers: headers,
+                        data: {
+                            productIndex: id
+                        }
+                    });
+
+                    this.setState({likeSelected: !selected});
+                } catch(e) {}
+            }
+        }
     };
 
     toggleTap = (isAboutTab) => {
@@ -83,31 +227,26 @@ export class ProdSpec extends React.Component{
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc1_${slsSles?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc2_${ammonium?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc3_${scent?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                        {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc4_${color?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                        {/* <p>Danger</p> */}
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc5_${humid?'red':'grey'}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                        {/* <p>Danger</p> */}
                 </div>
             </div>
         )
@@ -128,16 +267,6 @@ export class ProdSpec extends React.Component{
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/ingred_respitory${echaBreath?'_true':''}.png`)}
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
-                    {/* <p>Danger</p> */}
-                    {/* <span className="tooltiptext">
-                        <div>
-                            <img src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
-                        </div>
-                        <div>
-                            <h2><b>Ingredient(C8-16)</b></h2>
-                            <p>Alkyl polyglucoside(C8-16)</p>
-                        </div>
-                    </span> */}
                     <div>호흡 독성</div>
                 </div>
                 <div className="ingred-icon">
@@ -164,7 +293,7 @@ export class ProdSpec extends React.Component{
     
     updateModalData=(item)=>this.setState({modalData:item});
 
-    renderIngredients=(category)=>{
+    renderIngredients = (category) => {
         const text = (category==='living') ? livingText : cosmeticText;
         return (
             <div className="ingred-table">
@@ -207,36 +336,6 @@ export class ProdSpec extends React.Component{
                         (<LivingIngredientModal texts={text} data={this.state.modalData}/>) :
                         (<CosmeticIngredientModal texts={text} data={this.state.modalData}/>)
                 }
-                        {/* <div className="ingred-table-body">
-                    <div className="prod-ingr-ctn">
-                        <div className="prod-ingr-upr-div">
-                            
-                            <div className="prod-ingr-tbl">
-                                <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>성분등급</th>
-                                        <th>성분명</th>
-                                        <th style={{textAlign:'center'}}>주의성분여부</th>
-                                        <th style={{textAlign:'center'}}>유해성분여부</th>
-                                    </tr>
-                                        {Object.keys(this.state.ingredient_list.total).map(key => 
-                                            <IngredientRow
-                                                key={key}
-                                                data={this.state.ingredient_list.total[key]}
-                                                letter={this.state.ingredient_list.total[key].ewg_rank}
-                                                korName={this.state.ingredient_list.total[key].name}
-                                                engName={this.state.ingredient_list.total[key].name_eng}
-                                                handleClick={this.updateModalData}
-                                            />
-                                        )}
-                                </thead>
-                                </table>
-                                <IngredientModal texts={abcdText} data={this.state.modalData} />
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         )
     };
@@ -255,7 +354,37 @@ export class ProdSpec extends React.Component{
         )
     };
 
+    handleIngredientRequest = async () => {
+        if(!window.confirm('성분 공개 요청을 하시겠습니까?'))
+            return;
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return;
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'post',
+                url: `${process.env.API_URL}/api/ask/requestIngredOpen`,
+                headers: headers,
+                data: {
+                    productIndex: this.props.match.params.id
+                }
+            });
+
+            alert('요청이 정상적으로 처리되었습니다.');
+            this.setState({
+                ingredientRequestNum: this.state.ingredientRequestNum + 1,
+                ingredientRequest: true
+            });
+        } catch(e) {
+            alert('에러가 발생하였습니다. 관리자에게 문의해주세요.');
+        }
+    };
+
     render = () => {
+        const id = this.props.match.params.id;
         const productData = this.state.productData;
         if(productData === null) {
             return (<div><br/><br/></div>);
@@ -284,7 +413,7 @@ export class ProdSpec extends React.Component{
                 </div>
 
                 <div className="prod-info"> {/* image + info */}
-                    <div className="color-box"></div>
+                    <div className="color-box" />
                     <div className="prod-outer-img"> {/* product image */}
                         <img className="prod-img"
                              src={`${process.env.S3_URL}/product-images/${CategoryUtil.korSubToEngMain(productData.category)}-product-images/${productData.brand}/${productData.name}.jpg`}
@@ -303,14 +432,25 @@ export class ProdSpec extends React.Component{
                         <hr style={{color: 'gray'}}/>
 
                         <div className="icons-list"> {/* icons list */}
-                            <div className="icon">
-                                <i className="fa fa-home" aria-hidden="true" />
-                                <p style={{fontSize: '9px'}}>우리집 화학제품</p>
-                            </div>
-                            <div className="icon">
-                                <i className="fa fa-heart" aria-hidden="true" />
-                                <p style={{fontSize: '9px'}}>찜하기</p>
-                            </div>
+                            {this.state.login ?
+                                (<div className="icon">
+                                    <i className={`fa fa-home prod-icon ${((category==='living' && this.state.myHouseSelected) ||
+                                        (category!=='living' && this.state.myCosmeticSelected)) ? 'prod-icon-selected' : ''}`}
+                                       onClick={()=>this.houseAndLikeToggle(category, id)}
+                                       aria-hidden="true"
+                                    />
+                                    <p style={{fontSize: '9px'}}>우리집 {category==='living' ? '화학제품' : '화장품'}</p>
+                                </div>) :
+                                null}
+                            {this.state.login ?
+                                (<div className="icon">
+                                    <i className={`fa fa-heart prod-icon ${this.state.likeSelected ? 'prod-icon-selected' : ''}`}
+                                       aria-hidden="true"
+                                       onClick={()=>this.houseAndLikeToggle('like', id)}
+                                    />
+                                    <p style={{fontSize: '9px'}}>찜하기</p>
+                                </div>) :
+                                null}
                             <div className="icon">
                                 <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`}>
                                     <i className="fa fa-krw" aria-hidden="true" />
@@ -348,8 +488,11 @@ export class ProdSpec extends React.Component{
                                                      src={require('../../../../assets/images/product_spec_icons/request_people.png')}
                                                      alt=""/>
                                             </div>
-                                            <div className="text-in-table" style={{height: '60px'}}>{}명</div>
-                                            <button className="req-button">성분 공개 요청하기</button>
+                                            <div className="text-in-table" style={{height: '60px'}}>{this.state.ingredientRequestNum}명</div>
+                                            {(productData.ingredient !== 'O' && this.state.ingredientRequest === false && this.state.login) ?
+                                                (<button className="req-button" onClick={()=>this.handleIngredientRequest()}>
+                                                    성분 공개 요청하기
+                                                </button>) : null}
                                         </td>
                                     </tr>
                                     <tr style={{height: '100px'}}>
