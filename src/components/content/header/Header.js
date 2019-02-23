@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 class Header extends Component {
     render() {
         const isUserNick = (this.props.userNickName === undefined) || (this.props.userNickName === null);
-        console.log(isUserNick);
         const loginTab =
             ((localStorage.getItem('loginToken') === null) && (sessionStorage.getItem('loginToken') === null) && isUserNick ? 
                 (<div className="header-signup-and-login">

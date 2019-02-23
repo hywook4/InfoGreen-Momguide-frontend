@@ -10,7 +10,8 @@ export default (state=initialState, action) => {
                 userNickName: action.info.data.nickName,
                 userPhoto: action.info.data.photoUrl,
                 memberBirthYear: action.info.data.memberBirthYear,
-                userGender: action.info.data.gender
+                userGender: action.info.data.gender,
+                childBirthYear: action.info.data.childBirthYear
             };
         case types.LOGOUT:
             return {

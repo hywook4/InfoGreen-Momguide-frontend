@@ -1,6 +1,7 @@
 import React from 'react';
 import './MyProducts.css';
-
+import axios from 'axios';
+import TokenUtils from '../../../../../util/TokenUtil';
 
 const appendText={
     ingredient:{icon:require('../../../../../assets/images/ingredient_open.png'),text:'성분 공개'},
@@ -11,23 +12,14 @@ const appendText={
 
 export class MyProductCard extends React.Component{
 
-    state = ({
-        mainCategory: "",
-        check: false,
-        index: 0
-    })
-
-
-    componentDidMount=()=>{
-        this.setState({
+    constructor(props) {
+        super(props);
+        this.state = ({
             mainCategory: this.props.mainCategory,
-            check: this.props.check,
-            index: this.props.index
-        })
-        console.log(this.props.mainCategory);
-        console.log(this.props.index);
-        console.log(this.props.check);
-    };
+            check: false,
+            index: this.props.index + 1
+        });
+    }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if(nextProps.check !== prevState.check){
@@ -36,9 +28,42 @@ export class MyProductCard extends React.Component{
         return null;
     }
 
+    deleteLivingProduct = () => {
+        const token = TokenUtils.getLoginToken();
+        axios({
+            method: 'delete',
+            url: process.env.API_URL + '/api/auth/cancelHomeLiving',
+            headers: TokenUtils.getTokenRequestHeader(token),
+            data: {
+                productIndex: this.props.data.index
+            }
+        }).then(() => {
+            this.props.reRenderPage(this.props.currentPage);
+        })
+    }
+
+    deleteCosmeticProduct = () => {
+        const token = TokenUtils.getLoginToken();
+        
+        axios({
+            method: 'delete',
+            url: process.env.API_URL + '/api/auth/cancelHomeCosmetic',
+            headers: TokenUtils.getTokenRequestHeader(token),
+            data: {
+                productIndex: this.props.data.index
+            }
+        }).then(() => {
+            this.props.reRenderPage(this.props.currentPage);
+        })
+    }
+
     deleteProduct = () => {
-        console.log("delete product " + this.props.data.name);
-        //TODO : 해당하는 제품 삭제 요청 보내긴
+        if(this.props.mainCategory === 'cosmetic') {
+            console.log('cosmetic delete');
+            this.deleteCosmeticProduct();
+        } else if(this.props.mainCategory === 'living') {
+            this.deleteLivingProduct();
+        }
     }
 
     changeCheck = (e) => {
@@ -47,11 +72,12 @@ export class MyProductCard extends React.Component{
 
     render(){
         const data = this.props.data;
-
+        console.log(data);
+        // console.log(this.state.index);
         return(
             <div className="myproduct-card">
                 <div className="myproduct-card-checkbox">
-                    <input type="checkbox" onChange={this.changeCheck} checked={this.state.check ? "checked" : ""}/>
+                    <input type="checkbox" onChange={this.changeCheck} />
                 </div>
                 <div className="myproduct-card-image">
                     <div className="myproduct-img">
@@ -99,9 +125,9 @@ export class MyProductCard extends React.Component{
                     })}
                 </div>
                 <div className="myproduct-card-delete">
-                    <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>
+                    <div className="cancel-button" data-toggle="modal" data-target={"#deletemodal" + this.state.index}>삭제하기</div>
                 </div>
-                <div className="modal fade" id="deleteModal" role="dialog">
+                <div className="modal fade" id={"deletemodal" + this.state.index} role="dialog">
                     <div className="modal-dialog modal-sm">
                         <div className="modal-content">
                             <div className="modal-body">

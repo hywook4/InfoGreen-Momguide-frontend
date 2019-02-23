@@ -54,116 +54,118 @@ class MyProfile extends React.Component{
 
     calculateChildAge = (year) => {
         const childAge = this.calculateAge(year);
-        console.log(childAge);
-        if(year === undefined) {
+        if(year === 0) {
             return ('자녀 없음');
         } else {
+            if(year === undefined) {
+                return ('');
+            }
             return ('자녀 ' + childAge + '세');
         }
     }
     render(){
         /* dummy data */
-        const dummyFollower = [
-            {
-                nickName: "팔로워1",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로워2",
-                age: 23,
-                sex: "남자",
-                childAge: 3
-            },
-            {
-                nickName: "팔로워3",
-                age: 13,
-                sex: "여자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로워4",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-        ]
+        // const dummyFollower = [
+        //     {
+        //         nickName: "팔로워1",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로워2",
+        //         age: 23,
+        //         sex: "남자",
+        //         childAge: 3
+        //     },
+        //     {
+        //         nickName: "팔로워3",
+        //         age: 13,
+        //         sex: "여자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로워4",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        // ]
 
-        const dummyFollowee = [
-            {
-                nickName: "팔로잉1",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉2",
-                age: 23,
-                sex: "남자",
-                childAge: 3
-            },
-            {
-                nickName: "팔로잉3",
-                age: 13,
-                sex: "여자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉4",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉5",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉6",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉1",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉2",
-                age: 23,
-                sex: "남자",
-                childAge: 3
-            },
-            {
-                nickName: "팔로잉3",
-                age: 13,
-                sex: "여자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉4",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉5",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉6",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-        ]
+        // const dummyFollowee = [
+        //     {
+        //         nickName: "팔로잉1",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉2",
+        //         age: 23,
+        //         sex: "남자",
+        //         childAge: 3
+        //     },
+        //     {
+        //         nickName: "팔로잉3",
+        //         age: 13,
+        //         sex: "여자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉4",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉5",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉6",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉1",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉2",
+        //         age: 23,
+        //         sex: "남자",
+        //         childAge: 3
+        //     },
+        //     {
+        //         nickName: "팔로잉3",
+        //         age: 13,
+        //         sex: "여자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉4",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉5",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        //     {
+        //         nickName: "팔로잉6",
+        //         age: 123,
+        //         sex: "남자",
+        //         childAge: 5
+        //     },
+        // ]
 
         return(
             <React.Fragment>
@@ -176,7 +178,7 @@ class MyProfile extends React.Component{
                         <div className="profile-info">{this.calculateChildAge(this.props.childBirthYear)}</div>
                     </div>
                 </div>
-                <div className="follow-container">
+                {/* <div className="follow-container">
                     <div className="follow-tab-box">
                         <div className="follow-tabs">
                             <div className={`tab ${this.state.tab === "팔로워" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로워")}>
@@ -197,7 +199,7 @@ class MyProfile extends React.Component{
 
                         <div className="more-follow-card" onClick={this.addCards}>더보기</div>
                     </div>
-                </div>
+                </div> */}
             </React.Fragment>
             
         )
