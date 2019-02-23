@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './EventDetail.css';
+import {CommentCard} from '../../../common/CommentCard/CommentCard';
+import REPORT_ICON from '../../../../assets/images/report.png';
 
 export class EventDetail extends React.Component {
     constructor(props) {
@@ -20,13 +22,27 @@ export class EventDetail extends React.Component {
 
             ],
             likes: 10,
-            loggedIn: true
+            loggedIn: true,
+            commentPage: 1,
+            totalCommentPage: 2
         };
     }
 
+    loadNextPage = () => {
+        console.log("more page");
+        this.setState({
+            commentPage: this.state.commentPage
+        })
+        //TODO : 기존 리스트에 새로받은 값들 추가해주기
+    };
 
     
     render() {
+        const moreButton = (
+            <button className="comment-more-button" onClick={() => {this.loadNextPage()}}>
+                더보기
+            </button>
+        );
 
         return (
             <div className="event-detail-container">
@@ -56,7 +72,8 @@ export class EventDetail extends React.Component {
                 </div>
                 <div className="event-detail-button-box">
                     {
-                        this.state.loggedIn ? <button type="button" className="event-detail-button" >신청하기</button> :
+                        this.state.loggedIn ? 
+                        <button type="button" className="event-detail-button" >신청하기</button> :
                         <button type="button" className="event-detail-button" >로그인</button>
                     }
                 </div>
@@ -80,24 +97,9 @@ export class EventDetail extends React.Component {
                         <div className="comment-sort-selected" style={{marginRight: '20px'}}>최신순</div>
                     </div>
                     <div className="comment-list-box">
-                        <div className="comment-card">
-                            <div className="comment-profile-img">
-                                <img src='https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg' alt="profile-pic"/>
-                            </div>
-                            <div className="comment-content">
-                                <div className="comment-user-profile">
-                                    <p>닉네임들어감</p>
-                                    <div>성별</div>
-                                    <div>20대</div>
-                                    <div>자녀5~7세</div>
-                                    <span>2018.02.03 12:00</span>
-                                </div>
-                                <textarea className="comment-text" maxLength="300" value="sadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsfsadkfj;salkjdf;lsakjdf;lsf"/>
-                                <p className="comment-subcomment-fold">댓글 접기</p>
-                            </div>
-                            <div className="comment-icon-buttons">
-                            </div>
-                        </div>
+                        <CommentCard/>
+
+                        {this.state.commentPage < this.state.totalCommentPage ? moreButton : null}
                     </div>
                 
                 </div>
