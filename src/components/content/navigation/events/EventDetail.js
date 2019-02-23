@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './EventDetail.css';
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
-import REPORT_ICON from '../../../../assets/images/report.png';
 
 export class EventDetail extends React.Component {
     constructor(props) {
@@ -19,13 +18,65 @@ export class EventDetail extends React.Component {
                 end: false
             },
             comments: [
-
             ],
             likes: 10,
             loggedIn: true,
             commentPage: 1,
             totalCommentPage: 2
         };
+    }
+
+    componentDidMount = () => {
+        const dummy = [
+            {
+                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                name: '정현욱',
+                sex: '남자',
+                age: '21',
+                childAge: '53',
+                date: '2018.02.03 12:00',
+                content: 'ㅇㄻㄴㅇㄹ',
+                likes: 10,
+                dislikes: 10
+            },
+            {
+                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                name: '송재우',
+                sex: '여자',
+                age: '23',
+                childAge: '12',
+                date: '2018.02.03 12:00',
+                content: '20cm',
+                likes: 20,
+                dislikes: 20
+            },
+            {
+                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                name: '에부부',
+                sex: '남자',
+                age: '23',
+                childAge: '53',
+                date: '2018.02.03 12:00',
+                content: '와 에부부 정말 멋지네요',
+                likes: 10,
+                dislikes: 5
+            },
+            {
+                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                name: '에부부',
+                sex: '남자',
+                age: '23',
+                childAge: '53',
+                date: '2018.02.03 12:00',
+                content: '와 에부부 정말 멋지네요',
+                likes: 10,
+                dislikes: 5
+            }
+        ]
+        
+        this.setState({
+            comments: dummy
+        })
     }
 
     loadNextPage = () => {
@@ -78,6 +129,7 @@ export class EventDetail extends React.Component {
                     }
                 </div>
                 <div className="comments-container">
+                    {/*TODO 로그인 안했을 시에 댓글 쓰는 창 지우기*/}
                     <div className="comment-write-box">
                         <div className="comment-writer-profile">
                             <img src='https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg' alt="profile-pic"/>
@@ -96,9 +148,16 @@ export class EventDetail extends React.Component {
                         <div className="comment-sort">추천수</div>
                         <div className="comment-sort-selected" style={{marginRight: '20px'}}>최신순</div>
                     </div>
-                    <div className="comment-list-box">
-                        <CommentCard/>
 
+                    
+                    <div className="comment-list-box">
+                        {
+                            this.state.comments.map((data, index)=>{
+                                return (
+                                    <CommentCard data={data} key={index}/>
+                                )
+                            })
+                        }
                         {this.state.commentPage < this.state.totalCommentPage ? moreButton : null}
                     </div>
                 

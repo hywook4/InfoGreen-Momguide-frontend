@@ -332,3 +332,39 @@ button.comment-write-button{
 .comment-more-button:focus, .comment-more-button:active{
     outline: none;
 }
+
+.subcomment-more-button{
+    font-size: 13px;
+    width: 100%;
+    height: 50px;
+    background-color: lightgray;
+    border: none;
+    color: gray;
+}
+
+.subcomment-more-button i{
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.subcomment-more-button:focus, .subcomment-more-button:active{
+    outline: none;
+}
+
+.subcomment-close-button{
+    font-size: 13px;
+    width: 100%;
+    height: 50px;
+    background-color: lightgray;
+    border: 1px solid black;
+    color: gray;
+}
+
+.subcomment-close-button:focus, .subcomment-close-button:active{
+    outline: none;
+}
+
+.subcomment-close-button i{
+    font-size: 15px;
+    font-weight: 900;
+}
