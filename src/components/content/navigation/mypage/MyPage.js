@@ -2,10 +2,10 @@ import React from 'react';
 import './MyPage.css';
 
 import { MyPageMenu } from './MyPageMenu';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import {Route, Switch} from "react-router-dom"
 
-import { MyProfile } from './mypagecontent/MyProfile';
 import ProfileModify from './mypagecontent/ProfileModify';
+import MyProfile from './mypagecontent/MyProfile';
 
 import { MyHouseProduct }  from './mypagecontent/MyHouseProduct'
 import { MyDibProduct } from './mypagecontent/MyDibProduct'
@@ -44,7 +44,6 @@ export class MyPage extends React.Component{
                             </div>
                             <div className="content-body">
                                 <Switch>
-                                    <Route exact path="/mypage" component={MyProfile} />
                                     <Route path="/mypage/my-profile" component={MyProfile} /> 
                                     <Route path="/mypage/profile-modify" component={ProfileModify} />
                                     <Route path="/mypage/profile-modify-password-check" component={ProfileModifyPasswordCheck} />

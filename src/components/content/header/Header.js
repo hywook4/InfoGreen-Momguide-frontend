@@ -22,12 +22,16 @@ class Header extends Component {
                     </li>
                 </div>) :
                 (<div className="profile-tab">
-                    <li className="header-user-profile">
-                        <img src={this.props.userPhotoUrl} alt="" id="header-profile" />
-                    </li>
-                    <li className="header-user-nickname">
-                        {this.props.userNickName}
-                    </li>
+                    <Link to="/mypage/my-profile">
+                        <li className="header-user-profile">
+                            <img src={this.props.userPhotoUrl} alt="" id="header-profile" />
+                        </li>
+                    </Link>
+                    <Link to="/mypage/my-profile">
+                        <li className="header-user-nickname">
+                                {this.props.userNickName}
+                        </li>
+                    </Link>
                     <li className="header-user-alarm">
                         <img src={USER_ALARM} alt="" id="header-alarm" />
                     </li>
