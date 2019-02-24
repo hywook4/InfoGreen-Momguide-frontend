@@ -45,17 +45,29 @@ export class ProdSpec extends React.Component{
         modalData:{},
         aboutTab: true,
         reviewTab: false,
-        productData: null
+        productData: null,
+        rateAverage: 0
     };
 
     componentDidMount = async ()=> {
         const id = this.props.match.params.id;
         const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
 
-        let res = await axios.get(`${process.env.API_URL}/api/product/details?category=${category}&productId=${id}`);
+        const res = await axios.get(`${process.env.API_URL}/api/product/details?category=${category}&productId=${id}`);
+        
+        let rateAverage = 0;
+       
+        if(res.data.product.rateCount === 0){
+            rateAverage = 0
+        } else{
+            rateAverage = Math.round(res.data.product.rateSum/res.data.product.rateCount*100)/100;
+        }
+
+        console.log(rateAverage);
         this.setState({
             productData: res.data.product,
-            ingredientList: res.data.ingredient
+            ingredientList: res.data.ingredient,
+            rateAverage: rateAverage
         });
     };
 
@@ -296,8 +308,8 @@ export class ProdSpec extends React.Component{
                             <h1>{productData.name}</h1>
                         </div>
                         <div className="rating-info"> {/* rating stars and score */}
-                            <RatingRow config={{selected:Math.round(productData.rateSum/productData.rateCount*100)/100,hideSubHeading:true,size:'22px',alignStart:true,count:productData.rateCount}}/>
-                            <div className="rating-score">{Math.round(productData.rateSum/productData.rateCount*100)/100}</div>
+                            <RatingRow config={{selected:this.state.rateAverage, hideSubHeading:true,size:'22px',alignStart:true,count:productData.rateCount}}/>
+                            <div className="rating-score">{this.state.rateAverage}</div>
                         </div>
 
                         <hr style={{color: 'gray'}}/>

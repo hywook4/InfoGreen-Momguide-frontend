@@ -14,15 +14,19 @@ const appendText={
 }
 
 export class CategoryImg extends React.Component{
-    state={details:{}};
+    state={
+        rateAverage: 0
+    };
     componentDidMount = async ()=>{
-        this._ismounted = true;
+        let rateAverage = 0;
+        if(this.props.data.rateCount === 0){
 
-        const params = new URLSearchParams();
-        params.append("name", this.props.name);
-        let resp = await Axios.post(`${config.CLIENT_SERVER}/chemical/item_info.php`, params);
-            this._ismounted && this.setState({details: resp.data}) 
-            // Above USAGE OF _ismounted probable ANTI pattern, should move to flux implementation asap after the demo
+        } else{
+            rateAverage = parseFloat(this.props.data.rateSum / this.props.data.rateCount).toFixed(2);
+        }
+        this.setState({
+            rateAverage: rateAverage
+        })
     };
 
     componentWillUnmount=()=>{
@@ -31,7 +35,6 @@ export class CategoryImg extends React.Component{
 
     render=() =>{
         let props = this.props.data;
-        console.log(props);
         return(
             <div className="ctgy-inrimg-div loadedItem">
                 <Link to={`/product-details/${props.category}/${props.index}`}>
@@ -89,8 +92,8 @@ export class CategoryImg extends React.Component{
                         </div>
                         <div className="card-star">
                             <ProductRate config={{
-                                selected: parseFloat(props.rateSum / props.rateCount).toFixed(2),
-                                rate: parseFloat(props.rateSum / props.rateCount).toFixed(2),
+                                selected: this.state.rateAverage,
+                                rate: this.state.rateAverage,
                                 participate: props.rateCount // participated people number goes here
                             }}
                             />
