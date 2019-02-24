@@ -5,7 +5,7 @@ import { MyPageMenu } from './MyPageMenu';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 
 import { MyProfile } from './mypagecontent/MyProfile';
-import { ProfileModify } from './mypagecontent/ProfileModify';
+import ProfileModify from './mypagecontent/ProfileModify';
 
 import { MyHouseProduct }  from './mypagecontent/MyHouseProduct'
 import { MyDibProduct } from './mypagecontent/MyDibProduct'
@@ -15,16 +15,12 @@ import { MyIngredientRequest } from './mypagecontent/MyIngredientRequest'
 import { MyHelpDetail } from './mypagecontent/MyHelpDetail'
 import { MyIngredientDetail } from './mypagecontent/MyIngredientDetail'
 import { MyReview } from './mypagecontent/MyReview';
-
+import { ProfileModifyPasswordCheck } from './mypagecontent/ProfileModifyPasswordCheck';
 
 export class MyPage extends React.Component{
 
     state = {
         currentPage: "내 프로필"
-    };
-
-   
-    componentDidMount=()=>{
     };
 
     changeHeader = (head) => {
@@ -50,8 +46,9 @@ export class MyPage extends React.Component{
                                 <Switch>
                                     <Route exact path="/mypage" component={MyProfile} />
                                     <Route path="/mypage/my-profile" component={MyProfile} /> 
-                                    <Route path="/mypage/profile-modify" component={ProfileModify} /> 
-                                    <Route path="/mypage/my-house-products" component={MyHouseProduct} /> 
+                                    <Route path="/mypage/profile-modify" component={ProfileModify} />
+                                    <Route path="/mypage/profile-modify-password-check" component={ProfileModifyPasswordCheck} />
+                                    <Route path="/mypage/my-house-products" component={MyHouseProduct} />
                                     <Route path="/mypage/dib-products" component={MyDibProduct} /> 
                                     <Route exact path="/mypage/my-review" component={MyReview} />
                                     <Route path="/mypage/ingredient-open-request" component={OpenRequest} /> 

@@ -8,6 +8,7 @@ import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
 import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
+import {ResetPassword} from './content/resetPassword/ResetPassword';
 import {Signup} from './content/navigation/signup/Signup';
 import {SignupOk} from './content/navigation/signup/SignupOk';
 import {TipEvent} from './content/tipEvent/TipEvent';
@@ -65,6 +66,7 @@ export class MainPage extends Component {
                                             <Route path="/request/contact-us" component={ContactUs} />
                                             <Route path="/request/loggedin" component={LoggedIn} />
                                             <Route path="/findpassword" component={FindPassword} />
+                                            <Route path="/passwordReset" component={ResetPassword} />
                                             <Route path="/mypage" component={MyPage} />
                                         </Switch>
                                     </div>

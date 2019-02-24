@@ -70,7 +70,7 @@ export class MyPageMenu extends React.Component{
                 menu:'내 프로필'
             },
             {
-                path:'/profile-modify',
+                path:'/profile-modify-password-check',
                 menu:'프로필 수정'
             }
         ]

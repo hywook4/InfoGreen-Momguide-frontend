@@ -1,28 +1,84 @@
 import React from 'react';
 import './ContactUs.css';
 import '../../../product/prodSpec/ProdSpec.css';
+import { TokenUtil } from '../../../../../util';
+import axios from 'axios';
+import history from '../../../../../history/history';
 
 export class ContactUs extends React.Component{
 
     state = {
-        content: "contact-content",
-        file: "contact-file"
-    }
+        content: "",
+        imageFile: null
+    };
 
+    submitRequest = async () => {
+        const { content, imageFile} = this.state;
 
-    submitRequest = (e) => {
-        let content = document.getElementById(this.state.content).value;
-        let file = document.getElementById(this.state.file).value; //TODO: 파일을 받는건지 확인
-        //TODO : 유효성 검사 및 파일, 내용 전송하기, 유저의 정보도 같이 포함 
-        console.log(content);
-        console.log(file);
-    }
+        if(content === '') {
+            alert('내용을 입력해주세요.');
+            return;
+        }
+
+        if(imageFile) {
+            const nameSplitedArray = imageFile.name.split('.');
+            const extension = nameSplitedArray[nameSplitedArray.length - 1];
+            if (!(extension === 'jpeg' || extension === 'jpg' || extension === 'png' || extension === 'gif')) {
+                alert('jpg, png, gif파일만 업로드 가능합니다.');
+                return;
+            }
+        }
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("로그인 한 사용자만 사용가능합니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+        const formData = new FormData();
+        formData.append('questionContent', content);
+
+        if(imageFile !== null)
+            formData.append('questionFile',  imageFile);
+
+        try {
+            await axios({
+                method: 'post',
+                url: `${process.env.API_URL}/api/ask/questionOneToOne`,
+                headers: headers,
+                data: formData
+            });
+            alert('정상적으로 요청되었습니다.');
+            history.push('/request/loggedIn');
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        } catch(err) {
+            if(!err.response.data) {
+                alert("알 수 없는 에러가 발생하였습니다. 관리자에게 문의 부탁드립니다.");
+                return;
+            }
+
+            const message = err.response.data.error;
+
+            if(message === 'invalid file(image only)') {
+                alert("이미지 파일만 전송 가능합니다.");
+            } else {
+                alert("알 수 없는 에러가 발생하였습니다. 관리자에게 문의 부탁드립니다.");
+            }
+        }
+    };
+
+    onChange = (key, value) => {
+        const newObj = {};
+        newObj[key] = value;
+
+        this.setState(newObj);
+    };
 
     render=()=>{
         return(
             <div className="contactus-container">
                 <div className="contactus-page">
-                    <div className="banner"></div>
+                    <div className="banner"/>
                     <div className="contactus-description">
                         <h6>오류 및 버그신고, 기능 개선요청, 제품 정보 수정요청, 이벤트/제휴/광고 문의, 기타 서비스 관련 문의를 하실 수 있습니다.</h6>
                     </div>
@@ -36,7 +92,9 @@ export class ContactUs extends React.Component{
                     <div className="contactus-title">
                         <h4>1. 추가 문의 및 요청사항</h4>
                     </div>
-                    <textarea className="contactus-content" placeholder="내용을 입력해 주세요." id="contact-content"/>
+                    <textarea className="contactus-content" placeholder="내용을 입력해 주세요." id="contact-content"
+                              value={this.state.content} onChange={(e)=>this.onChange('content', e.target.value)}
+                    />
                             
 
                     <div className="contactus-title">
@@ -44,12 +102,23 @@ export class ContactUs extends React.Component{
                     </div>
 
                     <div className="contactus-file-box">
-                        <input className="contactus-file" type="file" id="contact-file"/>
+                        <input className="contactus-file-invisible" type="file" name="contactus-image"
+                               onChange={(e) => e.target.files.length === 0 ? this.onChange('imageFile', null) : this.onChange('imageFile', e.target.files[0])}
+                               id="contactus-image-upload"
+                        />
+                        <label htmlFor="contactus-image-upload" className="contactus-upload-image-label">파일 선택</label>
+                        <span>
+                            {this.state.imageFile === null ? <span className="contactus-upload-text">선택한 파일 없음</span> : null}
+                            {this.state.imageFile ?(
+                                <span className="contactus-upload-text">
+                                    {this.state.imageFile.name}
+                                    <i className="fas fa-times contactus-upload-red-x" onClick={() => this.onChange('imageFile', null)} />
+                                </span>) : null
+                            }
+                        </span>
                     </div>
 
-                    <button type="button" className="contactus-button" onClick={this.submitRequest}>문의하기</button>
-                    
-                
+                    <button type="button" className="contactus-button" onClick={() => this.submitRequest()}>문의하기</button>
                 </div>
             </div>
         )

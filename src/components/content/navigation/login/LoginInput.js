@@ -19,10 +19,9 @@ class LoginInput extends Component {
             email: localStorage.getItem('userEmail'),
             password: '',
             keepLogin: false,
-            saveId: false
+            saveId: localStorage.getItem('userEmail') ? true : false
         }
     }
-
 
     handleEmailChange = (e) => {
         const {value} = e.target;
@@ -65,6 +64,12 @@ class LoginInput extends Component {
             saveId: value
         });
     };
+
+    handleKeyPress = (e) => {
+        if(e.key === 'Enter') {
+            this.handleLoginClick();
+        }
+    }
 
     handleLoginClick = (e) => {
 
@@ -111,12 +116,11 @@ class LoginInput extends Component {
                 alert('이메일과 비밀번호를 입력해주세요.');
                 return;
             } else if(err.response.status === 424) {
-                if(err.response.data.error === 'hash compilation failed') {
-                    alert('hash compilation failed');
-                    return;
-                } else if (err.response.data.error === 'no member') {
+                if (err.response.data.error === 'no member') {
                     alert('없는 계정입니다. 이메일을 다시 확인해주세요.');
                     return;
+                } else {
+                    alert('알 수 없는 에러가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
                 }
             } else if (err.response.status === 403) {
                 alert('비밀번호를 다시 확인해주세요.');
@@ -126,6 +130,7 @@ class LoginInput extends Component {
     }
 
     render() {
+        console.log(this.state.saveId);
         if(this.props.isLogin) {
             history.push('/');
         }
@@ -140,18 +145,19 @@ class LoginInput extends Component {
             handlePwChange,
             handleKeepLoginCheck,
             handleLoginClick,
-            handleSaveEmailCheck
+            handleSaveEmailCheck,
+            handleKeyPress
         } = this;
 
         return (
             <div className="logininput-login-part">
                 <div className="logininput-id" >
                     <input id="emailinput" type="text" defaultValue={emailDefault} className="logininput-input"
-                           placeholder="아이디를 입력하세요." onChange={handleEmailChange}/>
+                           placeholder="아이디를 입력하세요." onChange={handleEmailChange} onKeyPress={handleKeyPress}/>
                 </div>
                 <div className="logininput-password">
                     <input type="password" placeholder="비밀번호를 입력하세요." className="logininput-input"
-                           onChange={handlePwChange}/>
+                           onChange={handlePwChange} onKeyPress={handleKeyPress}/>
                 </div>
                 <div>
                     <div className="logininput-login-options">
@@ -164,7 +170,7 @@ class LoginInput extends Component {
                     </div>
                     <div className="logininput-login-options">
                         <div className="logininput-save-id-box">
-                            <input type="checkbox" id="save" onClick={handleSaveEmailCheck}/>
+                            <input type="checkbox" id="save" defaultChecked={this.state.saveId} onClick={handleSaveEmailCheck}/>
                         </div>
                         <label htmlFor="save" className="logininput-save-id-text">
                             아이디 저장
