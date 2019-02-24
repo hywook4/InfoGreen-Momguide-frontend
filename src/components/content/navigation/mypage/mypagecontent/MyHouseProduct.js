@@ -205,7 +205,7 @@ export class MyHouseProduct extends React.Component{
         if(currentPage + op > 0 && currentPage + op <= this.state.maxPage){
             currentPage += op;
         }
-
+        this.changePage(e, currentPage);
         this.setState({
             currentPage: currentPage
         })
