@@ -1,7 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './EventDetail.css';
+import history from '../../../../history/history'
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
+
+
+const user = {
+    index: 1,
+    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+    name: '테스트',
+    sex: '남자',
+    age: '23',
+    childAge: '1',
+    additionalProfile: true
+}
 
 export class EventDetail extends React.Component {
     constructor(props) {
@@ -9,6 +21,7 @@ export class EventDetail extends React.Component {
 
         // TODO
         this.state = {
+            user: user,
             event: {
                 image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 title: '뿌요뿌요',
@@ -31,17 +44,21 @@ export class EventDetail extends React.Component {
     componentDidMount = () => {
         const dummy = [
             {
+                index: 1,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '정현욱',
+                name: '테스트',
                 sex: '남자',
-                age: '21',
-                childAge: '53',
+                age: '23',
+                childAge: '1',
                 date: '2018.02.03 12:00',
                 content: 'ㅇㄻㄴㅇㄹ',
                 likes: 10,
-                dislikes: 10
+                dislikes: 10,
+                likePressed: true,
+                dislikePressed: false
             },
             {
+                index: 2,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '송재우',
                 sex: '여자',
@@ -50,9 +67,12 @@ export class EventDetail extends React.Component {
                 date: '2018.02.03 12:00',
                 content: '20cm',
                 likes: 20,
-                dislikes: 20
+                dislikes: 20,
+                likePressed: false,
+                dislikePressed: true
             },
             {
+                index: 3,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '에부부',
                 sex: '남자',
@@ -61,9 +81,12 @@ export class EventDetail extends React.Component {
                 date: '2018.02.03 12:00',
                 content: '와 에부부 정말 멋지네요',
                 likes: 10,
-                dislikes: 5
+                dislikes: 5,
+                likePressed: false,
+                dislikePressed: false
             },
             {
+                index: 4,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '에부부',
                 sex: '남자',
@@ -72,7 +95,9 @@ export class EventDetail extends React.Component {
                 date: '2018.02.03 12:00',
                 content: '와 에부부 정말 멋지네요',
                 likes: 10,
-                dislikes: 5
+                dislikes: 5,
+                likePressed: true,
+                dislikePressed: true
             }
         ]
         
@@ -106,8 +131,18 @@ export class EventDetail extends React.Component {
         })
     }
 
+    toProfileModify = () => {
+        history.push(`/mypage/profile-modify`);
+    }
+
     onApply = () => {
-        console.log("이벤트 신청하기");
+        //정보 수집이 안되어있는경우는 신청하지 않기 
+        if(this.state.user.additionalProfile){
+            console.log("이벤트 신청 성공");
+        } else{
+            console.log("추가 정보 수집하고와라");
+        }
+
     }
     
     render() {
@@ -146,7 +181,8 @@ export class EventDetail extends React.Component {
                 <div className="event-detail-button-box">
                     {
                         this.state.loggedIn ? 
-                        <button type="button" className="event-detail-button" onClick={this.onApply}>신청하기</button> :
+                        <button type="button" className="event-detail-button" data-toggle="modal" 
+                        data-target={this.state.user.additionalProfile ? "#applyEvent" : "#additionalData"} onClick={this.onApply}>신청하기</button> :
                         <button type="button" className="event-detail-button" >로그인</button>
                     }
                 </div>
@@ -155,10 +191,10 @@ export class EventDetail extends React.Component {
                     <div className="comment-write-box">
                         <div className="comment-writer-profile">
                             <img src='https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg' alt="profile-pic"/>
-                            <p>닉네임</p>
-                            <div>여자</div>
-                            <div>25세</div>
-                            <div>자녀 7세</div>
+                            <p>{this.state.user.name}</p>
+                            <div>{this.state.user.sex}</div>
+                            <div>{this.state.user.age}세</div>
+                            <div>자녀{this.state.user.childAge}세</div>
                         </div>
                         <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" onChange={this.changeComment}/>
                         <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
@@ -171,7 +207,6 @@ export class EventDetail extends React.Component {
                         <div className={this.state.sortBy ==="최신순" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("최신순")}} style={{marginRight: '20px'}}>최신순</div>
                     </div>
 
-
                     <div className="comment-list-box">
                         {
                             this.state.comments.map((data, index)=>{
@@ -182,7 +217,43 @@ export class EventDetail extends React.Component {
                         }
                         {this.state.commentPage < this.state.totalCommentPage ? moreButton : null}
                     </div>
-                
+
+                    <div className="modal fade" id="applyEvent" role="dialog">
+                        <div className="modal-dialog modal-sm">
+                            <div className="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">이벤트 신청</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div className="modal-body">
+                                    <h6 className="event-apply-confirm">성공적으로 신청되었습니다!</h6>
+                                    <div className="modal-button-center">
+                                        <button type="button" className="event-confirm-button btn-default" data-dismiss="modal">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="modal fade" id="additionalData" role="dialog">
+                        <div className="modal-dialog modal-sm">
+                            <div className="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title event-apply-header">이벤트 신청</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div className="modal-body">
+                                    <p className="event-apply-need">수집정보가 입력되어있지 않습니다. 
+                                    이벤트 참여를 위해서는 수집정보가 필요합니다.</p>
+                                    <div className="modal-button-center">
+                                        <button type="button" className="event-confirm-button btn-default" data-dismiss="modal"
+                                        onClick={this.toProfileModify}>수집정보 입력하기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         )

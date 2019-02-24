@@ -2,25 +2,41 @@ import React from 'react';
 import './Comment.css';
 import REPORT_ICON from '../../../assets/images/report.png';
 
+import { SubcommentCard } from './SubcommentCard';
+
+
+const user = {
+    index: 1,
+    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+    name: '테스트',
+    sex: '남자',
+    age: '23',
+    childAge: '1',
+}
 export class CommentCard extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            user: user,
             profile: props.data,
             subcomments : [
                 {
+                    index: 1,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                    name: 'ㅇㄹㅇ',
+                    name: '테스트',
                     sex: '남자',
                     age: '23',
-                    childAge: '53',
+                    childAge: '1',      
                     date: '2018.02.03 12:00',
                     content: '와 에 정지네요',
                     likes: 5,
-                    dislikes: 5
+                    dislikes: 5,
+                    likePressed: true,
+                    dislikePressed: false
                 },
                 {
+                    index: 2,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '부부',
                     sex: '남자',
@@ -29,9 +45,12 @@ export class CommentCard extends React.Component {
                     date: '2018.02.03 12:00',
                     content: '와',
                     likes: 10,
-                    dislikes: 5
+                    dislikes: 5,
+                    likePressed: true,
+                    dislikePressed: true
                 },
                 {
+                    index: 3,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '234부',
                     sex: '남자',
@@ -40,9 +59,12 @@ export class CommentCard extends React.Component {
                     date: '2018.02.03 12:00',
                     content: '와네요',
                     likes: 10,
-                    dislikes: 5
+                    dislikes: 5,
+                    likePressed: false,
+                    dislikePressed: false
                 },
                 {
+                    index: 4,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '162153',
                     sex: '남자',
@@ -51,19 +73,34 @@ export class CommentCard extends React.Component {
                     date: '2018.02.03 12:00',
                     content: '와정말 멋지네요',
                     likes: 10,
-                    dislikes: 5
+                    dislikes: 5,
+                    likePressed: true,
+                    dislikePressed: true
+                },
+                {
+                    index: 1,
+                    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                    name: '테스트',
+                    sex: '남자',
+                    age: '23',
+                    childAge: '1',
+                    date: '2018.02.03 12:00',
+                    content: '하.....',
+                    likes: 5,
+                    dislikes: 5,
+                    likePressed: true,
+                    dislikePressed: false
                 },
             ],
             totalSubcommentPage: 5,
             subcommentPage: 1,
             subcommentOpen: false,
-            mySubcomment: ""
+            mySubcomment: "",
         }
     }
 
 
     foldSubcomment = () => {
-        console.log("asdf");
         this.setState({
             subcommentOpen: !this.state.subcommentOpen
         })
@@ -95,33 +132,14 @@ export class CommentCard extends React.Component {
                 더보기 <i className="fa fa-angle-down"/>
             </button>
         )
+        
+        const liked = { color: "#32b8a4"}
+        const disliked = {color: "red"}
 
         const cards = (
             this.state.subcomments.map((data, index)=>{
                 return (
-                    <div className="subcomment-card" key={index}>
-                        <div className="subcomment-content">
-                            <div className="subcomment-top">
-                                <p>{data.name}</p>
-                                <div>{data.sex}</div>
-                                <div>{data.age}세</div>
-                                <div>자녀{data.childAge}세</div>
-                                <span>{data.date}</span>
-                            </div>
-                            <div className="subcomment-middle">
-                                <textarea defaultValue={data.content} disabled/>
-                            </div>
-                            <div className="subcomment-bottom">
-                                <div className="subcomment-bottom-icons">
-                                    <i className="fa fa-thumbs-o-up"/>
-                                    <p>{data.likes}</p>
-                                    <i className="fa fa-thumbs-o-down"/>
-                                    <p>{data.dislikes}</p>
-                                    <img src={REPORT_ICON} alt="reportIcon"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <SubcommentCard data={data} key={index}/>
                 )
             })
         )
@@ -148,9 +166,18 @@ export class CommentCard extends React.Component {
                     
                 </div>
                 <div className="comment-icon-buttons">
-                    <i className="fa fa-thumbs-o-up"/>
+                    <div className="comment-modify-erase">
+                        {
+                            this.state.user.index === profile.index ? 
+                            <React.Fragment>
+                                <span>&#10006;</span>
+                                <i className="fa fa-pencil"/>
+                            </React.Fragment> : null
+                        }
+                    </div>
+                    <i className="fa fa-thumbs-o-up" style={profile.likePressed ? liked : null}/>
                     <p>{profile.likes}</p>
-                    <i className="fa fa-thumbs-o-down"/>
+                    <i className="fa fa-thumbs-o-down" style={profile.dislikePressed ? disliked : null}/>
                     <p>{profile.dislikes}</p>
                     <img src={REPORT_ICON} alt="reportIcon"/>
                 </div>
