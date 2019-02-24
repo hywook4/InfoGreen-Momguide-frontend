@@ -32,31 +32,56 @@ export class MyProductCard extends React.Component{
 
     deleteLivingProduct = () => {
         const token = TokenUtils.getLoginToken();
-        axios({
-            method: 'delete',
-            url: process.env.API_URL + '/api/auth/cancelHomeLiving',
-            headers: TokenUtils.getTokenRequestHeader(token),
-            data: {
-                productIndex: this.props.data.index
-            }
-        }).then(() => {
-            this.props.reRenderPage(this.props.currentPage);
-        })
+        if(this.props.type === 'house') {
+            axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/auth/cancelHomeLiving',
+                headers: TokenUtils.getTokenRequestHeader(token),
+                data: {
+                    productIndex: this.props.data.index
+                }
+            }).then(() => {
+                this.props.reRenderPage(this.props.currentPage);
+            })
+        } else if(this.props.type === 'like') {
+            axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/auth/cancelLikeLiving',
+                headers: TokenUtils.getTokenRequestHeader(token),
+                data: {
+                    productIndex: this.props.data.index
+                }
+            }).then(() => {
+                this.props.reRenderPage(this.props.currentPage);
+            })
+        }
     }
 
     deleteCosmeticProduct = () => {
         const token = TokenUtils.getLoginToken();
-        
-        axios({
-            method: 'delete',
-            url: process.env.API_URL + '/api/auth/cancelHomeCosmetic',
-            headers: TokenUtils.getTokenRequestHeader(token),
-            data: {
-                productIndex: this.props.data.index
-            }
-        }).then(() => {
-            this.props.reRenderPage(this.props.currentPage);
-        })
+        if(this.props.type === 'house') {
+            axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/auth/cancelHomeCosmetic',
+                headers: TokenUtils.getTokenRequestHeader(token),
+                data: {
+                    productIndex: this.props.data.index
+                }
+            }).then(() => {
+                this.props.reRenderPage(this.props.currentPage);
+            })
+        } else if(this.props.type === 'like') {
+            axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/auth/cancelLikeCosmetic',
+                headers: TokenUtils.getTokenRequestHeader(token),
+                data: {
+                    productIndex: this.props.data.index
+                }
+            }).then(() => {
+                this.props.reRenderPage(this.props.currentPage);
+            })
+        }
     }
 
     deleteProduct = () => {

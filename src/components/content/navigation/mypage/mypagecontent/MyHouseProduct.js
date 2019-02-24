@@ -8,11 +8,11 @@ import TokenUtils from '../../../../../util/TokenUtil';
 export class MyHouseProduct extends React.Component{
 
     state = ({
+        type: "house",
         mainCategory: "living",
         deleteList: [ false, false, false, false, false, false, false, false, false, false ], 
         checkAll: false,
         currentPage: 1,
-        numOfProduct: 0,
         maxPage: 0,
         products: []
     });
@@ -234,7 +234,7 @@ export class MyHouseProduct extends React.Component{
                         // TODO : 현재 카테고리에 따라 알맞는 배열을 map 시키기
                         this.state.products.map((d, i)=> <MyProductCard mainCategory={this.state.mainCategory} data={d} key={i} 
                         index={i} check={this.state.deleteList[i]} changeCardCheck={this.changeCardCheck} currentPage={this.state.currentPage}
-                        reRenderPage={this.rerenderPage}/>)
+                        reRenderPage={this.rerenderPage} type={this.state.type}/>)
                         
                     }
                     <div className="myproduct-bottom">
