@@ -4,7 +4,6 @@ import config from '../../../../../config';
 import axios from 'axios';
 import { MyProductCard } from './MyProductCard'
 import TokenUtils from '../../../../../util/TokenUtil';
-import { Item } from 'semantic-ui-react';
 
 export class MyHouseProduct extends React.Component{
 
@@ -56,7 +55,8 @@ export class MyHouseProduct extends React.Component{
                 currentPage: 1,
                 mainCategory: category,
                 products: res.data.Data,
-                maxPage: res.data.totalPages
+                maxPage: res.data.totalPages,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ]
             })
         })
         .catch((err) => {
@@ -65,18 +65,22 @@ export class MyHouseProduct extends React.Component{
     }
 
     changeCheckAll = (e) => {
-        let newList;
+        let newList = [];
         if(this.state.checkAll){
-            newList = [ false, false, false, false, false, false, false, false, false, false ];
+            for(let i = 0; i < this.state.products.length; i++) {
+                newList.push(false);
+            }
             this.setState({
                 checkAll: !this.state.checkAll,
-                deleteList: newList
+                deleteList: [...newList, ...this.state.deleteList.slice(this.state.products.length)]
             })
         } else{
-            newList = [ true, true, true, true, true, true, true, true, true, true ];
+            for(let i = 0; i < this.state.products.length; i++) {
+                newList.push(true);
+            }
             this.setState({
                 checkAll: !this.state.checkAll,
-                deleteList: newList
+                deleteList: [...newList, ...this.state.deleteList.slice(this.state.products.length)]
             })
         }
     }
@@ -89,9 +93,38 @@ export class MyHouseProduct extends React.Component{
         })
     }
 
-    deleteChecked = () => {
+    deleteChecked = async () => {
+        const indexList = [];
+        const token = TokenUtils.getLoginToken();
         //TODO : deleteList에 true 되어있는 제품들 삭제하기
-        console.log("delete " + this.state.deleteList);
+        for(let i = 0; i < this.state.products.length; i++) {
+            if(this.state.deleteList[i] === true) {
+                // console.log(this.state.products[i].index);
+                indexList.push(this.state.products[i].index);
+            }
+        }
+        for(let i = 0; i < indexList.length; i++) {
+            if(this.state.mainCategory === 'cosmetic') {
+                await axios({
+                    method: 'delete',
+                    url: process.env.API_URL + '/api/auth/cancelHomeCosmetic',
+                    headers: TokenUtils.getTokenRequestHeader(token),
+                    data: {
+                        productIndex: indexList[i]
+                    }
+                });
+            } else if(this.state.mainCategory === 'living') {
+                await axios({
+                    method: 'delete',
+                    url: process.env.API_URL + '/api/auth/cancelHomeLiving',
+                    headers: TokenUtils.getTokenRequestHeader(token),
+                    data: {
+                        productIndex: indexList[i]
+                    }
+                });
+            }
+            this.rerenderPage(this.state.currentPage);
+        }
     }
 
     changePage = (e, page) => {
@@ -119,11 +152,10 @@ export class MyHouseProduct extends React.Component{
     rerenderPage = (page) => {
         const token = TokenUtils.getLoginToken();
         let query = '';
-        if(this.state.products.length === 1) {
+
+        if(this.state.products.length === 1 ||
+            this.state.products.length === this.state.deleteList.filter((item) => item === true).length) {
             page -= 1;
-            this.setState({
-                maxPage: this.state.maxPage - 1
-            })
         }
         if(this.state.mainCategory === 'cosmetic') {
             query = `?isCosmetic=true&page=${page}`;
@@ -137,8 +169,10 @@ export class MyHouseProduct extends React.Component{
         })
         .then((res) => {
             this.setState({
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
                 currentPage: page,
                 products: res.data.Data,
+                maxPage: res.data.totalPages
             })
         })
     }
@@ -178,7 +212,7 @@ export class MyHouseProduct extends React.Component{
     }
    
     render(){
-        
+        console.log(this.state.deleteList);
         return(
             <div className="myproduct-container">
                 <div className="myproduct-header">

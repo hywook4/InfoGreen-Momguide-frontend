@@ -22,6 +22,8 @@ export class MyProductCard extends React.Component{
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
+        console.log(nextProps.check);
+        console.log(prevState.check);
         if(nextProps.check !== prevState.check){
             return { check: nextProps.check };
         }
@@ -67,7 +69,7 @@ export class MyProductCard extends React.Component{
     }
 
     changeCheck = (e) => {
-        this.props.changeCardCheck(this.state.index);
+        this.props.changeCardCheck(this.state.index - 1);
     }
 
     render(){
@@ -77,7 +79,7 @@ export class MyProductCard extends React.Component{
         return(
             <div className="myproduct-card">
                 <div className="myproduct-card-checkbox">
-                    <input type="checkbox" onChange={this.changeCheck} />
+                    <input type="checkbox" onChange={this.changeCheck} checked={this.state.check}/>
                 </div>
                 <div className="myproduct-card-image">
                     <div className="myproduct-img">
