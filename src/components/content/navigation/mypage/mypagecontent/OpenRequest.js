@@ -1,44 +1,54 @@
 import React from 'react';
 import './OpenRequest.css';
 import config from '../../../../../config';
-
+import TokenUtils from '../../../../../util/TokenUtil';
+import axios from 'axios';
 import { OpenRequestCard } from './OpenRequestCard'
-
-const maxProductNum = config.MAX_LIST_NUM;
-const dummyProductNum = 100; // dummy 제품 갯수 
 
 export class OpenRequest extends React.Component{
 
     state = ({
         currentPage: 1,
-        numOfProduct: 0,
-        maxPage: 0
+        maxPage: 0,
+        products: []
     });
 
 
     componentDidMount=()=>{
-        // TODO : 성분 공개 요청 제품의 데이터를 해당 페이지에 맞게 가져오기, 총 가정제품의 수 가져오기 , maxPAge 수 계산해서 넣어주기 
-
-        let productNum = dummyProductNum; // 가정제품 갯수 넣어줄곳 
-        
-        let pageNum = 0;  // 페이지 최대 수 
-
-        if(productNum===0){
-            pageNum = 1;
-        } else if(productNum % maxProductNum === 0){
-            pageNum = Math.floor(productNum/maxProductNum);
-        } else{
-            pageNum = Math.floor(productNum/maxProductNum) + 1;
-        }
-
-        this.setState({
-            maxPage: pageNum    // 최대 페이지 수 설정
+        const token = TokenUtils.getLoginToken();
+        const query = `?page=${this.state.currentPage}`;
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/ingredOpen' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                products: res.data.Data,
+                maxPage: res.data.totalPages
+            });
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
         })
     };
 
     changePage = (e, page) => {
-        this.setState({
-            currentPage: page
+        const token = TokenUtils.getLoginToken();
+        const query = `?page=${page}`;
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/ingredOpen' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                products: res.data.Data,
+                currentPage: page
+            });
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주시기 바랍니다.');
         })
     }
 
@@ -78,64 +88,6 @@ export class OpenRequest extends React.Component{
    
     render(){
 
-        const dummyData = [
-            {
-                index: 38,
-                name: '무첨가EM가루비누',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: '',
-                permit: '',
-                eco: 'df',
-                foreignCertificate: '',
-                viewNum: 46,
-                rateCount: 56,
-                rateSum: 200,
-                includeDanger: false,
-                includeToxic: true,
-                includeCare: true,
-            },
-            {
-                index: 33,
-                name: '강청 산소계 표백제',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: 'F-A03B-O001001-A160',
-                permit: '',
-                eco: '',
-                foreignCertificate: '',
-                viewNum: 24,
-                rateCount: 34,
-                rateSum: 130,
-                includeDanger: false,
-                includeToxic: false,
-                includeCare: false,
-            },
-            {
-                index: 34,
-                name: '강청 순천연 가루비누',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: '',
-                permit: '',
-                eco: '',
-                foreignCertificate: '',
-                viewNum: 28,
-                rateCount: 5,
-                rateSum: 20,
-                includeDanger: false,
-                includeToxic: false,
-                includeCare: false,
-            }
-        ]
-
-
         return(
             <div className="openrequest-container">
                 <div className="openrequest-header">
@@ -145,7 +97,7 @@ export class OpenRequest extends React.Component{
                 <div className="openrequest-card-box">
                     {
                         // TODO : 현재 카테고리에 따라 알맞는 배열을 map 시키기
-                        dummyData.map((d, i)=> <OpenRequestCard data={d} key={i} />)
+                        this.state.products.map((d, i)=> <OpenRequestCard data={d} key={i} />)
                         
                     }
 

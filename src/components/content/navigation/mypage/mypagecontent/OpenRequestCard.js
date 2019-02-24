@@ -11,19 +11,15 @@ const appendText={
 
 export class OpenRequestCard extends React.Component{
 
-    state = ({
-
-    })
-
-
-    componentDidMount=()=>{
-
-    };
-
-
     render(){
         const data = this.props.data;
-
+        let viewName = '';
+        if(data.name.length > 26) {
+            viewName = data.name.slice(0, 26) + '...';
+        } else {
+            viewName = data.name;
+        }
+        console.log(data);
         return(
             <div className="openrequest-card">
                 <div className="openrequest-card-img">
@@ -33,7 +29,7 @@ export class OpenRequestCard extends React.Component{
                 </div>
                 <div className="openrequest-card-name">
                     <p>{data.brand}</p>
-                    <h5>{data.name}</h5>
+                    <h5>{viewName}</h5>
                 </div>
                 <div className="openrequest-card-info">
                     {Object.keys(appendText).map((key,i)=>{
