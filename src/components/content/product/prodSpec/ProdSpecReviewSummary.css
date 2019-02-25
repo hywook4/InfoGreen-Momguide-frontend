@@ -1,0 +1,195 @@
+.prod-spec-review-summary-container {
+    background-color: rgba(50, 184, 164, 0.05);
+    margin-top: 40px;
+    text-align: left;
+    width: 980px;
+}
+
+.prod-spec-review-summary-container > span {
+    display: block;
+    height: 50px;
+    line-height: 70px;
+    margin-left: 10px;
+}
+
+.prod-spec-review-summary-first {
+    height: 100px;
+}
+
+.prod-spec-review-summary-first > .prod-spec-review-summary-left {
+    line-height: 70px;
+    height: 70px;
+    margin-left: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.prod-spec-review-summary-star-first {
+    margin-left: 20px;
+}
+
+.prod-spec-review-summary-second {
+    height: 200px;
+    margin-bottom: 50px;
+}
+
+.prod-spec-review-summary-left {
+    display: inline-block;
+    width: 355px;
+    margin-right: 15px;
+}
+
+.prod-spec-review-summary-right {
+    display: inline-block;
+    width: 600px;
+}
+
+.prod-spce-review-summary-progress {
+    margin-bottom: 20px;
+}
+
+.prod-spce-review-summary-progress > div:first-child {
+    float: left;
+    width: 80px;
+    margin-left: 20px;
+}
+
+.prod-spce-review-summary-progress > div:last-child {
+    display: inline-block;
+    width: 250px;
+
+}
+
+.prod-spec-review-summary-legend > span {
+    text-align: center;
+    margin-right: 20px;
+}
+.prod-spec-review-summary-legend > span:nth-child(1) > div {
+    margin: 0 auto;
+    width: 18px;
+    height: 18px;
+    background-color: #28a745;
+    border-radius: 3px;
+}
+.prod-spec-review-summary-legend > span:nth-child(2) > div {
+    margin: 0 auto;
+    width: 18px;
+    height: 18px;
+    background-color: #ffc107;
+    border-radius: 3px;
+}
+.prod-spec-review-summary-legend > span:nth-child(3) > div {
+    margin: 0 auto;
+    width: 18px;
+    height: 18px;
+    background-color: #dc3545;
+    border-radius: 3px;
+}
+
+.prod-spec-review-summary-image-container {
+    float: right;
+    position: relative;
+}
+
+.prod-spec-review-summary-image-container > img {
+    width: 110px;
+    height: 110px;
+    margin-left: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.prod-spec-review-summary-image-container > img:hover {
+    cursor: pointer;
+}
+
+.prod-spec-review-summary-more-text {
+    position: absolute;
+    right: 65px;
+    top: 25px;
+    text-align: center;
+}
+
+.prod-spec-review-summary-more-text:hover {
+    cursor: pointer
+}
+
+.prod-spec-review-summary-more-text > span:first-child {
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.5);
+    font-style: italic;
+}
+
+.prod-spec-review-summary-more-text > span:last-child {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+/* for modal */
+#prod-spec-review-summary-modal div.modal-content {
+    width: 560px;
+    height: 600px;
+    text-align: center;
+    border: none
+}
+#prod-spec-review-summary-modal div {
+    background: none !important;
+}
+
+.prod-spec-review-summary-modal-container > div {
+    width: 600px;
+}
+
+.prod-spec-review-summary-modal-header {
+    margin-top: -7px;
+    margin-bottom: 5px;
+    height: 20px;
+    position: relative;
+}
+
+.prod-spec-review-summary-modal-header > div {
+    color: white;
+    font-size: 13px;
+}
+
+.prod-spec-review-summary-modal-header > div:last-child {
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.prod-spec-review-summary-modal-header > div:last-child:hover {
+    cursor: pointer;
+}
+.prod-spec-review-summary-modal-content > div {
+    display: inline-block;
+    color: white;
+    font-size: 30px;
+    margin: 10px;
+}
+
+.prod-spec-review-summary-modal-content > div:hover {
+    cursor: pointer;
+}
+
+.prod-spec-review-summary-modal-content > img {
+    display: inline-block;
+    width: 500px;
+    height: 500px;
+}
+
+.prod-spec-review-summary-modal-footer {
+    margin-top: 10px;
+}
+
+.prod-spec-review-summary-modal-footer > img {
+    width: 45px;
+    height: 45px;
+}
+
+.prod-spec-review-summary-modal-footer > img:hover {
+    cursor: pointer;
+}
