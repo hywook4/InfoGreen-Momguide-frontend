@@ -14,16 +14,28 @@ export class ReportModal extends React.Component {
         super(props);
 
         this.state = {
+            user: user,
+            reportContent: props.reportContent,
+            reportModalId: props.reportModalId,
             checkedValue: "제품 내용과 관련 없는 리뷰",
-            modalId: "report"
+            content: ""
         }
     }
 
     changeCheck = (e) => {
-        console.log(e.target);
         this.setState({
-            checkedValue: e.target.checked
+            checkedValue: e.target.value
         })
+    }
+
+    changeContent = (e) => {
+        this.setState({
+            content: e.target.value
+        })
+    }
+
+    submitReport = () => {
+        console.log(this.state.checkedValue, this.state.content, this.state.reportContent.content);
     }
 
     render() {
@@ -38,7 +50,7 @@ export class ReportModal extends React.Component {
         ]
        
         return (
-            <div className="modal fade" id="report" role="dialog">
+            <div className="modal fade" id={this.state.reportModalId} role="dialog">
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -46,25 +58,22 @@ export class ReportModal extends React.Component {
                             <button type="button" className="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div className="modal-body">
-                            <div className="modal-report-checkbox">
-                                <form>
-                                    {
-                                        reportType.map((data, index)=> {
-                                            return(
-                                                <div className="report-type" key={index}>
-                                                    <input type="checkbox" id={index} value={data} onChange={this.changeCheck}
-                                                    defaultChecked={this.state.checkedValue===data ? "checked" : null}/>
-                                                    <label htmlFor={index}>{data}</label>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </form>
-                                
-                            </div>
-                            <textarea className="report-content" placeholder="신고 사유를 자세히 작성해 주시면 빠른 처리가 가능합니다."/>
+                            <form className="modal-report-checkbox">
+                                {
+                                    reportType.map((data, index)=> {
+                                        return(
+                                            <div className="report-type" key={index}>
+                                                <input type="radio" id={index} name="report-type" value={data} onClick={this.changeCheck}
+                                                defaultChecked={this.state.checkedValue === data ? "checked" : null}/>
+                                                <label htmlFor={index}>{data}</label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </form>
+                            <textarea className="report-content" placeholder="신고 사유를 자세히 작성해 주시면 빠른 처리가 가능합니다." onChange={this.changeContent}/>
                             <div className="modal-button-center">
-                                <button type="button" className="report-confirm-button btn-default" data-dismiss="modal">신고</button>
+                                <button type="button" className="report-confirm-button btn-default" data-dismiss="modal" onClick={this.submitReport}>신고</button>
                             </div>
                         </div>
                     </div>

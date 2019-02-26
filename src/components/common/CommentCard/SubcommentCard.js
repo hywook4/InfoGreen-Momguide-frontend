@@ -2,6 +2,7 @@ import React from 'react';
 import './Comment.css';
 import REPORT_ICON from '../../../assets/images/report.png';
 
+import { ReportModal }  from '../ReportModal/ReportModal';
 
 const user = {
     index: 1,
@@ -18,7 +19,8 @@ export class SubcommentCard extends React.Component {
         this.state = {
             user: user,
             subcomment : props.data,
-            editable: false
+            editable: false,
+            reportModalId: "report" + props.data.commentIndex + props.data.index
         }
     }
 
@@ -116,10 +118,12 @@ export class SubcommentCard extends React.Component {
                             <p>{subcomment.likes}</p>
                             <i className="fa fa-thumbs-o-down" style={subcomment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
                             <p>{subcomment.dislikes}</p>
-                            <img src={REPORT_ICON} alt="reportIcon"/>
+                            <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                         </div>
                     </div>
                 </div>
+
+                <ReportModal reportContent={this.state.subcomment} reportModalId={this.state.reportModalId}/>
             </div>
         )
     }

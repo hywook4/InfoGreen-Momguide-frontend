@@ -45,6 +45,7 @@ export class EventDetail extends React.Component {
         const dummy = [
             {
                 index: 1,
+                commentIndex: 1,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '테스트',
                 sex: '남자',
@@ -59,6 +60,7 @@ export class EventDetail extends React.Component {
             },
             {
                 index: 2,
+                commentIndex: 2,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '송재우',
                 sex: '여자',
@@ -73,6 +75,7 @@ export class EventDetail extends React.Component {
             },
             {
                 index: 3,
+                commentIndex: 3,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '에부부',
                 sex: '남자',
@@ -87,6 +90,7 @@ export class EventDetail extends React.Component {
             },
             {
                 index: 4,
+                commentIndex: 4,
                 imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 name: '에부부',
                 sex: '남자',

@@ -20,10 +20,11 @@ export class CommentCard extends React.Component {
 
         this.state = {
             user: user,
-            profile: props.data,
+            comment: props.data,
             subcomments : [
                 {
                     index: 1,
+                    commentIndex: 1,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '테스트',
                     sex: '남자',
@@ -38,6 +39,7 @@ export class CommentCard extends React.Component {
                 },
                 {
                     index: 2,
+                    commentIndex: 2,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '부부',
                     sex: '남자',
@@ -52,6 +54,7 @@ export class CommentCard extends React.Component {
                 },
                 {
                     index: 3,
+                    commentIndex: 3,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '234부',
                     sex: '남자',
@@ -66,6 +69,7 @@ export class CommentCard extends React.Component {
                 },
                 {
                     index: 4,
+                    commentIndex: 4,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '162153',
                     sex: '남자',
@@ -80,6 +84,7 @@ export class CommentCard extends React.Component {
                 },
                 {
                     index: 1,
+                    commentIndex: 5,
                     imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                     name: '테스트',
                     sex: '남자',
@@ -98,8 +103,8 @@ export class CommentCard extends React.Component {
             subcommentOpen: false,
             mySubcomment: "",
             editable: false,
-
-        }
+            reportModalId: "report" + props.data.index
+        } 
     }
 
 
@@ -128,16 +133,16 @@ export class CommentCard extends React.Component {
     }
 
     commentChange = (e) => {
-        let data = this.state.profile;
+        let data = this.state.comment;
         data.content = e.target.value;
         this.setState({
-            profile: data
+            comment: data
         })
     }
 
     onEdit = () => {
         if(this.state.editable){ // TODO : 수정을 한 경우 수정 요청을 보냄
-            console.log("댓글 수정하기 : " + this.state.profile.content);
+            console.log("댓글 수정하기 : " + this.state.comment.content);
         }
         this.setState({
             editable: !this.state.editable
@@ -145,11 +150,11 @@ export class CommentCard extends React.Component {
     }
 
     onDelete = () => {
-        console.log("delete this comment " + this.state.profile.content);
+        console.log("delete this comment " + this.state.comment.content);
     }
 
     onLike = () => {
-        let data = this.state.profile;
+        let data = this.state.comment;
 
         if(data.likePressed){
             data.likePressed = !data.likePressed;
@@ -160,12 +165,12 @@ export class CommentCard extends React.Component {
         }
 
         this.setState({
-            profile: data
+            comment: data
         })
     }
 
     onDislike = () => {
-        let data = this.state.profile;
+        let data = this.state.comment;
 
         if(data.dislikePressed){
             data.dislikePressed = !data.dislikePressed;
@@ -176,12 +181,12 @@ export class CommentCard extends React.Component {
         }
 
         this.setState({
-            profile: data
+            comment: data
         })
     }
 
     render() {
-        const profile = this.state.profile;
+        const comment = this.state.comment;
 
         const moreButton = (
             <button className="subcomment-more-button" onClick={this.loadPage}>
@@ -212,17 +217,17 @@ export class CommentCard extends React.Component {
         return (
             <div className="comment-card">
                 <div className="comment-profile-img">
-                    <img src={profile.imageUrl} alt="profile-pic"/>
+                    <img src={comment.imageUrl} alt="profile-pic"/>
                 </div>
                 <div className="comment-content">
                     <div className="comment-user-profile">
-                        <p>{profile.name}</p>
-                        <div>{profile.sex}</div>
-                        <div>{profile.age}세</div>
-                        <div>자녀{profile.childAge}세</div>
-                        <span>{profile.date}</span>
+                        <p>{comment.name}</p>
+                        <div>{comment.sex}</div>
+                        <div>{comment.age}세</div>
+                        <div>자녀{comment.childAge}세</div>
+                        <span>{comment.date}</span>
                     </div>
-                    <textarea className={this.state.editable ? "comment-text comment-text-on" : "comment-text"} maxLength="300" defaultValue={profile.content} 
+                    <textarea className={this.state.editable ? "comment-text comment-text-on" : "comment-text"} maxLength="300" defaultValue={comment.content} 
                     disabled={this.state.editable ? "" : "disabled"} onChange={this.commentChange}/>
                     {
                         this.state.subcommentOpen ? 
@@ -234,14 +239,14 @@ export class CommentCard extends React.Component {
                 <div className="comment-icon-buttons">
                     <div className="comment-modify-erase">
                         {
-                            this.state.user.index === profile.index ? editButton : null
+                            this.state.user.index === comment.index ? editButton : null
                         }
                     </div>
-                    <i className="fa fa-thumbs-o-up" style={profile.likePressed ? liked : null} onClick={this.onLike}/>
-                    <p>{profile.likes}</p>
-                    <i className="fa fa-thumbs-o-down" style={profile.dislikePressed ? disliked : null} onClick={this.onDislike}/>
-                    <p>{profile.dislikes}</p>
-                    <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target="#report"/>
+                    <i className="fa fa-thumbs-o-up" style={comment.likePressed ? liked : null} onClick={this.onLike}/>
+                    <p>{comment.likes}</p>
+                    <i className="fa fa-thumbs-o-down" style={comment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
+                    <p>{comment.dislikes}</p>
+                    <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                 </div>
                 
                 <div className="subcomment-card-box">
@@ -271,7 +276,7 @@ export class CommentCard extends React.Component {
                     }
                     
                 </div>
-                <ReportModal/>
+                <ReportModal reportContent={this.state.comment} reportModalId={this.state.reportModalId}/>
             </div>
         )
     }
