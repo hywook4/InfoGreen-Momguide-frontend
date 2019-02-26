@@ -96,6 +96,8 @@ export class CommentCard extends React.Component {
             subcommentPage: 1,
             subcommentOpen: false,
             mySubcomment: "",
+            editable: false,
+
         }
     }
 
@@ -124,6 +126,28 @@ export class CommentCard extends React.Component {
 
     }
 
+    commentChange = (e) => {
+        let data = this.state.profile;
+        data.content = e.target.value;
+        this.setState({
+            profile: data
+        })
+    }
+
+    onEdit = () => {
+        if(this.state.editable){ // TODO : 수정을 한 경우 수정 요청을 보냄
+            console.log("댓글 수정하기 : " + this.state.profile.content);
+        }
+        this.setState({
+            editable: !this.state.editable
+        })
+    }
+
+    onDelete = () => {
+        console.log("delete this comment " + this.state.profile.content);
+    }
+
+
     render() {
         const profile = this.state.profile;
 
@@ -144,6 +168,15 @@ export class CommentCard extends React.Component {
             })
         )
             
+        const editButton = (
+            this.state.editable ? 
+            <i className="fa fa-pencil" onClick={this.onEdit}/> :
+            <React.Fragment>
+                <span onClick={this.onDelete}>&#10006;</span>
+                <i className="fa fa-pencil" onClick={this.onEdit}/>
+            </React.Fragment>
+        )
+
         return (
             <div className="comment-card">
                 <div className="comment-profile-img">
@@ -157,7 +190,8 @@ export class CommentCard extends React.Component {
                         <div>자녀{profile.childAge}세</div>
                         <span>{profile.date}</span>
                     </div>
-                    <textarea className="comment-text" maxLength="300" defaultValue={profile.content} disabled/>
+                    <textarea className={this.state.editable ? "comment-text comment-text-on" : "comment-text"} maxLength="300" defaultValue={profile.content} 
+                    disabled={this.state.editable ? "" : "disabled"} onChange={this.commentChange}/>
                     {
                         this.state.subcommentOpen ? 
                         <p className="comment-subcomment-fold" onClick={this.foldSubcomment}>댓글 접기</p> :
@@ -168,11 +202,7 @@ export class CommentCard extends React.Component {
                 <div className="comment-icon-buttons">
                     <div className="comment-modify-erase">
                         {
-                            this.state.user.index === profile.index ? 
-                            <React.Fragment>
-                                <span>&#10006;</span>
-                                <i className="fa fa-pencil"/>
-                            </React.Fragment> : null
+                            this.state.user.index === profile.index ? editButton : null
                         }
                     </div>
                     <i className="fa fa-thumbs-o-up" style={profile.likePressed ? liked : null}/>

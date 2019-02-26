@@ -221,9 +221,9 @@ export class EventDetail extends React.Component {
                     <div className="modal fade" id="applyEvent" role="dialog">
                         <div className="modal-dialog modal-sm">
                             <div className="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">이벤트 신청</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <div className="modal-header">
+                                    <h4 className="modal-title">이벤트 신청</h4>
+                                    <button type="button" className="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div className="modal-body">
                                     <h6 className="event-apply-confirm">성공적으로 신청되었습니다!</h6>
@@ -238,9 +238,9 @@ export class EventDetail extends React.Component {
                     <div className="modal fade" id="additionalData" role="dialog">
                         <div className="modal-dialog modal-sm">
                             <div className="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title event-apply-header">이벤트 신청</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <div className="modal-header">
+                                    <h4 className="modal-title event-apply-header">이벤트 신청</h4>
+                                    <button type="button" className="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div className="modal-body">
                                     <p className="event-apply-need">수집정보가 입력되어있지 않습니다. 

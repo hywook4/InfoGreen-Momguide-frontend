@@ -17,16 +17,47 @@ export class SubcommentCard extends React.Component {
 
         this.state = {
             user: user,
-            subcomment : props.data
+            subcomment : props.data,
+            editable: false
         }
     }
 
+    onEdit = () => {
+        if(this.state.editable){ // TODO : 수정한 경우에 수정 요청 보내기 
+            console.log("대댓글 수정하기 : " + this.state.subcomment.content);
+        }
+
+        this.setState({
+            editable: !this.state.editable
+        })
+    }
+
+    onDelete = () => {
+        console.log("delete 대댓글 : " + this.state.subcomment.content);
+    }
+
+    subcommentChange = (e) => {
+        let subcomment = this.state.subcomment;
+        subcomment.content = e.target.value;
+        this.setState({
+            subcomment: subcomment
+        })
+    }
 
     render() {
         const liked = { color: "#32b8a4"}
         const disliked = {color: "red"}
 
         const subcomment = this.state.subcomment;
+
+        const editButton = (
+            this.state.editable ? 
+            <i className="fa fa-pencil" onClick={this.onEdit}/> :
+            <React.Fragment>
+                <b onClick={this.onDelete}>&#10006;</b>
+                <i className="fa fa-pencil" onClick={this.onEdit}/>
+            </React.Fragment>
+        )
             
         return (
             <div className="subcomment-card">
@@ -39,16 +70,13 @@ export class SubcommentCard extends React.Component {
                         <span>{subcomment.date}</span>
                         
                         {
-                            this.state.user.index === subcomment.index ? 
-                            <React.Fragment>
-                                <b>&#10006;</b>
-                                <i class="fa fa-pencil"/>
-                            </React.Fragment> : null
+                            this.state.user.index === subcomment.index ? editButton : null
                         }
                         
                     </div>
                     <div className="subcomment-middle">
-                        <textarea defaultValue={subcomment.content} disabled/>
+                        <textarea defaultValue={subcomment.content} 
+                        disabled={this.state.editable ? "" : "disabled"} onChange={this.subcommentChange}/>
                     </div>
                     <div className="subcomment-bottom">
                         <div className="subcomment-bottom-icons">

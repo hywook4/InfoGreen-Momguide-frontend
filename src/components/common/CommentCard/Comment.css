@@ -178,6 +178,10 @@ button.comment-write-button{
     border: none;
 }
 
+.comment-text-on{
+    background-color: lightgray;
+}
+
 .comment-text:focus, .comment-text:active{
     outline:none;
 }
@@ -234,12 +238,14 @@ button.comment-write-button{
     float: right;
     font-size:  20px;
     color: gray;
+    cursor: pointer;
 }
 
 .comment-modify-erase i{
     margin-top: 3px;
     float: right;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .subcomment-card-box{
@@ -297,12 +303,14 @@ button.comment-write-button{
     margin-top: 5px;
     margin-right: 10px;
     color: gray;
+    cursor: pointer;
 }
 
 .subcomment-top b{
     float: right;
     font-size: 15px;
     color: gray;
+    cursor: pointer;
 }
 
 .subcomment-middle{
