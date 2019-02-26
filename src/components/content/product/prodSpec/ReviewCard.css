@@ -1,0 +1,244 @@
+.review-card-container {
+    width: 980px;
+}
+
+.review-card-left {
+    width: 550px;
+    float: left;
+    margin-right: 40px;
+}
+
+.review-card-right {
+    width: 380px;
+    float: right;
+}
+
+.review-card-profile {
+    margin-top: 10px;
+    vertical-align: middle;
+}
+
+.review-card-profile > div {
+    display: inline-block;
+    height: 70px;
+}
+
+.review-card-profile img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #32B8A4;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.review-card-profile-text {
+    display: inline-block;
+    height: 70px;
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+.review-card-profile-text > div {
+    height: 35px;
+    line-height: 35px;
+}
+
+.review-card-profile-text > div:last-child {
+    margin-top: -8px;
+}
+
+.review-card-profile-text > div > span {
+    border: 1px solid #32B8A4;
+    color: #32B8A4;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 2px 20px;
+    margin-right: 10px;
+    font-size: 11px;
+}
+
+.review-card-rate {
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+
+.review-card-rate > span {
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.review-card-image-container {
+    position: relative;
+}
+
+.review-card-image-container > img {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-right: 5px;
+}
+
+.review-card-image-container > img:hover {
+    cursor: pointer;
+}
+
+.review-card-more-text {
+    position: absolute;
+    right: 289px;
+    top: 10px;
+    text-align: center;
+    line-height: 1.1em;
+}
+
+.review-card-more-text:hover {
+    cursor: pointer
+}
+
+.review-card-more-text > span:first-child {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.review-card-more-text > span:last-child {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+.review-card-text {
+    margin-top: 20px;
+}
+
+.review-card-text > a {
+    color: #32B8A4 !important;
+    text-decoration: underline !important;
+}
+
+.review-card-text > a:hover {
+    cursor: pointer;
+}
+
+.review-card-bar-guide {
+    margin-top: 20px;
+    margin-left: -10px;
+}
+
+.review-card-bar-guide > span {
+    margin-left: 90px;
+}
+
+.review-card-detail-bar {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.review-card-detail-bar-header {
+    display: inline-block;
+    width: 70px;
+}
+
+.review-card-detail-bar-line {
+    height: 3px;
+    width: 100px;
+    margin-left: -1px;
+}
+
+.review-card-detail-bar-circle:not(.selected) + .review-card-detail-bar-line:not(.selected) {
+    width: 107px;
+}
+
+.review-card-detail-bar-line.selected {
+    height: 5px;
+    width: 96px;
+    z-index: 1;
+}
+
+.review-card-detail-bar-circle:first-child {
+    margin-left: 10px;
+}
+
+.review-card-detail-bar-circle {
+    height: 12px;
+    width: 12px;
+}
+
+.review-card-detail-bar-circle.selected {
+    height: 23px;
+    width: 23px;
+    z-index: 1;
+}
+
+
+
+
+
+/* for modal */
+#review-card-modal div.modal-content {
+    width: 560px;
+    height: 600px;
+    text-align: center;
+    border: none
+}
+#review-card-modal div {
+    background: none !important;
+}
+
+.review-card-modal-container > div {
+    width: 600px;
+}
+
+.review-card-modal-header {
+    margin-top: -7px;
+    margin-bottom: 5px;
+    height: 20px;
+    position: relative;
+}
+
+.review-card-modal-header > div {
+    color: white;
+    font-size: 13px;
+}
+
+.review-card-modal-header > div:last-child {
+    position: absolute;
+    right: 10px;
+    top: -10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.review-card-modal-header > div:last-child:hover {
+    cursor: pointer;
+}
+.review-card-modal-content > div {
+    display: inline-block;
+    color: white;
+    font-size: 30px;
+    margin: 10px;
+}
+
+.review-card-modal-content > div:hover {
+    cursor: pointer;
+}
+
+.review-card-modal-content > img {
+    display: inline-block;
+    width: 500px;
+    height: 500px;
+}
+
+.review-card-modal-footer {
+    margin-top: 10px;
+}
+
+.review-card-modal-footer > img {
+    width: 45px;
+    height: 45px;
+}
+
+.review-card-modal-footer > img:hover {
+    cursor: pointer;
+}
+/* */

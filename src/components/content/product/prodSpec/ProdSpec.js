@@ -11,6 +11,7 @@ import greenLine from '../../../../assets/images/common_icons/green_line.png';
 import grayCircle from '../../../../assets/images/common_icons/gray_circle.png';
 import grayLine from '../../../../assets/images/common_icons/gray_line.png';
 import { ProdSpecReviewSummary } from './ProdSpecReviewSummary';
+import { ReviewCard } from './ReviewCard';
 
 import axios from 'axios';
 
@@ -62,6 +63,11 @@ export class ProdSpec extends React.Component{
         imageUrl: null,
         reviewUploaded: false,
 
+        myHouseSelected: false,
+        myCosmeticSelected: false,
+        likeSelected: false,
+        ingredientRequest: false,
+
         reviewApiLoaded: false,
         reviewCount: 0,
         rating: 1,
@@ -73,10 +79,10 @@ export class ProdSpec extends React.Component{
         reviewText: '',
         imageFiles: [],
 
-        myHouseSelected: false,
-        myCosmeticSelected: false,
-        likeSelected: false,
-        ingredientRequest: false
+        reviews: [],
+        reviewPage: 1,
+        reviewTotalPages: 0,
+        nextPageExist: false
     };
 
     onChange = (key, value) => {
@@ -128,9 +134,8 @@ export class ProdSpec extends React.Component{
                     ingredientRequest: res.data.check
                 });
 
-                let newStateObj = {};
                 res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
-                newStateObj = {
+                let newStateObj = {
                     login: true,
                     gender: res.data.gender,
                     nickname: res.data.nickName,
@@ -146,10 +151,31 @@ export class ProdSpec extends React.Component{
                     reviewApiLoaded: true
                 };
 
-                this.setState(newStateObj)
+                this.setState(newStateObj);
+
+                this.handleLoadReview(1);
             } catch (e) {
             }
         }
+    };
+
+    handleLoadReview = async (page) => {
+        const id = this.props.match.params.id;
+        const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return;
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        const res = await axios.get(`${process.env.API_URL}/api/review/product/list?category=${category}&id=${id}&page=${page}`, {
+            headers: headers
+        });
+        this.setState({
+            reviews: this.state.reviews.concat(res.data.reviews),
+            reviewPage: page,
+            nextPageExist: res.data.nextPageExist,
+            reviewTotalPages: res.data.totalPages
+        });
     };
 
     houseAndLikeToggle = async (category, id) => {
@@ -493,12 +519,6 @@ export class ProdSpec extends React.Component{
         }
     };
 
-    setReviewCount = (count) => {
-        this.setState({
-            reviewCount: count
-        });
-    };
-
     render = () => {
         const id = this.props.match.params.id;
         const productData = this.state.productData;
@@ -522,7 +542,7 @@ export class ProdSpec extends React.Component{
             selectedText = openness.great;
         }
 
-        const reviewTab = (
+        const reviewAdditionTab = (
             this.state.login && !this.state.reviewUploaded ?
                 (<div className="prod-spec-review-container">
                     <div className="prod-spec-review-write-container">
@@ -669,7 +689,7 @@ export class ProdSpec extends React.Component{
                                             <div className="prod-spec-detail-content prod-spec-width-full">
                                                 <textarea className="prod-spec-textarea"
                                                           value={this.state.reviewText}
-                                                          onChange={(e)=>{if(e.target.value.length <= 1000) this.onChange('reviewText', e.target.value)}} />
+                                                          onChange={(e)=>{this.onChange('reviewText', e.target.value.slice(0, 1000))}} />
                                             </div>
                                             <span className="prod-spec-review-content-count">
                                                 {this.state.reviewText.length}/1000
@@ -878,8 +898,20 @@ export class ProdSpec extends React.Component{
                         </div>
                     </div>
                     <div className={`ui bottom attached tab segment tab-content ${this.state.reviewTab ? "active" : ""}`} data-tab="review" id="review">
-                        {reviewTab}
+                        {reviewAdditionTab}
                         <ProdSpecReviewSummary category={category} id={id}/>
+                        <div className="prod-spec-review-container">
+                            <div className="prod-spec-review-title">베스트 리뷰</div>
+                            <ReviewCard />
+                        </div>
+                        <div className="prod-spec-review-container">
+                            <div className="prod-spec-review-title">
+                                리뷰 전체 보기
+                            </div>
+                            {this.state.reviews.map((review, i) => (
+                                <ReviewCard data={review} key={i}/>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </React.Fragment>

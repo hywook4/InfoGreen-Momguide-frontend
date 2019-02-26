@@ -735,3 +735,13 @@ h6.prod-spec-detail-header-inline {
 .prod-spec-review-enroll-button:hover {
     cursor: pointer;
 }
+
+.prod-spec-review-container{
+    text-align: left;
+}
+
+.prod-spec-review-title {
+    font-weight: bold;
+    border-bottom: 2px solid lightgrey;
+    padding-bottom: 10px;
+}

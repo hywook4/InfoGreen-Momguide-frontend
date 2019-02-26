@@ -76,7 +76,7 @@ export class ProdSpecReviewSummary extends React.Component {
             return null;
         }
 
-        const modal = (
+        const modal = this.state.images.length ? (
             <div className="modal fade" id="prod-spec-review-summary-modal" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
@@ -84,20 +84,20 @@ export class ProdSpecReviewSummary extends React.Component {
                         <div className="modal-body prod-spec-review-summary-modal-container">
                             <div className="prod-spec-review-summary-modal-header">
                                 <div>{this.state.selectedImageIndex+1}/{this.state.images.length}</div>
-                                <div>&times;</div>
+                                <div/>
                             </div>
                             <div className="prod-spec-review-summary-modal-content">
-                                {this.state.selectedImageIndex !== 0 ?
-                                    (<div onClick={()=>this.handleImageClick(this.state.selectedImageIndex-1)}>{'<'}</div>) :
-                                    null}
-                                <img src={this.state.images[this.state.selectedImageIndex].url} />
-                                {this.state.selectedImageIndex !== this.state.images.length-1 ?
-                                    (<div onClick={()=>this.handleImageClick(this.state.selectedImageIndex+1)}>{'>'}</div>) :
-                                    null}
+                                <div onClick={()=>this.handleImageClick(this.state.selectedImageIndex-1)}>
+                                    {this.state.selectedImageIndex !== 0 ? '<' : ' '}
+                                </div>
+                                <img src={this.state.images[this.state.selectedImageIndex].url} alt=""/>
+                                <div onClick={()=>this.handleImageClick(this.state.selectedImageIndex+1)}>
+                                    {this.state.selectedImageIndex !== this.state.images.length-1 ? '>' : ' '}
+                                </div>
                             </div>
                             <div className="prod-spec-review-summary-modal-footer">
                                 {this.state.images.map((image, i) => (
-                                    <img src={image.url} onClick={()=>this.handleImageClick(i)}
+                                    <img src={image.url} onClick={()=>this.handleImageClick(i)} alt=""
                                     />
                                 ))}
                             </div>
@@ -105,7 +105,7 @@ export class ProdSpecReviewSummary extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+        ) : null;
 
         return (
             <div className="prod-spec-review-summary-container">
@@ -149,12 +149,12 @@ export class ProdSpecReviewSummary extends React.Component {
                                 if(i >= 4)
                                     return null;
 
-                                return (<img key={i} src={image.url} onClick={()=>this.handleImageClick(i)}/>);
+                                return (<img key={i} src={image.url} onClick={()=>this.handleImageClick(i)} alt=""/>);
                             })
                         }
                         {
                             this.state.images.length >= 5 ?
-                                <img onClick={()=>this.handleImageClick(4)}/> :
+                                <img onClick={()=>this.handleImageClick(4)} alt=""/> :
                                 null
                         }
                         {
@@ -165,7 +165,7 @@ export class ProdSpecReviewSummary extends React.Component {
                                 </div>) :
                                 null
                         }
-                        {this.state.images.length ? modal : null}
+                        {modal}
                     </div>
                 </div>
             </div>
