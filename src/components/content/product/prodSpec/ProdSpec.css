@@ -642,6 +642,9 @@ h6.prod-spec-detail-header-inline {
     margin-right: 5px;
     color: red;
 }
+.prod-spec-upload-red-x:hover {
+    cursor: pointer;
+}
 
 .prod-spec-additional-review-container {
     border-collapse: collapse;

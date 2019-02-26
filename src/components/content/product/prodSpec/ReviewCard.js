@@ -52,7 +52,7 @@ export class ReviewCard extends React.Component {
                             </div>
                             <div className="review-card-modal-footer">
                                 {data.images.map((image, i) => (
-                                    <img src={image.url} onClick={()=>this.handleImageClick(i)} alt=""
+                                    <img src={image.url} onClick={()=>this.handleImageClick(i)} alt="" key={i}
                                     />
                                 ))}
                             </div>
@@ -64,6 +64,7 @@ export class ReviewCard extends React.Component {
 
         const contentLimit = 500;
 
+        console.log(data);
         return (
             <div className="review-card-container">
                 <div className="review-card-left">
@@ -123,11 +124,11 @@ export class ReviewCard extends React.Component {
                         {data.review.content.length > contentLimit ? (
                             <React.Fragment>
                                 {this.state.folded ?
-                                    (data.review.content.slice(0, contentLimit) + '...').split('\n').map(line => {
-                                        return <span>{line}<br/></span>
+                                    (data.review.content.slice(0, contentLimit) + '...').split('\n').map((line, i) => {
+                                        return <span key={i}>{line}<br/></span>
                                     }) :
-                                    data.review.content.split('\n').map(line => {
-                                        return <span>{line}<br/></span>
+                                    data.review.content.split('\n').map((line, i) => {
+                                        return <span key={i}>{line}<br/></span>
                                     })}
                                 <br/>
                                 <a onClick={(e) => {
@@ -136,8 +137,8 @@ export class ReviewCard extends React.Component {
                                 }}>{this.state.folded ? '열기' : '펴기'}</a>
                             </React.Fragment>) :
                             <React.Fragment>
-                                {data.review.content.split('\n').map(line => {
-                                    return <span>{line}<br/></span>
+                                {data.review.content.split('\n').map((line, i) => {
+                                    return <span key={i}>{line}<br/></span>
                                 })}
                             </React.Fragment>
                         }
@@ -224,7 +225,26 @@ export class ReviewCard extends React.Component {
                         </div>
                     </div>
                     <div className="review-card-addition">
-                        TODO: 추가
+                        {data.additionalReviews.map((item, i) => {
+                            return (
+                                <div className={`review-card-additional-review-container ${!item.ended?'success':'fail'}`} key={i}>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td className={`review-card-additional-review-duration ${!item.ended?'success':'fail'}`}>
+                                                    {CommonUtil.diffMonths(new Date(data.review.baseDate), new Date())}개월째 사용 {!item.ended?'':'중단'}
+                                                </td>
+                                                <td className="review-card-additional-review-detail">
+                                                    {item.content.split('\n').map((item, key) => {
+                                                        return (<span key={key}>{key !== 0 ? (<br />) : null}{item}</span>);
+                                                    })}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

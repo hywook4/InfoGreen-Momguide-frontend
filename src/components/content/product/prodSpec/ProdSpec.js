@@ -91,7 +91,7 @@ export class ProdSpec extends React.Component{
         this.setState(newObj);
     };
 
-    componentDidMount = async ()=> {
+    componentDidMount = async () => {
         const id = this.props.match.params.id;
         const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
 
@@ -134,6 +134,13 @@ export class ProdSpec extends React.Component{
                     ingredientRequest: res.data.check
                 });
 
+                res = await axios.get(`${process.env.API_URL}/api/review/product/list/count?category=${category}&id=${id}`);
+                console.log(res.data);
+
+                this.setState({
+                    reviewCount: res.data.count
+                });
+
                 res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
                 let newStateObj = {
                     login: true,
@@ -153,7 +160,8 @@ export class ProdSpec extends React.Component{
 
                 this.setState(newStateObj);
 
-                this.handleLoadReview(1);
+                await this.handleLoadReview(1);
+
             } catch (e) {
             }
         }
@@ -513,6 +521,7 @@ export class ProdSpec extends React.Component{
             this.setState({
                 reviewUploaded: true
             });
+            window.location.reload();
         } catch(e) {
             alert('에러가 발생하였습니다.');
             return;

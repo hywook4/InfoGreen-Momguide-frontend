@@ -20,6 +20,7 @@ import {ViewMore} from './common/ViewMore/ViewMore';
 import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdSpec';
 import {About} from './content/navigation/about/About';
 import {MyPage} from './content/navigation/mypage/MyPage';
+import {AdditionalReview} from './content/product/prodSpec/AdditionalReview';
 import history from '../history/history';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Router, Route, Switch} from "react-router-dom"
@@ -66,6 +67,7 @@ export class MainPage extends Component {
                                             <Route path="/request/loggedin" component={LoggedIn} />
                                             <Route path="/findpassword" component={FindPassword} />
                                             <Route path="/mypage" component={MyPage} />
+                                            <Route path="/additional-review/:id" component={AdditionalReview} />
                                         </Switch>
                                     </div>
                                 </React.Fragment>
