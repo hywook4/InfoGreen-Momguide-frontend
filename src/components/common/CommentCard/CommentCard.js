@@ -3,6 +3,7 @@ import './Comment.css';
 import REPORT_ICON from '../../../assets/images/report.png';
 
 import { SubcommentCard } from './SubcommentCard';
+import { ReportModal }  from '../ReportModal/ReportModal';
 
 
 const user = {
@@ -147,6 +148,37 @@ export class CommentCard extends React.Component {
         console.log("delete this comment " + this.state.profile.content);
     }
 
+    onLike = () => {
+        let data = this.state.profile;
+
+        if(data.likePressed){
+            data.likePressed = !data.likePressed;
+            data.likes = data.likes - 1;
+        } else{
+            data.likePressed = !data.likePressed;
+            data.likes = data.likes + 1;
+        }
+
+        this.setState({
+            profile: data
+        })
+    }
+
+    onDislike = () => {
+        let data = this.state.profile;
+
+        if(data.dislikePressed){
+            data.dislikePressed = !data.dislikePressed;
+            data.dislikes = data.dislikes - 1;
+        } else{
+            data.dislikePressed = !data.dislikePressed;
+            data.dislikes = data.dislikes + 1;
+        }
+
+        this.setState({
+            profile: data
+        })
+    }
 
     render() {
         const profile = this.state.profile;
@@ -205,11 +237,11 @@ export class CommentCard extends React.Component {
                             this.state.user.index === profile.index ? editButton : null
                         }
                     </div>
-                    <i className="fa fa-thumbs-o-up" style={profile.likePressed ? liked : null}/>
+                    <i className="fa fa-thumbs-o-up" style={profile.likePressed ? liked : null} onClick={this.onLike}/>
                     <p>{profile.likes}</p>
-                    <i className="fa fa-thumbs-o-down" style={profile.dislikePressed ? disliked : null}/>
+                    <i className="fa fa-thumbs-o-down" style={profile.dislikePressed ? disliked : null} onClick={this.onDislike}/>
                     <p>{profile.dislikes}</p>
-                    <img src={REPORT_ICON} alt="reportIcon"/>
+                    <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target="#report"/>
                 </div>
                 
                 <div className="subcomment-card-box">
@@ -239,6 +271,7 @@ export class CommentCard extends React.Component {
                     }
                     
                 </div>
+                <ReportModal/>
             </div>
         )
     }

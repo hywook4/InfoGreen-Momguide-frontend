@@ -210,6 +210,7 @@ button.comment-write-button{
     display: inline-block;
     font-size: 23px;
     color: gray;
+    cursor: pointer;
 }
 
 .comment-icon-buttons p{
@@ -226,6 +227,7 @@ button.comment-write-button{
     width: 23px;
     height: 23px;
     margin-top: -10px;
+    cursor: pointer;
 }
 
 .comment-modify-erase{
@@ -348,13 +350,14 @@ button.comment-write-button{
     float: right;
 }
 
-.subcomment-bottom i{
+.subcomment-bottom-icons i{
     display: inline-block;
     font-size: 23px;
     color: gray;
+    cursor: pointer;
 }
 
-.subcomment-bottom p{
+.subcomment-bottom-icons p{
     display: inline-block;
     width: 25px;
     margin-left: 3px;
@@ -363,10 +366,11 @@ button.comment-write-button{
     text-align: left;
 }
 
-.subcomment-bottom img{
+.subcomment-bottom-icons img{
     width: 23px;
     height: 23px;
     margin-top: -10px;
+    cursor: pointer;
 }
 
 

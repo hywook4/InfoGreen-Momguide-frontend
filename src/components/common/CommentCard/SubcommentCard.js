@@ -44,6 +44,38 @@ export class SubcommentCard extends React.Component {
         })
     }
 
+    onLike = () => {
+        let data = this.state.subcomment;
+
+        if(data.likePressed){
+            data.likePressed = !data.likePressed;
+            data.likes = data.likes - 1;
+        } else{
+            data.likePressed = !data.likePressed;
+            data.likes = data.likes + 1;
+        }
+
+        this.setState({
+            subcomment: data
+        })
+    }
+
+    onDislike = () => {
+        let data = this.state.subcomment;
+
+        if(data.dislikePressed){
+            data.dislikePressed = !data.dislikePressed;
+            data.dislikes = data.dislikes - 1;
+        } else{
+            data.dislikePressed = !data.dislikePressed;
+            data.dislikes = data.dislikes + 1;
+        }
+
+        this.setState({
+            subcomment: data
+        })
+    }
+
     render() {
         const liked = { color: "#32b8a4"}
         const disliked = {color: "red"}
@@ -80,9 +112,9 @@ export class SubcommentCard extends React.Component {
                     </div>
                     <div className="subcomment-bottom">
                         <div className="subcomment-bottom-icons">
-                            <i className="fa fa-thumbs-o-up" style={subcomment.likePressed ? liked : null}/>
+                            <i className="fa fa-thumbs-o-up" style={subcomment.likePressed ? liked : null} onClick={this.onLike}/>
                             <p>{subcomment.likes}</p>
-                            <i className="fa fa-thumbs-o-down" style={subcomment.dislikePressed ? disliked : null}/>
+                            <i className="fa fa-thumbs-o-down" style={subcomment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
                             <p>{subcomment.dislikes}</p>
                             <img src={REPORT_ICON} alt="reportIcon"/>
                         </div>
