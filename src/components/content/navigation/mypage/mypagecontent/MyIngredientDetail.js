@@ -1,19 +1,21 @@
 import React from 'react';
 import './MyIngredientDetail.css';
+import {connect} from 'react-redux';
+class MyIngredientDetail extends React.Component{
 
-
-export class MyIngredientDetail extends React.Component{
-
-    state = {
-        type: true,
-        title: "요넥스",
-        content: "야이거 분석해",
-        answer: "asdf"
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            type: this.props.analIsCosmetic,
+            title: this.props.analName,
+            content: this.props.analContent,
+            answer: this.props.analResponse
+        }
     }
 
-    componentDidMount=()=>{
-
-    };
+    componentDidMount() {
+    }
 
     onNameChange = (e) => {
         if(this.state.answer===""){
@@ -36,7 +38,7 @@ export class MyIngredientDetail extends React.Component{
     //TODO : 받은 object의 값에 따라서 답변의 유무, 수정의 가능 유무를 정해서 일부 컴포넌트 렌더링 여부 정하기 
 
     render=()=>{
-
+        
         return(
             <div className="ing-detail-container">
                 <div className="ing-detail-description">
@@ -93,3 +95,18 @@ export class MyIngredientDetail extends React.Component{
         )
     }        
 }
+
+const mapStateToProps = (state) => {
+    return ({
+        analName: state.ask.analName,
+        analIsCosmetic: state.ask.isCosmetic,
+        analContent: state.ask.requestContent,
+        analFile: state.ask.requesFileUrl,
+        analResponse: state.ask.responseContent,
+        analResponseFile: state.ask.responseFileUrl
+    })
+};
+
+const mapDispatchToProps = null;
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyIngredientDetail);

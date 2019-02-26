@@ -131,6 +131,7 @@ export class MyHouseProduct extends React.Component{
         console.log(this.state.currentPage);
         const token = TokenUtils.getLoginToken();
         let query = '';
+        console.log(page);
         if(this.state.mainCategory === 'cosmetic') {
             query = `?isCosmetic=true&page=${page}`;
         } else if(this.state.mainCategory === 'living') {

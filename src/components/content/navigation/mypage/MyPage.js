@@ -13,7 +13,7 @@ import { OpenRequest } from './mypagecontent/OpenRequest'
 import { MyHelpRequest } from './mypagecontent/MyHelpRequest'
 import { MyIngredientRequest } from './mypagecontent/MyIngredientRequest'
 import { MyHelpDetail } from './mypagecontent/MyHelpDetail'
-import { MyIngredientDetail } from './mypagecontent/MyIngredientDetail'
+import MyIngredientDetail from './mypagecontent/MyIngredientDetail'
 import { MyReview } from './mypagecontent/MyReview';
 import { ProfileModifyPasswordCheck } from './mypagecontent/ProfileModifyPasswordCheck';
 

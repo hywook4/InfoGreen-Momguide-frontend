@@ -35,3 +35,12 @@ export const logout = () => {
         sessionStorage.removeItem('loginToken');
     }
 };
+
+export const storeIngredAnalInfo = (info) => {
+    return (dispatch) => {
+        dispatch({
+            type: types.STOREINGREDANALINFO,
+            info
+        })
+    }
+};
