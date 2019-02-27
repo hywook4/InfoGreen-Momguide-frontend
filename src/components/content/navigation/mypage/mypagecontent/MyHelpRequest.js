@@ -124,7 +124,8 @@ export class MyHelpRequest extends React.Component{
                 deleteList: [ false, false, false, false, false, false, false, false, false, false ],
                 currentPage: page,
                 helps: res.data.Data,
-                maxPage: res.data.totalPages
+                maxPage: res.data.totalPages,
+                checkAll: false
             })
         })
     }

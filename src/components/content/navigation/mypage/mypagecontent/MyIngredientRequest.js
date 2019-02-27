@@ -125,7 +125,8 @@ export class MyIngredientRequest extends React.Component{
                 deleteList: [ false, false, false, false, false, false, false, false, false, false ],
                 currentPage: page,
                 products: res.data.Data,
-                maxPage: res.data.totalPages
+                maxPage: res.data.totalPages,
+                checkAll: false
             })
         })
     }
