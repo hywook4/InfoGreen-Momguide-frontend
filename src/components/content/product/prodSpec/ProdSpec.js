@@ -96,9 +96,20 @@ export class ProdSpec extends React.Component{
         const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
 
         let res = await axios.get(`${process.env.API_URL}/api/product/details?category=${category}&productId=${id}`);
+        
+        let rateAverage = 0;
+       
+        if(res.data.product.rateCount === 0){
+            rateAverage = 0
+        } else{
+            rateAverage = Math.round(res.data.product.rateSum/res.data.product.rateCount*100)/100;
+        }
+
+        console.log(rateAverage);
         this.setState({
             productData: res.data.product,
-            ingredientList: res.data.ingredient
+            ingredientList: res.data.ingredient,
+            rateAverage: rateAverage
         });
 
         res = await axios.get(`${process.env.API_URL}/api/ask/countIngredOpen?productIndex=${res.data.product.index}`);
@@ -524,7 +535,6 @@ export class ProdSpec extends React.Component{
             window.location.reload();
         } catch(e) {
             alert('에러가 발생하였습니다.');
-            return;
         }
     };
 

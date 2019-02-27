@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import './Header.css';
 import MOMGUIDE_LOGO_WHITE from '../../../assets/images/MOMGUIDE_LOGO_WHITE.png';
 import USER_ALARM from '../../../assets/images/alarm_on.png';
+import * as actions from '../../../actions/index';
 
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 
 class Header extends Component {
     render() {
+        const isUserNick = (this.props.userNickName === undefined) || (this.props.userNickName === null);
+        console.log(isUserNick);
         const loginTab =
-            ((localStorage.getItem('loginToken') === null) && (sessionStorage.getItem('loginToken') === null) ?
+            ((localStorage.getItem('loginToken') === null) && (sessionStorage.getItem('loginToken') === null) && isUserNick ? 
                 (<div className="header-signup-and-login">
                     <li className="nav-item active">
                         <Link to="/login" className="nav-link">로그인</Link>
@@ -83,6 +86,12 @@ const mapStateToProps = (state) => {
     });
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = (dispatch) => {
+    return({
+        handleLogout: () => {
+            return dispatch(actions.logout())
+        }
+    })
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

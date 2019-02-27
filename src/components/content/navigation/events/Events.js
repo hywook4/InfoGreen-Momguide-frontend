@@ -1,81 +1,222 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-
-import {StaticCard} from '../../../common/staticCard/StaticCard';
-import Search from '../../search/Search';
-import axios from 'axios';
-import { Card } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import './Events.css';
 
 export class Events extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            events: [],
-        }
-    }
-    
+        super(props);
 
-    componentWillMount() {
-        axios.post("http://13.125.89.0/chemical/event.php")
-            .then(res => {
-                this.setState({events: res.data});
-            })
+        // TODO
+        this.state = {
+            events: [{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: false
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            },{
+                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+                title: '뿌요뿌요',
+                contents: 'e스포츠',
+                startDate: '2018-09-11',
+                endDate: '2018-10-12',
+                end: true
+            }],
+            currentPage: 1,
+            totalPage: 2,
+            currentTab: "events", // events or winners
+            eventCategory: "전체 이벤트"
+        };
     }
+
+    changeTab = (tab) => {
+        // TODO : 해당하는 탭에 불러서 리스트에 넣어주기 
+        this.setState({
+            currentTab: tab,
+            currentPage: 1
+        })
+    }
+
+    changeCategory = (e) => {
+        console.log(e.target.value);
+        this.setState({
+            eventCategory: e.target.value,
+            currentPage: 1
+        })
+        // TODO : 해당하는 이벤트들 불러서 리스트에 넣어주기 
+        switch(e.target.value){
+            case "전체 이벤트":
+                break;
+            
+            case "진행중인 이벤트":
+                break;
+
+            case "지난 이벤트":
+                break;
+        }
+
+    }
+
+    // TODO
+    loadNextPage = () => {
+        this.setState({
+            currentPage: this.state.currentPage + 1
+        })
+        //TODO : 기존 리스트에 새로받은 값들 추가해주기
+    };
     
     render() {
-        return (
-            <div className="container-fluid">
-                <div className="row" style={{marginTop:8}}>
-                    <div className="col-sm-1">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerOne">
-                        <div className="tip-bnr-inr" style={{position: 'absolute', bottom: 15}}>
-                            <h5><b>12월 출석체크</b></h5>
-                            <p>매일 출석하고 포인트 받자!</p>
-                            <h6><Link to='#'>자세히 보기
-                            <i class="fa fa-angle-right"></i>
-                            </Link></h6>
+        const moreButton = (
+            <button className="events-more-button" onClick={() => {this.loadNextPage()}}>
+                더보기
+            </button>
+        );
+
+        const eventCards = (
+            this.state.events.map((item, i) => {
+                return (
+                    <Link to="/events/123" key={i}>
+                        <div className="events-card-item" >
+                            {item.end ? null : <div className="events-top-right">D-Day</div> /* TODO : 날짜 계산하기 */}
+                            <div className="events-card-item-image-container">
+                                {item.end ? <div className="events-end">종료된 이벤트 입니다.</div> : null}
+                                <img src={item.image} alt="events" />
+                            </div>
+                            <div className="events-bottom-left">
+                                <h5>{item.title}</h5>
+                                <h6>{item.contents}</h6>
+                            </div>
+                            <div className="events-bottom-right">
+                                {item.startDate + " ~ " + item.endDate}
+                            </div>
                         </div>
-                            
+                    </Link>
+                );
+            })
+        )
+
+        const winnerCards = (
+            this.state.events.map((item, i) => {
+                return (
+                    <Link to="/events/123" key={i}>
+                        <div className="events-card-item" >
+                            <div className="events-card-item-image-container">
+                                <img src={item.image} alt="events" />
+                            </div>
+                            <div className="events-bottom-left">
+                                <h5>{item.title}</h5>
+                                <h6>{item.contents}</h6>
+                            </div>
+                            <div className="events-bottom-right">
+                                {item.startDate + " ~ " + item.endDate}
+                            </div>
+                        </div>
+                    </Link>
+                );
+            })
+        )
+
+        return (
+            <div className="events-container">
+                <div className="events-header">
+                    <div className="events-header-title">
+                        이벤트
                     </div>
-    
-                    <div className="col-md-2 tipsBannnerTwo">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerThree">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerFour">
-                    </div>
-    
-                    <div className="col-md-2 tipsBannnerFive">
-                    </div>
-    
-                    <div className="col-sm-1">
-                    </div>
-    
                 </div>
-                <div className="row">
-                    <div className="col-md-12" style={{marginTop: 50, marginRight: 50}}>
-                        <Search />
+                <div className="events-navigation-container">
+                    <div className={`events-navigation-button ${this.state.currentTab==="events" ? "events-navigation-selected" : ""}`} 
+                    onClick={(e)=>{this.changeTab("events");}}>
+                        <select className="events-category" onChange={this.changeCategory} defaultValue="전체 이벤트">
+                            <option value="전체 이벤트">전체 이벤트</option>
+                            <option value="진행중인 이벤트">진행중인 이벤트</option>
+                            <option value="지난 이벤트">지난 이벤트</option>
+                        </select>
+                    </div>
+                    <div className={`events-navigation-button ${this.state.currentTab==="events" ? "" : "events-navigation-selected"}`} 
+                    onClick={(e)=>{this.changeTab("winners");}}>
+                        <div>당첨자 발표</div>
                     </div>
                 </div> 
-                <div className="tips-card-container">
-                    <Card.Group itemsPerRow={2} stackable={true}>
-                        {this.state.events.map((event) => 
-                            <StaticCard
-                                payload={event}
-                                index={event.index_number}
-                                section={"events"}
-                                image={event.image}
-                                thumbnail={`http://13.125.89.0/chemical/event_tip_thumbnail/${event.thumbnail}`}
-                                name={event.title}
-                                description={event.content}
-                            />
-                        )}
-                    </Card.Group>
+                <div className="events-card-container">
+
+                    {
+                        this.state.currentTab === "events" ? 
+                        eventCards : winnerCards
+                    }
+                        
                 </div>
+                {this.state.currentPage < this.state.totalPage ? moreButton : null}
             </div>
         )
     }

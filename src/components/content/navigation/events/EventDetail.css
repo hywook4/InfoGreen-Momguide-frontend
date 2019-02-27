@@ -1,0 +1,120 @@
+.event-detail-container {
+    width: 980px;
+    min-height: 500px;
+    margin: 100px auto;
+    overflow: hidden;
+    
+}
+
+.event-detail-header {
+    width: 100%;
+    height: 150px;
+}
+
+.event-detail-header-left{
+    display: inline-block;
+    width: 90%;
+    height: 100%;
+    vertical-align: top;
+}
+
+.event-detail-header-left h1{
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.event-detail-header-left h5{
+    font-size: 18px;
+    color: #32B8A4;
+    margin-bottom: 15px;
+}
+
+.event-detail-header-left h6{
+    font-size: 15px;
+    color: gray;
+}
+
+.event-detail-header-right{
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+}
+
+.event-detail-day{
+    border: 2px solid #32B8A4;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 57px;
+    font-size: 15px;
+    font-weight: bold;
+    float: right;
+    margin: 33px 0px;
+}
+
+.event-detail-content{
+    width: 100%;
+    min-height: 200px;
+    background-color: lightslategray;
+}
+
+.event-detail-bottom{
+    width: 100%;
+    height: 50px;
+    margin-top: 40px;
+}
+
+.event-detail-icon-active{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    color: #32B8A4;
+    float: right;
+}
+
+.event-detail-icon-inactive{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    color: gray;
+    float: right;
+}
+
+.event-detail-icon-inactive i, .event-detail-icon-active i{
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    margin: 0px auto;
+}
+
+.event-detail-icon-inactive p, .event-detail-icon-active p{
+    font-size: 10px;
+    text-align: center;
+}
+
+.event-detail-button-box{
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+}
+
+.event-detail-button{
+    width: 320px;
+    height: 50px;
+    background-color:#32b8a4;
+    color: white;
+    outline: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    margin: 0px auto;
+}
+
+.event-detail-button:focus, .event-detail-button:active{
+    outline: none;
+    border: none;
+}
+
