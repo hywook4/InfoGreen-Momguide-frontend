@@ -97,7 +97,7 @@ export class ProdSpecReviewSummary extends React.Component {
                             </div>
                             <div className="prod-spec-review-summary-modal-footer">
                                 {this.state.images.map((image, i) => (
-                                    <img src={image.url} onClick={()=>this.handleImageClick(i)} alt=""
+                                    <img key={i} src={image.url} onClick={()=>this.handleImageClick(i)} alt=""
                                     />
                                 ))}
                             </div>

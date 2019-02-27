@@ -80,6 +80,8 @@ export class ProdSpec extends React.Component{
         reviewText: '',
         imageFiles: [],
 
+        bestReview: null,
+        sorting: 'late',
         reviews: [],
         reviewPage: 1,
         reviewTotalPages: 0,
@@ -106,7 +108,6 @@ export class ProdSpec extends React.Component{
             rateAverage = Math.round(res.data.product.rateSum/res.data.product.rateCount*100)/100;
         }
 
-        console.log(rateAverage);
         this.setState({
             productData: res.data.product,
             ingredientList: res.data.ingredient,
@@ -123,6 +124,17 @@ export class ProdSpec extends React.Component{
             const headers = TokenUtil.getTokenRequestHeader(token);
 
             try {
+                res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
+                let newStateObj = {
+                    gender: res.data.gender,
+                    nickname: res.data.nickName,
+                    birthYear: res.data.memberBirthYear,
+                    childBirthYear: res.data.childBirthYear,
+                    imageUrl: res.data.photoUrl,
+                    login: true
+                };
+                this.setState(newStateObj);
+
                 res = await axios.get(`${process.env.API_URL}/api/auth/checkHomeLike?productIndex=${id}&isCosmetic=${category === 'cosmetic' ? 'true' : 'false'}`, {
                     headers: headers
                 });
@@ -147,35 +159,33 @@ export class ProdSpec extends React.Component{
                 });
 
                 res = await axios.get(`${process.env.API_URL}/api/review/product/list/count?category=${category}&id=${id}`);
-                console.log(res.data);
 
                 this.setState({
                     reviewCount: res.data.count
                 });
 
-                res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
-                let newStateObj = {
-                    login: true,
-                    gender: res.data.gender,
-                    nickname: res.data.nickName,
-                    birthYear: res.data.memberBirthYear,
-                    childBirthYear: res.data.childBirthYear,
-                    imageUrl: res.data.photoUrl
-                };
-
                 res = await axios.get(`${process.env.API_URL}/api/review/status?category=${category}&id=${id}`, {headers: TokenUtil.getTokenRequestHeader(token)});
                 newStateObj = {
-                    ...newStateObj,
                     reviewUploaded: res.data.exist,
                     reviewApiLoaded: true
                 };
-
                 this.setState(newStateObj);
 
-                await this.handleLoadReview(1);
+                res = await axios.get(`${process.env.API_URL}/api/review/best?category=${category}&id=${id}`, {
+                    headers: TokenUtil.getTokenRequestHeader(token)
+                });
+                this.setState({
+                    bestReview: res.data
+                });
 
+                await this.handleLoadReview(1);
             } catch (e) {
             }
+
+            res = await axios.get(`${process.env.API_URL}/api/review/best?category=${category}&id=${id}`);
+            this.setState({
+                bestReview: res.data
+            });
         } else {
             this.setState({
                 reviewApiLoaded: true
@@ -543,6 +553,26 @@ export class ProdSpec extends React.Component{
         }
     };
 
+    handleReviewSorting = async (sorting) => {
+        const id = this.props.match.params.id;
+        const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return;
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        const res = await axios.get(`${process.env.API_URL}/api/review/product/list?category=${category}&id=${id}&page=${1}&sorting=${sorting}`, {
+            headers: headers
+        });
+        this.setState({
+            reviews: res.data.reviews,
+            reviewPage: 1,
+            nextPageExist: res.data.nextPageExist,
+            reviewTotalPages: res.data.totalPages,
+            sorting: sorting
+        });
+    };
+
     render = () => {
         const id = this.props.match.params.id;
         const productData = this.state.productData;
@@ -566,8 +596,8 @@ export class ProdSpec extends React.Component{
             selectedText = openness.great;
         }
 
-        const loginContainer = (message) => (
-            <div className="prod-spec-login-container">
+        const loginContainer = (message, floatLeft) => (
+            <div className={`prod-spec-login-container ${floatLeft ? "float-left" : ""}`}>
                 <div>{message}</div>
                 <button onClick={()=>{
                     history.push('/login');
@@ -776,7 +806,6 @@ export class ProdSpec extends React.Component{
                     </div>
                 </div>) : (!this.state.login && this.state.reviewApiLoaded ?
                 (loginContainer('리뷰 작성은 로그인 후 이용하실 수 있습니다.')) : null));
-
         return (<React.Fragment>
                 <div className="prod-spec"> {/* Outer box contains every componenets */}
                     <div className="cate-header"> {/* Category header */}
@@ -935,17 +964,28 @@ export class ProdSpec extends React.Component{
                         <ProdSpecReviewSummary category={category} id={id}/>
                         <div className="prod-spec-review-container">
                             <div className="prod-spec-review-title">베스트 리뷰</div>
-                            <ReviewCard />
+                            {this.state.bestReview ? <ReviewCard data={this.state.bestReview} isLogin={this.state.login}/> : null}
                         </div>
                         <div className="prod-spec-review-container">
                             <div className="prod-spec-review-title">
                                 리뷰 전체 보기
                             </div>
+                            <div className="prod-spec-sorting-menu">
+                                <span className={this.state.sorting==='late' ? 'selected' : ''} onClick={()=>this.handleReviewSorting('late')}>
+                                    최신순
+                                </span>
+                                <span className={this.state.sorting==='like' ? 'selected' : ''} onClick={()=>this.handleReviewSorting('like')}>
+                                    호감수
+                                </span>
+                                <span className={this.state.sorting==='rating' ? 'selected' : ''} onClick={()=>this.handleReviewSorting('rating')}>
+                                    평점수
+                                </span>
+                            </div>
                             {this.state.reviews.map((review, i) => (
-                                <ReviewCard data={review} key={i}/>
+                                <ReviewCard data={review} key={i} isLogin={this.state.login}/>
                             ))}
                         </div>
-                        {loginContainer('로그인 후 이용하실 수 있습니다.')}
+                        {!this.state.login ? loginContainer('로그인 후 이용하실 수 있습니다.', true) : null}
                     </div>
                 </div>
             </React.Fragment>
