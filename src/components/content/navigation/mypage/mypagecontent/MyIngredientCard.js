@@ -5,10 +5,7 @@ import TokenUtils from '../../../../../util/TokenUtil';
 import axios from 'axios';
 
 
-import { connect } from 'react-redux';
-import * as actions from '../../../../../actions';
-
-class MyIngredientCard extends React.Component{
+export default class MyIngredientCard extends React.Component{
     
     constructor(props) {
         super(props);
@@ -20,13 +17,6 @@ class MyIngredientCard extends React.Component{
             name: this.props.data.title,
             content: this.props.data.requestContent
         });
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if(nextProps.check !== prevState.check){
-            return { check: nextProps.check };
-        }
-        return null;
     }
 
     deleteList = () => {
@@ -49,17 +39,14 @@ class MyIngredientCard extends React.Component{
         this.props.changeCardCheck(this.state.index);
     }
 
-    modifyRequest = (e) => {
-        const { storeIngredAnalInfo } = this.props;
-        storeIngredAnalInfo(this.props.data);
-    }
-
     render(){
         const data = this.props.data;
         const date = data.created_at.slice(2,10);
         const category = data.isCosmetic ? '유아용 화장품' : '가정용 화학제품';
         const productName = data.title;
         const requestContent = data.requestContent;
+        const responseContent = data.responseContent;
+        console.log(responseContent);
         return(
             <div className="myingredient-card">
                 <div className="myingredient-card-checkbox">
@@ -77,8 +64,8 @@ class MyIngredientCard extends React.Component{
                 </div>
                 <div className="myingredient-card-answer">
                     {
-                        data.answered ? 
-                        <Link to={data.photoUrl}>
+                        responseContent !== null ? 
+                        <Link to={`ingredient-analysis-request/${this.props.data.index}`}>
                             <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button>
                         </Link> : // TODO : 누르면 상세 링크연결
                         <button type="button" className="myhelp-answer-off">답변&nbsp;중</button>
@@ -86,7 +73,7 @@ class MyIngredientCard extends React.Component{
                 </div>
                 <div className="myingredient-card-delete">
                     {
-                        data.answered ? 
+                        responseContent !== null ? 
                         "" :
                         <Link to={`ingredient-analysis-request/${this.props.data.index}`}>
                             <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
@@ -117,15 +104,3 @@ class MyIngredientCard extends React.Component{
         
     }
 }
-
-const mapStateToProps = null;
-
-const mapDispatchToProps = (dispatch) => {
-    return ({
-        storeIngredAnalInfo: (info) => {
-            return dispatch(actions.storeIngredAnalInfo(info));
-        }
-    })
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyIngredientCard);

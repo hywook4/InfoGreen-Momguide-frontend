@@ -165,7 +165,6 @@ export class MyIngredientRequest extends React.Component{
     }
    
     render(){
-        
         return(
             <div className="myingredient-container">
                 <div className="myingredient-header">
