@@ -748,3 +748,27 @@ h6.prod-spec-detail-header-inline {
     border-bottom: 2px solid lightgrey;
     padding-bottom: 10px;
 }
+
+.prod-spec-login-container {
+    margin-top: 30px;
+    height: 100px;
+}
+
+.prod-spec-login-container > div {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.prod-spec-login-container > button {
+    margin-top: 15px;
+    width: 320px;
+    height: 60px;
+    color: white;
+    background-color: #32B8A4;
+    border: none;
+    border-radius: 10px;
+}
+
+.prod-spec-login-container > button:hover {
+    cursor: pointer;
+}

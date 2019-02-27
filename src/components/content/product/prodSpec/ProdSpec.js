@@ -12,6 +12,7 @@ import grayCircle from '../../../../assets/images/common_icons/gray_circle.png';
 import grayLine from '../../../../assets/images/common_icons/gray_line.png';
 import { ProdSpecReviewSummary } from './ProdSpecReviewSummary';
 import { ReviewCard } from './ReviewCard';
+import history from '../../../../history/history';
 
 import axios from 'axios';
 
@@ -175,6 +176,10 @@ export class ProdSpec extends React.Component{
 
             } catch (e) {
             }
+        } else {
+            this.setState({
+                reviewApiLoaded: true
+            });
         }
     };
 
@@ -561,6 +566,16 @@ export class ProdSpec extends React.Component{
             selectedText = openness.great;
         }
 
+        const loginContainer = (message) => (
+            <div className="prod-spec-login-container">
+                <div>{message}</div>
+                <button onClick={()=>{
+                    history.push('/login');
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
+                }}>로그인</button>
+            </div>
+        );
+
         const reviewAdditionTab = (
             this.state.login && !this.state.reviewUploaded ?
                 (<div className="prod-spec-review-container">
@@ -759,9 +774,8 @@ export class ProdSpec extends React.Component{
                             </div>
                         </div>
                     </div>
-                </div>) : (!this.state.login && this.state.reviewApiLoaded ? (<div className="prod-spec-review-container">
-                    <button onClick={(e)=>{}}>로그인</button>
-                </div>) : null));
+                </div>) : (!this.state.login && this.state.reviewApiLoaded ?
+                (loginContainer('리뷰 작성은 로그인 후 이용하실 수 있습니다.')) : null));
 
         return (<React.Fragment>
                 <div className="prod-spec"> {/* Outer box contains every componenets */}
@@ -931,6 +945,7 @@ export class ProdSpec extends React.Component{
                                 <ReviewCard data={review} key={i}/>
                             ))}
                         </div>
+                        {loginContainer('로그인 후 이용하실 수 있습니다.')}
                     </div>
                 </div>
             </React.Fragment>
