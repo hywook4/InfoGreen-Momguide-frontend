@@ -1,8 +1,9 @@
 import React from 'react';
 import './MyProfile.css';
 import { connect } from 'react-redux';
-
+import * as actions from '../../../../../actions';
 import {FollowCard} from './FollowCard'
+import history from '../../../../../history/history';
 
 class MyProfile extends React.Component{
 
@@ -63,6 +64,12 @@ class MyProfile extends React.Component{
             return ('자녀 ' + childAge + '세');
         }
     }
+
+    handleLogout = (e) => {
+        const { handleLogout } = this.props;
+        handleLogout();
+        history.push('/');
+    }
     render(){
 
         return(
@@ -98,6 +105,9 @@ class MyProfile extends React.Component{
                         <div className="more-follow-card" onClick={this.addCards}>더보기</div>
                     </div>
                 </div> */}
+                <div className="myprofile-logout">
+                    <button type="button" id="logout-button" onClick={this.handleLogout}>로그아웃</button>
+                </div>
             </React.Fragment>
             
         )
@@ -115,6 +125,12 @@ const mapStateToProps = (state) => {
     });
 };
 
-const mapDispatchToProps = null;
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        handleLogout: () => {
+            return dispatch(actions.logout());
+        }
+    })
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);
