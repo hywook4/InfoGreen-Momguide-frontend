@@ -109,3 +109,12 @@
     margin-bottom: 20px;
     background: none;
 }
+
+.tips-bottom-left h5{
+    font-weight: 900;
+}
+
+.tips-bottom-left h6{
+    font-size: 12px;
+    color: gray;
+}

@@ -14,6 +14,7 @@ import {Signup} from './content/navigation/signup/Signup';
 import {SignupOk} from './content/navigation/signup/SignupOk';
 import {TipEvent} from './content/tipEvent/TipEvent';
 import {Tips} from './content/navigation/tips/Tips';
+import {TipDetail} from './content/navigation/tips/TipDetail';
 import {Product} from './content/product/Product';
 import {LoggedIn} from './content/navigation/request/loggedIn/LoggedIn';
 import {RequestComment} from './content/navigation/request/requestComment/RequestComment';
@@ -61,7 +62,7 @@ export class MainPage extends Component {
                                             <Route exact path="/events" component={Events} />
                                             <Route path="/events/:id" render={(props) => <EventDetail {...props} section={"events"} />} />
                                             <Route exact path="/tips" component={Tips} />
-                                            <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
+                                            <Route path="/tips/:id" render={(props) => <TipDetail {...props} section={"tips"} />} />
                                             <Route path="/product-details/:category/:id" component={ProductSpecification} />
                                             <Route path="/request/request-comment" component={RequestComment} />
                                             <Route path="/request/contact-us" component={ContactUs} />

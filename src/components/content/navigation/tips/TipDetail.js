@@ -1,5 +1,5 @@
 import React from 'react';
-import './EventDetail.css';
+import './TipDetail.css';
 import history from '../../../../history/history'
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
 
@@ -14,19 +14,19 @@ const user = {
     additionalProfile: true
 }
 
-export class EventDetail extends React.Component {
+export class TipDetail extends React.Component {
     constructor(props) {
         super(props);
 
         // TODO
         this.state = {
             user: user,
-            event: {
+            tip: {
                 image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
                 title: '뿌요뿌요',
+                subtitle: '뿌요는 재미있다',
                 contents: 'e스포츠',
-                startDate: '2018-09-11',
-                endDate: '2018-10-12',
+                date: '2019.02.28',
                 end: false
             },
             comments: [
@@ -156,37 +156,33 @@ export class EventDetail extends React.Component {
         );
 
         return (
-            <div className="event-detail-container">
-                <div className="event-detail-header">
-                    <div className="event-detail-header-left">
-                        <h5>2019.01.01 ~ 2019.02.02</h5>
-                        <h1>에부부의 탄생일</h1>
-                        <h6>에부부가 탄생하였따!</h6>
-                    </div>
-                    <div className="event-detail-header-right">
-                        <div className="event-detail-day">D-14</div>
+            <div className="tip-detail-container">
+                <div className="tip-detail-header">
+                    <div className="tip-detail-header-left">
+                        <h5>{this.state.tip.date}</h5>
+                        <h1>{this.state.tip.title}</h1>
+                        <h6>{this.state.tip.subtitle}</h6>
                     </div>
                 </div>
-                <div className="event-detail-content">
+                <div className="tip-detail-content">
                 
                 </div>
 
-                <div className="event-detail-bottom">
-                    <div className="event-detail-icon-inactive">
+                <div className="tip-detail-bottom">
+                    <div className="tip-detail-icon-inactive">
                         <i className="fa fa-share-alt"/>
                         <p>공유하기</p>
                     </div>
-                    <div className="event-detail-icon-active" style={{marginRight: '15px'}}>
+                    <div className="tip-detail-icon-active" style={{marginRight: '15px'}}>
                         <i className="fa fa-heart"/>
                         <p>좋아요</p>
                     </div>
                 </div>
-                <div className="event-detail-button-box">
+                <div className="tip-detail-button-box">
                     {
                         this.state.loggedIn ? 
-                        <button type="button" className="event-detail-button" data-toggle="modal" 
-                        data-target={this.state.user.additionalProfile ? "#applyEvent" : "#additionalData"} onClick={this.onApply}>신청하기</button> :
-                        <button type="button" className="event-detail-button" >로그인</button>
+                        null :
+                        <button type="button" className="tip-detail-button" >로그인</button>
                     }
                 </div>
                 <div className="comments-container">
@@ -220,43 +216,6 @@ export class EventDetail extends React.Component {
                         }
                         {this.state.commentPage < this.state.totalCommentPage ? moreButton : null}
                     </div>
-
-                    <div className="modal fade" id="applyEvent" role="dialog">
-                        <div className="modal-dialog modal-sm">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h4 className="modal-title">이벤트 신청</h4>
-                                    <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div className="modal-body">
-                                    <h6 className="event-apply-confirm">성공적으로 신청되었습니다!</h6>
-                                    <div className="modal-button-center">
-                                        <button type="button" className="event-confirm-button btn-default" data-dismiss="modal">확인</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="modal fade" id="additionalData" role="dialog">
-                        <div className="modal-dialog modal-sm">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h4 className="modal-title event-apply-header">이벤트 신청</h4>
-                                    <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div className="modal-body">
-                                    <p className="event-apply-need">수집정보가 입력되어있지 않습니다. 
-                                    이벤트 참여를 위해서는 수집정보가 필요합니다.</p>
-                                    <div className="modal-button-center">
-                                        <button type="button" className="event-confirm-button btn-default" data-dismiss="modal"
-                                        onClick={this.toProfileModify}>수집정보 입력하기</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         )
