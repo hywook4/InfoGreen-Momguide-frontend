@@ -1,32 +1,47 @@
 import React from 'react';
 import './Comment.css';
 import REPORT_ICON from '../../../assets/images/report.png';
-
+import axios from 'axios';
+import {TokenUtil} from '../../../util';
 import { ReportModal }  from '../ReportModal/ReportModal';
 
-const user = {
-    index: 1,
-    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-    name: '테스트',
-    sex: '남자',
-    age: '23',
-    childAge: '1',
-}
+
 export class SubcommentCard extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: user,
+            user: props.user,
+            postType: props.postType,
             subcomment : props.data,
             editable: false,
-            reportModalId: "report" + props.data.commentIndex + props.data.index
+            reportModalId: "report" + props.data.index
         }
     }
 
-    onEdit = () => {
+    onEdit = async () => {
         if(this.state.editable){ // TODO : 수정한 경우에 수정 요청 보내기 
-            console.log("대댓글 수정하기 : " + this.state.subcomment.content);
+            const token = TokenUtil.getLoginToken();
+            if(token === null) {
+                alert("권한이 없습니다.");
+                return;
+            }
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            try{
+                await axios({
+                    method: 'put',
+                    url: `${process.env.API_URL}/api/${this.state.postType.type}/comment`,
+                    headers: headers,
+                    data: {
+                        content: this.state.subcomment.content,
+                        index: this.state.subcomment.index,
+                        tipIndex: this.state.postType.index
+                    }
+                })
+            } catch(error){
+                alert("댓글 수정에 실패하였습니다.")
+            }
         }
 
         this.setState({
@@ -34,8 +49,30 @@ export class SubcommentCard extends React.Component {
         })
     }
 
-    onDelete = () => {
-        console.log("delete 대댓글 : " + this.state.subcomment.content);
+    onDelete = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("권한이 없습니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'delete',
+                url: `${process.env.API_URL}/api/${this.state.postType.type}/comment`,
+                headers: headers,
+                data: {
+                    index: this.state.subcomment.index,
+                    tipIndex: this.state.postType.index
+                }
+            });
+        } catch(error) {
+            alert("댓글 삭제에 실패하였습니다.");
+        }
+        
+
+        this.props.getSubcomments();
     }
 
     subcommentChange = (e) => {
@@ -78,6 +115,24 @@ export class SubcommentCard extends React.Component {
         })
     }
 
+    subcommentProfile = () => {
+        if(this.state.subcomment.creator.index === undefined){
+            return (
+                null
+            )
+        } else{
+            return (
+                <React.Fragment>
+                    <p>{this.state.subcomment.creator.nickName}</p>
+                    <div>{this.state.subcomment.creator.gender}</div>
+                    <div>{this.state.subcomment.creator.memberBirthYear}세</div>
+                    <div>자녀{this.state.subcomment.creator.childBirthYear}세</div>
+                    <span>{this.state.subcomment.created_at}</span>
+                </React.Fragment>
+            )
+        }
+    }
+
     render() {
         const liked = { color: "#32b8a4"}
         const disliked = {color: "red"}
@@ -97,14 +152,12 @@ export class SubcommentCard extends React.Component {
             <div className="subcomment-card">
                 <div className="subcomment-content">
                     <div className="subcomment-top">
-                        <p>{subcomment.name}</p>
-                        <div>{subcomment.sex}</div>
-                        <div>{subcomment.age}세</div>
-                        <div>자녀{subcomment.childAge}세</div>
-                        <span>{subcomment.date}</span>
-                        
                         {
-                            this.state.user.index === subcomment.index ? editButton : null
+                            this.subcommentProfile()
+                        }
+
+                        {
+                            this.state.user.index === subcomment.creator.index ? editButton : null
                         }
                         
                     </div>

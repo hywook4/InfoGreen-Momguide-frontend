@@ -1,112 +1,41 @@
 import React from 'react';
 import './Comment.css';
+import axios from 'axios';
+import {TokenUtil} from '../../../util';
 import REPORT_ICON from '../../../assets/images/report.png';
 
 import { SubcommentCard } from './SubcommentCard';
 import { ReportModal }  from '../ReportModal/ReportModal';
 
-
-const user = {
-    index: 1,
-    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-    name: '테스트',
-    sex: '남자',
-    age: '23',
-    childAge: '1',
-}
 export class CommentCard extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: user,
             comment: props.data,
-            subcomments : [
-                {
-                    index: 1,
-                    commentIndex: 1,
-                    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                    name: '테스트',
-                    sex: '남자',
-                    age: '23',
-                    childAge: '1',      
-                    date: '2018.02.03 12:00',
-                    content: '와 에 정지네요',
-                    likes: 5,
-                    dislikes: 5,
-                    likePressed: true,
-                    dislikePressed: false
-                },
-                {
-                    index: 2,
-                    commentIndex: 2,
-                    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                    name: '부부',
-                    sex: '남자',
-                    age: '23',
-                    childAge: '53',
-                    date: '2018.02.03 12:00',
-                    content: '와',
-                    likes: 10,
-                    dislikes: 5,
-                    likePressed: true,
-                    dislikePressed: true
-                },
-                {
-                    index: 3,
-                    commentIndex: 3,
-                    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                    name: '234부',
-                    sex: '남자',
-                    age: '23',
-                    childAge: '53',
-                    date: '2018.02.03 12:00',
-                    content: '와네요',
-                    likes: 10,
-                    dislikes: 5,
-                    likePressed: false,
-                    dislikePressed: false
-                },
-                {
-                    index: 4,
-                    commentIndex: 4,
-                    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                    name: '162153',
-                    sex: '남자',
-                    age: '23',
-                    childAge: '53',
-                    date: '2018.02.03 12:00',
-                    content: '와정말 멋지네요',
-                    likes: 10,
-                    dislikes: 5,
-                    likePressed: true,
-                    dislikePressed: true
-                },
-                {
-                    index: 1,
-                    commentIndex: 5,
-                    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                    name: '테스트',
-                    sex: '남자',
-                    age: '23',
-                    childAge: '1',
-                    date: '2018.02.03 12:00',
-                    content: '하.....',
-                    likes: 5,
-                    dislikes: 5,
-                    likePressed: true,
-                    dislikePressed: false
-                },
-            ],
-            totalSubcommentPage: 5,
+            postType: props.postType,   // postType.type : 'event or tip'  postType.index : index
+            subcomments : [],
+            totalSubcommentPage: 0,
             subcommentPage: 1,
             subcommentOpen: false,
             mySubcomment: "",
             editable: false,
-            reportModalId: "report" + props.data.index
+            reportModalId: "report" + props.data.index,
+            deleted: false
         } 
     }
 
+    componentDidMount = async () => {
+        const data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${this.state.subcommentPage}`);
+        
+        const subcomments = data.data.childComments;
+        const totalPage = data.data.totalPages;
+
+        this.setState({
+            subcomments: subcomments,
+            totalSubcommentPage: totalPage,
+        })
+    }
 
     foldSubcomment = () => {
         this.setState({
@@ -114,9 +43,17 @@ export class CommentCard extends React.Component {
         })
     }
 
-    loadPage = () => { 
+    loadPage = async () => { 
+        const nextPage = this.state.subcommentPage + 1;
+        let data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${nextPage}`);
+        console.log(data);
+        let subcomments = this.state.subcomments;
+        subcomments = subcomments.concat(data.data.childComments);
+
         this.setState({
-            subcommentPage: this.state.subcommentPage + 1
+            subcommentPage: nextPage,
+            totalSubcommentPage: data.data.totalPages,
+            subcomments: subcomments
         })
     }
 
@@ -126,9 +63,44 @@ export class CommentCard extends React.Component {
         })
     }
 
-    subcommentSubmit = () => {
-        //TODO 해당하는 리뷰에 댓글 달기 요청 및 재
-        console.log(this.state.mySubcomment);
+    subcommentSubmit = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("권한이 없습니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'post',
+                url: `${process.env.API_URL}/api/tip/childComment`,
+                headers: headers,
+                data: {
+                    content: this.state.mySubcomment,
+                    commentIndex: this.state.comment.index
+                }
+            });
+
+        } catch(error) {
+            alert("대댓글 작성에 실패하였습니다.");
+        }
+        
+        let subcomments = [];
+        let data;
+
+        for(let a = 1; a <= this.state.subcommentPage; a++){
+            data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${a}`);
+            subcomments = subcomments.concat(data.data.childComments)
+        }
+
+        const totalPage = data.data.totalPages;
+
+        this.setState({
+            mySubcomment: "",
+            subcomments: subcomments,
+            totalSubcommentPage: totalPage,
+        })
 
     }
 
@@ -140,17 +112,62 @@ export class CommentCard extends React.Component {
         })
     }
 
-    onEdit = () => {
+    onEdit = async () => {
         if(this.state.editable){ // TODO : 수정을 한 경우 수정 요청을 보냄
-            console.log("댓글 수정하기 : " + this.state.comment.content);
+            const token = TokenUtil.getLoginToken();
+            if(token === null) {
+                alert("권한이 없습니다.");
+                return;
+            }
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            try{
+                await axios({
+                    method: 'put',
+                    url: `${process.env.API_URL}/api/${this.state.postType.type}/comment`,
+                    headers: headers,
+                    data: {
+                        content: this.state.comment.content,
+                        index: this.state.comment.index,
+                        tipIndex: this.state.postType.index
+                    }
+                })
+            } catch(error){
+                alert("댓글 수정에 실패하였습니다.")
+            }
         }
         this.setState({
             editable: !this.state.editable
         })
     }
 
-    onDelete = () => {
-        console.log("delete this comment " + this.state.comment.content);
+    delete = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("권한이 없습니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'delete',
+                url: `${process.env.API_URL}/api/${this.state.postType.type}/comment`,
+                headers: headers,
+                data: {
+                    index: this.state.comment.index,
+                    tipIndex: this.state.postType.index
+                }
+            });
+        } catch(error) {
+            alert("댓글 삭제에 실패하였습니다.");
+        }
+    }
+
+    onDelete = async () => {
+        await this.delete();
+        
+        this.props.getComment();
     }
 
     onLike = () => {
@@ -185,6 +202,47 @@ export class CommentCard extends React.Component {
         })
     }
 
+    commentProfile = () => {
+        if(this.state.deleted || this.state.comment.creator.index === undefined){
+            return (
+                <div className="comment-user-profile">
+        
+                </div>
+            )
+        } else{
+            return (
+                <div className="comment-user-profile">
+                    <p>{this.state.comment.creator.nickName}</p>
+                    <div>{this.state.comment.creator.gender}</div>
+                    <div>{this.state.comment.creator.memberBirthYear}세</div>
+                    <div>자녀{this.state.comment.creator.childBirthYear}세</div>
+                    <span>{this.state.comment.created_at}</span>
+                </div>
+            )
+        }
+    }
+
+    getSubcomments = async () => {
+        let subcomments = [];
+        let data;
+        
+        for(let a = 1; a <= this.state.subcommentPage; a++){
+            data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${a}`);
+            console.log(data);
+            subcomments = subcomments.concat(data.data.childComments);
+        }
+
+        // react doesn't recoginze same num of object array ..... shit
+        this.setState({
+            subcomments: []
+        })
+    
+        this.setState({
+            subcomments: subcomments,
+            totalSubcommentPage: data.data.totalPages
+        });
+    }
+
     render() {
         const comment = this.state.comment;
 
@@ -199,8 +257,9 @@ export class CommentCard extends React.Component {
 
         const cards = (
             this.state.subcomments.map((data, index)=>{
+                console.log(data);
                 return (
-                    <SubcommentCard data={data} key={index}/>
+                    <SubcommentCard data={data} key={index} postType={this.state.postType} user={this.props.user} getSubcomments={this.getSubcomments}/>
                 )
             })
         )
@@ -217,16 +276,16 @@ export class CommentCard extends React.Component {
         return (
             <div className="comment-card">
                 <div className="comment-profile-img">
-                    <img src={comment.imageUrl} alt="profile-pic"/>
+                    {
+                        comment.creator.photoUrl === undefined ? null :
+                        <img src={comment.creator.photoUrl} alt="profile-pic"/>
+                    }
+                    
                 </div>
                 <div className="comment-content">
-                    <div className="comment-user-profile">
-                        <p>{comment.name}</p>
-                        <div>{comment.sex}</div>
-                        <div>{comment.age}세</div>
-                        <div>자녀{comment.childAge}세</div>
-                        <span>{comment.date}</span>
-                    </div>
+                    {
+                        this.commentProfile()
+                    }
                     <textarea className={this.state.editable ? "comment-text comment-text-on" : "comment-text"} maxLength="300" defaultValue={comment.content} 
                     disabled={this.state.editable ? "" : "disabled"} onChange={this.commentChange}/>
                     {
@@ -239,13 +298,13 @@ export class CommentCard extends React.Component {
                 <div className="comment-icon-buttons">
                     <div className="comment-modify-erase">
                         {
-                            this.state.user.index === comment.index ? editButton : null
+                            this.props.user.index === comment.creator.index ? editButton : null
                         }
                     </div>
                     <i className="fa fa-thumbs-o-up" style={comment.likePressed ? liked : null} onClick={this.onLike}/>
-                    <p>{comment.likes}</p>
+                    <p>{comment.likeNum}</p>
                     <i className="fa fa-thumbs-o-down" style={comment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
-                    <p>{comment.dislikes}</p>
+                    <p>{comment.hateNum}</p>
                     <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                 </div>
                 
@@ -264,7 +323,8 @@ export class CommentCard extends React.Component {
                         <div className="subcomment-write-box">
                             <div className="subcomment-write">
                                 {/*TODO: 로그인 여부에 따라 placeholder 바꾸기 및 버튼 활성화*/}
-                                <textarea className="subcomment-write-content" onChange={this.changeSubcomment} placeholder="댓글을 입력하세요. (최대 300자)"/>
+                                <textarea className="subcomment-write-content" onChange={this.changeSubcomment} placeholder="댓글을 입력하세요. (최대 300자)"
+                                value={this.state.mySubcomment}/>
                                 <button className="subcomment-write-submit" onClick={this.subcommentSubmit}>등록</button>
                             </div>
                         </div> :

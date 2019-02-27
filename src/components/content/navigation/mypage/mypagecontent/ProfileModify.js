@@ -75,6 +75,7 @@ class ProfileModify extends React.Component{
         if(token === null) {
             alert("권한이 없습니다.");
             history.push('/');
+            return;
         }
         const headers = TokenUtil.getTokenRequestHeader(token);
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import './EventDetail.css';
-import history from '../../../../history/history'
+import history from '../../../../history/history';
+import axios from 'axios';
+import dateFormat from 'dateformat';
+import moment from 'moment';
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
 
 
@@ -14,98 +17,47 @@ const user = {
     additionalProfile: true
 }
 
+const defaultEvent = {
+    index: 1,
+    title: "1",
+    subtitle: "1",
+    content: "1",
+    titleImageUrl: "https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg",
+    contentImageUrl: "https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg",
+    expirationDate: "2019-01-01 00:00:00",
+    created_at: "2019-01-01 00:00:00",
+    updated_at: "2019-01-01 00:00:00"
+}
+
 export class EventDetail extends React.Component {
     constructor(props) {
         super(props);
 
+        const firstPage = 1;
         // TODO
         this.state = {
             user: user,
-            event: {
-                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                title: '뿌요뿌요',
-                contents: 'e스포츠',
-                startDate: '2018-09-11',
-                endDate: '2018-10-12',
-                end: false
-            },
-            comments: [
-            ],
-            likes: 10,
+            eventIndex: props.match.params.id,
+            event: defaultEvent,
+            comments: [],
             loggedIn: true,
-            commentPage: 1,
-            totalCommentPage: 2,
+            commentPage: firstPage,
+            totalCommentPage: 1,
             myComment: "",
             sortBy : "최신순"
         };
     }
 
-    componentDidMount = () => {
-        const dummy = [
-            {
-                index: 1,
-                commentIndex: 1,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '테스트',
-                sex: '남자',
-                age: '23',
-                childAge: '1',
-                date: '2018.02.03 12:00',
-                content: 'ㅇㄻㄴㅇㄹ',
-                likes: 10,
-                dislikes: 10,
-                likePressed: true,
-                dislikePressed: false
-            },
-            {
-                index: 2,
-                commentIndex: 2,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '송재우',
-                sex: '여자',
-                age: '23',
-                childAge: '12',
-                date: '2018.02.03 12:00',
-                content: '20cm',
-                likes: 20,
-                dislikes: 20,
-                likePressed: false,
-                dislikePressed: true
-            },
-            {
-                index: 3,
-                commentIndex: 3,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '에부부',
-                sex: '남자',
-                age: '23',
-                childAge: '53',
-                date: '2018.02.03 12:00',
-                content: '와 에부부 정말 멋지네요',
-                likes: 10,
-                dislikes: 5,
-                likePressed: false,
-                dislikePressed: false
-            },
-            {
-                index: 4,
-                commentIndex: 4,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '에부부',
-                sex: '남자',
-                age: '23',
-                childAge: '53',
-                date: '2018.02.03 12:00',
-                content: '와 에부부 정말 멋지네요',
-                likes: 10,
-                dislikes: 5,
-                likePressed: true,
-                dislikePressed: true
-            }
-        ]
-        
+    componentDidMount = async () => {
+        let data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}`);
+        let event = data.data.event;
+        let comments = data.data.comments;
+
+        console.log(event);
+
         this.setState({
-            comments: dummy
+            event: event,
+            comments: comments
         })
     }
     
@@ -145,7 +97,21 @@ export class EventDetail extends React.Component {
         } else{
             console.log("추가 정보 수집하고와라");
         }
+    }
 
+    getDate = (d) => {
+        let date = new Date(d);
+
+        return (dateFormat(date, "yyyy-mm-dd"))
+    }
+
+    getDDay = (d) => {
+        let date = new Date(d);
+        let today = new Date();
+
+        today.setHours(0, 0, 0, 0);
+
+        return moment(date).diff(today, 'days');
     }
     
     render() {
@@ -155,20 +121,25 @@ export class EventDetail extends React.Component {
             </button>
         );
 
+        const event = this.state.event;
+
         return (
             <div className="event-detail-container">
                 <div className="event-detail-header">
                     <div className="event-detail-header-left">
-                        <h5>2019.01.01 ~ 2019.02.02</h5>
-                        <h1>에부부의 탄생일</h1>
-                        <h6>에부부가 탄생하였따!</h6>
+                        <h5>{this.getDate(event.created_at)} ~ {this.getDate(event.expirationDate)}</h5>
+                        <h1>{event.title}</h1>
+                        <h6>{event.subtitle}</h6>
                     </div>
                     <div className="event-detail-header-right">
-                        <div className="event-detail-day">D-14</div>
+                        { 
+                            this.getDDay(event.expirationDate) < 0 ? <div className="event-detail-day">끝</div> :
+                            <div className="event-detail-day">D-{this.getDDay(event.expirationDate)}</div>
+                        }
                     </div>
                 </div>
                 <div className="event-detail-content">
-                
+                    <img src={event.contentImageUrl} alt="event-content"/>
                 </div>
 
                 <div className="event-detail-bottom">

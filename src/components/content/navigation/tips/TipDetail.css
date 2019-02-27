@@ -59,6 +59,11 @@
     background-color: lightslategray;
 }
 
+.tip-detail-content img{
+    width: 100%;
+    object-fit: scale-down;
+}
+
 .tip-detail-bottom{
     width: 100%;
     height: 50px;
