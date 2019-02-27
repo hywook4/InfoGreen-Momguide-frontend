@@ -102,8 +102,8 @@ export class Tips extends React.Component {
 
         return (
             <div className="tips-container">
-                <div className="tips-header">
-                    <div className="tips-bottom-left">
+                <div className="events-header">
+                    <div className="events-header-title">
                         꿀팁
                     </div>
                 </div>
@@ -112,12 +112,10 @@ export class Tips extends React.Component {
                         return (
                             <Link to="/tips/123">
                                 <div className="tips-card-item" key={i}>
-                                    {item.end ? null : <div className="tips-top-right">D-Day</div>}
                                     <div className="tips-card-item-image-container">
-                                        {item.end ? <div className="tips-end">종료된 이벤트 입니다.</div> : null}
                                         <img src={item.image} alt="tips" />
                                     </div>
-                                    <div>
+                                    <div className="tips-bottom-left">
                                         <h5>{item.title}</h5>
                                         <h6>{item.contents}</h6>
                                     </div>

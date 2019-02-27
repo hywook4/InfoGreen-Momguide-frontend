@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './MainPage.css';
+import './common/CommentCard/Comment.css'
 import Header from './content/header/Header';
 import {Slider} from './content/slider/Slider';
 import {Footer} from './content/footer/Footer';
 import Search from './content/search/Search';
 import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
+import {EventDetail} from './content/navigation/events/EventDetail';
 import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
 import {ResetPassword} from './content/resetPassword/ResetPassword';
@@ -13,6 +15,7 @@ import {Signup} from './content/navigation/signup/Signup';
 import {SignupOk} from './content/navigation/signup/SignupOk';
 import {TipEvent} from './content/tipEvent/TipEvent';
 import {Tips} from './content/navigation/tips/Tips';
+import {TipDetail} from './content/navigation/tips/TipDetail';
 import {Product} from './content/product/Product';
 import {LoggedIn} from './content/navigation/request/loggedIn/LoggedIn';
 import {RequestComment} from './content/navigation/request/requestComment/RequestComment';
@@ -58,9 +61,9 @@ export class MainPage extends Component {
                                             <Route exact path="/login" component={Login} />
                                             <Route path="/login/findpassword" component={FindPassword} />
                                             <Route exact path="/events" component={Events} />
-                                            <Route path="/events/:id" render={(props) => <ViewMore {...props} section={"events"} />} />
+                                            <Route path="/events/:id" render={(props) => <EventDetail {...props} section={"events"} />} />
                                             <Route exact path="/tips" component={Tips} />
-                                            <Route path="/tips/:id" render={(props) => <ViewMore {...props} section={"tips"} />} />
+                                            <Route path="/tips/:id" render={(props) => <TipDetail {...props} section={"tips"} />} />
                                             <Route path="/product-details/:category/:id" component={ProductSpecification} />
                                             <Route path="/request/request-comment" component={RequestComment} />
                                             <Route path="/request/contact-us" component={ContactUs} />

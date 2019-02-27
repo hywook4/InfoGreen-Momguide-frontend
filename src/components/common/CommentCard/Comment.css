@@ -1,0 +1,501 @@
+
+.comments-container{
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+    margin-top: 60px;
+}
+
+.comment-write-box{
+    width: 100%;
+    height: 175px;
+}
+
+.comment-writer-profile{
+    display: inline-block;
+    width: 100px;
+    height: 100%;
+    vertical-align: top;
+    align-items: center;
+}
+
+.comment-writer-profile img{
+    height: 60px;
+    width: 60px;
+    margin: 0px auto;
+    border-radius: 100%;
+    margin-left: 20px;
+}
+
+.comment-writer-profile p{
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px 0px;
+}
+
+.comment-writer-profile div{
+    width: fit-content;
+    height: 20px;
+    border: 1px solid #32b8a4;
+    font-size: 10px;
+    color: #32b8a4;
+    margin: 5px auto;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0px 15px;
+}
+
+textarea.comment-write{
+    display: inline-block;
+    width: 814px;
+    height: 100%;
+    border: 1px solid gray;
+    padding: 10px 20px;
+    border-right: none;
+    resize: none;
+}
+
+textarea.comment-write:focus, textarea.comment-write:active{
+    outline: none;
+}
+
+button.comment-write-button{
+    display: inline-block;
+    width: 66px;
+    height: 100%;
+    vertical-align: top;
+    background-color:#32b8a4;
+    color: white;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.comment-list-header{
+    width: 100%;
+    height: 30px;
+    margin-top: 43px;
+    border-bottom: 1px solid gray;
+}
+
+.comment-number{
+    display: inline-block;
+    font-size: 15px;
+    color: gray;
+    float: left;
+}
+
+.comment-sort{
+    display: inline-block;
+    font-size: 15px;
+    color: gray;
+    float: right;
+    cursor: pointer;
+}
+
+.comment-sort-selected{
+    display: inline-block;
+    font-size: 15px;
+    color: #32b8a4;
+    float: right;
+    cursor: pointer;
+}
+
+.comment-number span{
+    color: #32b8a4;
+}
+
+.comment-list-box{
+    width: 100%;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.comment-card{
+    width: 100%;
+    min-height: 150px;
+    border-bottom: 1px solid lightgray;
+}
+
+.comment-profile-img{
+    width: 80px;
+    height: 150px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.comment-profile-img img{
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    margin-top: 20px;
+}
+
+.comment-content{
+    display: inline-block;
+    width: 760px;
+    min-height: 150px;
+    vertical-align: top;
+    margin-right: 20px;
+}
+
+.comment-user-profile{
+    margin-top: 25px;
+    height: 25px;
+}
+
+.comment-user-profile p {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px 4px;
+}
+
+.comment-user-profile div{
+    display: inline-block;
+    border: 1px solid #32b8a4;
+    font-size: 10px;
+    border-radius: 6px;
+    padding: 2px 10px;
+    color: #32b8a4;
+    margin: 0px 4px;
+}
+
+.comment-user-profile span{
+    display: inline-block;
+    font-size: 10px;
+    color: gray;
+    margin-left: 10px;
+}
+
+.comment-text{
+    margin-top: 10px;
+    width: 100%;
+    min-height: 30px;
+    font-size: 12px;
+    resize: none;
+    border: none;
+}
+
+.comment-text-on{
+    background-color: lightgray;
+}
+
+.comment-text:focus, .comment-text:active{
+    outline:none;
+}
+
+.comment-text:disabled{
+    background-color: transparent;
+}
+
+.comment-subcomment-fold{
+    display: inline-block;
+    cursor: pointer;
+    color: gray;
+    text-decoration: underline;
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+.comment-icon-buttons{
+    display: inline-block;
+    min-height: 150px;
+    width: 120px;
+    padding: 15px 0px;
+}
+
+.comment-icon-buttons i{
+    display: inline-block;
+    font-size: 23px;
+    color: gray;
+    cursor: pointer;
+}
+
+.comment-icon-buttons p{
+    display: inline-block;
+    width: 25px;
+    margin-left: 3px;
+    margin-top: -10px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.comment-icon-buttons img{
+    width: 23px;
+    height: 23px;
+    margin-top: -10px;
+    cursor: pointer;
+}
+
+.comment-modify-erase{
+    width: 100%;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.comment-modify-erase span{
+    float: right;
+    font-size:  20px;
+    color: gray;
+    cursor: pointer;
+}
+
+.comment-modify-erase i{
+    margin-top: 3px;
+    float: right;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.subcomment-card-box{
+    width: 100%;
+    min-height: 0px;
+}
+
+.subcomment-card{
+    width: 100%;
+    min-height: 180px;
+    background-color: lightgray;
+}
+
+.subcomment-content{
+    width: 95%;
+    border-bottom: 1px solid gray;
+    min-height: 180px;
+    margin: 0px auto;
+    padding-top: 40px;
+}
+
+.subcomment-top{
+    width: 865px;
+    margin: 0px auto;
+    height: 30px;
+}
+
+.subcomment-top p {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px 4px;
+}
+
+.subcomment-top div{
+    display: inline-block;
+    border: 1px solid #32b8a4;
+    font-size: 10px;
+    border-radius: 6px;
+    padding: 2px 10px;
+    color: #32b8a4;
+    margin: 0px 4px;
+}
+
+.subcomment-top span{
+    display: inline-block;
+    font-size: 10px;
+    color: gray;
+    margin-left: 10px;
+}
+
+.subcomment-top i{
+    float: right;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-right: 10px;
+    color: gray;
+    cursor: pointer;
+}
+
+.subcomment-top b{
+    float: right;
+    font-size: 15px;
+    color: gray;
+    cursor: pointer;
+}
+
+.subcomment-middle{
+    width: 865px;
+    margin: 0px auto;
+    min-height: 60px;
+}
+
+.subcomment-middle textarea{
+    width: 100%;
+    min-height: 60px;
+    border: 1px solid gray;
+    padding: 5px 5px;
+    resize: none;
+    font-size: 12px;
+}
+
+.subcomment-middle textarea:focus, .subcomment-middle textarea:active{
+    outline: none;
+}
+
+.subcomment-middle textarea:disabled{
+    background-color: white;
+}
+
+.subcomment-bottom{
+    width: 865px;
+    margin: 0px auto;
+    height: 25px;
+}
+
+.subcomment-bottom-icons{
+    width: fit-content;
+    height: 100%;
+    float: right;
+}
+
+.subcomment-bottom-icons i{
+    display: inline-block;
+    font-size: 23px;
+    color: gray;
+    cursor: pointer;
+}
+
+.subcomment-bottom-icons p{
+    display: inline-block;
+    width: 25px;
+    margin-left: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.subcomment-bottom-icons img{
+    width: 23px;
+    height: 23px;
+    margin-top: -10px;
+    cursor: pointer;
+}
+
+
+
+.comment-more-button{
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    background-color: transparent;
+    margin-top: 50px;
+}
+
+.comment-more-button:focus, .comment-more-button:active{
+    outline: none;
+}
+
+.subcomment-more-button{
+    font-size: 13px;
+    width: 100%;
+    height: 50px;
+    background-color: lightgray;
+    border: none;
+    color: gray;
+}
+
+.subcomment-more-button i{
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.subcomment-more-button:focus, .subcomment-more-button:active{
+    outline: none;
+}
+
+.subcomment-close-button{
+    font-size: 13px;
+    width: 100%;
+    height: 50px;
+    background-color: lightgray;
+    border: 1px solid black;
+    color: gray;
+}
+
+.subcomment-close-button:focus, .subcomment-close-button:active{
+    outline: none;
+}
+
+.subcomment-close-button i{
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.subcomment-write-box{
+    width: 100%;
+    min-height: 60px;
+    background-color: lightgray;
+}
+
+.subcomment-write{
+    width: 865px;
+    height: 60px;
+    margin: 0px auto;
+    background-color: black;
+}
+
+
+textarea.subcomment-write-content{
+    display: inline-block;
+    width: 800px;
+    height: 100%;
+    border: 1px solid gray;
+    padding: 5px 5px;
+    border-right: none;
+    resize: none;
+    font-size: 12px;
+}
+
+button.subcomment-write-submit{
+    display: inline-block;
+    width: 65px;
+    height: 100%;
+    vertical-align: top;
+    background-color:#32b8a4;
+    color: white;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.event-apply-confirm{
+    font-size: 20px;
+    color: gray;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.event-confirm-button{
+    display: inline-block;
+    color: white;
+    background-color: #32b8a4;
+    border-color: #32b8a4;
+    font-size: 16px;
+    letter-spacing: 1px;
+    outline: 0;
+    padding: 10px 20px;
+    top: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.modal-button-center{
+    width: fit-content;
+    margin: 0px auto;
+}
+
+.event-apply-header{
+    font-weight: bold;
+}
+
+.event-apply-need{
+    width: 100%;
+    color: gray;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0px 20px;
+}
