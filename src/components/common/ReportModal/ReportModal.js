@@ -1,5 +1,9 @@
 import React from 'react';
 import './ReportModal.css';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { TokenUtil } from '../../../util';
+import $ from 'jquery';
 
 const user = {
     index: 1,
@@ -8,49 +12,77 @@ const user = {
     sex: '남자',
     age: '23',
     childAge: '1',
-}
+};
+
 export class ReportModal extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             user: user,
-            reportContent: props.reportContent,
-            reportModalId: props.reportModalId,
-            checkedValue: "제품 내용과 관련 없는 리뷰",
-            content: ""
-        }
+            checkedValue: "제품 내용과 관련 없는 글",
+            content: "",
+        };
     }
 
     changeCheck = (e) => {
         this.setState({
             checkedValue: e.target.value
-        })
-    }
+        });
+    };
 
     changeContent = (e) => {
         this.setState({
             content: e.target.value
-        })
-    }
+        });
+    };
 
-    submitReport = () => {
-        console.log(this.state.checkedValue, this.state.content, this.state.reportContent.content);
-    }
+    submitReport = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return null;
+
+        if(this.state.content.length > 200) {
+            alert('신고 내용은 200글자 이하로 작성해주세요.');
+            return;
+        }
+
+        try {
+            const dataObj = {
+                reason: this.state.checkedValue,
+                reasonSpec: this.state.content
+            };
+
+            // review, comment, event
+            if(this.props.type === 'review') {
+                dataObj['reviewId'] = this.props.id;
+            }
+
+            await axios({
+                method: 'post',
+                url: `${process.env.API_URL}${this.props.objUrl}`,
+                headers: TokenUtil.getTokenRequestHeader(token),
+                data: dataObj
+            });
+
+            alert('신고가 접수되었습니다.');
+            $(`#${this.props.reportModalId}`).modal('hide');
+        } catch (e) {}
+    };
 
     render() {
 
         const reportType = [
-            "제품 내용과 관련 없는 리뷰",
-            "광고성, 대가성 리뷰",
-            "동일 브랜드에 대한 도배 및 중복 리뷰",
-            "연락처, SNS계정 등 개인정보가 포함된 리뷰",
-            "타인에게 불쾌감을 주는 리뷰",
+            "제품 내용과 관련 없는 글",
+            "광고성, 대가성 글",
+            "동일 브랜드에 대한 도배 및 중복 글",
+            "연락처, SNS계정 등 개인정보가 포함된 글",
+            "타인에게 불쾌감을 주는 글",
             "기타"
-        ]
+        ];
        
         return (
-            <div className="modal fade" id={this.state.reportModalId} role="dialog">
+            <div className="modal fade" id={this.props.reportModalId} role="dialog">
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -79,6 +111,13 @@ export class ReportModal extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
+
+ReportModal.propTypes = {
+    id: PropTypes.number,
+    reportModalId: PropTypes.string,
+    type: PropTypes.string,
+    objUrl: PropTypes.string
+};

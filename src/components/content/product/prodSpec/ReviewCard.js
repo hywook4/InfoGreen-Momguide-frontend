@@ -1,17 +1,28 @@
 import React from 'react';
 import './ReviewCard.css';
-import { CommonUtil } from '../../../../util';
+import { CommonUtil, TokenUtil } from '../../../../util';
 import $ from 'jquery';
 import greenCircle from '../../../../assets/images/common_icons/green_circle.png';
 import greenLine from '../../../../assets/images/common_icons/green_line.png';
 import grayCircle from '../../../../assets/images/common_icons/gray_circle.png';
 import grayLine from '../../../../assets/images/common_icons/gray_line.png';
+import inactiveHeart from '../../../../assets/images/heart_inactive.png';
+import activeHeart from '../../../../assets/images/heart_active.png';
+import reportIcon from '../../../../assets/images/report.png';
+import { ReportModal } from '../../../common/ReportModal/ReportModal';
+import axios from 'axios';
 
 export class ReviewCard extends React.Component {
-    state = {
-        selectedImageIndex: 0,
-        folded: true
-    };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selectedImageIndex: 0,
+            folded: true,
+            like: props.data ? props.data.like : null
+        };
+    }
 
     handleImageClick = (index) => {
         this.setState({
@@ -24,6 +35,30 @@ export class ReviewCard extends React.Component {
         const newObj = {};
         newObj[key] = value;
         this.setState(newObj);
+    };
+
+    handleLike = async (like) => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null)
+            return;
+
+        try {
+            await axios({
+                method: like ? 'post' : 'delete',
+                url: `${process.env.API_URL}/api/review/like`,
+                headers: TokenUtil.getTokenRequestHeader(token),
+                data: {
+                    reviewId: this.props.data.review.index
+                }
+            });
+            this.setState({
+                like: like
+            });
+        } catch(e) {}
+    };
+
+    handleReport = async (reviewIndex) => {
+        $(`#review-card-modal-${reviewIndex}`).modal('show');
     };
 
     render() {
@@ -64,7 +99,6 @@ export class ReviewCard extends React.Component {
 
         const contentLimit = 500;
 
-        console.log(data);
         return (
             <div className="review-card-container">
                 <div className="review-card-left">
@@ -226,13 +260,14 @@ export class ReviewCard extends React.Component {
                     </div>
                     <div className="review-card-addition">
                         {data.additionalReviews.map((item, i) => {
+                            const diffMonth = CommonUtil.diffMonths(new Date(data.review.baseDate), new Date());
                             return (
                                 <div className={`review-card-additional-review-container ${!item.ended?'success':'fail'}`} key={i}>
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <td className={`review-card-additional-review-duration ${!item.ended?'success':'fail'}`}>
-                                                    {CommonUtil.diffMonths(new Date(data.review.baseDate), new Date())}개월째 사용 {!item.ended?'':'중단'}
+                                                    {(diffMonth >= 12 ? '1년이상 사용 ' : diffMonth+'개월째 사용 ') + (!item.ended?'':'중단')}
                                                 </td>
                                                 <td className="review-card-additional-review-detail">
                                                     {item.content.split('\n').map((item, key) => {
@@ -245,6 +280,11 @@ export class ReviewCard extends React.Component {
                                 </div>
                             );
                         })}
+                        <div className="review-card-icon">
+                            <img src={this.state.like ? activeHeart : inactiveHeart} onClick={()=>this.handleLike(!this.state.like)} alt="" />
+                            <img src={reportIcon} onClick={()=>this.handleReport(data.review.index)} alt="" />
+                        </div>
+                        <ReportModal reportModalId={`review-card-modal-${data.review.index}`} id={data.review.index} type={'review'} objUrl={'/api/review/report'}/>
                     </div>
                 </div>
             </div>

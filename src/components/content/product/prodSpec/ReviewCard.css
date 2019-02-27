@@ -231,6 +231,20 @@
     word-break: break-all;
 }
 
+.review-card-icon {
+    margin-top: -15px;
+    text-align: right;
+}
+
+.review-card-icon > img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.review-card-icon > img:hover {
+    cursor: pointer;
+}
 
 
 
