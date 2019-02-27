@@ -5,7 +5,6 @@ class MyIngredientDetail extends React.Component{
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             type: this.props.analIsCosmetic,
             title: this.props.analName,

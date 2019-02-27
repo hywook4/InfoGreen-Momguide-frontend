@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './MyHelpRequest.css';
-
+import TokenUtils from '../../../../../util/TokenUtil';
+import axios from 'axios';
 
 export class MyHelpCard extends React.Component{
 
@@ -28,8 +29,19 @@ export class MyHelpCard extends React.Component{
     }
 
     deleteList = () => {
-        console.log("delete help " + this.props.data.title);
-        //TODO : 해당하는 문의 내용 삭제하기
+        const token = TokenUtils.getLoginToken();
+        const query = `?index=${this.props.data.index}`;
+        axios({
+            method: 'delete',
+            url: process.env.API_URL + '/api/ask/cancelOneToOne' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then(() => {
+            this.props.rerenderPage(this.props.currentPage);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
     changeCheck = (e) => {
@@ -43,16 +55,16 @@ export class MyHelpCard extends React.Component{
 
     render(){
         const data = this.props.data;
-
+        const date = data.created_at.slice(2, 10);
+        const content = data.questionContent;
         return(
             <div className="myhelp-card">
                 <div className="myhelp-card-checkbox">
                     <input type="checkbox" onChange={this.changeCheck} checked={this.state.check ? "checked" : ""}/>
                 </div>
                 <div className="myhelp-card-title">
-                    <p>{data.date}</p>
-                    <h5>{data.title}</h5>
-                    <h6>{data.content}</h6>
+                    <p>{date}</p>
+                    <h6>{content}</h6>
                 </div>
                 <div className="myhelp-card-answer">
                     {
@@ -72,10 +84,10 @@ export class MyHelpCard extends React.Component{
                         </Link>       
                     }
                     
-                    <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>
+                    <div className="cancel-button" data-toggle="modal" data-target={"#deleteModal" + this.state.index}>삭제하기</div>
                 </div>
 
-                <div className="modal fade" id="deleteModal" role="dialog">
+                <div className="modal fade" id={"deleteModal" + this.state.index} role="dialog">
                     <div className="modal-dialog modal-sm">
                         <div className="modal-content">
                             <div className="modal-body">

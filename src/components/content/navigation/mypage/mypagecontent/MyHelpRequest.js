@@ -1,10 +1,8 @@
 import React from 'react';
 import './MyHelpRequest.css';
-
+import TokenUtils from '../../../../../util/TokenUtil';
+import axios from 'axios';
 import { MyHelpCard } from './MyHelpCard'
-
-const maxListNum = 10;
-const dummyListNum = 257; // dummy 제품 갯수 
 
 export class MyHelpRequest extends React.Component{
 
@@ -13,27 +11,27 @@ export class MyHelpRequest extends React.Component{
         checkAll: false,
         currentPage: 1,
         numOfRequest: 0,
-        maxPage: 0
+        maxPage: 0,
+        helps: []
     });
 
 
     componentDidMount=()=>{
-        // TODO : 문의한 데이터 수 가져오기, 현재 페이지에 맞게 문의 데이터 가져오기
-
-        let listNum = dummyListNum; // 가정제품 갯수 넣어줄곳 
-        
-        let pageNum = 0;  // 페이지 최대 수 
-
-        if(listNum===0){
-            pageNum = 1;
-        } else if(listNum % maxListNum === 0){
-            pageNum = Math.floor(listNum/maxListNum);
-        } else{
-            pageNum = Math.floor(listNum/maxListNum) + 1;
-        }
-
-        this.setState({
-            maxPage: pageNum    // 최대 페이지 수 설정
+        const token = TokenUtils.getLoginToken();
+        const query = '?page=1';
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/oneToOne' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                helps: res.data.Data,
+                maxPage: res.data.totalPages
+            });
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
         })
     };
 
@@ -63,14 +61,71 @@ export class MyHelpRequest extends React.Component{
         })
     }
 
-    deleteChecked = () => {
+    deleteChecked = async () => {
+        const indexList = [];
+        const token = TokenUtils.getLoginToken();
         //TODO : deleteList에 true 되어있는 제품들 삭제하기
-        console.log("delete " + this.state.deleteList);
+        for(let i = 0; i < this.state.helps.length; i++) {
+            if(this.state.deleteList[i] === true) {
+                // console.log(this.state.products[i].index);
+                indexList.push(this.state.helps[i].index);
+            }
+        }
+        // console.log(indexList)
+        for(let i = 0; i < indexList.length; i++) {
+            await axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/ask/cancelOneToOne?index=' + indexList[i],
+                headers: TokenUtils.getTokenRequestHeader(token)
+            });
+            console.log(this.state.currentPage);
+            this.rerenderPage(this.state.currentPage);
+        }
     }
 
     changePage = (e, page) => {
-        this.setState({
-            currentPage: page
+        console.log(this.state.currentPage);
+        const token = TokenUtils.getLoginToken();
+        let query = '?page=' + page;
+        console.log(page);
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/oneToOne' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: page,
+                helps: res.data.Data,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false
+            });
+        })
+    }
+
+    rerenderPage = (page) => {
+        const token = TokenUtils.getLoginToken();
+        let query = '';
+
+        if(this.state.helps.length === 1 ||
+            this.state.helps.length === this.state.deleteList.filter((item) => item === true).length) {
+            page -= 1;
+        }
+
+        query = `?page=${page}`;
+        console.log(page);
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/oneToOne' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                currentPage: page,
+                helps: res.data.Data,
+                maxPage: res.data.totalPages
+            })
         })
     }
 
@@ -102,40 +157,13 @@ export class MyHelpRequest extends React.Component{
         if(currentPage + op > 0 && currentPage + op <= this.state.maxPage){
             currentPage += op;
         }
-
+        this.changePage(e, currentPage);
         this.setState({
             currentPage: currentPage
         })
     }
    
     render(){
-        const dummy = [
-            {
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: true
-            },
-            {
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: false
-            },
-            {
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: false
-            },
-            {
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: true
-            },
-        ]
-
 
         return(
             <div className="myhelp-container">
@@ -150,8 +178,8 @@ export class MyHelpRequest extends React.Component{
                 </div>
                 <div className="myhelp-card-box">
                     {
-                        dummy.map((d, i) => <MyHelpCard data={d} key={i} index={i} check={this.state.deleteList[i]} 
-                        changeCardCheck={this.changeCardCheck}/>)
+                        this.state.helps.map((d, i) => <MyHelpCard data={d} key={i} index={i} check={this.state.deleteList[i]} 
+                        changeCardCheck={this.changeCardCheck} rerenderPage={this.rerenderPage} currentPage={this.state.currentPage}/>)
                     }
                         
                     
