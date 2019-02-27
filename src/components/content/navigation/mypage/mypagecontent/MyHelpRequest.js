@@ -19,6 +19,7 @@ export class MyHelpRequest extends React.Component{
     componentDidMount=()=>{
         const token = TokenUtils.getLoginToken();
         const query = '?page=1';
+        console.log(token);
         axios({
             method: 'get',
             url: process.env.API_URL + '/api/ask/oneToOne' + query,

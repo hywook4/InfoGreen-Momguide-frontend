@@ -11,7 +11,6 @@ export class MyHelpCard extends React.Component{
         index: 0
     })
 
-
     componentDidMount=()=>{
         this.setState({
             check: this.props.check,
@@ -57,6 +56,8 @@ export class MyHelpCard extends React.Component{
         const data = this.props.data;
         const date = data.created_at.slice(2, 10);
         const content = data.questionContent;
+        const answer = data.answerContent;
+        const isAnswered = answer === null ? false : true;
         return(
             <div className="myhelp-card">
                 <div className="myhelp-card-checkbox">
@@ -68,8 +69,8 @@ export class MyHelpCard extends React.Component{
                 </div>
                 <div className="myhelp-card-answer">
                     {
-                        data.answered ? 
-                        <Link to={`my-help/${this.props.index}`}>
+                        isAnswered ? 
+                        <Link to={`my-help/${data.index}`}>
                             <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button>
                         </Link> : 
                         <button type="button" className="myhelp-answer-off">답변&nbsp;중</button>
@@ -77,9 +78,9 @@ export class MyHelpCard extends React.Component{
                 </div>
                 <div className="myhelp-card-delete">
                     {
-                        data.answered ? 
+                        isAnswered ? 
                         "" :
-                        <Link to={`my-help/${this.props.index}`}>
+                        <Link to={`my-help/${data.index}`}>
                             <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
                         </Link>       
                     }
