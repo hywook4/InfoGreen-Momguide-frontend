@@ -29,6 +29,7 @@ export class ReviewCard extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         console.log(prevState.propsChangeCount, nextProps.propsChangeCount);
+        console.log(prevState, nextProps);
         if(nextProps.propsChangeCount && prevState.propsChangeCount !== nextProps.propsChangeCount) {
             return {
                 like: nextProps.data.like,

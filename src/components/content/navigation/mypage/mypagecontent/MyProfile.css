@@ -55,7 +55,7 @@
     height: 80px;
     
 }
-.tab{
+.profile-tab{
     display: inline-block;
     width: 80px;
     height: 80px;
@@ -68,13 +68,13 @@
     border-bottom: 3px solid skyblue;
 }
 
-.tab h1{
+.profile-tab h1{
     font-size: 27px;
     font-style: italic;
     font-weight: bold;
 }
 
-.tab p {
+.profile-tab p {
     font-size: 10px;
     color: skyblue;
 }

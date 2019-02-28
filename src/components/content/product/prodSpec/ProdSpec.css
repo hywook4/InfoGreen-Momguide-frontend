@@ -67,6 +67,12 @@
     height: 90px;
 }
 
+.prod-name h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 .rating-info {
     width: 480px;
     height: 60px;
@@ -223,7 +229,8 @@
 .ingred-bad-special {
     width: 980px;
     height: 120px;
-    margin-bottom: 65px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .ingred-icons {
@@ -232,6 +239,10 @@
     color: gray;
     font-size: 10px;
     float: left;
+}
+
+.ingred-icons > div > img:hover {
+    cursor: pointer;
 }
 
 .ingred-icon {
@@ -801,4 +812,92 @@ h6.prod-spec-detail-header-inline {
 
 .prod-spec-sorting-menu > span.selected {
     border-bottom: 3px solid #32B8A4;
+}
+
+.prod-spec-ingredient-modal > div {
+    text-align: center;
+}
+
+.prod-spec-ingredient-modal .modal-body > div {
+    margin-bottom: 20px;
+}
+
+.prod-spec-ingredient-modal .modal-body img {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+}
+
+.prod-spec-ingredient-modal .modal-body > div > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.prod-spec-ingredient-modal .modal-body > div > div:nth-child(2) {
+    width: 80px;
+    font-weight: bold;
+}
+
+.prod-spec-ingredient-modal .modal-body > div > div:last-child {
+    width: 300px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.prod-spec-interest-modal > div {
+    text-align: center;
+}
+
+.prod-spec-interest-modal .modal-body > div {
+    margin-bottom: 20px;
+}
+
+.prod-spec-interest-modal .modal-body img {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+}
+
+.prod-spec-interest-modal .modal-body > div > div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.prod-spec-interest-modal .modal-body > div > div:last-child {
+    width: 350px;
+}
+
+#selected-ingredient-modal .modal-body > div > div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#selected-ingredient-modal .modal-body > div > div:first-child {
+    margin-top: 0
+}
+
+#selected-ingredient-modal .modal-body > div > div:last-child {
+    margin-bottom: 0
+}
+
+#selected-ingredient-modal .modal-body img {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#selected-ingredient-modal .modal-body > div > div > div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 30px;
+}
+
+#selected-ingredient-modal .modal-body > div > div > div > div:first-child {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#selected-ingredient-modal .modal-body > div > div > div > div:last-child {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 15px;
 }
