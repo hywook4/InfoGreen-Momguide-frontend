@@ -2,10 +2,10 @@ import React from 'react';
 import './MyPage.css';
 
 import { MyPageMenu } from './MyPageMenu';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import {Route, Switch} from "react-router-dom"
 
-import { MyProfile } from './mypagecontent/MyProfile';
 import ProfileModify from './mypagecontent/ProfileModify';
+import MyProfile from './mypagecontent/MyProfile';
 
 import { MyHouseProduct }  from './mypagecontent/MyHouseProduct'
 import { MyDibProduct } from './mypagecontent/MyDibProduct'
@@ -13,10 +13,10 @@ import { OpenRequest } from './mypagecontent/OpenRequest'
 import { MyHelpRequest } from './mypagecontent/MyHelpRequest'
 import { MyIngredientRequest } from './mypagecontent/MyIngredientRequest'
 import { MyHelpDetail } from './mypagecontent/MyHelpDetail'
-import { MyIngredientDetail } from './mypagecontent/MyIngredientDetail'
+import MyIngredientDetail from './mypagecontent/MyIngredientDetail'
 import { MyReview } from './mypagecontent/MyReview';
 import { ProfileModifyPasswordCheck } from './mypagecontent/ProfileModifyPasswordCheck';
-
+import { MyReviewDetail } from './mypagecontent/MyReviewDetail';
 export class MyPage extends React.Component{
 
     state = {
@@ -44,13 +44,13 @@ export class MyPage extends React.Component{
                             </div>
                             <div className="content-body">
                                 <Switch>
-                                    <Route exact path="/mypage" component={MyProfile} />
                                     <Route path="/mypage/my-profile" component={MyProfile} /> 
                                     <Route path="/mypage/profile-modify" component={ProfileModify} />
                                     <Route path="/mypage/profile-modify-password-check" component={ProfileModifyPasswordCheck} />
                                     <Route path="/mypage/my-house-products" component={MyHouseProduct} />
                                     <Route path="/mypage/dib-products" component={MyDibProduct} /> 
                                     <Route exact path="/mypage/my-review" component={MyReview} />
+                                    <Route path="/mypage/my-review/modify" component={MyReviewDetail} />
                                     <Route path="/mypage/ingredient-open-request" component={OpenRequest} /> 
                                     <Route exact path="/mypage/ingredient-analysis-request" component={MyIngredientRequest} /> 
                                     <Route path="/mypage/ingredient-analysis-request" component={MyIngredientDetail} /> 

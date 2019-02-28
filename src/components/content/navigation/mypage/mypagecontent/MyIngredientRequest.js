@@ -1,10 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import './MyIngredientRequest.css';
-
-import { MyIngredientCard } from './MyIngredientCard'
-
-const maxListNum = 10;
-const dummyListNum = 257; // dummy 제품 갯수 
+import TokenUtils from '../../../../../util/TokenUtil';
+import MyIngredientCard from './MyIngredientCard'
 
 export class MyIngredientRequest extends React.Component{
 
@@ -13,27 +11,27 @@ export class MyIngredientRequest extends React.Component{
         checkAll: false,
         currentPage: 1,
         numOfRequest: 0,
-        maxPage: 0
+        maxPage: 0,
+        products: []
     });
 
 
     componentDidMount=()=>{
-        // TODO : 문의한 데이터 수 가져오기, 현재 페이지에 맞게 문의 데이터 가져오기
-        
-        let listNum = dummyListNum; // 가정제품 갯수 넣어줄곳 
-        
-        let pageNum = 0;  // 페이지 최대 수 
-
-        if(listNum===0){
-            pageNum = 1;
-        } else if(listNum % maxListNum === 0){
-            pageNum = Math.floor(listNum/maxListNum);
-        } else{
-            pageNum = Math.floor(listNum/maxListNum) + 1;
-        }
-
-        this.setState({
-            maxPage: pageNum    // 최대 페이지 수 설정
+        const token = TokenUtils.getLoginToken();
+        const query = '?page=1';
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/ingredAnal' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                products: res.data.Data,
+                maxPage: res.data.totalPages
+            });
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주시기 바랍니다.');
         })
     };
 
@@ -61,16 +59,75 @@ export class MyIngredientRequest extends React.Component{
         this.setState({
             deleteList: newList
         })
+        console.log(newList);
     }
 
-    deleteChecked = () => {
+    deleteChecked = async () => {
+        const indexList = [];
+        const token = TokenUtils.getLoginToken();
         //TODO : deleteList에 true 되어있는 제품들 삭제하기
-        console.log("delete " + this.state.deleteList);
+        for(let i = 0; i < this.state.products.length; i++) {
+            if(this.state.deleteList[i] === true) {
+                // console.log(this.state.products[i].index);
+                indexList.push(this.state.products[i].index);
+            }
+        }
+        // console.log(indexList)
+        for(let i = 0; i < indexList.length; i++) {
+            await axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/ask/cancelIngredAnal?index=' + indexList[i],
+                headers: TokenUtils.getTokenRequestHeader(token)
+            });
+            console.log(this.state.currentPage);
+            this.rerenderPage(this.state.currentPage);
+        }
     }
 
     changePage = (e, page) => {
-        this.setState({
-            currentPage: page
+        console.log(this.state.currentPage);
+        const token = TokenUtils.getLoginToken();
+        let query = '?page=' + page;
+        console.log(page);
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/ingredAnal' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: page,
+                products: res.data.Data,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false
+            });
+        })
+    }
+
+    rerenderPage = (page) => {
+        const token = TokenUtils.getLoginToken();
+        let query = '';
+
+        if(this.state.products.length === 1 ||
+            this.state.products.length === this.state.deleteList.filter((item) => item === true).length) {
+            page -= 1;
+        }
+
+        query = `?page=${page}`;
+        console.log(page);
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/ask/ingredAnal' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                currentPage: page,
+                products: res.data.Data,
+                maxPage: res.data.totalPages,
+                checkAll: false
+            })
         })
     }
 
@@ -102,45 +159,13 @@ export class MyIngredientRequest extends React.Component{
         if(currentPage + op > 0 && currentPage + op <= this.state.maxPage){
             currentPage += op;
         }
-
+        this.changePage(e, currentPage);
         this.setState({
             currentPage: currentPage
         })
     }
    
     render(){
-        const dummy = [
-            {
-                index: 0,
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼asdfasdfasdfasdfasdfasdfsadfasdfasdf",
-                answered: true
-            },
-            {
-                index: 1,
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: false
-            },
-            {
-                index: 2,
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: false
-            },
-            {
-                index: 3,
-                date: "12-12-12",
-                title: "이거슨 문의1",
-                content: "내용내용ㅇㅁ니ㅏㅇ럼;ㅣ나얼",
-                answered: true
-            },
-        ]
-
-
         return(
             <div className="myingredient-container">
                 <div className="myingredient-header">
@@ -154,8 +179,8 @@ export class MyIngredientRequest extends React.Component{
                 </div>
                 <div className="myingredient-card-box">
                     {
-                        dummy.map((d, i) => <MyIngredientCard data={d} key={i} index={i} check={this.state.deleteList[i]} 
-                        changeCardCheck={this.changeCardCheck}/>)
+                        this.state.products.map((d, i) => <MyIngredientCard data={d} key={i} index={i} check={this.state.deleteList[i]} 
+                        changeCardCheck={this.changeCardCheck} rerenderPage={this.rerenderPage} currentPage={this.state.currentPage}/>)
                     }
                         
                     

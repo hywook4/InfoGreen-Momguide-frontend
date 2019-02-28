@@ -1,65 +1,86 @@
 import React from 'react';
 import './MyProducts.css';
 import config from '../../../../../config';
-
+import axios from 'axios';
 import { MyProductCard } from './MyProductCard'
-
-const maxProductNum = config.MAX_LIST_NUM;
-const dummyProductNum = 257; // dummy 제품 갯수 
+import TokenUtils from '../../../../../util/TokenUtil';
 
 export class MyHouseProduct extends React.Component{
 
     state = ({
+        type: "house",
         mainCategory: "living",
         deleteList: [ false, false, false, false, false, false, false, false, false, false ], 
         checkAll: false,
         currentPage: 1,
-        numOfProduct: 0,
-        maxPage: 0
+        maxPage: 0,
+        products: []
     });
 
-
     componentDidMount=()=>{
-        // TODO : 우리집 가정제품의 데이터를 해당 페이지에 맞게 가져오기, 총 가정제품의 수 가져오기 , maxPAge 수 계산해서 넣어주기 
-
-        let productNum = dummyProductNum; // 가정제품 갯수 넣어줄곳 
-        
-        let pageNum = 0;  // 페이지 최대 수 
-
-        if(productNum===0){
-            pageNum = 1;
-        } else if(productNum % maxProductNum === 0){
-            pageNum = Math.floor(productNum/maxProductNum);
-        } else{
-            pageNum = Math.floor(productNum/maxProductNum) + 1;
-        }
-
-        this.setState({
-            maxPage: pageNum    // 최대 페이지 수 설정
-        })
+        const token = TokenUtils.getLoginToken();
+        const query = `?isCosmetic=false&page=${this.state.currentPage}`;
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/auth/homeProduct' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        }).then((res) => {
+            this.setState({
+                mainCategory: "living",
+                products: res.data.Data,
+                maxPage: res.data.totalPages
+            });
+        }).catch((err) => {
+            alert('알 수 없는 오류입니다. 관리자에게 문의해주시기 바랍니다.');
+        });
     };
 
     changeType = (e) => {
-        this.setState({
-            mainCategory: e.target.value
-        });
+        const token = TokenUtils.getLoginToken();
+        const category = e.target.value;
+        let query = '';
+        if(category === 'cosmetic') {
+            query = `?isCosmetic=true&page=1`;
+        } else if(category === 'living') {
+            query = `?isCosmetic=false&page=1`;
+        }
 
-        // TODO : 다시 api 요청을 보내서 값을 받고 리렌더링 (큰 카테고리 변경)
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/auth/homeProduct' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: 1,
+                mainCategory: category,
+                products: res.data.Data,
+                maxPage: res.data.totalPages,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ]
+            })
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류입니다. 관리자에게 문의해주시기 바랍니다.');
+        })
     }
 
     changeCheckAll = (e) => {
-        let newList;
+        let newList = [];
         if(this.state.checkAll){
-            newList = [ false, false, false, false, false, false, false, false, false, false ];
+            for(let i = 0; i < this.state.products.length; i++) {
+                newList.push(false);
+            }
             this.setState({
                 checkAll: !this.state.checkAll,
-                deleteList: newList
+                deleteList: [...newList, ...this.state.deleteList.slice(this.state.products.length)]
             })
         } else{
-            newList = [ true, true, true, true, true, true, true, true, true, true ];
+            for(let i = 0; i < this.state.products.length; i++) {
+                newList.push(true);
+            }
             this.setState({
                 checkAll: !this.state.checkAll,
-                deleteList: newList
+                deleteList: [...newList, ...this.state.deleteList.slice(this.state.products.length)]
             })
         }
     }
@@ -72,23 +93,97 @@ export class MyHouseProduct extends React.Component{
         })
     }
 
-    deleteChecked = () => {
+    deleteChecked = async () => {
+        const indexList = [];
+        const token = TokenUtils.getLoginToken();
         //TODO : deleteList에 true 되어있는 제품들 삭제하기
-        console.log("delete " + this.state.deleteList);
+        for(let i = 0; i < this.state.products.length; i++) {
+            if(this.state.deleteList[i] === true) {
+                // console.log(this.state.products[i].index);
+                indexList.push(this.state.products[i].index);
+            }
+        }
+        for(let i = 0; i < indexList.length; i++) {
+            if(this.state.mainCategory === 'cosmetic') {
+                await axios({
+                    method: 'delete',
+                    url: process.env.API_URL + '/api/auth/cancelHomeCosmetic',
+                    headers: TokenUtils.getTokenRequestHeader(token),
+                    data: {
+                        productIndex: indexList[i]
+                    }
+                });
+            } else if(this.state.mainCategory === 'living') {
+                await axios({
+                    method: 'delete',
+                    url: process.env.API_URL + '/api/auth/cancelHomeLiving',
+                    headers: TokenUtils.getTokenRequestHeader(token),
+                    data: {
+                        productIndex: indexList[i]
+                    }
+                });
+            }
+            this.rerenderPage(this.state.currentPage);
+        }
     }
 
     changePage = (e, page) => {
-        this.setState({
-            currentPage: page
+        console.log(this.state.currentPage);
+        const token = TokenUtils.getLoginToken();
+        let query = '';
+        console.log(page);
+        if(this.state.mainCategory === 'cosmetic') {
+            query = `?isCosmetic=true&page=${page}`;
+        } else if(this.state.mainCategory === 'living') {
+            query = `?isCosmetic=false&page=${page}`;
+        }
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/auth/homeProduct' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: page,
+                products: res.data.Data
+            });
+        })
+    }
+
+    rerenderPage = (page) => {
+        const token = TokenUtils.getLoginToken();
+        let query = '';
+
+        if(this.state.products.length === 1 ||
+            this.state.products.length === this.state.deleteList.filter((item) => item === true).length) {
+            page -= 1;
+        }
+        if(this.state.mainCategory === 'cosmetic') {
+            query = `?isCosmetic=true&page=${page}`;
+        } else if(this.state.mainCategory === 'living') {
+            query = `?isCosmetic=false&page=${page}`;
+        }
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/auth/homeProduct' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                currentPage: page,
+                products: res.data.Data,
+                maxPage: res.data.totalPages
+            })
         })
     }
 
     createPagination = () => {
         let pagination = []
-
         let currentPage = this.state.currentPage;
+        console.log(currentPage + ' debug');
         let maxPage = this.state.maxPage;
-
+        console.log(maxPage);
         let start = Math.floor((currentPage-1)/7) * 7 + 1;
         let end = start + 6;
         if(maxPage < end){
@@ -111,72 +206,14 @@ export class MyHouseProduct extends React.Component{
         if(currentPage + op > 0 && currentPage + op <= this.state.maxPage){
             currentPage += op;
         }
-
+        this.changePage(e, currentPage);
         this.setState({
             currentPage: currentPage
         })
     }
    
     render(){
-
-        const dummyData = [
-            {
-                index: 38,
-                name: '무첨가EM가루비누',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: '',
-                permit: '',
-                eco: 'df',
-                foreignCertificate: '',
-                viewNum: 46,
-                rateCount: 56,
-                rateSum: 200,
-                includeDanger: false,
-                includeToxic: true,
-                includeCare: true,
-            },
-            {
-                index: 33,
-                name: '강청 산소계 표백제',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: 'F-A03B-O001001-A160',
-                permit: '',
-                eco: '',
-                foreignCertificate: '',
-                viewNum: 24,
-                rateCount: 34,
-                rateSum: 130,
-                includeDanger: false,
-                includeToxic: false,
-                includeCare: false,
-            },
-            {
-                index: 34,
-                name: '강청 순천연 가루비누',
-                brand: '강청',
-                madeBy: '(주)강청',
-                category: '세탁세제',
-                ingredient: 'O',
-                testNum: '',
-                permit: '',
-                eco: '',
-                foreignCertificate: '',
-                viewNum: 28,
-                rateCount: 5,
-                rateSum: 20,
-                includeDanger: false,
-                includeToxic: false,
-                includeCare: false,
-            }
-        ]
-
-
+        console.log(this.state.deleteList);
         return(
             <div className="myproduct-container">
                 <div className="myproduct-header">
@@ -196,8 +233,9 @@ export class MyHouseProduct extends React.Component{
                 <div className="myproduct-card-box">
                     {
                         // TODO : 현재 카테고리에 따라 알맞는 배열을 map 시키기
-                        dummyData.map((d, i)=> <MyProductCard mainCategory={this.state.mainCategory} data={d} key={i} 
-                        index={i} check={this.state.deleteList[i]} changeCardCheck={this.changeCardCheck}/>)
+                        this.state.products.map((d, i)=> <MyProductCard mainCategory={this.state.mainCategory} data={d} key={i} 
+                        index={i} check={this.state.deleteList[i]} changeCardCheck={this.changeCardCheck} currentPage={this.state.currentPage}
+                        reRenderPage={this.rerenderPage} type={this.state.type}/>)
                         
                     }
                     <div className="myproduct-bottom">

@@ -1,16 +1,37 @@
 import React from 'react';
 import './MyProfile.css';
+import { connect } from 'react-redux';
+import * as actions from '../../../../../actions';
 import {FollowCard} from './FollowCard'
+import history from '../../../../../history/history';
+import TokenUtils from '../../../../../util/TokenUtil';
 
-export class MyProfile extends React.Component{
+class MyProfile extends React.Component{
 
-    state = ({
-        tab: "팔로워"
-    })
+    constructor(props) {
+        super(props);
 
+        this.state = ({
+            tab: "팔로워"
+        })
+    }
+
+
+    isLogin = () => {
+        const token = TokenUtils.getLoginToken();
+        if(token === null) {
+            const login = window.confirm("로그인 후 이용 바랍니다.");
+            if(login) {
+                history.push('/login');
+            } else {
+                history.push('/');
+            }
+        } else {
+            return;
+        }
+    }
 
     componentDidMount=()=>{
-        
     };
 
     changeTab = (tab) => {
@@ -27,125 +48,55 @@ export class MyProfile extends React.Component{
     addCards = () => { 
         console.log("request for more follower or followee infos");
     }
-   
+
+    calculateAge = (year) => {
+        const d = new Date();
+        const yyyy = d.getFullYear();
+        if(year === undefined) {
+            return ('');
+        }
+        return yyyy - year + 1;
+    }
+
+    translateGender = (gender) => {
+        if(gender === 'male') {
+            return '남자';
+        } else if(gender === 'female') {
+            return '여자';
+        }
+    };
+
+    calculateChildAge = (year) => {
+        const childAge = this.calculateAge(year);
+        if(year === 0) {
+            return ('자녀 없음');
+        } else {
+            if(year === undefined) {
+                return ('');
+            }
+            return ('자녀 ' + childAge + '세');
+        }
+    }
+
+    handleLogout = (e) => {
+        const { handleLogout } = this.props;
+        handleLogout();
+        history.push('/');
+    }
     render(){
-
-        const dummyFollower = [
-            {
-                nickName: "팔로워1",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로워2",
-                age: 23,
-                sex: "남자",
-                childAge: 3
-            },
-            {
-                nickName: "팔로워3",
-                age: 13,
-                sex: "여자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로워4",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-        ]
-
-        const dummyFollowee = [
-            {
-                nickName: "팔로잉1",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉2",
-                age: 23,
-                sex: "남자",
-                childAge: 3
-            },
-            {
-                nickName: "팔로잉3",
-                age: 13,
-                sex: "여자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉4",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉5",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉6",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉1",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉2",
-                age: 23,
-                sex: "남자",
-                childAge: 3
-            },
-            {
-                nickName: "팔로잉3",
-                age: 13,
-                sex: "여자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉4",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉5",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-            {
-                nickName: "팔로잉6",
-                age: 123,
-                sex: "남자",
-                childAge: 5
-            },
-        ]
-
-
-        
+        this.isLogin();
         return(
             <React.Fragment>
                 <div className="profile-card">
-                    <div className="profile-img"><img alt="">{/*here goes profile pic*/}</img></div>
+                    <div className="profile-img"><img src={this.props.userPhoto} alt="" id="user-profile-img"></img></div>
                     <div className="profile-info-box">
-                        <div className="profile-nickname">NickName</div>
-                        <div className="profile-info">Year</div>
-                        <div className="profile-info">Sex</div>
-                        <div className="profile-info">ChildAge</div>
+                        <div className="profile-nickname">{this.props.userNickName}</div>
+                        <div className="profile-info">{this.calculateAge(this.props.memberBirthYear)}</div>
+                        <div className="profile-info">{this.translateGender(this.props.userGender)}</div>
+                        <div className="profile-info">{this.calculateChildAge(this.props.childBirthYear)}</div>
                     </div>
                 </div>
-                <div className="follow-container">
+                {/* <div className="follow-container">
                     <div className="follow-tab-box">
                         <div className="follow-tabs">
                             <div className={`tab ${this.state.tab === "팔로워" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로워")}>
@@ -166,6 +117,9 @@ export class MyProfile extends React.Component{
 
                         <div className="more-follow-card" onClick={this.addCards}>더보기</div>
                     </div>
+                </div> */}
+                <div className="myprofile-logout">
+                    <button type="button" id="logout-button" onClick={this.handleLogout}>로그아웃</button>
                 </div>
             </React.Fragment>
             
@@ -173,3 +127,23 @@ export class MyProfile extends React.Component{
         
     }
 }
+
+const mapStateToProps = (state) => {
+    return ({
+        userNickName: state.auth.userNickName,
+        userPhoto: state.auth.userPhoto,
+        memberBirthYear: state.auth.memberBirthYear,
+        userGender: state.auth.userGender,
+        childBirthYear: state.auth.childBirthYear
+    });
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        handleLogout: () => {
+            return dispatch(actions.logout());
+        }
+    })
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

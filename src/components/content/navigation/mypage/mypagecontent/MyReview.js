@@ -1,44 +1,134 @@
 import React from 'react';
 import './MyReview.css';
-import greenCircle from '../../../../../assets/images/common_icons/green_circle.png';
-import greenLine from '../../../../../assets/images/common_icons/green_line.png';
-import grayCircle from '../../../../../assets/images/common_icons/gray_circle.png';
-import grayLine from '../../../../../assets/images/common_icons/gray_line.png';
+import MyReviewCard from './MyReviewCard';
+import TokenUtils from '../../../../../util/TokenUtil';
+import axios from 'axios';
 
 export class MyReview extends React.Component {
     // TODO: api 요청에 따라 state 수정
     state = {
-        brand: '강청',
-        name: '강청 산소계 표백제',
+        deleteList: [ false, false, false, false, false, false, false, false, false, false ],
         category: 'living',
-        rating: 4,
-        usePeriod: 2,
-        functionality: 2,
-        nonIrritating: 2,
-        sent: 1,
-        costEffectiveness: 3,
-        reviewText: '동해물과 백두산이 마르고 닳도록\n' +
-            '하느님이 보우하사 우리나라 만세\n' +
-            '무궁화 삼천리 화려강산\n' +
-            '대한 사람 대한으로 길이 보전하세\n',
-        imageFiles: [],
-        additionalReviewList: [{
-            id: 1,
-            duration: 2,
-            text: '가성비 좋아요\n재우돼지\n재우돼지\n재우돼지',
-            success: true
-        }, {
-            id: 2,
-            duration: 4,
-            text: '향이 좋지는 않지만\n가성비가 너무 좋아요!',
-            success: true
-        }, {
-            id: 3,
-            duration: 7,
-            text: '향 때문에 다른거 씁니다.',
-            success: false
-        }]
+        checkAll: false,
+        currentPage: 1,
+        totalPages: 0,
+        reviews: []
     };
+
+    componentDidMount() {
+        const token = TokenUtils.getLoginToken();
+        const query = '?page=1&category=living';
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/review/member/list' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            console.log(res.data);
+            this.setState({
+                reviews: res.data.reviews,
+                totalPages: res.data.totalPages
+            })
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
+        })
+    }
+
+    changeCheckAll = (e) => {
+        let newList = [];
+        if(this.state.checkAll){
+            for(let i = 0; i < this.state.reviews.length; i++) {
+                newList.push(false);
+            }
+            this.setState({
+                checkAll: !this.state.checkAll,
+                deleteList: [...newList, ...this.state.deleteList.slice(this.state.reviews.length)]
+            })
+        } else{
+            for(let i = 0; i < this.state.reviews.length; i++) {
+                newList.push(true);
+            }
+            this.setState({
+                checkAll: !this.state.checkAll,
+                deleteList: [...newList, ...this.state.deleteList.slice(this.state.reviews.length)]
+            })
+        }
+    }
+
+    changeType = (e) => {
+        const token = TokenUtils.getLoginToken();
+        const category = e.target.value;
+        let query = ''
+        if(category === 'cosmetic') {
+            query = '?page=1&category=cosmetic';
+        } else if (category === 'living') {
+            query = '?page=1&category=living';
+        }
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/review/member/list' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            console.log(res.data);
+            this.setState({
+                reviews: res.data.reviews,
+                totalPages: res.data.totalPages,
+                category: category
+            })
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
+        })
+    }
+
+    rerenderPage = (page) => {
+        const token = TokenUtils.getLoginToken();
+        let query = '';
+
+        if(this.state.reviews.length === 1 ||
+            this.state.reviews.length === this.state.deleteList.filter((item) => item === true).length) {
+            page -= 1;
+        }
+
+        query = `?page=${page}&category=${this.state.category}`;
+        console.log(page);
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/review/member/list' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                currentPage: page,
+                reviews: res.data.reviews,
+                totalPages: res.data.totalPages,
+                checkAll: false
+            })
+        })
+    }
+
+    changePage = (e, page) => {
+        console.log(this.state.currentPage);
+        const token = TokenUtils.getLoginToken();
+        let query = '?page=' + page + '&category=' + this.state.category;
+        console.log(page);
+        axios({
+            method: 'get',
+            url: process.env.API_URL + '/api/review/member/list' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: page,
+                reviews: res.data.reviews,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false
+            });
+        })
+    } 
 
     onChange = (key, value) => {
         const newObj = {};
@@ -47,209 +137,130 @@ export class MyReview extends React.Component {
         this.setState(newObj);
     };
 
-    deleteImageFile = (fileName) => {
+    changeCardCheck = (index) => {
+        let newList = this.state.deleteList;
+        newList[index] = !newList[index];
         this.setState({
-            imageFiles: this.state.imageFiles.filter((item) => item.name !== fileName)
-        });
-    };
+            deleteList: newList
+        })
+    }
+    
+    deleteChecked = async () => {
+        const indexList = [];
+        const token = TokenUtils.getLoginToken();
+        console.log(this.state.reviews);
+        //TODO : deleteList에 true 되어있는 제품들 삭제하기
+        for(let i = 0; i < this.state.reviews.length; i++) {
+            if(this.state.deleteList[i] === true) {
+                // console.log(this.state.products[i].index);
+                indexList.push(this.state.reviews[i].review.index);
+            }
+        }
+        
+        // console.log(indexList)
+        for(let i = 0; i < indexList.length; i++) {
+            await axios({
+                method: 'delete',
+                url: process.env.API_URL + '/api/review',
+                headers: TokenUtils.getTokenRequestHeader(token),
+                data: {
+                    "reviewId": indexList[i]
+                }
+            });
+            console.log(this.state.currentPage);
+            this.rerenderPage(this.state.currentPage);
+        }
+    }
+
+    createPagination = () => {
+        let pagination = []
+        let currentPage = this.state.currentPage;
+        console.log(currentPage + ' debug');
+        let maxPage = this.state.totalPages;
+        console.log(maxPage);
+        let start = Math.floor((currentPage-1)/7) * 7 + 1;
+        let end = start + 6;
+        if(maxPage < end){
+            end = maxPage;
+        }
+
+        for(let i = start; i<= end ; i++){
+            if(i === currentPage){
+                pagination.push(<div className="pagination-button pagination-focused" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
+            } else{
+                pagination.push(<div className="pagination-button" onClick={(e)=> this.changePage(e, i)} key={i}>{i}</div>);
+            }
+            
+        }
+        return pagination;
+    }
+
+    scrollPagination = (e, op) => {
+        let currentPage = this.state.currentPage;
+        if(currentPage + op > 0 && currentPage + op <= this.state.maxPage){
+            currentPage += op;
+        }
+        this.changePage(e, currentPage);
+        this.setState({
+            currentPage: currentPage
+        })
+    }
+   
 
     render() {
         if(this.state.brand === '')
             return null;
-
+        console.log(this.state.reviews);
         return (
             <div className="my-review-container">
-                <div className="my-review-title">
-                    <span>
-                        <img alt="물건 사진" src={`${process.env.S3_URL}/product-images/${this.state.category}-product-images/${this.state.brand}/${this.state.name}.jpg`} />
-                    </span>
-                    <span>
-                        <h6>{this.state.brand}</h6>
-                        <h4>{this.state.name}</h4>
-                    </span>
-                </div>
-                <div className="my-review-detail-container">
-                    <div className="my-review-detail-header">
-                        <h3>1. 별점</h3>
+                <div className="my-review-header">
+                    <div className="my-review-header-checkbox">
+                        <input type="checkbox" onChange={this.changeCheckAll} checked={this.state.checkAll ? "checked" : ""}/>
                     </div>
-                    <div className="my-review-detail-content">
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 1 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 1)}/>
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 2 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 2)} />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 3 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 3)} />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 4 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 4)} />
-                        <i className={`my-review-star fa fa-star${(this.state.rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" onClick={()=>this.onChange('rating', 5)} />
-                    </div>
-                </div>
-                <div className="my-review-detail-container">
-                    <div className="my-review-detail-header">
-                        <h3>2. 사용기간</h3>
-                    </div>
-                    <div className="my-review-detail-content">
-                        <select className="my-review-use-period-select"
-                                value={this.state.usePeriod + '개월'}
-                                onChange={(e)=>this.onChange('usePeriod', e.target.value.slice(0, e.target.value.length-2))}
-                                disabled={true}
-                        >
-                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => {
-                                return (<option key={i}>{i}개월</option>);
-                            })}
+                    <div className="my-review-header-type">
+                        <select onChange={this.changeType}>
+                            <option value="living">가정용 화학제품</option>
+                            <option value="cosmetic">유아용 화장품</option>
                         </select>
-                    </div>
+                    </div>   
+                    <div className="my-review-header-name">제품명</div>
+                    <div className="my-review-header-rate">평점</div>
+                    <div className="my-review-header-delete">관리</div>
                 </div>
-                <div className="my-review-detail-container">
-                    <div className="my-review-detail-header">
-                        <h3>3. 세부 항목</h3>
+                <div className="my-review-card-box">
+                    { this.state.reviews.map((d, i) => <MyReviewCard data={d} key={i} index={i} mainCategory={this.state.category}
+                                                        rerenderPage={this.rerenderPage} currentPage={this.state.currentPage} 
+                                                        changeCardCheck={this.changeCardCheck} check={this.state.deleteList[i]}/>) }
+                    <div className="myproduct-bottom">
+                        <div className="bottom-element">
+                            &#10004; 선택상품을
+                        </div>
+                        <div className="all-delete">
+                            <div className="cancel-button" data-toggle="modal" data-target="#deleteCheckedModal">삭제하기</div>
+                        </div>
                     </div>
-                    <div className="my-review-detail-content">
-                        <div className="my-review-detail-bar">
-                            <span className="my-review-detail-bar-header">기능력</span>
-                            <span>
-                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('functionality', 1)}/>
-                                {this.state.functionality >= 2 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.functionality >= 2 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('functionality', 2)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('functionality', 2)} />)}
-                                {this.state.functionality >= 3 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.functionality >= 3 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('functionality', 3)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('functionality', 3)} />)}
-                            </span>
-                        </div>
-                        <div className="my-review-detail-bar">
-                            <span className="my-review-detail-bar-header">저자극성</span>
-                            <span>
-                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 1)}/>
-                                {this.state.nonIrritating >= 2 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.nonIrritating >= 2 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 2)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 2)} />)}
-                                {this.state.nonIrritating >= 3 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.nonIrritating >= 3 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 3)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('nonIrritating', 3)} />)}
-                            </span>
-                        </div>
-                        <div className="my-review-detail-bar">
-                            <span className="my-review-detail-bar-header">제품향</span>
-                            <span>
-                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('sent', 1)}/>
-                                {this.state.sent >= 2 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.sent >= 2 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('sent', 2)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('sent', 2)} />)}
-                                {this.state.sent >= 3 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.sent >= 3 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('sent', 3)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('sent', 3)} />)}
-                            </span>
-                        </div>
-                        <div className="my-review-detail-bar">
-                            <span className="my-review-detail-bar-header">가성비</span>
-                            <span>
-                                <img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 1)}/>
-                                {this.state.costEffectiveness >= 2 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.costEffectiveness >= 2 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 2)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 2)} />)}
-                                {this.state.costEffectiveness >= 3 ?
-                                    (<img src={greenLine} className="my-review-detail-bar-line selected" alt="bar-img" />) :
-                                    (<img src={grayLine} className="my-review-detail-bar-line" alt="bar-img" />)}
-                                {this.state.costEffectiveness >= 3 ?
-                                    (<img src={greenCircle} className="my-review-detail-bar-circle selected" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 3)} />) :
-                                    (<img src={grayCircle} className="my-review-detail-bar-circle" alt="bar-img" onClick={()=>this.onChange('costEffectiveness', 3)} />)}
-                            </span>
+
+                    <div className="myproduct-pagination-box">
+                        <div className="myproduct-pagination">
+                            <div className="pagination-scroll-button" onClick={(e)=> this.scrollPagination(e, -1)}>&lt;</div>
+                            {this.createPagination()}
+                            <div className="pagination-scroll-button" onClick={(e)=> this.scrollPagination(e, +1)}>&gt;</div>
                         </div>
                     </div>
                 </div>
-                <div className="my-review-detail-container">
-                    <div className="my-review-detail-header">
-                        <h3 className="my-review-detail-header-inline">4. 리뷰</h3>
-                        <span className="my-review-detail-header-boundary">|</span>
-                        <span>
-                            <h6 className="my-review-detail-header-inline">
-                                리뷰를 솔직하고 자세히 적어주세요.
-                            </h6>
-                            <br />
-                            <h6 className="my-review-detail-header-inline second-line">
-                                광고성, 대가성 리뷰나 욕설 및 무조건적인 비방이 포함된 리뷰 등 이용약관에 위배되는 리뷰는 임의로 삭제될 수 있습니다.
-                            </h6>
-                        </span>
+
+
+                <div className="modal fade" id="deleteCheckedModal" role="dialog">
+                    <div className="modal-dialog modal-sm">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                {/*<button type="button" className="close" data-dismiss="modal">&times;</button>*/}
+                                <h6 className="myproduct-delete-confirm">삭제하시겠습니까?</h6>
+                                <button type="button" className="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
+                                <button type="button" className="delete-btn btn-default" data-dismiss="modal" onClick={this.deleteChecked}>삭제하기</button>
+                            </div>
+                        </div>
                     </div>
-                    <div className="my-review-detail-content">
-                        <textarea className="my-review-textarea" value={this.state.reviewText} onChange={(e)=>{this.onChange('reviewText', e.target.value)}} />
-                    </div>
-                </div>
-                <div className="my-review-detail-container">
-                    <div className="my-review-detail-header">
-                        <h3 className="my-review-detail-header-inline">5. 첨부파일</h3>
-                        <span className="my-review-detail-header-boundary">|</span>
-                        <h6 className="my-review-detail-header-inline">
-                            최대 10장까지 업로드 가능합니다.
-                        </h6>
-                    </div>
-                    <div className="my-review-detail-content">
-                        <input className="my-review-file-invisible" type="file" name="review-images" multiple="multiple"
-                               onChange={(e) => this.onChange('imageFiles', Object.keys(e.target.files).map((key) => e.target.files[key]))}
-                               id="image-upload"
-                        />
-                        <label htmlFor="image-upload" className="my-review-upload-image-label">파일 선택</label>
-                        <span>
-                            {this.state.imageFiles.length === 0 ? <span className="my-review-upload-text">선택한 파일 없음</span> : null}
-                            {this.state.imageFiles.map(image => {
-                                return (
-                                    <span key={image.name} className="my-review-upload-text">
-                                        {image.name}
-                                        <i className="fas fa-times my-review-upload-red-x" onClick={() => this.deleteImageFile(image.name)} />
-                                    </span>
-                                );
-                            })}
-                        </span>
-                    </div>
-                </div>
-                <div className="my-review-detail-container">
-                    <div className="my-review-detail-header">
-                        <h3>6. 추가 리뷰</h3>
-                    </div>
-                        {this.state.additionalReviewList.map((item, i) => {
-                            return (
-                                <div className={`my-review-additional-review-container ${item.success?'success':'fail'}`} key={i}>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td className={`my-review-additional-review-duration ${item.success?'success':'fail'}`}>
-                                                    {item.duration}개월째 사용 {item.success?'':'중단'}
-                                                </td>
-                                                <td className="my-review-additional-review-detail">
-                                                    {item.text.split('\n').map((item, key) => {
-                                                        return (<span key={key}>{key !== 0 ? (<br />) : null}{item}</span>);
-                                                    })}
-                                                </td>
-                                                <td className="my-review-additional-review-item my-review-additional-review-icon">
-                                                    <i className="fas fa-pen" />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            );
-                        })}
-                </div>
-                <div className="my-review-detail-container">
-                    <button className="my-review-correct-button btn">수정 저장</button>
                 </div>
             </div>
         );

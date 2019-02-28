@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './MyHelpRequest.css';
-
+import TokenUtils from '../../../../../util/TokenUtil';
+import axios from 'axios';
 
 export class MyHelpCard extends React.Component{
 
@@ -9,7 +10,6 @@ export class MyHelpCard extends React.Component{
         check: false,
         index: 0
     })
-
 
     componentDidMount=()=>{
         this.setState({
@@ -28,8 +28,19 @@ export class MyHelpCard extends React.Component{
     }
 
     deleteList = () => {
-        console.log("delete help " + this.props.data.title);
-        //TODO : 해당하는 문의 내용 삭제하기
+        const token = TokenUtils.getLoginToken();
+        const query = `?index=${this.props.data.index}`;
+        axios({
+            method: 'delete',
+            url: process.env.API_URL + '/api/ask/cancelOneToOne' + query,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then(() => {
+            this.props.rerenderPage(this.props.currentPage);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
     changeCheck = (e) => {
@@ -43,21 +54,23 @@ export class MyHelpCard extends React.Component{
 
     render(){
         const data = this.props.data;
-
+        const date = data.created_at.slice(2, 10);
+        const content = data.questionContent;
+        const answer = data.answerContent;
+        const isAnswered = answer === null ? false : true;
         return(
             <div className="myhelp-card">
                 <div className="myhelp-card-checkbox">
                     <input type="checkbox" onChange={this.changeCheck} checked={this.state.check ? "checked" : ""}/>
                 </div>
                 <div className="myhelp-card-title">
-                    <p>{data.date}</p>
-                    <h5>{data.title}</h5>
-                    <h6>{data.content}</h6>
+                    <p>{date}</p>
+                    <h6>{content}</h6>
                 </div>
                 <div className="myhelp-card-answer">
                     {
-                        data.answered ? 
-                        <Link to={`my-help/${this.props.index}`}>
+                        isAnswered ? 
+                        <Link to={`my-help/${data.index}`}>
                             <button type="button" className="myhelp-answer-on">답변&nbsp;보기</button>
                         </Link> : 
                         <button type="button" className="myhelp-answer-off">답변&nbsp;중</button>
@@ -65,17 +78,17 @@ export class MyHelpCard extends React.Component{
                 </div>
                 <div className="myhelp-card-delete">
                     {
-                        data.answered ? 
+                        isAnswered ? 
                         "" :
-                        <Link to={`my-help/${this.props.index}`}>
+                        <Link to={`my-help/${data.index}`}>
                             <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
                         </Link>       
                     }
                     
-                    <div className="cancel-button" data-toggle="modal" data-target="#deleteModal">삭제하기</div>
+                    <div className="cancel-button" data-toggle="modal" data-target={"#deleteModal" + this.state.index}>삭제하기</div>
                 </div>
 
-                <div className="modal fade" id="deleteModal" role="dialog">
+                <div className="modal fade" id={"deleteModal" + this.state.index} role="dialog">
                     <div className="modal-dialog modal-sm">
                         <div className="modal-content">
                             <div className="modal-body">
