@@ -192,7 +192,7 @@ export class Category extends React.Component{
             this.state.page));
     };
 
-    resetSearchResults= cb =>this.setState({result:[],page:1,totalPages:null,},cb);
+    resetSearchResults= cb =>this.setState({result:[],page:1,totalPages:null,apiStatus:false},cb);
 
     objectToQuery = (obj) => {
         var str = [];
