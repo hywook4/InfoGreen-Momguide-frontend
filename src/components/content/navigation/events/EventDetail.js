@@ -53,7 +53,8 @@ class EventDetail extends React.Component {
             commentPage: firstPage,
             totalCommentPage: 1,
             myComment: "",
-            order : "latest" //latest or recommend
+            order : "latest", //latest or recommend
+            additionalProfile : false
         };
     }
 
@@ -62,8 +63,7 @@ class EventDetail extends React.Component {
         let event = data.data.event;
         let comments = data.data.comments;
 
-
-        console.log(data.data);
+        this.getAdditionalProfile();
 
         this.setState({
             event: event,
@@ -154,15 +154,35 @@ class EventDetail extends React.Component {
     }
 
     toProfileModify = () => {
-        history.push(`/mypage/profile-modify`);
+        history.push(`/mypage/profile-modify-password-check`);
     }
 
-    onApply = () => {
+    onApply = async () => {
         //정보 수집이 안되어있는경우는 신청하지 않기 
-        if(this.state.user.additionalProfile){
-            console.log("이벤트 신청 성공");
+        if(this.state.additionalProfile){
+            const token = TokenUtil.getLoginToken();
+            if(token === null) {
+                alert("권한이 없습니다.");
+                return;
+            }
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            try {
+                await axios({
+                    method: 'post',
+                    url: `${process.env.API_URL}/api/event/application`,
+                    headers: headers,
+                    data: {
+                        eventIndex: this.state.eventIndex
+                    }
+                });
+
+            } catch(error) {
+                alert("이벤트 신청에 실패하였습니다.");
+            }
+            
         } else{
-            console.log("추가 정보 수집하고와라");
+            alert("이벤트 신청에 실패하였습니다.");
         }
     }
 
@@ -206,6 +226,36 @@ class EventDetail extends React.Component {
         return moment(date).diff(today, 'days');
     }
     
+    getAdditionalProfile = async () =>{
+        const token = TokenUtil.getLoginToken();
+        const headers = TokenUtil.getTokenRequestHeader(token);
+        
+        let data;
+
+        try {
+            data = await axios({
+                method: 'get',
+                url: `${process.env.API_URL}/api/auth/info`,
+                headers: headers,
+            });
+
+        } catch(error) {
+            alert("getAdditionalProfile 에러");
+        }
+
+        console.log(data);
+
+        if(data.data.addressRoad === null || data.data.addressSpec === null || data.data.phoneNum === null || data.data.postalCode === null || data.data.name === null){
+            this.setState({
+                additionalProfile: false
+            })
+        } else{
+            this.setState({
+                additionalProfile: true
+            })
+        }
+
+    }
 
     render() {
         const moreButton = (
@@ -220,7 +270,11 @@ class EventDetail extends React.Component {
             <div className="event-detail-container">
                 <div className="event-detail-header">
                     <div className="event-detail-header-left">
-                        <h5>{this.getDate(event.created_at)} ~ {this.getDate(event.expirationDate)}</h5>
+                        {
+                            event.expirationDate === null ? 
+                            <h5>{this.getDate(event.created_at)}</h5> :
+                            <h5>{this.getDate(event.created_at)} ~ {this.getDate(event.expirationDate)}</h5>
+                        }
                         <h1>{event.title}</h1>
                         <h6>{event.subtitle}</h6>
                     </div>
@@ -247,9 +301,10 @@ class EventDetail extends React.Component {
                 </div>
                 <div className="event-detail-button-box">
                     {
-                        this.state.loggedIn ? 
+                        this.state.loggedIn ? ((event.expirationDate === null || this.getDDay(event.expirationDate) < 0 ) ? null :
                         <button type="button" className="event-detail-button" data-toggle="modal" 
-                        data-target={this.state.user.additionalProfile ? "#applyEvent" : "#additionalData"} onClick={this.onApply}>신청하기</button> :
+                        data-target={ this.state.additionalProfile ? "#applyEvent" : "#additionalData"} onClick={this.onApply}>신청하기</button> )
+                        :
                         <button type="button" className="event-detail-button" onClick={this.toLogIn}>로그인</button>
                     }
                 </div>
