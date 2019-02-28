@@ -13,6 +13,17 @@ import grayLine from '../../../../assets/images/common_icons/gray_line.png';
 import { ProdSpecReviewSummary } from './ProdSpecReviewSummary';
 import { ReviewCard } from './ReviewCard';
 import history from '../../../../history/history';
+import $ from 'jquery';
+import dangerIcon1 from '../../../../assets/images/icons/danger-icon2.png';
+import dangerIcon2 from '../../../../assets/images/icons/skin-irritant-true.png';
+import dangerIcon3 from '../../../../assets/images/icons/danger-icon3.png';
+import dangerIcon4 from '../../../../assets/images/icons/cancer-true.png';
+
+import interestIcon1 from '../../../../assets/images/icons/etc1_red.png';
+import interestIcon2 from '../../../../assets/images/icons/etc2_red.png';
+import interestIcon3 from '../../../../assets/images/icons/etc3_red.png';
+import interestIcon4 from '../../../../assets/images/icons/etc4_red.png';
+import interestIcon5 from '../../../../assets/images/icons/etc5_red.png';
 
 import axios from 'axios';
 
@@ -30,7 +41,7 @@ const openness={
 };
 
 const livingText={
-    x:'정보없음 (중간위험)',
+    x:'정보없음',
     a:'매우 낮은 위험',
     b:'낮은 위험',
     c:'높은 위험',
@@ -39,7 +50,7 @@ const livingText={
 };
 
 const cosmeticText = {
-    x:'정보없음 (중간위험)',
+    x:'정보없음',
     a:'낮은 위험',
     b:'중간 위험',
     c: '매우 높은 위험'
@@ -47,12 +58,11 @@ const cosmeticText = {
 
 export class ProdSpec extends React.Component{
 
-    // TODO: about, review tab change
     state = {
         ingredientList: null,
         modalData:{},
-        aboutTab: false,
-        reviewTab: true,
+        aboutTab: true,
+        reviewTab: false,
         productData: null,
         ingredientRequestNum: 0,
 
@@ -87,7 +97,8 @@ export class ProdSpec extends React.Component{
         reviewTotalPages: 0,
         nextPageExist: false,
 
-        reviewListChangeCount: 1
+        reviewListChangeCount: 1,
+        selectedIngredients: []
     };
 
     onChange = (key, value) => {
@@ -135,6 +146,7 @@ export class ProdSpec extends React.Component{
                     imageUrl: res.data.photoUrl,
                     login: true
                 };
+                console.log(res);
                 this.setState(newStateObj);
 
                 res = await axios.get(`${process.env.API_URL}/api/auth/checkHomeLike?productIndex=${id}&isCosmetic=${category === 'cosmetic' ? 'true' : 'false'}`, {
@@ -333,32 +345,44 @@ export class ProdSpec extends React.Component{
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
                     관심 성분
-                    <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
+                    <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""
+                         onClick={()=>$('#interest-ingredient-modal').modal('show')}
+                    />
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc1_${slsSles?'red':'grey'}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('slsSles')}
+                    />
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc2_${ammonium?'red':'grey'}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('ammonium')}
+                    />
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc3_${scent?'red':'grey'}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('scent')}
+                    />
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc4_${color?'red':'grey'}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('color')}
+                    />
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/etc5_${humid?'red':'grey'}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('humid')}
+                    />
                 </div>
             </div>
         )
@@ -372,31 +396,41 @@ export class ProdSpec extends React.Component{
         return (
             <div className="ingred-icons">
                 <div style={{fontSize: "13px", color: "black", fontWeight: "900", marginTop: "10px", marginBottom: "10px"}}>
-                    나쁜 성분
-                    <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""/>
+                    성분 독성 정보
+                    <img src={require('../../../../assets/images/product_spec_icons/detail.jpg')} style={{maxHeight:'20px', maxWidth:'20px', marginLeft: "10px"}} alt=""
+                         onClick={()=>$('#toxic-ingredient-modal').modal('show')}
+                    />
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/ingred_respitory${echaBreath?'_true':''}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('echaBreath')}
+                    />
                     <div>호흡 독성</div>
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/ingred_skin${echaSkin?'_true':''}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('echaSkin')}
+                    />
                     <div>피부 자극</div>
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/ingred_development${echaDev?'_true':''}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('echaDev')}
+                    />
                     <div>발달/생식 독성</div>
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
                          src={require(`../../../../assets/images/product_spec_icons/ingred_cancer${echaCancer?'_true':''}.png`)}
-                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""/>
+                         style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
+                         onClick={()=>this.handleIngredientSelect('echaCancer')}
+                    />
                     <div>발암성</div>
                 </div>
             </div>
@@ -575,6 +609,305 @@ export class ProdSpec extends React.Component{
             sorting: sorting,
             reviewListChangeCount: this.state.reviewListChangeCount + 1
         });
+    };
+
+    handleIngredientSelect = async (category) => {
+        let list = [];
+
+        const productCategory = CategoryUtil.korSubToEngMain(this.props.match.params.category);
+        if(category === 'echaBreath') {
+            list = this.state.ingredientList.filter((item) => (item.echaBreath !== '')).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'echaSkin') {
+            list = this.state.ingredientList.filter((item) => (item.echaSkin !== '')).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'echaDev') {
+            list = this.state.ingredientList.filter((item) => (item.echaDev !== '')).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'echaCancer') {
+            list = this.state.ingredientList.filter((item) => (item.echaCancer !== '')).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'slsSles') {
+            list = this.state.ingredientList.filter((item) => (item.slsSles)).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'ammonium') {
+            list = this.state.ingredientList.filter((item) => (item.ammonium)).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'scent') {
+            list = this.state.ingredientList.filter((item) => (item.scent)).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'color') {
+            list = this.state.ingredientList.filter((item) => (item.color)).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        } else if(category === 'humid') {
+            list = this.state.ingredientList.filter((item) => (item.humid)).map((item) => {
+                const letter = item.ewgCode ? item.ewgCode : 'X';
+                let imgSrc = 'cosmetic_gray.png';
+                if(letter === 'AA')
+                    imgSrc = 'cosmetic_green_3.png';
+                else if(letter === 'AB')
+                    imgSrc = 'cosmetic_green_2.png';
+                else if(letter === 'AC')
+                    imgSrc = 'cosmetic_green_1.png';
+                else if(letter === 'BA')
+                    imgSrc = 'cosmetic_yellow_3.png';
+                else if(letter === 'BB')
+                    imgSrc = 'cosmetic_yellow_2.png';
+                else if(letter === 'BC')
+                    imgSrc = 'cosmetic_yellow_1.png';
+                else if(letter === 'CA')
+                    imgSrc = 'cosmetic_red_3.png';
+                else if(letter === 'CB')
+                    imgSrc = 'cosmetic_red_2.png';
+                else if(letter === 'CC')
+                    imgSrc = 'cosmetic_red_1.png';
+
+                const imgUrl = productCategory === 'living' ?
+                    require(`../../../../assets/images/product_spec_icons/living_grade_${item.ewg}.png`) :
+                    require(`../../../../assets/images/product_spec_icons/${imgSrc}`);
+                return {
+                    imgUrl: imgUrl,
+                    korName: item.korName,
+                    engName: item.engName
+                };
+            });
+        }
+
+        this.setState({
+            selectedIngredients: list
+        }, () => {$('#selected-ingredient-modal').modal('show')});
     };
 
     render = () => {
@@ -810,7 +1143,109 @@ export class ProdSpec extends React.Component{
                     </div>
                 </div>) : (!this.state.login && this.state.reviewApiLoaded ?
                 (loginContainer('리뷰 작성은 로그인 후 이용하실 수 있습니다.')) : null));
+
+        const toxicIngredientModal = (
+            <div className="modal fade prod-spec-ingredient-modal" id="toxic-ingredient-modal" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">나쁜 성분 자세히 보기</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div>
+                                <img alt="" src={dangerIcon1} />
+                                <div>호흡 독성</div>
+                                <div>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={dangerIcon2} />
+                                <div>피부 자극</div>
+                                <div>흡입시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={dangerIcon3} />
+                                <div>발달/생식 독성</div>
+                                <div>생식기능, 생식능력 또는 태아의 발생, 발육에 유해한 영향을 주거나 그것이 의심되는 성분입니다. 특정한 노출 경로 및 환경에 따라 나타나므로 해당 성분이 포함되어 있다고 해서 생식 독성을 일으키는 제품이라고 단정할 순 없습니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={dangerIcon4} />
+                                <div>발암성</div>
+                                <div>인체에 암을 일으키거나 그러한 가능성이 있는 성분입니다. 특정한 노출 경로 및 환경에 따라 나타나므로 해당 성분이 포함되어 있다고 해서 암을 일으키는 제품이라고 단정할 순 없습니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const interestIngredientModal = (
+            <div className="modal fade prod-spec-interest-modal" id="interest-ingredient-modal" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle2">관심 성분 자세히 보기</h5>
+                        </div>
+                        <div className="modal-body">
+                            <div>
+                                <img alt="" src={interestIcon1} />
+                                <div>소듐라우릴설페이트(SLS), 소듐라우레스설페이트(SLES)는 유해성 논란으로 소비자들의 관심이 큰 성분이며, 여기에는 소듐코코설페이트, 암모늄라우릴설페이트 등 유사성분도 포함됩니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={interestIcon2} />
+                                <div>양이온 계면활성제나 살균제에 주로 쓰이는 4급 암모늄염은 독성 논란이 있어 소비자들의 관심이 큰 성분이며, 여기에는 4급 암모늄 계열의 모든 성분이 포함됩니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={interestIcon3} />
+                                <div>"향로"라고 성분을 표기한 경우로, 구체적인 성분을 알 수 없습니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={interestIcon4} />
+                                <div>"색소"라고 성분을 표기한 경우, 색소 성분명이 불분명한 경우, 각종 콜타르염료(Coal Tar Dyes)가 사용된 경우가 포함됩니다. 또한 "형광증백제"라는 성분표시의 경우와 형광증백제 기능을 하는 성분이 포함됩니다.</div>
+                            </div>
+                            <div>
+                                <img alt="" src={interestIcon5} />
+                                <div>전 국민이 관심을 갖는 가습기 살균제 성분으로 MIT / CMIT / PHMG / PGH가 포함됩니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const selectedIngredientModal = (
+            <div className="modal fade prod-spec-selected-modal" id="selected-ingredient-modal" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-body">
+                            <div>
+                                {
+                                    this.state.selectedIngredients.map((item, i) =>
+                                        (<div key={i}>
+                                            <img alt="" src={item.imgUrl} />
+                                            <div>
+                                                <div>{item.korName}</div>
+                                                <div>{item.engName}</div>
+                                            </div>
+                                        </div>)
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
         return (<React.Fragment>
+                {toxicIngredientModal}
+                {interestIngredientModal}
+                {selectedIngredientModal}
                 <div className="prod-spec"> {/* Outer box contains every componenets */}
                     <div className="cate-header"> {/* Category header */}
                         카테고리 > {category==='living' ? '가정용 화학제품' : '유야용 화장품'} > <span style={{color: '#32b8a4', fontWeight: '600'}}>{productData.category}</span>
@@ -821,7 +1256,7 @@ export class ProdSpec extends React.Component{
                         <div className="prod-outer-img"> {/* product image */}
                             <img className="prod-img"
                                  src={`${process.env.S3_URL}/product-images/${CategoryUtil.korSubToEngMain(productData.category)}-product-images/${productData.brand}/${productData.name}.jpg`}
-                                 alt=""/>
+                                 alt="" />
                         </div>
                         <div className="prod-texts"> {/* all text container */}
                             <div className="brand-name">{productData.brand}</div>
@@ -936,13 +1371,24 @@ export class ProdSpec extends React.Component{
                                 null
                             }
 
-
-                            <ul className="description-list">
-                                <li>성분 정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량에 관한 정보를 전달하지 않습니다.</li>
-                                <li>위 정보들은 제품 자체의 위해성을 뜻하진 않으며, 해당성분의 노출경로나 함량 따라 유해 여부가 달라질 수는 있으니, 참고사항으로 봐주시기 바랍니다.</li>
-                                <li>정보 업데이트 과정에서 크고 작은 오류가 발생할 수 있으니 문제를 발견하시면 문의하기 메뉴를 이용해주세요.</li>
-                                <li>해당 정보를 허가 없이 상업적으로 이용하는 경우, 법적조치를 받을 수 있습니다.</li>
-                            </ul>
+                            {category === 'living' ?
+                                (<ul className="description-list">
+                                    <li>화장품 전성분 정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량이 높은 순으로 기재됩니다.</li>
+                                    <li>아래 정보들은 제품 자체의 위해성을 뜻하진 않으며, 해당성분의 노출경로나 함량 따라 유해 여부가 달라질 수 있으니, 참고사항으로 봐주시기
+                                        바랍니다.
+                                    </li>
+                                    <li>정보 업데이트 과정에서 크고 작은 오류가 발생할 수 있으니 문제를 발견하시면 문의하기 메뉴를 이용해주세요.</li>
+                                    <li>해당 정보를 허가 없이 상업적으로 이용하는 경우, 법적조치를 받을 수 있습니다.</li>
+                                </ul>) :
+                                (<ul className="description-list">
+                                    <li>생활화학제품 성분정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량 정보는 포함하지 않습니다.</li>
+                                    <li>아래 정보들은 제품 자체의 위해성을 뜻하진 않으며, 해당성분의 노출경로나 함량 따라 유해 여부가 달라질 수 있으니, 참고사항으로 봐주시기
+                                        바랍니다.
+                                    </li>
+                                    <li>정보 업데이트 과정에서 크고 작은 오류가 발생할 수 있으니 문제를 발견하시면 문의하기 메뉴를 이용해주세요.</li>
+                                    <li>해당 정보를 허가 없이 상업적으로 이용하는 경우, 법적조치를 받을 수 있습니다.</li>
+                                </ul>)
+                            }
                         </div>
                     </div>
 
