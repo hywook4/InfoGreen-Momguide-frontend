@@ -21,7 +21,7 @@ export class CommentCard extends React.Component {
             mySubcomment: "",
             editable: false,
             reportModalId: "report" + props.data.index,
-            deleted: false
+            deleted: false,
         } 
     }
 
@@ -257,7 +257,6 @@ export class CommentCard extends React.Component {
 
         const cards = (
             this.state.subcomments.map((data, index)=>{
-                console.log(data);
                 return (
                     <SubcommentCard data={data} key={index} postType={this.state.postType} user={this.props.user} getSubcomments={this.getSubcomments}/>
                 )
@@ -301,9 +300,9 @@ export class CommentCard extends React.Component {
                             this.props.user.index === comment.creator.index ? editButton : null
                         }
                     </div>
-                    <i className="fa fa-thumbs-o-up" style={comment.likePressed ? liked : null} onClick={this.onLike}/>
+                    <i className="fa fa-thumbs-o-up" style={this.state.liked ? liked : null} onClick={this.onLike}/>
                     <p>{comment.likeNum}</p>
-                    <i className="fa fa-thumbs-o-down" style={comment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
+                    <i className="fa fa-thumbs-o-down" style={this.state.disliked ? disliked : null} onClick={this.onDislike}/>
                     <p>{comment.hateNum}</p>
                     <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                 </div>

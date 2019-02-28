@@ -31,24 +31,33 @@ class TipDetail extends React.Component {
         super(props);
 
         let firstPage = 1;
+        let loggedIn = false;
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+        } else{
+            loggedIn = true;
+        }
 
         this.state = {
             user: user,
             tipIndex: props.match.params.id,
             tip: defaultTip,
             comments: [],
-            loggedIn: true,
+            loggedIn: loggedIn,
             commentPage: firstPage,
             totalCommentPage: 1,
             myComment: "",
-            sortBy : "최신순"
+            order : "latest" // latest or recommend
         };
     }
 
     componentDidMount = async () => {
-        let data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&page=${this.state.commentPage}`);
+        let data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${this.state.commentPage}`);
         let tip = data.data.tip;
         let comments = data.data.comments;
+        console.log(data);
+        console.log(comments);
 
         this.setState({
             tip: tip,
@@ -96,10 +105,15 @@ class TipDetail extends React.Component {
         let data;
 
         for(let a = 1; a <= this.state.commentPage ; a++){
-            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&page=${a}`);
+            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${a}`);
             comments = comments.concat(data.data.comments);
+            console.log(data);
         } 
-        
+
+        this.setState({
+            comments: []
+        })
+
         this.setState({
             myComment: "",
             totalCommentPage: data.data.totalPages,
@@ -109,7 +123,7 @@ class TipDetail extends React.Component {
 
     loadNextPage = async () => {
         const nextPage = this.state.commentPage + 1;
-        let data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&page=${nextPage}`);
+        let data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${nextPage}`);
 
         let comments = this.state.comments;
         comments = comments.concat(data.data.comments);
@@ -121,23 +135,32 @@ class TipDetail extends React.Component {
         })
     };
 
-    changeSort = (sort) => {
+    changeSort = async (sort) => {
+        let comments = [];
+        let data;
+        
+        for(let a = 1; a <= this.state.commentPage; a++){
+            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${sort}&page=${a}`);
+            comments = comments.concat(data.data.comments);
+        }
+
         this.setState({
-            sortBy: sort
+            comments: []
+        })
+
+        this.setState({
+            order: sort,
+            comments: comments,
+            totalCommentPage: data.data.totalPages
         })
     }
-
-    toProfileModify = () => {
-        history.push(`/mypage/profile-modify`);
-    }
-
 
     getComment = async () => {
         let comments = [];
         let data;
         
         for(let a = 1; a <= this.state.commentPage; a++){
-            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&page=${a}`);
+            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${a}`);
             comments = comments.concat(data.data.comments);
         }
 
@@ -182,6 +205,10 @@ class TipDetail extends React.Component {
         }
     }
 
+    toLogIn = () => {
+        history.push(`/login`);
+    }
+
     render() {
         const moreButton = (
             <button className="comment-more-button" onClick={() => {this.loadNextPage()}}>
@@ -216,29 +243,32 @@ class TipDetail extends React.Component {
                     {
                         this.state.loggedIn ? 
                         null :
-                        <button type="button" className="tip-detail-button" >로그인</button>
+                        <button type="button" className="tip-detail-button" onClick={this.toLogIn}>로그인</button>
                     }
                 </div>
                 <div className="comments-container">
-                    {/*TODO 로그인 안했을 시에 댓글 쓰는 창 지우기*/}
-                    <div className="comment-write-box">
-                        <div className="comment-writer-profile">
-                            <img src={this.props.user.photo} alt="profile-pic"/>
-                            <p>{this.props.user.nickName}</p>
-                            <div>{this.props.user.gender}</div>
-                            <div>{this.props.user.birth}세</div>
-                            <div>자녀{this.props.user.childBirth}세</div>
-                        </div>
-                        <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" 
-                        onChange={this.changeComment} value={this.state.myComment}/>
-                        <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
-                    </div>
+                    {
+                        this.state.loggedIn ? 
+                        <div className="comment-write-box">
+                            <div className="comment-writer-profile">
+                                <img src={this.props.user.photo} alt="profile-pic"/>
+                                <p>{this.props.user.nickName}</p>
+                                <div>{this.props.user.gender}</div>
+                                <div>{this.props.user.birth}세</div>
+                                <div>자녀{this.props.user.childBirth}세</div>
+                            </div>
+                            <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" 
+                            onChange={this.changeComment} value={this.state.myComment}/>
+                            <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
+                        </div> : null
+                    }
+                   
                     <div className="comment-list-header">
                         <div className="comment-number">
                             댓글&nbsp;&nbsp;<span>100</span>개
                         </div>
-                        <div className={this.state.sortBy ==="최신순" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("추천수")}}>추천수</div>
-                        <div className={this.state.sortBy ==="최신순" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("최신순")}} style={{marginRight: '20px'}}>최신순</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("latest")}}>추천수</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("recommend")}} style={{marginRight: '20px'}}>최신순</div>
                     </div>
 
                     <div className="comment-list-box">
