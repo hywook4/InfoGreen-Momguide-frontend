@@ -85,7 +85,9 @@ export class ProdSpec extends React.Component{
         reviews: [],
         reviewPage: 1,
         reviewTotalPages: 0,
-        nextPageExist: false
+        nextPageExist: false,
+
+        reviewListChangeCount: 1
     };
 
     onChange = (key, value) => {
@@ -207,7 +209,9 @@ export class ProdSpec extends React.Component{
             reviews: this.state.reviews.concat(res.data.reviews),
             reviewPage: page,
             nextPageExist: res.data.nextPageExist,
-            reviewTotalPages: res.data.totalPages
+            reviewTotalPages: res.data.totalPages,
+
+            reviewListChangeCount: this.state.reviewListChangeCount + 1
         });
     };
 
@@ -568,7 +572,8 @@ export class ProdSpec extends React.Component{
             reviewPage: 1,
             nextPageExist: res.data.nextPageExist,
             reviewTotalPages: res.data.totalPages,
-            sorting: sorting
+            sorting: sorting,
+            reviewListChangeCount: this.state.reviewListChangeCount + 1
         });
     };
 
@@ -963,7 +968,9 @@ export class ProdSpec extends React.Component{
                         <ProdSpecReviewSummary category={category} id={id}/>
                         <div className="prod-spec-review-container">
                             <div className="prod-spec-review-title">베스트 리뷰</div>
-                            {this.state.bestReview ? <ReviewCard data={this.state.bestReview} isLogin={this.state.login}/> : null}
+                            {(this.state.bestReview && !(Object.keys(this.state.bestReview).length === 0 && this.state.bestReview.constructor === Object)) ?
+                                <ReviewCard data={this.state.bestReview} isLogin={this.state.login} propsChangeCount={1}/> :
+                                null}
                         </div>
                         <div className="prod-spec-review-container">
                             <div className="prod-spec-review-title">
@@ -981,7 +988,7 @@ export class ProdSpec extends React.Component{
                                 </span>
                             </div>
                             {this.state.reviews.map((review, i) => (
-                                <ReviewCard data={review} key={i} isLogin={this.state.login}/>
+                                <ReviewCard data={review} key={i} isLogin={this.state.login} propsChangeCount={this.state.reviewListChangeCount}/>
                             ))}
                         </div>
                         {!this.state.login ? loginContainer('로그인 후 이용하실 수 있습니다.', true) : null}

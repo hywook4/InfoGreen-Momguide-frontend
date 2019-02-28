@@ -17,24 +17,25 @@ export class ReviewCard extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log('mounting');
         this.state = {
             selectedImageIndex: 0,
             folded: true,
             like: null,
             isLogin: false,
 
-            propsLike: null
+            propsChangeCount: 0
         };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if(prevState.propsLike !== nextProps.data.propsLike) {
+        console.log(prevState.propsChangeCount, nextProps.propsChangeCount);
+        if(nextProps.propsChangeCount && prevState.propsChangeCount !== nextProps.propsChangeCount) {
             return {
                 like: nextProps.data.like,
-                propsLike: nextProps.data.like
+                propsChangeCount: nextProps.propsChangeCount
             };
         }
+        return {};
     }
 
     handleImageClick = (index) => {
@@ -75,11 +76,12 @@ export class ReviewCard extends React.Component {
     };
 
     render() {
+        console.log(this.state);
         const {data} = this.props;
         if (typeof data === 'undefined')
             return null;
 
-        const modal = data.images.length ? (
+        const modal = (data.images && data.images.length) ? (
             <div className="modal fade" id="review-card-modal" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
@@ -276,6 +278,8 @@ export class ReviewCard extends React.Component {
         const addition = (
             <div className="review-card-addition align-top">
                 {data.additionalReviews.map((item, i) => {
+                    if(i >= 3)
+                        return null;
                     const diffMonth = CommonUtil.diffMonths(new Date(data.review.baseDate), new Date());
                     return (
                         <div className={`review-card-additional-review-container ${!item.ended?'success':'fail'}`} key={i}>
