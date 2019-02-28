@@ -617,6 +617,8 @@ export class ProdSpec extends React.Component{
         const productCategory = CategoryUtil.korSubToEngMain(this.props.match.params.category);
         if(category === 'echaBreath') {
             list = this.state.ingredientList.filter((item) => (item.echaBreath !== '')).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -649,6 +651,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'echaSkin') {
             list = this.state.ingredientList.filter((item) => (item.echaSkin !== '')).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -681,6 +685,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'echaDev') {
             list = this.state.ingredientList.filter((item) => (item.echaDev !== '')).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -713,6 +719,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'echaCancer') {
             list = this.state.ingredientList.filter((item) => (item.echaCancer !== '')).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -745,6 +753,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'slsSles') {
             list = this.state.ingredientList.filter((item) => (item.slsSles)).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -777,6 +787,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'ammonium') {
             list = this.state.ingredientList.filter((item) => (item.ammonium)).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -809,6 +821,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'scent') {
             list = this.state.ingredientList.filter((item) => (item.scent)).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -841,6 +855,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'color') {
             list = this.state.ingredientList.filter((item) => (item.color)).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
@@ -873,6 +889,8 @@ export class ProdSpec extends React.Component{
             });
         } else if(category === 'humid') {
             list = this.state.ingredientList.filter((item) => (item.humid)).map((item) => {
+                if(item.ewg === '')
+                    item.ewg = 'X';
                 const letter = item.ewgCode ? item.ewgCode : 'X';
                 let imgSrc = 'cosmetic_gray.png';
                 if(letter === 'AA')
