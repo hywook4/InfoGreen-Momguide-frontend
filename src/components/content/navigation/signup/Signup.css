@@ -52,9 +52,12 @@
 
 .signup-agreement-age, .signup-agreement-license, .signup-agreement-personal-info, .signup-agreement-marketing {
     font-size: 13px;
-    text-decoration: underline;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.signup-agreement-age-text, .signup-agreement-license-text, .signup-agreement-personal-info-text, .signup-agreement-marketing-text {
+    text-decoration: underline;
 }
 
 .signup-agreement-age-box, .signup-agreement-license-box, .signup-agreement-personal-info-box, .signup-agreement-marketing-box {
@@ -407,4 +410,33 @@ button.signup-button-remove-css:focus {
 
 .signup-optional-info-address .signup-address-detail2:first-child {
     margin-right: 20px;
+}
+
+.signup-drop-down {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.signup-drop-down:hover {
+    cursor: pointer;
+}
+
+.signup-agreement-text {
+    margin-top: 30px;
+    text-decoration: none !important;
+    transition: height 1s cubic-bezier(0.000, 0.795, 0.000, 1.000);
+}
+
+.signup-advertisement-table {
+    margin-top: 20px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.signup-advertisement-table > tr {
+    border: 1px solid black;
+}
+.signup-advertisement-table td {
+    width: 300px;
+    border: 1px solid black;
+    padding: 5px;
 }
