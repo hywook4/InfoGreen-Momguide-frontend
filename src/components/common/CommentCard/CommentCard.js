@@ -74,7 +74,7 @@ export class CommentCard extends React.Component {
         try {
             await axios({
                 method: 'post',
-                url: `${process.env.API_URL}/api/tip/childComment`,
+                url: `${process.env.API_URL}/api/${this.state.postType.type}/childComment`,
                 headers: headers,
                 data: {
                     content: this.state.mySubcomment,
@@ -129,7 +129,7 @@ export class CommentCard extends React.Component {
                     data: {
                         content: this.state.comment.content,
                         index: this.state.comment.index,
-                        tipIndex: this.state.postType.index
+                        [this.state.postType.type+"Index"]: this.state.postType.index
                     }
                 })
             } catch(error){
@@ -156,7 +156,7 @@ export class CommentCard extends React.Component {
                 headers: headers,
                 data: {
                     index: this.state.comment.index,
-                    tipIndex: this.state.postType.index
+                    [this.state.postType.type+"Index"]: this.state.postType.index
                 }
             });
         } catch(error) {

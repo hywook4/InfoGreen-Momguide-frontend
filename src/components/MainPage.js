@@ -7,7 +7,7 @@ import {Footer} from './content/footer/Footer';
 import Search from './content/search/Search';
 import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
-import {EventDetail} from './content/navigation/events/EventDetail';
+import EventDetail from './content/navigation/events/EventDetail';
 import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
 import {ResetPassword} from './content/resetPassword/ResetPassword';

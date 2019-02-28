@@ -86,7 +86,7 @@ class TipDetail extends React.Component {
             });
 
         } catch(error) {
-            alert("에러가 발생하였습니다.");
+            alert("댓글 작성에 실패하였습니다.");
         }
     };
 
@@ -107,7 +107,6 @@ class TipDetail extends React.Component {
         for(let a = 1; a <= this.state.commentPage ; a++){
             data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${a}`);
             comments = comments.concat(data.data.comments);
-            console.log(data);
         } 
 
         this.setState({
@@ -181,30 +180,6 @@ class TipDetail extends React.Component {
         return (dateFormat(date, "yyyy-mm-dd"))
     }
 
-    currentUser = () => {
-        if(this.props.user === undefined){
-            return(
-                <div className="comment-writer-profile">
-                    <img src={this.state.user.photo} alt="profile-pic"/>
-                    <p>{this.state.user.nickName}</p>
-                    <div>{this.state.user.gender}</div>
-                    <div>{this.state.user.birth}세</div>
-                    <div>자녀{this.state.user.childBirth}세</div>
-                </div>
-            )
-        } else{
-            return(
-                <div className="comment-writer-profile">
-                    <img src={this.props.user.photo} alt="profile-pic"/>
-                    <p>{this.props.user.nickName}</p>
-                    <div>{this.props.user.gender}</div>
-                    <div>{this.props.user.birth}세</div>
-                    <div>자녀{this.props.user.childBirth}세</div>
-                </div>
-            )
-        }
-    }
-
     toLogIn = () => {
         history.push(`/login`);
     }
@@ -265,10 +240,10 @@ class TipDetail extends React.Component {
                    
                     <div className="comment-list-header">
                         <div className="comment-number">
-                            댓글&nbsp;&nbsp;<span>100</span>개
+                            댓글&nbsp;&nbsp;<span></span>
                         </div>
-                        <div className={this.state.order ==="latest" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("latest")}}>추천수</div>
-                        <div className={this.state.order ==="latest" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("recommend")}} style={{marginRight: '20px'}}>최신순</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("recommend")}}>추천수</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("latest")}} style={{marginRight: '20px'}}>최신순</div>
                     </div>
 
                     <div className="comment-list-box">

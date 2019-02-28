@@ -15,7 +15,7 @@ export class Events extends React.Component {
             events: [],
             currentPage: firstPage,
             totalPages: 1,
-            currentTab: "events", // events or winners
+            currentTab: "event", // events or winners
             eventCategory: "total",
             nextPageNum: 0,
             order: "latest"
@@ -23,7 +23,7 @@ export class Events extends React.Component {
     }
 
     componentDidMount = async () => {
-        let data = await axios.get(`${process.env.API_URL}/api/event/postList?state=${this.state.eventCategory}&order=${this.state.order}&page=${this.state.currentPage}`);
+        let data = await axios.get(`${process.env.API_URL}/api/${this.state.currentTab}/postList?state=${this.state.eventCategory}&order=${this.state.order}&page=${this.state.currentPage}`);
 
         this.setState({
             events: data.data.Data,
@@ -34,14 +34,19 @@ export class Events extends React.Component {
         console.log(Date());
     }
 
-    changeTab = (tab) => {
+    changeTab = async (tab) => {
         // TODO : 해당하는 탭에 불러서 리스트에 넣어주기 
         if(this.state.currentTab === tab){
 
         } else{
+            let data = await axios.get(`${process.env.API_URL}/api/${this.state.currentTab}/postList?order=${this.state.order}&page=1`);
+
             this.setState({
                 currentTab: tab,
-                currentPage: 1
+                currentPage: 1,
+                events: data.data.Data,
+                totalPages: data.data.totalPages,
+                nextPageNum: data.data.nextNum
             })
         }
     }
@@ -67,7 +72,7 @@ export class Events extends React.Component {
     loadNextPage = async () => {
         let nextPage = this.state.currentPage + 1;
 
-        let nextData = await axios.get(`${process.env.API_URL}/api/event/postList?state=${this.state.eventCategory}&order=${this.state.order}&page=${nextPage}`);
+        let nextData = await axios.get(`${process.env.API_URL}/api/${this.state.currentTab}/postList?state=${this.state.eventCategory}&order=${this.state.order}&page=${nextPage}`);
         let events = this.state.events;
 
         events = events.concat(nextData.data.Data);
@@ -135,17 +140,17 @@ export class Events extends React.Component {
         const winnerCards = (
             this.state.events.map((item, i) => {
                 return (
-                    <Link to="/events/123" key={i}>
+                    <Link to={`/events/winner/${item.index}`} key={i}>
                         <div className="events-card-item" >
                             <div className="events-card-item-image-container">
-                                <img src={item.image} alt="events" />
+                                <img src={item.titleImageUrl} alt="events" />
                             </div>
                             <div className="events-bottom-left">
                                 <h5>{item.title}</h5>
-                                <h6>{item.contents}</h6>
+                                <h6>{item.subtitle}</h6>
                             </div>
                             <div className="events-bottom-right">
-                                {item.startDate + " ~ " + item.endDate}
+                                {this.getDate(item.created_at)}
                             </div>
                         </div>
                     </Link>
@@ -161,23 +166,23 @@ export class Events extends React.Component {
                     </div>
                 </div>
                 <div className="events-navigation-container">
-                    <div className={`events-navigation-button ${this.state.currentTab==="events" ? "events-navigation-selected" : ""}`} 
-                    onClick={(e)=>{this.changeTab("events");}}>
+                    <div className={`events-navigation-button ${this.state.currentTab==="event" ? "events-navigation-selected" : ""}`} 
+                    onClick={(e)=>{this.changeTab("event");}}>
                         <select className="events-category" onChange={this.changeCategory} defaultValue="total">
                             <option value="total">전체 이벤트</option>
                             <option value="progress">진행중인 이벤트</option>
                             <option value="finished">지난 이벤트</option>
                         </select>
                     </div>
-                    <div className={`events-navigation-button ${this.state.currentTab==="events" ? "" : "events-navigation-selected"}`} 
-                    onClick={(e)=>{this.changeTab("winners");}}>
+                    <div className={`events-navigation-button ${this.state.currentTab==="event" ? "" : "events-navigation-selected"}`} 
+                    onClick={(e)=>{this.changeTab("winner");}}>
                         <div>당첨자 발표</div>
                     </div>
                 </div> 
                 <div className="events-card-container">
 
                     {
-                        this.state.currentTab === "events" ? 
+                        this.state.currentTab === "event" ? 
                         eventCards : winnerCards
                     }
                         

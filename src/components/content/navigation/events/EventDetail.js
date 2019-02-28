@@ -3,6 +3,8 @@ import './EventDetail.css';
 import history from '../../../../history/history';
 import axios from 'axios';
 import dateFormat from 'dateformat';
+import { connect } from 'react-redux';
+import { TokenUtil } from '../../../../util';
 import moment from 'moment';
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
 
@@ -29,35 +31,44 @@ const defaultEvent = {
     updated_at: "2019-01-01 00:00:00"
 }
 
-export class EventDetail extends React.Component {
+class EventDetail extends React.Component {
     constructor(props) {
         super(props);
 
         const firstPage = 1;
+        let loggedIn = false;
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null){
+        } else{
+            loggedIn = true;
+        }
         // TODO
         this.state = {
             user: user,
             eventIndex: props.match.params.id,
             event: defaultEvent,
             comments: [],
-            loggedIn: true,
+            loggedIn: loggedIn,
             commentPage: firstPage,
             totalCommentPage: 1,
             myComment: "",
-            sortBy : "최신순"
+            order : "latest" //latest or recommend
         };
     }
 
     componentDidMount = async () => {
-        let data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}`);
+        let data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${this.state.commentPage}`);
         let event = data.data.event;
         let comments = data.data.comments;
 
-        console.log(event);
+
+        console.log(data.data);
 
         this.setState({
             event: event,
-            comments: comments
+            comments: comments,
+            totalCommentPage: data.data.totalPages
         })
     }
     
@@ -67,9 +78,52 @@ export class EventDetail extends React.Component {
         })
     }
 
-    submitComment = () => {
-        //TODO : 나의 댓글 추가 요청하기
-        console.log(this.state.myComment);
+    init = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("권한이 없습니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'post',
+                url: `${process.env.API_URL}/api/event/comment`,
+                headers: headers,
+                data: {
+                    content: this.state.myComment,
+                    eventIndex: this.state.eventIndex
+                }
+            });
+
+        } catch(error) {
+            alert("댓글 작성에 실패하였습니다.");
+        }
+    };
+
+
+    submitComment = async () => {
+        await this.init();
+
+        let comments = [];
+        let data;
+
+        for(let a = 1; a <= this.state.commentPage ; a++){
+            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${a}`);
+            comments = comments.concat(data.data.comments);
+        }
+
+        this.setState({
+            comments: [],
+            myComment: ""
+        })
+
+        this.setState({
+            myComment: "",
+            totalCommentPage: data.data.totalPages,
+            comments: comments
+        }, console.log(this.state.myComment))
     }
 
     loadNextPage = () => {
@@ -80,9 +134,23 @@ export class EventDetail extends React.Component {
         //TODO : 기존 리스트에 새로받은 값들 추가해주기
     };
 
-    changeSort = (sort) => {
+    changeSort = async (sort) => {
+        let comments = [];
+        let data;
+        
+        for(let a = 1; a <= this.state.commentPage; a++){
+            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${sort}&page=${a}`);
+            comments = comments.concat(data.data.comments);
+        }
+
         this.setState({
-            sortBy: sort
+            comments: []
+        })
+
+        this.setState({
+            order: sort,
+            comments: comments,
+            totalCommentPage: data.data.totalPages
         })
     }
 
@@ -99,6 +167,31 @@ export class EventDetail extends React.Component {
         }
     }
 
+    toLogIn = () => {
+        history.push(`/login`);
+    }
+
+    getComment = async () => {
+        let comments = [];
+        let data;
+        
+        for(let a = 1; a <= this.state.commentPage; a++){
+            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${a}`);
+            comments = comments.concat(data.data.comments);
+        }
+
+        // react doesn't recoginze same num of object array ..... shit
+        this.setState({
+            comments: []
+        })
+
+        this.setState({
+            comments: comments,
+            totalCommentPage: data.data.totalPages
+        });
+    }
+
+
     getDate = (d) => {
         let date = new Date(d);
 
@@ -114,6 +207,7 @@ export class EventDetail extends React.Component {
         return moment(date).diff(today, 'days');
     }
     
+
     render() {
         const moreButton = (
             <button className="comment-more-button" onClick={() => {this.loadNextPage()}}>
@@ -157,35 +251,39 @@ export class EventDetail extends React.Component {
                         this.state.loggedIn ? 
                         <button type="button" className="event-detail-button" data-toggle="modal" 
                         data-target={this.state.user.additionalProfile ? "#applyEvent" : "#additionalData"} onClick={this.onApply}>신청하기</button> :
-                        <button type="button" className="event-detail-button" >로그인</button>
+                        <button type="button" className="event-detail-button" onClick={this.toLogIn}>로그인</button>
                     }
                 </div>
                 <div className="comments-container">
-                    {/*TODO 로그인 안했을 시에 댓글 쓰는 창 지우기*/}
-                    <div className="comment-write-box">
-                        <div className="comment-writer-profile">
-                            <img src='https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg' alt="profile-pic"/>
-                            <p>{this.state.user.name}</p>
-                            <div>{this.state.user.sex}</div>
-                            <div>{this.state.user.age}세</div>
-                            <div>자녀{this.state.user.childAge}세</div>
-                        </div>
-                        <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" onChange={this.changeComment}/>
-                        <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
-                    </div>
+                    { this.state.loggedIn ? 
+                        <div className="comment-write-box">
+                            <div className="comment-writer-profile">
+                                <img src={this.props.user.photo} alt="profile-pic"/>
+                                <p>{this.props.user.nickName}</p>
+                                <div>{this.props.user.gender}</div>
+                                <div>{this.props.user.birth}세</div>
+                                <div>자녀{this.props.user.childBirth}세</div>
+                            </div>
+                            <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" onChange={this.changeComment}
+                            value={this.state.myComment}/>
+                            <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
+                        </div> : null
+                    }
+                    
                     <div className="comment-list-header">
                         <div className="comment-number">
-                            댓글&nbsp;&nbsp;<span>100</span>개
+                            댓글&nbsp;&nbsp;<span></span>
                         </div>
-                        <div className={this.state.sortBy ==="최신순" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("추천수")}}>추천수</div>
-                        <div className={this.state.sortBy ==="최신순" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("최신순")}} style={{marginRight: '20px'}}>최신순</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("recommend")}}>추천수</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("latest")}} style={{marginRight: '20px'}}>최신순</div>
                     </div>
 
                     <div className="comment-list-box">
                         {
                             this.state.comments.map((data, index)=>{
                                 return (
-                                    <CommentCard data={data} key={index}/>
+                                    <CommentCard data={data} key={index} user={this.props.user} getComment={this.getComment}
+                                    postType={{index: this.state.eventIndex, type: "event"}}/>
                                 )
                             })
                         }
@@ -233,3 +331,22 @@ export class EventDetail extends React.Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return ({
+        user: {
+            index: state.auth.userIndex,
+            nickName: state.auth.userNickName,
+            photo: state.auth.userPhoto,
+            gender: state.auth.userGender,
+            birth: state.auth.userBirthYear,
+            childBirth: state.auth.childBirthYear
+        }
+    });
+};
+
+const mapDispatchToProps = null;
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetail);

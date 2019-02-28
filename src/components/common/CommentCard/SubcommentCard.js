@@ -36,7 +36,7 @@ export class SubcommentCard extends React.Component {
                     data: {
                         content: this.state.subcomment.content,
                         index: this.state.subcomment.index,
-                        tipIndex: this.state.postType.index
+                        [this.state.postType.type+"Index"]: this.state.postType.index
                     }
                 })
             } catch(error){
@@ -64,7 +64,7 @@ export class SubcommentCard extends React.Component {
                 headers: headers,
                 data: {
                     index: this.state.subcomment.index,
-                    tipIndex: this.state.postType.index
+                    [this.state.postType.type+"Index"]: this.state.postType.index
                 }
             });
         } catch(error) {
