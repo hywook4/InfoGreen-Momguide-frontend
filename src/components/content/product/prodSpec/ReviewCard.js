@@ -17,18 +17,24 @@ export class ReviewCard extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log('mounting');
         this.state = {
             selectedImageIndex: 0,
             folded: true,
-            like: props.data ? props.data.like : null,
+            like: null,
             isLogin: false,
 
-            propsLike: props.data ? props.data.like : null
+            propsLike: null
         };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        return {};
+        if(prevState.propsLike !== nextProps.data.propsLike) {
+            return {
+                like: nextProps.data.like,
+                propsLike: nextProps.data.like
+            };
+        }
     }
 
     handleImageClick = (index) => {

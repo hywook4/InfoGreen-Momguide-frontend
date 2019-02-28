@@ -181,12 +181,11 @@ export class ProdSpec extends React.Component{
                 await this.handleLoadReview(1);
             } catch (e) {
             }
-
+        } else {
             res = await axios.get(`${process.env.API_URL}/api/review/best?category=${category}&id=${id}`);
             this.setState({
                 bestReview: res.data
             });
-        } else {
             this.setState({
                 reviewApiLoaded: true
             });
