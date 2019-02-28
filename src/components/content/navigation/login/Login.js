@@ -4,6 +4,12 @@ import LOGIN_BANNER from '../../../../assets/images/banner.png';
 import LoginInput from './LoginInput';
 
 export class Login extends React.Component{
+    constructor(props) {
+        super(props);
+
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
+
     render(){
         return(
             <div className="container">
