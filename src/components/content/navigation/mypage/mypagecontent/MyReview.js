@@ -1,10 +1,6 @@
 import React from 'react';
 import './MyReview.css';
 import MyReviewCard from './MyReviewCard';
-import greenCircle from '../../../../../assets/images/common_icons/green_circle.png';
-import greenLine from '../../../../../assets/images/common_icons/green_line.png';
-import grayCircle from '../../../../../assets/images/common_icons/gray_circle.png';
-import grayLine from '../../../../../assets/images/common_icons/gray_line.png';
 
 export class MyReview extends React.Component {
     // TODO: api 요청에 따라 state 수정

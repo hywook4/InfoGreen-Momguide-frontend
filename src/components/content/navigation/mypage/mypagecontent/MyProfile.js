@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../../../actions';
 import {FollowCard} from './FollowCard'
 import history from '../../../../../history/history';
+import TokenUtils from '../../../../../util/TokenUtil';
 
 class MyProfile extends React.Component{
 
@@ -16,9 +17,21 @@ class MyProfile extends React.Component{
     }
 
 
+    isLogin = () => {
+        const token = TokenUtils.getLoginToken();
+        if(token === null) {
+            const login = window.confirm("로그인 후 이용 바랍니다.");
+            if(login) {
+                history.push('/login');
+            } else {
+                history.push('/');
+            }
+        } else {
+            return;
+        }
+    }
 
     componentDidMount=()=>{
-        
     };
 
     changeTab = (tab) => {
@@ -71,7 +84,7 @@ class MyProfile extends React.Component{
         history.push('/');
     }
     render(){
-
+        this.isLogin();
         return(
             <React.Fragment>
                 <div className="profile-card">

@@ -190,14 +190,15 @@ h6.my-review-detail-header-inline {
     margin-top: 20px;
 }
 
+.my-review-card-rate {
+    width : 132px;
+    margin-right: 0;
+    display: inline-block;
+}
 .my-review-star {
     color: grey;
-    font-size: 35px !important;
+    font-size: 23px !important;
     margin-right: 5px;
-}
-
-.my-review-star:hover {
-    cursor: pointer;
 }
 
 .my-review-star.selected {
@@ -367,3 +368,33 @@ h6.my-review-detail-header-inline {
     width: 100%;
     color: white !important;
 }
+
+.my-review-manage-buttons {
+    display: inline-block;
+    margin-left: 35px;
+    height: 100px;
+    padding-top: 30px;
+}
+.my-review-button {
+    width: 54px;
+    height: 22px;
+    padding: 2px 0px;
+    border: 1px solid #c6cbd1;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 10px;
+    color: #c6cbd1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.my-review-content {
+    color: gray;
+    margin-left: 40px;
+    font-size: 10px;
+    margin-top: 5px;
+}
+/* .my-review-button.modify{
+    margin-bottom: 10px;
+}
+ */

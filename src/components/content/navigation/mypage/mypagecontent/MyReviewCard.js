@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
+import './MyReview.css';
 class MyReviewCard extends Component {
     state = {
-        rating: 4
+        rating: 3
     }
     render() {
         return (
@@ -27,7 +27,26 @@ class MyReviewCard extends Component {
                     <i className={`my-review-star fa fa-star${(this.state.rating >= 4 ? ' selected' : '-o')}`} aria-hidden="true" />
                     <i className={`my-review-star fa fa-star${(this.state.rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" />
                 </div>
-                
+                <div className="my-review-manage-buttons">
+                    <div className="my-review-button modify" onClick={this.modifyRequest}>수정하기</div>
+                    <div className="my-review-button delete"  data-toggle="modal" data-target="#deletemodal">삭제하기</div>
+                    <div className="my-review-button add" onClick={this.modifyRequest}>추가하기</div>
+                </div>
+                <div className="my-review-content">
+                    에부부에부부
+                </div>
+                <div className="modal fade" id="deletemodal" role="dialog">
+                    <div className="modal-dialog modal-sm">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                {/*<button type="button" class="close" data-dismiss="modal">&times;</button>*/}
+                                <h6 className="myproduct-delete-confirm">삭제하시겠습니까?</h6>
+                                <button type="button" className="cancel-btn btn-default" data-dismiss="modal">취소하기</button>
+                                <button type="button" className="delete-btn btn-default" data-dismiss="modal"  onClick={this.deleteList}>삭제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
