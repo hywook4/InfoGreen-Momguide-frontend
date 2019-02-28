@@ -56,8 +56,12 @@ export class ReportModal extends React.Component {
             // review, comment, event
             if(this.props.type === 'review') {
                 dataObj['reviewId'] = this.props.id;
+            } else if(this.props.type === 'comment'){
+                dataObj['commentIndex'] = this.props.id;
             }
 
+            console.log(dataObj);
+            console.log(this.props.objUrl);
             await axios({
                 method: 'post',
                 url: `${process.env.API_URL}${this.props.objUrl}`,

@@ -414,7 +414,7 @@ export class CommentCard extends React.Component {
                         <button className="subcomment-close-button" onClick={this.foldSubcomment}>답글접기<i className="fa fa-angle-up"/></button> : null
                     }
                 </div>
-                <ReportModal reportContent={this.state.comment} reportModalId={this.state.reportModalId}/>
+                <ReportModal id={this.state.comment.index} reportModalId={this.state.reportModalId} type="comment" objUrl="/api/report/comment"/>
             </div>
         )
     }

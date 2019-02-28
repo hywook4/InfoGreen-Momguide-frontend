@@ -207,7 +207,7 @@ class TipDetail extends React.Component {
         history.push(`/login`);
     }
 
-    /*
+    
     likePress = async () => {
         const token = TokenUtil.getLoginToken();
         if(token === null) {
@@ -219,10 +219,10 @@ class TipDetail extends React.Component {
                 try {
                     await axios({
                         method: 'delete',
-                        url: `${process.env.API_URL}/api/like/eventLike`,
+                        url: `${process.env.API_URL}/api/like/tipLike`,
                         headers: headers,
                         data: {
-                            eventIndex: this.state.eventIndex
+                            tipIndex: this.state.tipIndex
                         }
                     });
     
@@ -237,10 +237,10 @@ class TipDetail extends React.Component {
                 try {
                     await axios({
                         method: 'post',
-                        url: `${process.env.API_URL}/api/like/eventLike`,
+                        url: `${process.env.API_URL}/api/like/tipLike`,
                         headers: headers,
                         data: {
-                            eventIndex: this.state.eventIndex
+                            tipIndex: this.state.tipIndex
                         }
                     });
     
@@ -253,7 +253,7 @@ class TipDetail extends React.Component {
                 })
             }
         }
-    }*/
+    }
 
     render() {
         const moreButton = (

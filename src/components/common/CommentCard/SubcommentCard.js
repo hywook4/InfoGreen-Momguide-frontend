@@ -226,7 +226,7 @@ export class SubcommentCard extends React.Component {
                     </div>
                 </div>
 
-                <ReportModal reportContent={this.state.subcomment} reportModalId={this.state.reportModalId}/>
+                <ReportModal id={this.state.subcomment.index} reportModalId={this.state.reportModalId} type="comment" objUrl="/api/report/comment"/>
             </div>
         )
     }
