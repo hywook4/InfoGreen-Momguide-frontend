@@ -19,7 +19,7 @@ export class MyProductCard extends React.Component{
         this.state = ({
             mainCategory: this.props.mainCategory,
             check: false,
-            index: this.props.index + 1
+            index: this.props.index
         });
     }
 
@@ -96,7 +96,7 @@ export class MyProductCard extends React.Component{
     }
 
     changeCheck = (e) => {
-        this.props.changeCardCheck(this.state.index - 1);
+        this.props.changeCardCheck(this.state.index);
     }
 
     render(){

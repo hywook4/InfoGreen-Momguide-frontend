@@ -16,7 +16,7 @@ import { MyHelpDetail } from './mypagecontent/MyHelpDetail'
 import MyIngredientDetail from './mypagecontent/MyIngredientDetail'
 import { MyReview } from './mypagecontent/MyReview';
 import { ProfileModifyPasswordCheck } from './mypagecontent/ProfileModifyPasswordCheck';
-
+import { MyReviewDetail } from './mypagecontent/MyReviewDetail';
 export class MyPage extends React.Component{
 
     state = {
@@ -50,6 +50,7 @@ export class MyPage extends React.Component{
                                     <Route path="/mypage/my-house-products" component={MyHouseProduct} />
                                     <Route path="/mypage/dib-products" component={MyDibProduct} /> 
                                     <Route exact path="/mypage/my-review" component={MyReview} />
+                                    <Route path="/mypage/my-review/modify" component={MyReviewDetail} />
                                     <Route path="/mypage/ingredient-open-request" component={OpenRequest} /> 
                                     <Route exact path="/mypage/ingredient-analysis-request" component={MyIngredientRequest} /> 
                                     <Route path="/mypage/ingredient-analysis-request" component={MyIngredientDetail} /> 

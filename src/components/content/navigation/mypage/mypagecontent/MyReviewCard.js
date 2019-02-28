@@ -1,41 +1,105 @@
 import React, { Component } from 'react';
+import TokenUtils from '../../../../../util/TokenUtil';
+import axios from 'axios';
 import './MyReview.css';
+import { Link } from 'react-router-dom';
+import { cpus } from 'os';
 class MyReviewCard extends Component {
-    state = {
-        rating: 3
+
+    constructor(props) {
+        super(props);
+
+        this.state = ({
+            mainCategory: this.props.mainCategory,
+            check: false,
+            index: 0
+        })
     }
+
+    componentDidMount = () => {
+        this.setState({
+            check: this.props.check,
+            index: this.props.index
+        })
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if(nextProps.check !== prevState.check){
+            return { check: nextProps.check };
+        }
+        return null;
+    }
+
+    changeCheck = (e) => {
+        console.log(this.state.index);
+        this.props.changeCardCheck(this.state.index);
+    }
+
+    deleteList = () => {
+        const token = TokenUtils.getLoginToken();
+        axios({
+            method: 'delete',
+            url: process.env.API_URL + '/api/review',
+            headers: TokenUtils.getTokenRequestHeader(token),
+            data: {
+                "reviewId": this.props.data.review.index
+            }
+        })
+        .then(() => {
+            this.props.rerenderPage(this.props.currentPage);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    parseDate = (date) => {
+        const yyyy = date.slice(0, 4);
+        const mm = date.slice(5, 7);
+        const dd = date.slice(8, 10);
+        return yyyy + '-' + mm + '-' + dd;
+    }
+
     render() {
+        const data = this.props.data;
+        const date = this.parseDate(data.review.created_at);
+        const rating = data.review.rating;
+        const content = data.review.content;
+        const brand= data.product.brand;
+        const product = data.product.name;
+        const index = data.review.index;
         return (
             <div className="my-review-card">
                 <div className="my-review-card-checkbox">
-                    <input type="checkbox" />
+                    <input type="checkbox" onChange={this.changeCheck} checked={this.state.check}/>
                 </div>
                 <div className="my-review-card-image">
                     <div className="my-review-img">
-                        <img src="~/Desktop/images.jpeg" alt="" className="my-review-img-preview" />
+                        <img src={`${process.env.S3_URL}/product-images/${this.props.mainCategory}-product-images/${brand}/${product}.jpg`} alt="" className="my-review-img-preview" />
                     </div>
                 </div>
                 <div className="my-review-card-title">
-                    <p>19-02-26</p>
-                    <h6>브랜드</h6>
-                    <h5>에부부-에부부</h5>
+                    <p>{date}</p>
+                    <h6>{brand}</h6>
+                    <h5>{product}</h5>
                 </div>
                 <div className="my-review-card-rate">
-                    <i className={`my-review-star fa fa-star${(this.state.rating >= 1 ? ' selected' : '-o')}`} aria-hidden="true"/>
-                    <i className={`my-review-star fa fa-star${(this.state.rating >= 2 ? ' selected' : '-o')}`} aria-hidden="true"/>
-                    <i className={`my-review-star fa fa-star${(this.state.rating >= 3 ? ' selected' : '-o')}`} aria-hidden="true" />
-                    <i className={`my-review-star fa fa-star${(this.state.rating >= 4 ? ' selected' : '-o')}`} aria-hidden="true" />
-                    <i className={`my-review-star fa fa-star${(this.state.rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" />
+                    <i className={`my-review-star fa fa-star${(rating >= 1 ? ' selected' : '-o')}`} aria-hidden="true"/>
+                    <i className={`my-review-star fa fa-star${(rating >= 2 ? ' selected' : '-o')}`} aria-hidden="true"/>
+                    <i className={`my-review-star fa fa-star${(rating >= 3 ? ' selected' : '-o')}`} aria-hidden="true" />
+                    <i className={`my-review-star fa fa-star${(rating >= 4 ? ' selected' : '-o')}`} aria-hidden="true" />
+                    <i className={`my-review-star fa fa-star${(rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" />
                 </div>
                 <div className="my-review-manage-buttons">
-                    <div className="my-review-button modify" onClick={this.modifyRequest}>수정하기</div>
-                    <div className="my-review-button delete"  data-toggle="modal" data-target="#deletemodal">삭제하기</div>
+                    <Link to="/mypage/my-review/modify">
+                        <div className="my-review-button modify" onClick={this.modifyRequest}>수정하기</div>
+                    </Link>
+                    <div className="my-review-button delete"  data-toggle="modal" data-target={"#deletemodal" + index}>삭제하기</div>
                     <div className="my-review-button add" onClick={this.modifyRequest}>추가하기</div>
                 </div>
                 <div className="my-review-content">
-                    에부부에부부
+                    {content}
                 </div>
-                <div className="modal fade" id="deletemodal" role="dialog">
+                <div className="modal fade" id={"deletemodal" + index} role="dialog">
                     <div className="modal-dialog modal-sm">
                         <div className="modal-content">
                             <div className="modal-body">
