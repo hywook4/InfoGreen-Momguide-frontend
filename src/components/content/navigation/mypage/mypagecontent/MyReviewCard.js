@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TokenUtils from '../../../../../util/TokenUtil';
+import * as utils from '../../../../../util';
 import axios from 'axios';
 import './MyReview.css';
 import { Link } from 'react-router-dom';
@@ -36,11 +36,11 @@ class MyReviewCard extends Component {
     }
 
     deleteList = () => {
-        const token = TokenUtils.getLoginToken();
+        const token = utils.TokenUtil.getLoginToken();
         axios({
             method: 'delete',
             url: process.env.API_URL + '/api/review',
-            headers: TokenUtils.getTokenRequestHeader(token),
+            headers: utils.TokenUtil.getTokenRequestHeader(token),
             data: {
                 "reviewId": this.props.data.review.index
             }
@@ -67,6 +67,14 @@ class MyReviewCard extends Component {
         const brand= data.product.brand;
         const product = data.product.name;
         const index = data.review.index;
+
+        console.log(data);
+        const recentDate = new Date(data.recentDate);
+        console.log(data.review.created_at);
+        const now = new Date();
+        console.log(now);
+        const diff = utils.CommonUtil.diffMonths(recentDate, now);
+        console.log(index);
         return (
             <div className="my-review-card">
                 <div className="my-review-card-checkbox">
@@ -90,11 +98,19 @@ class MyReviewCard extends Component {
                     <i className={`my-review-star fa fa-star${(rating >= 5 ? ' selected' : '-o')}`} aria-hidden="true" />
                 </div>
                 <div className="my-review-manage-buttons">
-                    <Link to="/mypage/my-review/modify">
+                    <Link to={"/mypage/my-review/modify/" + index }>
                         <div className="my-review-button modify" onClick={this.modifyRequest}>수정하기</div>
                     </Link>
                     <div className="my-review-button delete"  data-toggle="modal" data-target={"#deletemodal" + index}>삭제하기</div>
-                    <div className="my-review-button add" onClick={this.modifyRequest}>추가하기</div>
+                    {
+                        diff > 0 ? 
+                        <Link to={"/additional-review/" + index}>
+                            <div className="my-review-button add available">추가하기</div>
+                        </Link>
+                        :
+                        <div className="my-review-button add" onClick={this.modifyRequest} disabled="true">추가하기</div>
+                    }
+                    
                 </div>
                 <div className="my-review-content">
                     {content}

@@ -210,7 +210,7 @@ export class MyReview extends React.Component {
     render() {
         if(this.state.brand === '')
             return null;
-
+        console.log(this.state.reviews);
         return (
             <div className="my-review-container">
                 <div className="my-review-header">

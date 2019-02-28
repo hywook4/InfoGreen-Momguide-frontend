@@ -1,5 +1,8 @@
 import React from 'react';
 import './MyReview.css';
+import * as utils from '../../../../../util';
+import history from '../../../../../history/history';
+import axios from 'axios';
 import greenCircle from '../../../../../assets/images/common_icons/green_circle.png';
 import greenLine from '../../../../../assets/images/common_icons/green_line.png';
 import grayCircle from '../../../../../assets/images/common_icons/gray_circle.png';
@@ -8,43 +11,64 @@ import grayLine from '../../../../../assets/images/common_icons/gray_line.png';
 export class MyReviewDetail extends React.Component {
     // TODO: api 요청에 따라 state 수정
     state = {
-        brand: '강청',
-        name: '강청 산소계 표백제',
-        category: 'living',
-        rating: 4,
-        usePeriod: 2,
-        functionality: 2,
-        nonIrritating: 2,
-        sent: 1,
-        costEffectiveness: 3,
-        reviewText: '동해물과 백두산이 마르고 닳도록\n' +
-            '하느님이 보우하사 우리나라 만세\n' +
-            '무궁화 삼천리 화려강산\n' +
-            '대한 사람 대한으로 길이 보전하세\n',
+        productId: null,
+        brand: '',
+        name: '',
+        category: '',
+        rating: null,
+        usePeriod: null,
+        functionality: null,
+        nonIrritating: null,
+        sent: null,
+        costEffectiveness: null,
+        reviewText: '',
         imageFiles: [],
-        additionalReviewList: [{
-            id: 1,
-            duration: 2,
-            text: '가성비 좋아요\n재우돼지\n재우돼지\n재우돼지',
-            success: true
-        }, {
-            id: 2,
-            duration: 4,
-            text: '향이 좋지는 않지만\n가성비가 너무 좋아요!',
-            success: true
-        }, {
-            id: 3,
-            duration: 7,
-            text: '향 때문에 다른거 씁니다.',
-            success: false
-        }]
+        additionalReviewList: [],
+        reviewCreateDate: '',
+        textAreaDisable: true
     };
 
+
+    componentDidMount = () => {
+        const token = utils.TokenUtil.getLoginToken();
+        const index = this.props.location.pathname.split('/')[4];
+        console.log(index);
+        const query = `?id=${index}`;
+        axios({
+            method: 'get',
+            url: `${process.env.API_URL}/api/review${query}`,
+            headers: utils.TokenUtil.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            const now = new Date();
+            const postDate = new Date(res.data.review.created_at);
+            const diffMonth = utils.CommonUtil.diffMonths(now, postDate);
+            console.log(res.data);
+            this.setState({
+                productId: res.data.product.index,
+                brand: res.data.product.brand,
+                name: res.data.product.name,
+                category: res.data.review.cosmetic_index === null ? 'living' : 'cosmetic',
+                rating: res.data.review.rating,
+                usePeriod: diffMonth,
+                functionality: res.data.review.functionality,
+                nonIrritating: res.data.review.nonIrritating,
+                sent: res.data.review.sent,
+                costEffectiveness: res.data.review.costEffectiveness,
+                reviewText: res.data.review.content,
+                additionalReviewList: res.data.additionalReview,
+                reviewCreateDate: res.data.review.created_at,
+                textAreaDisable: true
+            })
+            console.log(res.data.images);
+        })
+    }
     onChange = (key, value) => {
         const newObj = {};
         newObj[key] = value;
 
         this.setState(newObj);
+        // console.log(value);
     };
 
     deleteImageFile = (fileName) => {
@@ -53,10 +77,90 @@ export class MyReviewDetail extends React.Component {
         });
     };
 
+    modifyReview = async () => {
+        const token = utils.TokenUtil.getLoginToken();
+        const reviewForm = new FormData();
+        const reviewId = this.props.location.pathname.split('/')[4]
+        reviewForm.append('reviewId', reviewId);
+        reviewForm.append('category', this.state.category);
+        reviewForm.append('productId', this.state.productId);
+        reviewForm.append('rating', this.state.rating);
+        reviewForm.append('content', this.state.reviewText);
+        reviewForm.append('functionality', this.state.functionality);
+        reviewForm.append('nonIrritating', this.state.nonIrritating);
+        reviewForm.append('sent', this.state.sent);
+        reviewForm.append('costEffectiveness', this.state.costEffectiveness);
+        for(let i = 0; i < this.state.imageFiles.length; i++) {
+            reviewForm.append('images', this.state.imageFiles[i]);
+        }
+        
+        for(let i = 0; i < this.state.additionalReviewList.length; i++) {
+            console.log(this.state.additionalReviewList[i]);
+            try {
+                await axios ({
+                    method: 'put',
+                    url: `${process.env.API_URL}/api/review/addition`,
+                    headers: utils.TokenUtil.getTokenRequestHeader(token),
+                    data: {
+                        additionalReviewId: this.state.additionalReviewList[i].index,
+                        content: this.state.additionalReviewList[i].content
+                    }
+                })
+            } catch(e) {
+                alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
+                return;
+            }
+        }
+        
+
+        try {
+            await axios({
+                method: 'put',
+                url: `${process.env.API_URL}/api/review`,
+                headers: {
+                    ...utils.TokenUtil.getTokenRequestHeader(token),
+                    'Content-Type': 'multipart/form-data'
+                },
+                data: reviewForm
+            })
+        } catch{
+            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
+        }
+
+        alert('리뷰가 수정되었습니다.');
+        history.push(`/mypage/my-review/modify/${reviewId}`);
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+        
+        
+    }
+
+    handleDisableTextarea = () => {
+        this.setState({
+            textAreaDisable: !this.state.textAreaDisable
+        });
+    }
+
+    changeAddReview = (e, i) => {
+        console.log('hello');
+        let newList = [];
+        const beforeReview = this.state.additionalReviewList.slice(0, i);
+        const afterReview = this.state.additionalReviewList.slice(i+1, this.state.additionalReviewList.length);
+        const changeReview = this.state.additionalReviewList[i];
+        changeReview.content = e.target.value;
+        newList = [
+            ...beforeReview,
+            changeReview,
+            ...afterReview
+        ]
+        this.setState({
+            additionalReviewList: newList
+        });
+    }
+
     render() {
+        console.log(this.state);
         if(this.state.brand === '')
             return null;
-
         return (
             <div className="my-review-container">
                 <div className="my-review-title">
@@ -225,21 +329,26 @@ export class MyReviewDetail extends React.Component {
                         <h3>6. 추가 리뷰</h3>
                     </div>
                         {this.state.additionalReviewList.map((item, i) => {
+                            console.log(item);
+                            const firstReview = new Date(this.state.reviewCreateDate);
+                            const addReview = new Date(item.created_at);
+                            const diff = utils.CommonUtil.diffMonths(firstReview, addReview);
                             return (
-                                <div className={`my-review-additional-review-container ${item.success?'success':'fail'}`} key={i}>
+                                <div className={`my-review-additional-review-container ${item.ended?'success':'fail'}`} key={i}>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td className={`my-review-additional-review-duration ${item.success?'success':'fail'}`}>
-                                                    {item.duration}개월째 사용 {item.success?'':'중단'}
+                                                <td className={`my-review-additional-review-duration ${item.ended?'success':'fail'}`}>
+                                                    {diff}개월째 사용 {item.ended?'':'중단'}
                                                 </td>
                                                 <td className="my-review-additional-review-detail">
-                                                    {item.text.split('\n').map((item, key) => {
-                                                        return (<span key={key}>{key !== 0 ? (<br />) : null}{item}</span>);
+                                                    {item.content.split('\n').map((item, key) => {
+                                                        return (<textarea key={key} defaultValue={item} className="additional-review-item"
+                                                                disabled={this.state.textAreaDisable} onChange={(e) => this.changeAddReview(e, i)}>{key !== 0 ? (<br />) : null}</textarea>);
                                                     })}
                                                 </td>
                                                 <td className="my-review-additional-review-item my-review-additional-review-icon">
-                                                    <i className="fas fa-pen" />
+                                                    <i className="fas fa-pen" onClick={this.handleDisableTextarea}/>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -249,7 +358,7 @@ export class MyReviewDetail extends React.Component {
                         })}
                 </div>
                 <div className="my-review-detail-container">
-                    <button className="my-review-correct-button btn">수정 저장</button>
+                    <button className="my-review-correct-button btn" onClick={this.modifyReview}>수정 저장</button>
                 </div>
             </div>
         );
