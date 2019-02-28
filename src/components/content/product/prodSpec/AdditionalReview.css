@@ -1,0 +1,185 @@
+.additional-review-container {
+    width: 375px;
+    margin: 200px auto 200px;
+    position: relative;
+    display: table;
+    height: 100%;
+    overflow-y: hidden;
+    text-align: center;
+    box-shadow: 1px 1px 4px;
+}
+
+.additional-review-container.success {
+    border: 2px solid #32B8A4;
+}
+
+.additional-review-container.fail {
+    border: 2px solid red;
+}
+
+.additional-review-title {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.additional-review-title > div:first-child {
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.additional-review-title > div:first-child > span {
+    color :#32B8A4;
+}
+
+.additional-review-title > div:last-child {
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+.additional-review-title-second {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.additional-review-title-second > div {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.additional-review-pre-button {
+    position: absolute;
+    left: 10px;
+    z-index: 100;
+}
+
+.additional-review-pre-button:hover {
+    cursor: pointer;
+}
+
+.additional-review-content {
+    margin-top: 10px;
+    text-align: center;
+    width: 375px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.additional-review-image {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.additional-review-content img {
+    width: 70px;
+    height: 70px;
+}
+
+.additional-review-product-info {
+    display: inline-block;
+    margin-left: 10px;
+    text-align: left;
+}
+
+.additional-review-product-info > div:first-child {
+    font-size: 10px;
+    margin-top: 17px;
+}
+
+.additional-review-product-info > div:last-child {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.additional-review-card-rate {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.additional-review-star {
+    color: grey;
+    font-size: 25px !important;
+    margin-right: 5px;
+    margin-bottom: 30px;
+}
+
+.additional-review-star.selected {
+    color: #32B8A4;
+}
+
+.additional-review-card-rate > span {
+    margin-left: 10px;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.additional-review-text {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.5);
+    text-align: right;
+}
+
+.additional-review-text > textarea {
+    padding: 10px 20px;
+    width: 100%;
+    height: 200px;
+    border: none;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.additional-review-text > div {
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+.additional-review-text > textarea:focus {
+    outline-width: 0;
+}
+
+.additional-review-submit {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.additional-review-submit > button {
+    width: 145px;
+    height: 50px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 10px 5px;
+}
+
+.additional-review-submit > button:hover {
+    cursor: pointer;
+}
+
+.additional-review-submit > button:first-child {
+    background-color: #32B8A4;
+}
+
+.additional-review-submit > button:nth-child(2) {
+    background-color: red;
+}
+
+h6.additional-review-all-finish-button {
+    margin-top: 50px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+button.additional-review-all-finish-button {
+    font-size: 18px;
+    color: white;
+    background-color: #32B8A4;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 30px;
+    width: 80%;
+    height: 50px;
+}
+
+button.additional-review-all-finish-button:hover {
+    cursor: pointer;
+}

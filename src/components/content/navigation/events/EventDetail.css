@@ -59,6 +59,11 @@
     background-color: lightslategray;
 }
 
+.event-detail-content img{
+    width: 100%;
+    object-fit: scale-down;
+}
+
 .event-detail-bottom{
     width: 100%;
     height: 50px;

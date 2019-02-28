@@ -1,113 +1,119 @@
 import React from 'react';
 import './TipDetail.css';
 import history from '../../../../history/history'
+import axios from 'axios';
+import dateFormat from 'dateformat';
+import { connect } from 'react-redux';
+import { TokenUtil } from '../../../../util';
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
+import { timingSafeEqual } from 'crypto';
 
 
 const user = {
     index: 1,
-    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-    name: '테스트',
-    sex: '남자',
-    age: '23',
-    childAge: '1',
-    additionalProfile: true
+    photo: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+    nickName: '테스트',
+    gender: 'male',
+    birth: '23',
+    childBirth: '1',
 }
 
-export class TipDetail extends React.Component {
+const defaultTip = {
+    index: 0,
+    title: "1",
+    subtitle: "1",
+    content: "1",
+    created_at: "2019-01-01 00:00:00"
+}
+
+class TipDetail extends React.Component {
+    
     constructor(props) {
         super(props);
 
-        // TODO
+        let firstPage = 1;
+        let loggedIn = false;
+
+        let headers = null;
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null){
+        } else{
+            loggedIn = true;
+            headers = TokenUtil.getTokenRequestHeader(token);
+        }
+
         this.state = {
             user: user,
-            tip: {
-                image: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                title: '뿌요뿌요',
-                subtitle: '뿌요는 재미있다',
-                contents: 'e스포츠',
-                date: '2019.02.28',
-                end: false
-            },
-            comments: [
-            ],
-            likes: 10,
-            loggedIn: true,
-            commentPage: 1,
-            totalCommentPage: 2,
+            tipIndex: props.match.params.id,
+            tip: defaultTip,
+            comments: [],
+            loggedIn: loggedIn,
+            commentPage: firstPage,
+            totalCommentPage: 1,
             myComment: "",
-            sortBy : "최신순"
+            order : "latest", // latest or recommend
+            likePressed: false,
+            token: token,
+            headers: headers
         };
     }
 
-    componentDidMount = () => {
-        const dummy = [
-            {
-                index: 1,
-                commentIndex: 1,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '테스트',
-                sex: '남자',
-                age: '23',
-                childAge: '1',
-                date: '2018.02.03 12:00',
-                content: 'ㅇㄻㄴㅇㄹ',
-                likes: 10,
-                dislikes: 10,
-                likePressed: true,
-                dislikePressed: false
-            },
-            {
-                index: 2,
-                commentIndex: 2,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '송재우',
-                sex: '여자',
-                age: '23',
-                childAge: '12',
-                date: '2018.02.03 12:00',
-                content: '20cm',
-                likes: 20,
-                dislikes: 20,
-                likePressed: false,
-                dislikePressed: true
-            },
-            {
-                index: 3,
-                commentIndex: 3,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '에부부',
-                sex: '남자',
-                age: '23',
-                childAge: '53',
-                date: '2018.02.03 12:00',
-                content: '와 에부부 정말 멋지네요',
-                likes: 10,
-                dislikes: 5,
-                likePressed: false,
-                dislikePressed: false
-            },
-            {
-                index: 4,
-                commentIndex: 4,
-                imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-                name: '에부부',
-                sex: '남자',
-                age: '23',
-                childAge: '53',
-                date: '2018.02.03 12:00',
-                content: '와 에부부 정말 멋지네요',
-                likes: 10,
-                dislikes: 5,
-                likePressed: true,
-                dislikePressed: true
-            }
-        ]
+    getPostAndComment = async (page) => {
+        let data;
+
+        if(this.state.token === null){
+            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${page}`);
+        } else{
+            data = await axios({
+                method: 'get',
+                url: `${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${page}`,
+                headers: this.state.headers
+            })
+        }
         
+        return data;
+    }
+
+    componentDidMount = async () => {
+        let data = await this.getPostAndComment(this.state.commentPage);
+        let tip = data.data.tip;
+        let comments = data.data.comments;
+        console.log(data);
+        console.log(comments);
+
         this.setState({
-            comments: dummy
+            tip: tip,
+            comments: comments,
+            totalCommentPage: data.data.totalPages
         })
     }
+
+    init = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("권한이 없습니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'post',
+                url: `${process.env.API_URL}/api/tip/comment`,
+                headers: headers,
+                data: {
+                    content: this.state.myComment,
+                    tipIndex: this.state.tipIndex
+                }
+            });
+
+        } catch(error) {
+            alert("댓글 작성에 실패하였습니다.");
+        }
+    };
+
+
     
     changeComment = (e) => {
         this.setState({
@@ -115,39 +121,140 @@ export class TipDetail extends React.Component {
         })
     }
 
-    submitComment = () => {
-        //TODO : 나의 댓글 추가 요청하기
-        console.log(this.state.myComment);
+    submitComment = async () => {
+        await this.init();
+
+        let comments = [];
+        let data;
+
+        for(let a = 1; a <= this.state.commentPage ; a++){
+            data = await this.getPostAndComment(a);
+            comments = comments.concat(data.data.comments);
+        } 
+
+        this.setState({
+            comments: []
+        })
+
+        this.setState({
+            myComment: "",
+            totalCommentPage: data.data.totalPages,
+            comments: comments
+        })
     }
 
-    loadNextPage = () => {
-        console.log("more page");
+    loadNextPage = async () => {
+        const nextPage = this.state.commentPage + 1;
+        let data = await this.getPostAndComment(nextPage);
+
+        let comments = this.state.comments;
+        comments = comments.concat(data.data.comments);
+
         this.setState({
-            commentPage: this.state.commentPage + 1
+            commentPage: nextPage,
+            totalCommentPage: data.data.totalPages,
+            comments: comments
         })
-        //TODO : 기존 리스트에 새로받은 값들 추가해주기
     };
 
-    changeSort = (sort) => {
+    changeSort = async (sort) => {
+        let comments = [];
+        let data;
+        
+        for(let a = 1; a <= this.state.commentPage; a++){
+            data = await this.getPostAndComment(a);
+            comments = comments.concat(data.data.comments);
+        }
+
         this.setState({
-            sortBy: sort
+            comments: []
+        })
+
+        this.setState({
+            order: sort,
+            comments: comments,
+            totalCommentPage: data.data.totalPages
         })
     }
 
-    toProfileModify = () => {
-        history.push(`/mypage/profile-modify`);
-    }
-
-    onApply = () => {
-        //정보 수집이 안되어있는경우는 신청하지 않기 
-        if(this.state.user.additionalProfile){
-            console.log("이벤트 신청 성공");
-        } else{
-            console.log("추가 정보 수집하고와라");
+    getComment = async () => {
+        let comments = [];
+        let data;
+        
+        for(let a = 1; a <= this.state.commentPage; a++){
+            data = await this.getPostAndComment(a);
+            comments = comments.concat(data.data.comments);
         }
 
+        // react doesn't recoginze same num of object array ..... shit
+        this.setState({
+            comments: []
+        })
+
+        this.setState({
+            comments: comments,
+            totalCommentPage: data.data.totalPages
+        });
     }
     
+    getDate = (d) => {
+        let date = new Date(d);
+
+        return (dateFormat(date, "yyyy-mm-dd"))
+    }
+
+    toLogIn = () => {
+        history.push(`/login`);
+    }
+
+    
+    likePress = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+        
+        } else{
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            if(this.state.likePressed){
+                try {
+                    await axios({
+                        method: 'delete',
+                        url: `${process.env.API_URL}/api/like/tipLike`,
+                        headers: headers,
+                        data: {
+                            tipIndex: this.state.tipIndex
+                        }
+                    });
+    
+                } catch(error) {
+                    alert("좋아요 취소 실패");
+                }
+
+                this.setState({
+                    likePressed: false
+                })
+            } else{
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${process.env.API_URL}/api/like/tipLike`,
+                        headers: headers,
+                        data: {
+                            tipIndex: this.state.tipIndex
+                        }
+                    });
+    
+                } catch(error) {
+                    alert("좋아요 실패");
+                }
+    
+                this.setState({
+                    likePressed: true
+                })
+            }
+        }
+    }
+
     render() {
         const moreButton = (
             <button className="comment-more-button" onClick={() => {this.loadNextPage()}}>
@@ -159,13 +266,13 @@ export class TipDetail extends React.Component {
             <div className="tip-detail-container">
                 <div className="tip-detail-header">
                     <div className="tip-detail-header-left">
-                        <h5>{this.state.tip.date}</h5>
+                        <h5>{this.getDate(this.state.tip.created_at)}</h5>
                         <h1>{this.state.tip.title}</h1>
                         <h6>{this.state.tip.subtitle}</h6>
                     </div>
                 </div>
                 <div className="tip-detail-content">
-                
+                    <img src={this.state.tip.contentImageUrl} alt="tip-content"></img>
                 </div>
 
                 <div className="tip-detail-bottom">
@@ -173,8 +280,8 @@ export class TipDetail extends React.Component {
                         <i className="fa fa-share-alt"/>
                         <p>공유하기</p>
                     </div>
-                    <div className="tip-detail-icon-active" style={{marginRight: '15px'}}>
-                        <i className="fa fa-heart"/>
+                    <div className={this.state.likePressed ? "tip-detail-icon-active" : "tip-detail-icon-inactive"} style={{marginRight: '15px'}}>
+                        <i className="fa fa-heart" onClick={this.likePress}/>
                         <p>좋아요</p>
                     </div>
                 </div>
@@ -182,35 +289,40 @@ export class TipDetail extends React.Component {
                     {
                         this.state.loggedIn ? 
                         null :
-                        <button type="button" className="tip-detail-button" >로그인</button>
+                        <button type="button" className="tip-detail-button" onClick={this.toLogIn}>로그인</button>
                     }
                 </div>
                 <div className="comments-container">
-                    {/*TODO 로그인 안했을 시에 댓글 쓰는 창 지우기*/}
-                    <div className="comment-write-box">
-                        <div className="comment-writer-profile">
-                            <img src='https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg' alt="profile-pic"/>
-                            <p>{this.state.user.name}</p>
-                            <div>{this.state.user.sex}</div>
-                            <div>{this.state.user.age}세</div>
-                            <div>자녀{this.state.user.childAge}세</div>
-                        </div>
-                        <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" onChange={this.changeComment}/>
-                        <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
-                    </div>
+                    {
+                        this.state.loggedIn ? 
+                        <div className="comment-write-box">
+                            <div className="comment-writer-profile">
+                                <img src={this.props.user.photo} alt="profile-pic"/>
+                                <p>{this.props.user.nickName}</p>
+                                <div>{this.props.user.gender}</div>
+                                <div>{this.props.user.birth}세</div>
+                                <div>자녀{this.props.user.childBirth}세</div>
+                            </div>
+                            <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" 
+                            onChange={this.changeComment} value={this.state.myComment}/>
+                            <button type="button" className="comment-write-button" onClick={this.submitComment}>등록</button>
+                        </div> : null
+                    }
+                   
                     <div className="comment-list-header">
                         <div className="comment-number">
-                            댓글&nbsp;&nbsp;<span>100</span>개
+                            댓글&nbsp;&nbsp;<span></span>
                         </div>
-                        <div className={this.state.sortBy ==="최신순" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("추천수")}}>추천수</div>
-                        <div className={this.state.sortBy ==="최신순" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("최신순")}} style={{marginRight: '20px'}}>최신순</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort" : "comment-sort-selected"} onClick={()=>{this.changeSort("recommend")}}>추천수</div>
+                        <div className={this.state.order ==="latest" ? "comment-sort-selected" : "comment-sort"} onClick={()=>{this.changeSort("latest")}} style={{marginRight: '20px'}}>최신순</div>
                     </div>
 
                     <div className="comment-list-box">
                         {
                             this.state.comments.map((data, index)=>{
                                 return (
-                                    <CommentCard data={data} key={index}/>
+                                    <CommentCard data={data} key={index} user={this.props.user} getComment={this.getComment}
+                                    postType={{index: this.state.tipIndex, type: "tip"}}/>
                                 )
                             })
                         }
@@ -221,3 +333,22 @@ export class TipDetail extends React.Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return ({
+        user: {
+            index: state.auth.userIndex,
+            nickName: state.auth.userNickName,
+            photo: state.auth.userPhoto,
+            gender: state.auth.userGender,
+            birth: state.auth.userBirthYear,
+            childBirth: state.auth.childBirthYear
+        }
+    });
+};
+
+const mapDispatchToProps = null;
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TipDetail);
