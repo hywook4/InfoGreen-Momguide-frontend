@@ -2,6 +2,8 @@ import React from 'react';
 import './MyProducts.css';
 import axios from 'axios';
 import TokenUtils from '../../../../../util/TokenUtil';
+import history from '../../../../../history/history';
+import {Link} from 'react-router-dom';
 
 const appendText={
     ingredient:{icon:require('../../../../../assets/images/ingredient_open.png'),text:'성분 공개'},
@@ -111,10 +113,12 @@ export class MyProductCard extends React.Component{
                         <img src={`${process.env.S3_URL}/product-images/${this.props.mainCategory}-product-images/${data.brand}/${data.name}.jpg`} alt=""/>
                     </div>
                 </div>
-                <div className="myproduct-card-name">
-                    <p>{data.brand}</p>
-                    <h5>{data.name}</h5>
-                </div>
+                <Link to={"/product-details/" + data.category + "/" + data.index} className="product-card-link">
+                    <div className="myproduct-card-name">
+                        <p>{data.brand}</p>
+                        <h5>{data.name}</h5>
+                    </div>
+                </Link>
                 <div className="myproduct-card-info">
                     {Object.keys(appendText).map((key,i)=>{
                         let toReturn = '';
