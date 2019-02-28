@@ -46,9 +46,8 @@ export class LivingIngredientModal extends React.Component{
                                         <img className="img-responsive icon_img"
                                              src={require('../../../../assets/images/product_spec_icons/caution_usa.png')}
                                              alt=""/>
-                                        <div>
-                                            <h6>미 환경보호 (EPA)</h6>:&nbsp;&nbsp;유해성 논란 성분
-                                        </div>
+                                        <h6>미 환경보호 (EPA)</h6>
+                                        <span>유해성 논란 성분</span>
                                     </div>) : null
                                 }
                                 {props.dsl ?
@@ -56,47 +55,85 @@ export class LivingIngredientModal extends React.Component{
                                         <img className="img-responsive icon_img"
                                              src={require('../../../../assets/images/product_spec_icons/caution_canada.png')}
                                              alt=""/>
-                                        <div>
-                                            <h6>캐나다 환경부 (DSL)</h6>:&nbsp;&nbsp;인간 노출에 대한 잠재성이 있거나 독성이 있을 수 있음
-                                        </div>
+                                        <h6>캐나다 환경부 (DSL)</h6>
+                                        <span>인간 노출에 대한 잠재성이 있거나 독성이 있을 수 있음</span>
                                     </div>) : null
+                                }
+                                {(props.allergic === 'R') ?
+                                    (<div className="popup-icon-level">
+                                        <img className="img-responsive icon_img"
+                                             src={require('../../../../assets/images/Asset 144.png')}
+                                             alt=""/>
+                                        <h6>유럽연합위원회(EC)</h6>
+                                        <span>적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 상당히 높음</span>
+                                    </div>) : null
+                                }
+                                {(props.allegric === 'S') ?
+                                    (<div className="popup-icon-level">
+                                        <img className="img-responsive icon_img"
+                                             src={require('../../../../assets/images/Asset 143.png')}
+                                             alt=""/>
+                                        <h6>유럽연합위원회(EC)</h6>
+                                        <span>적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 존재함</span>
+                                    </div>) : null
+                                }
+                                {(props.epa !== 'Y' && !props.dsl && props.sr !== 'S' && props.sr !== 'R') ?
+                                    (<div className="popup-icon-level middle">
+                                        <h6>해당 없음</h6>
+                                    </div>) :
+                                    null
                                 }
                             </div>
                             <p className="modal-para">유해성분</p>
                             <div className="modal-caution-container">
-                                {props.harmness?
+                                {props.harmness ?
                                    <div className="popup-icon-level">
                                        <img className="img-responsive icon_img" src={require('../../../../assets/images/common_icons/warning.png')} alt=""/>
                                        <h6>국내 유해화학물질</h6>:&nbsp;&nbsp;유독물질
                                    </div>
                                 : null}
+                                {!props.harmness ?
+                                    <div className="popup-icon-level middle">
+                                        <h6>해당 없음</h6>
+                                    </div> : null
+                                }
                             </div>
-                            <p className="modal-para">나쁜 성분</p>
+                            <p className="modal-para">성분 독성 정보</p>
                             <div className="modal-caution-container">
                                 {props.echaBreath?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_respitory_true.png')} alt=""/>
                                         <h6>호흡 독성</h6>
+                                        <span>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
                                 {props.echaSkin?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_skin_true.png')} alt=""/>
                                         <h6>피부 자극</h6>
+                                        <span>흡입 시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
                                 {props.echaDev?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_development_true.png')} alt=""/>
                                         <h6>발달/생식 독성</h6>
+                                        <span>생식기능, 생식능력 또는 태아의 발생, 발육에 유해한 영향을 주거나 그것이 의심되는 성분입니다. 특정한 노출 경로 및 환경에 따라 나타나므로 해당 성분이 포함되어 있다고 해서 생식 독성을 일으키는 제품이라고 단정할 순 없습니다.</span>
                                     </div>
                                     : null}
                                 {props.echaCancer?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_cancer_true.png')} alt=""/>
                                         <h6>발암성</h6>
+                                        <span>인체에 암을 일으키거나 그러한 가능성이 있는 성분입니다. 특정한 노출 경로 및 환경에 따라 나타나므로 해당 성분이 포함되어 있다고 해서 암을 일으키는 제품이라고 단정할 순 없습니다.</span>
                                     </div>
                                     : null}
+                                {(!props.echaBreacth && !props.echaSkin && !props.echaDev && !props.echaCancer) ?
+                                    <div className="popup-icon-level middle">
+                                        <h6>해당 없음</h6>
+                                    </div>
+                                    : null
+                                }
                             </div>
                             <p className="modal-para">배합용도</p>
                             <div className="modal-caution-container end">
@@ -177,9 +214,8 @@ export class CosmeticIngredientModal extends React.Component{
                                         <img className="img-responsive icon_img"
                                              src={require('../../../../assets/images/Asset 144.png')}
                                              alt=""/>
-                                        <div>
-                                            <h6>유럽연합위원회(EC)</h6>:&nbsp;&nbsp;적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 상당히 높음
-                                        </div>
+                                        <h6>유럽연합위원회(EC)</h6>
+                                        <span>적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 상당히 높음</span>
                                     </div>) : null
                                 }
                                 {(props.allegric === 'S') ?
@@ -187,38 +223,53 @@ export class CosmeticIngredientModal extends React.Component{
                                         <img className="img-responsive icon_img"
                                              src={require('../../../../assets/images/Asset 143.png')}
                                              alt=""/>
-                                        <div>
-                                            <h6>유럽연합위원회(EC)</h6>:&nbsp;&nbsp;적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 존재함
-                                        </div>
+                                        <h6>유럽연합위원회(EC)</h6>
+                                        <span>적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 존재함</span>
                                     </div>) : null
                                 }
+                                {(props.allegric !== 'S' && props.allergic !== 'R') ?
+                                    (<div className="popup-icon-level middle">
+                                        <h6>해당 없음</h6>
+                                    </div>) :
+                                    null
+                                }
                             </div>
-                            <p className="modal-para">나쁜 성분</p>
+                            <p className="modal-para">성분 독성 정보</p>
                             <div className="modal-caution-container">
                                 {props.echaBreath?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_respitory_true.png')} alt=""/>
                                         <h6>호흡 독성</h6>
+                                        <span>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
                                 {props.echaSkin?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_skin_true.png')} alt=""/>
                                         <h6>피부 자극</h6>
+                                        <span>흡입 시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
                                 {props.echaDev?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_development_true.png')} alt=""/>
                                         <h6>발달/생식 독성</h6>
+                                        <span>생식기능, 생식능력 또는 태아의 발생, 발육에 유해한 영향을 주거나 그것이 의심되는 성분입니다. 특정한 노출 경로 및 환경에 따라 나타나므로 해당 성분이 포함되어 있다고 해서 생식 독성을 일으키는 제품이라고 단정할 순 없습니다.</span>
                                     </div>
                                     : null}
                                 {props.echaCancer?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_cancer_true.png')} alt=""/>
                                         <h6>발암성</h6>
+                                        <span>인체에 암을 일으키거나 그러한 가능성이 있는 성분입니다. 특정한 노출 경로 및 환경에 따라 나타나므로 해당 성분이 포함되어 있다고 해서 암을 일으키는 제품이라고 단정할 순 없습니다.</span>
                                     </div>
                                     : null}
+                                {(!props.echaBreacth && !props.echaSkin && !props.echaDev && !props.echaCancer) ?
+                                    <div className="popup-icon-level middle">
+                                        <h6>해당 없음</h6>
+                                    </div>
+                                    : null
+                                }
                             </div>
                             <p className="modal-para">배합용도</p>
                             <div className="modal-caution-container">

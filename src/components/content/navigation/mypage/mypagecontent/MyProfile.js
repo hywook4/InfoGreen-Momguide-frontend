@@ -148,11 +148,11 @@ export class MyProfile extends React.Component{
                 <div className="follow-container">
                     <div className="follow-tab-box">
                         <div className="follow-tabs">
-                            <div className={`tab ${this.state.tab === "팔로워" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로워")}>
+                            <div className={`profile-tab ${this.state.tab === "팔로워" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로워")}>
                                 <h1>24</h1>
                                 <p>팔로워</p>
                             </div>
-                            <div className={`tab ${this.state.tab === "팔로잉" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로잉")}>
+                            <div className={`profile-tab ${this.state.tab === "팔로잉" ? "tab-selected":""}`} onClick={()=> this.changeTab("팔로잉")}>
                                 <h1>30</h1>
                                 <p>팔로잉</p>
                             </div>
