@@ -39,7 +39,12 @@ export class Events extends React.Component {
         if(this.state.currentTab === tab){
 
         } else{
-            let data = await axios.get(`${process.env.API_URL}/api/${this.state.currentTab}/postList?order=${this.state.order}&page=1`);
+            let data;
+            if(tab === "event"){
+                data = await axios.get(`${process.env.API_URL}/api/event/postList?state=${this.state.eventCategory}&order=${this.state.order}&page=1`);
+            } else{
+                data = await axios.get(`${process.env.API_URL}/api/event/postList?state=${tab}&order=${this.state.order}&page=1`);
+            }
 
             this.setState({
                 currentTab: tab,
@@ -140,7 +145,7 @@ export class Events extends React.Component {
         const winnerCards = (
             this.state.events.map((item, i) => {
                 return (
-                    <Link to={`/events/winner/${item.index}`} key={i}>
+                    <Link to={`/events/${item.index}`} key={i}>
                         <div className="events-card-item" >
                             <div className="events-card-item-image-container">
                                 <img src={item.titleImageUrl} alt="events" />

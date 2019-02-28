@@ -40,6 +40,8 @@ const renderHome=()=>{
 
 export class MainPage extends Component {
     render () {
+        //localStorage.removeItem('loginToken');
+        //sessionStorage.removeItem('loginToken');
         return (
             <div className="full_main_page">
                 <div className="main_inner">

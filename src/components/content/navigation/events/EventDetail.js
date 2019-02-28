@@ -116,7 +116,6 @@ class EventDetail extends React.Component {
 
         this.setState({
             comments: [],
-            myComment: ""
         })
 
         this.setState({
