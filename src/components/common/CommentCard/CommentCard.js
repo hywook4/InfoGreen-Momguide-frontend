@@ -3,6 +3,7 @@ import './Comment.css';
 import axios from 'axios';
 import {TokenUtil} from '../../../util';
 import REPORT_ICON from '../../../assets/images/report.png';
+import CommonUtils from '../../../util/CommonUtil'
 
 import { SubcommentCard } from './SubcommentCard';
 import { ReportModal }  from '../ReportModal/ReportModal';
@@ -22,7 +23,7 @@ export class CommentCard extends React.Component {
             loggedIn = true;
             headers = TokenUtil.getTokenRequestHeader(token);
         }
-
+        console.log(props.data);
         this.state = {
             comment: props.data,
             postType: props.postType,   // postType.type : 'event or tip'  postType.index : index
@@ -293,9 +294,13 @@ export class CommentCard extends React.Component {
             return (
                 <div className="comment-user-profile">
                     <p>{this.state.comment.creator.nickName}</p>
-                    <div>{this.state.comment.creator.gender}</div>
-                    <div>{this.state.comment.creator.memberBirthYear}세</div>
-                    <div>자녀{this.state.comment.creator.childBirthYear}세</div>
+                    <div>{CommonUtils.getGender(this.state.comment.creator.gender)}</div>
+                    <div>{CommonUtils.getAge(this.state.comment.creator.memberBirthYear)}세</div>
+                    {
+                        this.state.comment.creator.hasChild ? 
+                        <div>자녀{CommonUtils.getAge(this.state.comment.creator.childBirthYear)}세</div> : 
+                        <div>자녀없음</div>
+                    }
                     <span>{this.state.comment.created_at}</span>
                 </div>
             )

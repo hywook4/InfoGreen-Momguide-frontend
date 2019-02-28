@@ -5,6 +5,17 @@ CommonUtils.getAge = (year) => {
     return currentYear - Number(year);
 };
 
+CommonUtils.getGender = (gender) => {
+    let sex;
+    if(gender === 'male'){
+        sex = "남자";
+    } else if(gender === 'female'){
+        sex = "여자";
+    }
+
+    return sex;
+}
+
 CommonUtils.range = (start, end) => {
     const len = end-start+1;
     if(len < 0)

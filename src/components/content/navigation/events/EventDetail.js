@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { TokenUtil } from '../../../../util';
 import moment from 'moment';
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
+import CommonUtils from '../../../../util/CommonUtil'
 
 
 const user = {
@@ -412,9 +413,13 @@ class EventDetail extends React.Component {
                             <div className="comment-writer-profile">
                                 <img src={this.props.user.photo} alt="profile-pic"/>
                                 <p>{this.props.user.nickName}</p>
-                                <div>{this.props.user.gender}</div>
-                                <div>{this.props.user.birth}세</div>
-                                <div>자녀{this.props.user.childBirth}세</div>
+                                <div>{CommonUtils.getGender(this.props.user.gender)}</div>
+                                <div>{CommonUtils.getAge(this.props.user.birth)}세</div>
+                                {
+                                    this.props.user.hasChild ? 
+                                    <div>자녀{CommonUtils.getAge(this.props.user.childBirth)}세</div> : 
+                                    <div>자녀없음</div>
+                                }
                             </div>
                             <textarea className="comment-write" placeholder="댓글을 입력하세요. (최대 300자)" maxLength="300" onChange={this.changeComment}
                             value={this.state.myComment}/>

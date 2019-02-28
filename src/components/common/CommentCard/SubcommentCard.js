@@ -4,6 +4,7 @@ import REPORT_ICON from '../../../assets/images/report.png';
 import axios from 'axios';
 import {TokenUtil} from '../../../util';
 import { ReportModal }  from '../ReportModal/ReportModal';
+import CommonUtils from '../../../util/CommonUtil'
 
 
 export class SubcommentCard extends React.Component {
@@ -174,9 +175,13 @@ export class SubcommentCard extends React.Component {
             return (
                 <React.Fragment>
                     <p>{this.state.subcomment.creator.nickName}</p>
-                    <div>{this.state.subcomment.creator.gender}</div>
-                    <div>{this.state.subcomment.creator.memberBirthYear}세</div>
-                    <div>자녀{this.state.subcomment.creator.childBirthYear}세</div>
+                    <div>{CommonUtils.getGender(this.state.subcomment.creator.gender)}</div>
+                    <div>{CommonUtils.getAge(this.state.subcomment.creator.memberBirthYear)}세</div>
+                    {
+                        this.state.subcomment.creator.hasChild ? 
+                        <div>자녀{CommonUtils.getAge(this.state.subcomment.creator.childBirthYear)}세</div> : 
+                        <div>자녀없음</div>
+                    }
                     <span>{this.state.subcomment.created_at}</span>
                 </React.Fragment>
             )
