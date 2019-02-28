@@ -7,7 +7,7 @@ import {Footer} from './content/footer/Footer';
 import Search from './content/search/Search';
 import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
-import {EventDetail} from './content/navigation/events/EventDetail';
+import EventDetail from './content/navigation/events/EventDetail';
 import {Login} from './content/navigation/login/Login';
 import {FindPassword} from './content/navigation/login/FindPassword';
 import {ResetPassword} from './content/resetPassword/ResetPassword';
@@ -15,12 +15,11 @@ import {Signup} from './content/navigation/signup/Signup';
 import {SignupOk} from './content/navigation/signup/SignupOk';
 import {TipEvent} from './content/tipEvent/TipEvent';
 import {Tips} from './content/navigation/tips/Tips';
-import {TipDetail} from './content/navigation/tips/TipDetail';
+import TipDetail from './content/navigation/tips/TipDetail';
 import {Product} from './content/product/Product';
 import {LoggedIn} from './content/navigation/request/loggedIn/LoggedIn';
 import {RequestComment} from './content/navigation/request/requestComment/RequestComment';
 import {ContactUs} from './content/navigation/request/contactUs/ContactUs';
-import {ViewMore} from './common/ViewMore/ViewMore';
 import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdSpec';
 import {About} from './content/navigation/about/About';
 import {MyPage} from './content/navigation/mypage/MyPage';
@@ -42,6 +41,8 @@ const renderHome=()=>{
 
 export class MainPage extends Component {
     render () {
+        //localStorage.removeItem('loginToken');
+        //sessionStorage.removeItem('loginToken');
         return (
             <div className="full_main_page">
                 <div className="main_inner">

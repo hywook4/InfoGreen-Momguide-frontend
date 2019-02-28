@@ -5,12 +5,37 @@ CommonUtils.getAge = (year) => {
     return currentYear - Number(year);
 };
 
+CommonUtils.getGender = (gender) => {
+    let sex;
+    if(gender === 'male'){
+        sex = "남자";
+    } else if(gender === 'female'){
+        sex = "여자";
+    }
+
+    return sex;
+}
+
 CommonUtils.range = (start, end) => {
     const len = end-start+1;
     if(len < 0)
         return [];
 
     return [...Array(len).keys()].map((i) => i+start);
+};
+
+CommonUtils.rountTwoDecimal = (num) => {
+    return Math.round(num * 100) / 100;
+};
+
+CommonUtils.diffMonths = (d1, d2) => {
+    let months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+    if(d1.getDate() > d2.getDate())
+    months -= 1;
+    return months <= 0 ? 0 : months;
 };
 
 CommonUtils.lastDay = (year, month) => {
@@ -27,20 +52,6 @@ CommonUtils.validatePassword = (password) => {
     var re2 = /^[A-Za-z]*$/;
     var re3 = /^[0-9]*$/;
     return !re2.test(password) && !re3.test(password) && re.test(password);
-}
-
-CommonUtils.rountTwoDecimal = (num) => {
-    return Math.round(num * 100) / 100;
-};
-
-CommonUtils.diffMonths = (d1, d2) => {
-    let months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
-    if(d1.getDate() > d2.getDate())
-        months -= 1;
-    return months <= 0 ? 0 : months;
 };
 
 export default CommonUtils;

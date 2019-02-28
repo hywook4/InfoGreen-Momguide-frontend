@@ -1,7 +1,5 @@
 import React from 'react';
 //import './Category.css';
-import config from '../../../../config';
-import Axios from 'axios';
 import './CategoryImg.css'
 import {ProductRate} from './ProductRate'
 import { Link } from 'react-router-dom';

@@ -1,28 +1,37 @@
 .review-card-container {
     width: 980px;
+    display: table;
+    border-collapse: separate;
 }
 
-.review-card-left {
+.review-card-top {
+    display: table-row;
     width: 550px;
-    float: left;
     margin-right: 40px;
-    margin-top: 30px
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
-.review-card-right {
+.review-card-bottom {
+    display: table-row;
     width: 380px;
-    float: right;
     margin-top: 30px;
 }
 
+.review-card-info {
+    display: table-cell;
+    width: 550px;
+}
+
 .review-card-profile {
-    margin-top: 10px;
+    margin-top: 30px;
+    height: 60px;
     vertical-align: middle;
 }
 
 .review-card-profile > div {
     display: inline-block;
-    height: 70px;
+    height: 60px;
 }
 
 .review-card-profile img {
@@ -34,19 +43,20 @@
 }
 
 .review-card-profile-text {
-    display: inline-block;
-    height: 70px;
+    display: table-cell;
+    height: 60px;
     margin-left: 10px;
+    margin-top: 10px;
     vertical-align: top;
 }
 
 .review-card-profile-text > div {
-    height: 35px;
-    line-height: 35px;
+    height: 30px;
+    line-height: 15px;
 }
 
 .review-card-profile-text > div:last-child {
-    margin-top: -8px;
+    margin-top: -3px;
 }
 
 .review-card-profile-text > div > span {
@@ -60,12 +70,12 @@
     font-size: 11px;
 }
 
-.review-card-rate {
+.review-card-rate-container {
     margin-top: 22px;
     margin-bottom: 22px;
 }
 
-.review-card-rate > span {
+.review-card-rate-container > span {
     margin-left: 10px;
     font-size: 30px;
 }
@@ -75,8 +85,8 @@
 }
 
 .review-card-image-container > img {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin-right: 5px;
 }
@@ -87,8 +97,8 @@
 
 .review-card-more-text {
     position: absolute;
-    right: 289px;
-    top: 10px;
+    right: 235px;
+    top: 21px;
     text-align: center;
     line-height: 1.1em;
 }
@@ -110,7 +120,10 @@
 }
 
 .review-card-text {
-    margin-top: 20px;
+    display: table-cell;
+    margin-top: 30px;
+    padding-right: 50px;
+    width: 550px;
 }
 
 .review-card-text > a {
@@ -120,6 +133,11 @@
 
 .review-card-text > a:hover {
     cursor: pointer;
+}
+
+.review-card-option {
+    display: table-cell;
+    margin-top: 20px;
 }
 
 .review-card-bar-guide {
@@ -173,6 +191,7 @@
 }
 
 .review-card-addition {
+    display: table-cell;
     width: 370px;
 }
 
@@ -182,8 +201,8 @@
     border-style: hidden;
     overflow: hidden;
 
+    width: 369px;
     margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 .review-card-additional-review-container.success {
@@ -231,6 +250,21 @@
     word-break: break-all;
 }
 
+.review-card-icon {
+    width: 369px;
+    margin-top: -15px;
+    text-align: right;
+}
+
+.review-card-icon > img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.review-card-icon > img:hover {
+    cursor: pointer;
+}
 
 
 

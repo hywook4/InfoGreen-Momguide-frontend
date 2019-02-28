@@ -1,41 +1,83 @@
 import React from 'react';
 import './Comment.css';
 import REPORT_ICON from '../../../assets/images/report.png';
-
+import axios from 'axios';
+import {TokenUtil} from '../../../util';
 import { ReportModal }  from '../ReportModal/ReportModal';
+import CommonUtils from '../../../util/CommonUtil'
 
-const user = {
-    index: 1,
-    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
-    name: '테스트',
-    sex: '남자',
-    age: '23',
-    childAge: '1',
-}
+
 export class SubcommentCard extends React.Component {
     constructor(props) {
         super(props);
-
+        console.log(props.data);
         this.state = {
-            user: user,
+            user: props.user,
+            postType: props.postType,
             subcomment : props.data,
             editable: false,
-            reportModalId: "report" + props.data.commentIndex + props.data.index
+            reportModalId: "report" + props.data.index,
+            likeNum: props.data.likeNum,
+            hateNum: props.data.hateNum,
+            like: props.data.like,
+            hate: props.data.hate,
         }
     }
 
-    onEdit = () => {
+    onEdit = async () => {
         if(this.state.editable){ // TODO : 수정한 경우에 수정 요청 보내기 
-            console.log("대댓글 수정하기 : " + this.state.subcomment.content);
+            const token = TokenUtil.getLoginToken();
+            if(token === null) {
+                alert("권한이 없습니다.");
+                return;
+            }
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            try{
+                await axios({
+                    method: 'put',
+                    url: `${process.env.API_URL}/api/${this.state.postType.type}/comment`,
+                    headers: headers,
+                    data: {
+                        content: this.state.subcomment.content,
+                        index: this.state.subcomment.index,
+                        [this.state.postType.type+"Index"]: this.state.postType.index
+                    }
+                })
+            } catch(error){
+                alert("댓글 수정에 실패하였습니다.")
+            }
         }
 
         this.setState({
             editable: !this.state.editable
-        })
+        }, console.log(this.state.subcomment))
     }
 
-    onDelete = () => {
-        console.log("delete 대댓글 : " + this.state.subcomment.content);
+    onDelete = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            alert("권한이 없습니다.");
+            return;
+        }
+        const headers = TokenUtil.getTokenRequestHeader(token);
+
+        try {
+            await axios({
+                method: 'delete',
+                url: `${process.env.API_URL}/api/${this.state.postType.type}/comment`,
+                headers: headers,
+                data: {
+                    index: this.state.subcomment.index,
+                    [this.state.postType.type+"Index"]: this.state.postType.index
+                }
+            });
+        } catch(error) {
+            alert("댓글 삭제에 실패하였습니다.");
+        }
+        
+
+        this.props.getSubcomments();
     }
 
     subcommentChange = (e) => {
@@ -46,36 +88,104 @@ export class SubcommentCard extends React.Component {
         })
     }
 
-    onLike = () => {
-        let data = this.state.subcomment;
-
-        if(data.likePressed){
-            data.likePressed = !data.likePressed;
-            data.likes = data.likes - 1;
+    onLike = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            // not logged in so can't do it
         } else{
-            data.likePressed = !data.likePressed;
-            data.likes = data.likes + 1;
-        }
+            const headers = TokenUtil.getTokenRequestHeader(token);
 
-        this.setState({
-            subcomment: data
-        })
+            if(this.state.like){
+                await axios({
+                    method: "delete",
+                    url: `${process.env.API_URL}/api/like/commentLike`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    like: false,
+                    likeNum: this.state.likeNum - 1
+                })
+            } else{
+                await axios({
+                    method: "post",
+                    url: `${process.env.API_URL}/api/like/commentLike`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    like: true,
+                    likeNum: this.state.likeNum + 1
+                })
+            }
+        }
     }
 
-    onDislike = () => {
-        let data = this.state.subcomment;
-
-        if(data.dislikePressed){
-            data.dislikePressed = !data.dislikePressed;
-            data.dislikes = data.dislikes - 1;
+    onDislike = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            // not logged in so can't do it
         } else{
-            data.dislikePressed = !data.dislikePressed;
-            data.dislikes = data.dislikes + 1;
-        }
+            const headers = TokenUtil.getTokenRequestHeader(token);
 
-        this.setState({
-            subcomment: data
-        })
+            if(this.state.hate){
+                await axios({
+                    method: "delete",
+                    url: `${process.env.API_URL}/api/like/commentHate`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    hate: false,
+                    hateNum: this.state.hateNum - 1
+                })
+            } else{
+                await axios({
+                    method: "post",
+                    url: `${process.env.API_URL}/api/like/commentHate`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    hate: true,
+                    hateNum: this.state.hateNum + 1
+                })
+            }
+        }
+    }
+
+    subcommentProfile = () => {
+        if(this.state.subcomment.creator.index === undefined){
+            return (
+                null
+            )
+        } else{
+            return (
+                <React.Fragment>
+                    <p>{this.state.subcomment.creator.nickName}</p>
+                    <div>{CommonUtils.getGender(this.state.subcomment.creator.gender)}</div>
+                    <div>{CommonUtils.getAge(this.state.subcomment.creator.memberBirthYear)}세</div>
+                    {
+                        this.state.subcomment.creator.hasChild ? 
+                        <div>자녀{CommonUtils.getAge(this.state.subcomment.creator.childBirthYear)}세</div> : 
+                        <div>자녀없음</div>
+                    }
+                    <span>{this.state.subcomment.created_at}</span>
+                </React.Fragment>
+            )
+        }
     }
 
     render() {
@@ -97,14 +207,12 @@ export class SubcommentCard extends React.Component {
             <div className="subcomment-card">
                 <div className="subcomment-content">
                     <div className="subcomment-top">
-                        <p>{subcomment.name}</p>
-                        <div>{subcomment.sex}</div>
-                        <div>{subcomment.age}세</div>
-                        <div>자녀{subcomment.childAge}세</div>
-                        <span>{subcomment.date}</span>
-                        
                         {
-                            this.state.user.index === subcomment.index ? editButton : null
+                            this.subcommentProfile()
+                        }
+
+                        {
+                            this.state.user.index === subcomment.creator.index ? editButton : null
                         }
                         
                     </div>
@@ -114,16 +222,16 @@ export class SubcommentCard extends React.Component {
                     </div>
                     <div className="subcomment-bottom">
                         <div className="subcomment-bottom-icons">
-                            <i className="fa fa-thumbs-o-up" style={subcomment.likePressed ? liked : null} onClick={this.onLike}/>
-                            <p>{subcomment.likes}</p>
-                            <i className="fa fa-thumbs-o-down" style={subcomment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
-                            <p>{subcomment.dislikes}</p>
+                            <i className="fa fa-thumbs-o-up" style={this.state.like ? liked : null} onClick={this.onLike}/>
+                            <p>{this.state.likeNum}</p>
+                            <i className="fa fa-thumbs-o-down" style={this.state.hate ? disliked : null} onClick={this.onDislike}/>
+                            <p>{this.state.hateNum}</p>
                             <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                         </div>
                     </div>
                 </div>
 
-                <ReportModal reportContent={this.state.subcomment} reportModalId={this.state.reportModalId}/>
+                <ReportModal id={this.state.subcomment.index} reportModalId={this.state.reportModalId} type="comment" objUrl="/api/report/comment"/>
             </div>
         )
     }

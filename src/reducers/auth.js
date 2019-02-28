@@ -11,6 +11,7 @@ export default (state=initialState, action) => {
                 userPhoto: action.info.data.photoUrl,
                 memberBirthYear: action.info.data.memberBirthYear,
                 userGender: action.info.data.gender,
+                userBirthYear: action.info.data.memberBirthYear,
                 childBirthYear: action.info.data.childBirthYear
             };
         case types.LOGOUT:
