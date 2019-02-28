@@ -92,7 +92,6 @@ export class Category extends React.Component{
     };
 
     onKeyBoardPress = e =>{
-        this.state.search.length>0 &&
         e.keyCode===13 &&
         this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort,
             this.state.careCheck,
@@ -277,8 +276,8 @@ export class Category extends React.Component{
             <div className="tab-content prod-ctgy-tabs">
                 <div id="other" className="tab-pane active">
                     <div className="sub-ctgy-div">
-                        <h1>{this.state.search === "" ? "" : this.state.search}
-                            {this.state.mainCategory === "" ? "" : " > " + this.state.mainCategory}
+                        <h1>
+                            {this.state.mainCategory === "" ? "" : this.state.mainCategory}
                             {this.state.subCategory === "" ? "" : " > " + this.state.subCategory}
                         </h1>
                         <ul className="nav nav-tabs ">
