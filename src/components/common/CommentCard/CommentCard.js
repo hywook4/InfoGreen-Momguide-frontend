@@ -10,23 +10,59 @@ import { ReportModal }  from '../ReportModal/ReportModal';
 export class CommentCard extends React.Component {
     constructor(props) {
         super(props);
+        
+        const firstPage = 1;
+        let loggedIn = false;
+
+        let headers = null;
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null){
+        } else{
+            loggedIn = true;
+            headers = TokenUtil.getTokenRequestHeader(token);
+        }
 
         this.state = {
             comment: props.data,
             postType: props.postType,   // postType.type : 'event or tip'  postType.index : index
             subcomments : [],
             totalSubcommentPage: 0,
-            subcommentPage: 1,
+            subcommentPage: firstPage,
             subcommentOpen: false,
             mySubcomment: "",
             editable: false,
             reportModalId: "report" + props.data.index,
             deleted: false,
+            likeNum: props.data.likeNum,
+            hateNum: props.data.hateNum,
+            like: props.data.like,
+            hate: props.data.hate,
+            loggedIn: loggedIn,
+            token: token,
+            headers: headers
         } 
     }
 
+    getSubcomment = async (page) => {
+        let data;
+
+        if(this.state.token === null){
+            data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${page}`);
+        } else{
+            data = await axios({
+                method: 'get',
+                url: `${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${page}`,
+                headers: this.state.headers
+            })
+        }
+
+        return data;
+    }
+
+
     componentDidMount = async () => {
-        const data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${this.state.subcommentPage}`);
+        const data = await this.getSubcomment(this.state.subcommentPage);
         
         const subcomments = data.data.childComments;
         const totalPage = data.data.totalPages;
@@ -45,7 +81,7 @@ export class CommentCard extends React.Component {
 
     loadPage = async () => { 
         const nextPage = this.state.subcommentPage + 1;
-        let data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${nextPage}`);
+        let data = await this.getSubcomment(nextPage);
         console.log(data);
         let subcomments = this.state.subcomments;
         subcomments = subcomments.concat(data.data.childComments);
@@ -64,18 +100,16 @@ export class CommentCard extends React.Component {
     }
 
     subcommentSubmit = async () => {
-        const token = TokenUtil.getLoginToken();
-        if(token === null) {
+        if(this.state.token === null) {
             alert("권한이 없습니다.");
             return;
         }
-        const headers = TokenUtil.getTokenRequestHeader(token);
-
+    
         try {
             await axios({
                 method: 'post',
                 url: `${process.env.API_URL}/api/${this.state.postType.type}/childComment`,
-                headers: headers,
+                headers: this.state.headers,
                 data: {
                     content: this.state.mySubcomment,
                     commentIndex: this.state.comment.index
@@ -90,7 +124,7 @@ export class CommentCard extends React.Component {
         let data;
 
         for(let a = 1; a <= this.state.subcommentPage; a++){
-            data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${a}`);
+            data = await this.getSubcomment(a);
             subcomments = subcomments.concat(data.data.childComments)
         }
 
@@ -170,36 +204,82 @@ export class CommentCard extends React.Component {
         this.props.getComment();
     }
 
-    onLike = () => {
-        let data = this.state.comment;
-
-        if(data.likePressed){
-            data.likePressed = !data.likePressed;
-            data.likes = data.likes - 1;
+    onLike = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            // not logged in so can't do it
         } else{
-            data.likePressed = !data.likePressed;
-            data.likes = data.likes + 1;
-        }
+            const headers = TokenUtil.getTokenRequestHeader(token);
 
-        this.setState({
-            comment: data
-        })
+            if(this.state.like){
+                await axios({
+                    method: "delete",
+                    url: `${process.env.API_URL}/api/like/commentLike`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.comment.index
+                    }
+                })
+
+                this.setState({
+                    like: false,
+                    likeNum: this.state.likeNum - 1
+                })
+            } else{
+                await axios({
+                    method: "post",
+                    url: `${process.env.API_URL}/api/like/commentLike`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.comment.index
+                    }
+                })
+
+                this.setState({
+                    like: true,
+                    likeNum: this.state.likeNum + 1
+                })
+            }
+        }
     }
 
-    onDislike = () => {
-        let data = this.state.comment;
-
-        if(data.dislikePressed){
-            data.dislikePressed = !data.dislikePressed;
-            data.dislikes = data.dislikes - 1;
+    onDislike = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            // not logged in so can't do it
         } else{
-            data.dislikePressed = !data.dislikePressed;
-            data.dislikes = data.dislikes + 1;
-        }
+            const headers = TokenUtil.getTokenRequestHeader(token);
 
-        this.setState({
-            comment: data
-        })
+            if(this.state.hate){
+                await axios({
+                    method: "delete",
+                    url: `${process.env.API_URL}/api/like/commentHate`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.comment.index
+                    }
+                })
+
+                this.setState({
+                    hate: false,
+                    hateNum: this.state.hateNum - 1
+                })
+            } else{
+                await axios({
+                    method: "post",
+                    url: `${process.env.API_URL}/api/like/commentHate`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.comment.index
+                    }
+                })
+
+                this.setState({
+                    hate: true,
+                    hateNum: this.state.hateNum + 1
+                })
+            }
+        }
     }
 
     commentProfile = () => {
@@ -300,10 +380,10 @@ export class CommentCard extends React.Component {
                             this.props.user.index === comment.creator.index ? editButton : null
                         }
                     </div>
-                    <i className="fa fa-thumbs-o-up" style={this.state.liked ? liked : null} onClick={this.onLike}/>
-                    <p>{comment.likeNum}</p>
-                    <i className="fa fa-thumbs-o-down" style={this.state.disliked ? disliked : null} onClick={this.onDislike}/>
-                    <p>{comment.hateNum}</p>
+                    <i className="fa fa-thumbs-o-up" style={this.state.like ? liked : null} onClick={this.onLike}/>
+                    <p>{this.state.likeNum}</p>
+                    <i className="fa fa-thumbs-o-down" style={this.state.hate ? disliked : null} onClick={this.onDislike}/>
+                    <p>{this.state.hateNum}</p>
                     <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                 </div>
                 
@@ -333,7 +413,6 @@ export class CommentCard extends React.Component {
                         this.state.subcommentOpen ?
                         <button className="subcomment-close-button" onClick={this.foldSubcomment}>답글접기<i className="fa fa-angle-up"/></button> : null
                     }
-                    
                 </div>
                 <ReportModal reportContent={this.state.comment} reportModalId={this.state.reportModalId}/>
             </div>

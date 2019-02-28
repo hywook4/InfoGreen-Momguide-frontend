@@ -33,7 +33,7 @@ export class ProfileModifyPasswordCheck extends React.Component{
         const headers = TokenUtil.getTokenRequestHeader(token);
 
         try {
-            const res = await axios({
+            await axios({
                 method: 'get',
                 url: `${process.env.API_URL}/api/auth/editProfile/checkPassword?password=${this.state.password}`,
                 headers: headers

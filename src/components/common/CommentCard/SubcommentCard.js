@@ -9,13 +9,17 @@ import { ReportModal }  from '../ReportModal/ReportModal';
 export class SubcommentCard extends React.Component {
     constructor(props) {
         super(props);
-
+        console.log(props.data);
         this.state = {
             user: props.user,
             postType: props.postType,
             subcomment : props.data,
             editable: false,
-            reportModalId: "report" + props.data.index
+            reportModalId: "report" + props.data.index,
+            likeNum: props.data.likeNum,
+            hateNum: props.data.hateNum,
+            like: props.data.like,
+            hate: props.data.hate,
         }
     }
 
@@ -46,7 +50,7 @@ export class SubcommentCard extends React.Component {
 
         this.setState({
             editable: !this.state.editable
-        })
+        }, console.log(this.state.subcomment))
     }
 
     onDelete = async () => {
@@ -83,36 +87,82 @@ export class SubcommentCard extends React.Component {
         })
     }
 
-    onLike = () => {
-        let data = this.state.subcomment;
-
-        if(data.likePressed){
-            data.likePressed = !data.likePressed;
-            data.likes = data.likes - 1;
+    onLike = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            // not logged in so can't do it
         } else{
-            data.likePressed = !data.likePressed;
-            data.likes = data.likes + 1;
-        }
+            const headers = TokenUtil.getTokenRequestHeader(token);
 
-        this.setState({
-            subcomment: data
-        })
+            if(this.state.like){
+                await axios({
+                    method: "delete",
+                    url: `${process.env.API_URL}/api/like/commentLike`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    like: false,
+                    likeNum: this.state.likeNum - 1
+                })
+            } else{
+                await axios({
+                    method: "post",
+                    url: `${process.env.API_URL}/api/like/commentLike`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    like: true,
+                    likeNum: this.state.likeNum + 1
+                })
+            }
+        }
     }
 
-    onDislike = () => {
-        let data = this.state.subcomment;
-
-        if(data.dislikePressed){
-            data.dislikePressed = !data.dislikePressed;
-            data.dislikes = data.dislikes - 1;
+    onDislike = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            // not logged in so can't do it
         } else{
-            data.dislikePressed = !data.dislikePressed;
-            data.dislikes = data.dislikes + 1;
-        }
+            const headers = TokenUtil.getTokenRequestHeader(token);
 
-        this.setState({
-            subcomment: data
-        })
+            if(this.state.hate){
+                await axios({
+                    method: "delete",
+                    url: `${process.env.API_URL}/api/like/commentHate`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    hate: false,
+                    hateNum: this.state.hateNum - 1
+                })
+            } else{
+                await axios({
+                    method: "post",
+                    url: `${process.env.API_URL}/api/like/commentHate`,
+                    headers: headers,
+                    data: {
+                        commentIndex: this.state.subcomment.index
+                    }
+                })
+
+                this.setState({
+                    hate: true,
+                    hateNum: this.state.hateNum + 1
+                })
+            }
+        }
     }
 
     subcommentProfile = () => {
@@ -167,10 +217,10 @@ export class SubcommentCard extends React.Component {
                     </div>
                     <div className="subcomment-bottom">
                         <div className="subcomment-bottom-icons">
-                            <i className="fa fa-thumbs-o-up" style={subcomment.likePressed ? liked : null} onClick={this.onLike}/>
-                            <p>{subcomment.likes}</p>
-                            <i className="fa fa-thumbs-o-down" style={subcomment.dislikePressed ? disliked : null} onClick={this.onDislike}/>
-                            <p>{subcomment.dislikes}</p>
+                            <i className="fa fa-thumbs-o-up" style={this.state.like ? liked : null} onClick={this.onLike}/>
+                            <p>{this.state.likeNum}</p>
+                            <i className="fa fa-thumbs-o-down" style={this.state.hate ? disliked : null} onClick={this.onDislike}/>
+                            <p>{this.state.hateNum}</p>
                             <img src={REPORT_ICON} alt="reportIcon" data-toggle="modal" data-target={`#${this.state.reportModalId}`}/>
                         </div>
                     </div>

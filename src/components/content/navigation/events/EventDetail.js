@@ -38,10 +38,13 @@ class EventDetail extends React.Component {
         const firstPage = 1;
         let loggedIn = false;
 
+        let headers = null;
+
         const token = TokenUtil.getLoginToken();
         if(token === null){
         } else{
             loggedIn = true;
+            headers = TokenUtil.getTokenRequestHeader(token);
         }
         // TODO
         this.state = {
@@ -54,21 +57,64 @@ class EventDetail extends React.Component {
             totalCommentPage: 1,
             myComment: "",
             order : "latest", //latest or recommend
-            additionalProfile : false
+            additionalProfile : false,
+            likePressed: false, 
+            token: token,
+            headers: headers
         };
     }
 
+    getPostAndComment = async (page) => {
+        let data;
+
+        if(this.state.token === null){
+            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${page}`);
+        } else{
+            data = await axios({
+                method: 'get',
+                url: `${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${page}`,
+                headers: this.state.headers
+            })
+        }
+        
+        return data;
+    }
+
     componentDidMount = async () => {
-        let data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${this.state.commentPage}`);
+        let data = await this.getPostAndComment(this.state.commentPage);
         let event = data.data.event;
         let comments = data.data.comments;
 
+        let likePressed = false;
+
         this.getAdditionalProfile();
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            
+        } else{
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            try {
+                let data = await axios({
+                    method: 'get',
+                    url: `${process.env.API_URL}/api/event/post/like?index=${this.state.eventIndex}`,
+                    headers: headers,
+                });
+
+                likePressed = data.data.like;
+
+            } catch(error) {
+                alert("좋아요 정보 가져오기 실패");
+            }
+        }
+        
 
         this.setState({
             event: event,
             comments: comments,
-            totalCommentPage: data.data.totalPages
+            totalCommentPage: data.data.totalPages,
+            likePressed: likePressed
         })
     }
     
@@ -110,7 +156,7 @@ class EventDetail extends React.Component {
         let data;
 
         for(let a = 1; a <= this.state.commentPage ; a++){
-            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${a}`);
+            data = await this.getPostAndComment(a);
             comments = comments.concat(data.data.comments);
         }
 
@@ -125,12 +171,18 @@ class EventDetail extends React.Component {
         }, console.log(this.state.myComment))
     }
 
-    loadNextPage = () => {
-        console.log("more page");
+    loadNextPage = async () => {
+        const nextPage = this.state.commentPage + 1;
+        let data = await this.getPostAndComment(nextPage);
+
+        let comments = this.state.comments;
+        comments = comments.concat(data.data.comments);
+
         this.setState({
-            commentPage: this.state.commentPage + 1
+            commentPage: nextPage,
+            totalCommentPage: data.data.totalPages,
+            comments: comments
         })
-        //TODO : 기존 리스트에 새로받은 값들 추가해주기
     };
 
     changeSort = async (sort) => {
@@ -138,7 +190,7 @@ class EventDetail extends React.Component {
         let data;
         
         for(let a = 1; a <= this.state.commentPage; a++){
-            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${sort}&page=${a}`);
+            data = await this.getPostAndComment(a);
             comments = comments.concat(data.data.comments);
         }
 
@@ -195,7 +247,7 @@ class EventDetail extends React.Component {
         let data;
         
         for(let a = 1; a <= this.state.commentPage; a++){
-            data = await axios.get(`${process.env.API_URL}/api/event/post?index=${this.state.eventIndex}&order=${this.state.order}&page=${a}`);
+            data = await this.getPostAndComment(a);
             comments = comments.concat(data.data.comments);
         }
 
@@ -239,24 +291,69 @@ class EventDetail extends React.Component {
                 headers: headers,
             });
 
+            if(data.data.addressRoad === null || data.data.addressSpec === null || data.data.phoneNum === null || data.data.postalCode === null || data.data.name === null){
+                this.setState({
+                    additionalProfile: false
+                })
+            } else{
+                this.setState({
+                    additionalProfile: true
+                })
+            }
+
         } catch(error) {
-            alert("getAdditionalProfile 에러");
+            console.log("not loginned");
         }
-
-        console.log(data);
-
-        if(data.data.addressRoad === null || data.data.addressSpec === null || data.data.phoneNum === null || data.data.postalCode === null || data.data.name === null){
-            this.setState({
-                additionalProfile: false
-            })
-        } else{
-            this.setState({
-                additionalProfile: true
-            })
-        }
-
     }
 
+    likePress = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+        
+        } else{
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            if(this.state.likePressed){
+                try {
+                    await axios({
+                        method: 'delete',
+                        url: `${process.env.API_URL}/api/like/eventLike`,
+                        headers: headers,
+                        data: {
+                            eventIndex: this.state.eventIndex
+                        }
+                    });
+    
+                } catch(error) {
+                    alert("좋아요 취소 실패");
+                }
+
+                this.setState({
+                    likePressed: false
+                })
+            } else{
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${process.env.API_URL}/api/like/eventLike`,
+                        headers: headers,
+                        data: {
+                            eventIndex: this.state.eventIndex
+                        }
+                    });
+    
+                } catch(error) {
+                    alert("좋아요 실패");
+                }
+    
+                this.setState({
+                    likePressed: true
+                })
+            }
+        }
+    }
+
+   
     render() {
         const moreButton = (
             <button className="comment-more-button" onClick={() => {this.loadNextPage()}}>
@@ -280,8 +377,9 @@ class EventDetail extends React.Component {
                     </div>
                     <div className="event-detail-header-right">
                         { 
-                            this.getDDay(event.expirationDate) < 0 ? <div className="event-detail-day">끝</div> :
-                            <div className="event-detail-day">D-{this.getDDay(event.expirationDate)}</div>
+                            event.expirationDate === null ? null :
+                            (this.getDDay(event.expirationDate) < 0 ? <div className="event-detail-day">끝</div> :
+                            <div className="event-detail-day">D-{this.getDDay(event.expirationDate)}</div>)
                         }
                     </div>
                 </div>
@@ -294,8 +392,8 @@ class EventDetail extends React.Component {
                         <i className="fa fa-share-alt"/>
                         <p>공유하기</p>
                     </div>
-                    <div className="event-detail-icon-active" style={{marginRight: '15px'}}>
-                        <i className="fa fa-heart"/>
+                    <div className={this.state.likePressed ? "event-detail-icon-active" : "event-detail-icon-inactive"} style={{marginRight: '15px'}}>
+                        <i className="fa fa-heart" onClick={this.likePress}/>
                         <p>좋아요</p>
                     </div>
                 </div>

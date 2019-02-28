@@ -6,6 +6,7 @@ import dateFormat from 'dateformat';
 import { connect } from 'react-redux';
 import { TokenUtil } from '../../../../util';
 import {CommentCard} from '../../../common/CommentCard/CommentCard';
+import { timingSafeEqual } from 'crypto';
 
 
 const user = {
@@ -33,10 +34,13 @@ class TipDetail extends React.Component {
         let firstPage = 1;
         let loggedIn = false;
 
+        let headers = null;
+
         const token = TokenUtil.getLoginToken();
-        if(token === null) {
+        if(token === null){
         } else{
             loggedIn = true;
+            headers = TokenUtil.getTokenRequestHeader(token);
         }
 
         this.state = {
@@ -48,12 +52,31 @@ class TipDetail extends React.Component {
             commentPage: firstPage,
             totalCommentPage: 1,
             myComment: "",
-            order : "latest" // latest or recommend
+            order : "latest", // latest or recommend
+            likePressed: false,
+            token: token,
+            headers: headers
         };
     }
 
+    getPostAndComment = async (page) => {
+        let data;
+
+        if(this.state.token === null){
+            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${page}`);
+        } else{
+            data = await axios({
+                method: 'get',
+                url: `${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${page}`,
+                headers: this.state.headers
+            })
+        }
+        
+        return data;
+    }
+
     componentDidMount = async () => {
-        let data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${this.state.commentPage}`);
+        let data = await this.getPostAndComment(this.state.commentPage);
         let tip = data.data.tip;
         let comments = data.data.comments;
         console.log(data);
@@ -105,7 +128,7 @@ class TipDetail extends React.Component {
         let data;
 
         for(let a = 1; a <= this.state.commentPage ; a++){
-            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${a}`);
+            data = await this.getPostAndComment(a);
             comments = comments.concat(data.data.comments);
         } 
 
@@ -122,7 +145,7 @@ class TipDetail extends React.Component {
 
     loadNextPage = async () => {
         const nextPage = this.state.commentPage + 1;
-        let data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${nextPage}`);
+        let data = await this.getPostAndComment(nextPage);
 
         let comments = this.state.comments;
         comments = comments.concat(data.data.comments);
@@ -139,7 +162,7 @@ class TipDetail extends React.Component {
         let data;
         
         for(let a = 1; a <= this.state.commentPage; a++){
-            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${sort}&page=${a}`);
+            data = await this.getPostAndComment(a);
             comments = comments.concat(data.data.comments);
         }
 
@@ -159,7 +182,7 @@ class TipDetail extends React.Component {
         let data;
         
         for(let a = 1; a <= this.state.commentPage; a++){
-            data = await axios.get(`${process.env.API_URL}/api/tip/post?index=${this.state.tipIndex}&order=${this.state.order}&page=${a}`);
+            data = await this.getPostAndComment(a);
             comments = comments.concat(data.data.comments);
         }
 
@@ -183,6 +206,54 @@ class TipDetail extends React.Component {
     toLogIn = () => {
         history.push(`/login`);
     }
+
+    /*
+    likePress = async () => {
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+        
+        } else{
+            const headers = TokenUtil.getTokenRequestHeader(token);
+
+            if(this.state.likePressed){
+                try {
+                    await axios({
+                        method: 'delete',
+                        url: `${process.env.API_URL}/api/like/eventLike`,
+                        headers: headers,
+                        data: {
+                            eventIndex: this.state.eventIndex
+                        }
+                    });
+    
+                } catch(error) {
+                    alert("좋아요 취소 실패");
+                }
+
+                this.setState({
+                    likePressed: false
+                })
+            } else{
+                try {
+                    await axios({
+                        method: 'post',
+                        url: `${process.env.API_URL}/api/like/eventLike`,
+                        headers: headers,
+                        data: {
+                            eventIndex: this.state.eventIndex
+                        }
+                    });
+    
+                } catch(error) {
+                    alert("좋아요 실패");
+                }
+    
+                this.setState({
+                    likePressed: true
+                })
+            }
+        }
+    }*/
 
     render() {
         const moreButton = (
@@ -209,8 +280,8 @@ class TipDetail extends React.Component {
                         <i className="fa fa-share-alt"/>
                         <p>공유하기</p>
                     </div>
-                    <div className="tip-detail-icon-active" style={{marginRight: '15px'}}>
-                        <i className="fa fa-heart"/>
+                    <div className={this.state.likePressed ? "tip-detail-icon-active" : "tip-detail-icon-inactive"} style={{marginRight: '15px'}}>
+                        <i className="fa fa-heart" onClick={this.likePress}/>
                         <p>좋아요</p>
                     </div>
                 </div>
