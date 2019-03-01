@@ -4,11 +4,13 @@ import {CategoryImg} from '../category/CategoryImg';
 import {CategoryMenu} from '../category/CategoryMenu';
 import axios from 'axios';
 import { CategoryUtil } from '../../../../util';
+import CategoryUtils from '../../../../util/CategoryUtil';
 
 export class Category extends React.Component{
 
     state = {
         search: "",
+        searchTitle: "",
         sort: "",
         mainCategory: "",
         subCategory: "",
@@ -92,15 +94,22 @@ export class Category extends React.Component{
     };
 
     onKeyBoardPress = e =>{
-        e.keyCode===13 &&
-        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort,
-            this.state.careCheck,
-            this.state.harmCheck,
-            this.state.highDangerCheck,
-            this.state.ecoCheck,
-            this.state.ingredientCheck,
-            this.state.middleDangerCheck,
-            this.state.page));
+        if(e.keyCode===13){
+            this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort,
+                this.state.careCheck,
+                this.state.harmCheck,
+                this.state.highDangerCheck,
+                this.state.ecoCheck,
+                this.state.ingredientCheck,
+                this.state.middleDangerCheck,
+                this.state.page));
+
+            this.setState({
+                searchTitle: this.state.search
+            })
+        }
+        
+       
     };
 
     onChange = e => {
@@ -111,7 +120,6 @@ export class Category extends React.Component{
 
     onCategoryClick = (mainCategory, subCategory) => {
         if(this.state.mainCategory !== mainCategory){
-            console.log("diffenered");
             this.setState({
                 careCheck: false,
                 harmCheck: false,
@@ -277,8 +285,9 @@ export class Category extends React.Component{
                 <div id="other" className="tab-pane active">
                     <div className="sub-ctgy-div">
                         <h1>
-                            {this.state.mainCategory === "" ? "" : this.state.mainCategory}
-                            {this.state.subCategory === "" ? "" : " > " + this.state.subCategory}
+                            {this.state.searchTitle === "" ? "" : this.state.searchTitle + " > "}
+                            {this.state.mainCategory === "" ? "" : CategoryUtils.mainEngToKor(this.state.mainCategory)}
+                            {this.state.subCategory === "" ? "" : " > " + CategoryUtils.subEngToKor(this.state.mainCategory, this.state.subCategory)}
                         </h1>
                         <ul className="nav nav-tabs ">
                             <li className={this.state.sortFocus==="별점순"?"focused":""}><a href="#tab_default_1" data-toggle="tab" name="star" onClick={this.onSort}>별점순</a></li>

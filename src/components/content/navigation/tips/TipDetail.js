@@ -20,9 +20,9 @@ const user = {
 
 const defaultTip = {
     index: 0,
-    title: "1",
-    subtitle: "1",
-    content: "1",
+    title: "",
+    subtitle: "",
+    content: "",
     created_at: "2019-01-01 00:00:00"
 }
 
@@ -227,7 +227,7 @@ class TipDetail extends React.Component {
                     });
     
                 } catch(error) {
-                    alert("좋아요 취소 실패");
+                    console.log("좋아요 취소 실패");
                 }
 
                 this.setState({
@@ -245,7 +245,7 @@ class TipDetail extends React.Component {
                     });
     
                 } catch(error) {
-                    alert("좋아요 실패");
+                    console.log("좋아요 실패");
                 }
     
                 this.setState({

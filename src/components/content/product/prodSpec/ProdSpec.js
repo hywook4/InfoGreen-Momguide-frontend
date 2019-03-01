@@ -121,6 +121,7 @@ export class ProdSpec extends React.Component{
             rateAverage = Math.round(res.data.product.rateSum/res.data.product.rateCount*100)/100;
         }
 
+
         this.setState({
             productData: res.data.product,
             ingredientList: res.data.ingredient,
@@ -146,7 +147,7 @@ export class ProdSpec extends React.Component{
                     imageUrl: res.data.photoUrl,
                     login: true
                 };
-                console.log(res);
+
                 this.setState(newStateObj);
 
                 res = await axios.get(`${process.env.API_URL}/api/auth/checkHomeLike?productIndex=${id}&isCosmetic=${category === 'cosmetic' ? 'true' : 'false'}`, {
@@ -1282,8 +1283,8 @@ export class ProdSpec extends React.Component{
                                 <h1>{productData.name}</h1>
                             </div>
                             <div className="rating-info"> {/* rating stars and score */}
-                                <RatingRow config={{selected:Math.round(productData.rateSum/productData.rateCount*100)/100,hideSubHeading:true,size:'22px',alignStart:true,count:productData.rateCount}}/>
-                                <div className="rating-score">{Math.round(productData.rateSum/productData.rateCount*100)/100}</div>
+                                <RatingRow config={{selected:this.state.rateAverage ,hideSubHeading:true,size:'22px',alignStart:true,count:productData.rateCount}}/>
+                                <div className="rating-score">{this.state.rateAverage}</div>
                             </div>
 
                             <hr style={{color: 'gray'}}/>
