@@ -68,13 +68,19 @@ class MyReviewCard extends Component {
         const product = data.product.name;
         const index = data.review.index;
 
-        console.log(data);
-        const recentDate = new Date(data.recentDate);
-        console.log(data.review.created_at);
+        // console.log(data);
+        let recentDate = null;
+        if(data.recentDate === null) {
+            recentDate = new Date(data.review.created_at);
+        } else {
+            recentDate = new Date(data.recentDate);
+        }
+        console.log(recentDate);
+        // console.log(data.review.created_at);
         const now = new Date();
-        console.log(now);
+        // console.log(now);
         const diff = utils.CommonUtil.diffMonths(recentDate, now);
-        console.log(index);
+        // console.log(index);
         return (
             <div className="my-review-card">
                 <div className="my-review-card-checkbox">
@@ -103,7 +109,7 @@ class MyReviewCard extends Component {
                     </Link>
                     <div className="my-review-button delete"  data-toggle="modal" data-target={"#deletemodal" + index}>삭제하기</div>
                     {
-                        diff > 0 ? 
+                        diff >=1 ? 
                         <Link to={"/additional-review/" + index}>
                             <div className="my-review-button add available">추가하기</div>
                         </Link>

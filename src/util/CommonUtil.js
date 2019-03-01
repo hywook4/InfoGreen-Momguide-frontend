@@ -33,8 +33,9 @@ CommonUtils.diffMonths = (d1, d2) => {
     months = (d2.getFullYear() - d1.getFullYear()) * 12;
     months -= d1.getMonth();
     months += d2.getMonth();
-    if(d1.getDate() > d2.getDate())
-    months -= 1;
+    if(d1.getDate() > d2.getDate()) {
+        months -= 1;
+    }
     return months <= 0 ? 0 : months;
 };
 
