@@ -11,7 +11,7 @@ export const Footer = ()=>{
             
             <div className="footer">
                 <div className="row">
-                    <div className="col-md-6 footer-col">
+                    <div className="col-md-8 footer-col">
                         <div className="logofooter">
                             <img className="img-responsive dim" alt="" src={require('../../../assets/images/MOMGUIDE_LOGO_WHITE.png')} />
                         </div>
@@ -20,8 +20,8 @@ export const Footer = ()=>{
                             <span>개인정보취급방침 <b></b></span>
                         </p>
                         <p className="footer_para-heading">
-                            주(인포그린) | 대표자 : 구진산 | 개인정보보호책임자 : 우영기 | 사업자등록번호 : 000-00-00000
-                            통신판매 신고번호 : 제 2016 -경기성남-0000호 | 건강기능식품판매 : 제 2000-0000000 호 | 의료기기판매 : 제 0000-0000000-00000
+                            주식회사 인포그린 | 대표자 : 구진산 | 주소 : 서울특별시 서대문구 연세로 50, 연세대학교 공학원 212B-1 <br/>
+                            사업자등록번호: 327-87-01114 | 대표번호: 070-5056-2592 | 문의: help@momguide.co.kr
                         </p>
     
                         <p className="footer_para-heading">Copyrights @INFOGREENC Inc. All rights reserved.</p>
@@ -29,7 +29,7 @@ export const Footer = ()=>{
                     </div>
        
        
-                    <div className="col-md-6 text-center footer-col">
+                    <div className="col-md-4 text-center footer-col">
           
                             {/* <ul className="footer-social pull-right tobottom">
                             <li><i className="fa fa-facebook social-icon facebook" aria-hidden="true"></i></li> 
