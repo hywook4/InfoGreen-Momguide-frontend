@@ -46,8 +46,8 @@ export class RequestComment extends React.Component{
                 data: formData
             });
             alert('정상적으로 요청되었습니다.');
-            // TODO: 기획에 따라 이동할 페이지 설정
-            history.push('/');
+            history.push('/request/loggedin');
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         } catch(err) {
             if(!err.response.data) {
                 alert("알 수 없는 에러가 발생하였습니다. 관리자에게 문의 부탁드립니다.");
