@@ -123,4 +123,5 @@
 .tip-event-button:hover{
     border-color:#32b8a4;
     color:#32b8a4;
+    cursor: pointer;
 }
