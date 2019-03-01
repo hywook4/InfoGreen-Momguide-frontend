@@ -77,6 +77,7 @@ export class MyReview extends React.Component {
                 totalPages: res.data.totalPages,
                 category: category
             })
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         })
         .catch((err) => {
             alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
@@ -107,6 +108,7 @@ export class MyReview extends React.Component {
                 totalPages: res.data.totalPages,
                 checkAll: false
             })
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         })
     }
 
@@ -127,6 +129,7 @@ export class MyReview extends React.Component {
                 deleteList: [ false, false, false, false, false, false, false, false, false, false ],
                 checkAll: false
             });
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         })
     } 
 
@@ -168,8 +171,26 @@ export class MyReview extends React.Component {
                 }
             });
             console.log(this.state.currentPage);
-            this.rerenderPage(this.state.currentPage);
         }
+        axios({
+            method: 'get',
+            url: `${process.env.API_URL}/api/revew/member/list?page=${this.state.currentPage}&category=${this.state.category}`,
+            headers: TokenUtils.getTokenRequestHeader(token)  
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: this.state.currentPage,
+                reviews: res.data.reviews,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false,
+                totalPages: res.data.totalPages
+            })
+            this.rerenderPage(this.state.currentPage);
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류입니다. 관리자에게 문의해 주시기 바랍니다.');
+            return;
+        })
     }
 
     createPagination = () => {
