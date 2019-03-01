@@ -12,13 +12,21 @@
     overflow: hidden;
     margin: 20px 0px;
     background-image: url("../../../../assets/images/about.png");
+    margin-bottom: 200px;
 }
 
-.about-youtube{
+.about-youtube-1{
     width: 560px;
     height: 325px;
     margin-top: 600px;
 }
+
+.about-youtube-2{
+    width: 700px;
+    height: 325px;
+    margin-top: 3715px;
+    margin-left: 140px;
+}
 .about-naver-map{
-    margin-top: 4200px;
+    margin-top: 150px;
 }
