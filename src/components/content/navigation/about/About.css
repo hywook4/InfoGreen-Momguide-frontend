@@ -1,27 +1,24 @@
 .about-container {
+    width: 980px;
+    margin: 10px auto;
+    min-height: 10px;
+    overflow: hidden;
+}
+
+.about-content {
     width: 100%;
-    /* margin: 50px auto; */
-    /* float: left; */
-    position: relative;
-    top: 8px;
-    display: table;
-    height: 100%;
-    overflow-y: hidden;
+    height: 5500px;
+    min-height: 10px;
+    overflow: hidden;
+    margin: 20px 0px;
+    background-image: url("../../../../assets/images/about.png");
 }
 
-.about-container .nav-tabs{
-    padding-left: 15%;
-    background: #f9f7f7;
-    padding-top: 65px;
+.about-youtube{
+    width: 560px;
+    height: 325px;
+    margin-top: 600px;
 }
-
-.about-container .tab-pane{
-    padding-top: 50px;
-    width: 50%;
-    margin: 0 auto;
-}
-
-
-.about-container .tab-pane.about{
-    width: 100%;
+.about-naver-map{
+    margin-top: 4200px;
 }

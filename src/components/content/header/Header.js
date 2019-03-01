@@ -20,7 +20,7 @@ class Header extends Component {
                         <Link to="/signup" className="nav-link">가입하기</Link>
                     </li>
                 </div>) :
-                (<div className="profile-tab">
+                (<div className="header-profile-tab">
                     <Link to="/mypage/my-profile">
                         <li className="header-user-profile">
                             <img src={this.props.userPhotoUrl} alt="" id="header-profile" />
