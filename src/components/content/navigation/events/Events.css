@@ -118,7 +118,6 @@
 .events-card-item img {
     width: 311px; /* 315px = 311px + 2px*2 (border) */
     height: 150px;
-    background: red;
 }
 
 .events-card-item h5 {
@@ -169,6 +168,11 @@
 }
 
 .events-bottom-left h6{
+    display: block;
     font-size: 12px;
+    height: 14px;
+    width: 120px;
     color: gray;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

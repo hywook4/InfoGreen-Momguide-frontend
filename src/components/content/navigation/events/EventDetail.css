@@ -61,7 +61,6 @@
 
 .event-detail-content img{
     width: 100%;
-    object-fit: scale-down;
 }
 
 .event-detail-bottom{
