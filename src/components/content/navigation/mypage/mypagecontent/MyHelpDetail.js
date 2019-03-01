@@ -3,6 +3,7 @@ import './MyHelpDetail.css';
 import TokenUtils from '../../../../../util/TokenUtil';
 import axios from 'axios';
 import { TextArea } from 'semantic-ui-react';
+import history from '../../../../../history/history';
 
 export class MyHelpDetail extends React.Component{
 
@@ -58,12 +59,14 @@ export class MyHelpDetail extends React.Component{
     setPhotoArea = () => {
         if(this.state.answer === null) {
             if(this.state.contentFile === null) {
+                console.log(this.state.contentFile);
                 return(
                     <div className="myhelp-detail-file-box">
                         <input className="myhelp-detail-file" type="file" id="contact-file" onChange={this.setNewFile}/>
                     </div>
                 )
             } else {
+                console.log('debug1');
                 return (
                     <div className="myhelp-detail-file-box">
                         <img src={this.state.contentFile} alt="" id="ingred-anal-image" />
@@ -96,10 +99,25 @@ export class MyHelpDetail extends React.Component{
         });
     }
     modifyHelp = () => {
-        let content = document.getElementById("contact-content").value;
-        let file = document.getElementById("contact-file").value;
-
-        console.log(content, file);
+        const token = TokenUtils.getLoginToken();
+        const query = `?index=${this.state.index}`;
+        console.log(query);
+        const questForm = new FormData();
+        questForm.append('questionContent', this.state.content);
+        if(this.state.modifyFile !== null) {
+            questForm.append('questionFile', this.state.modifyFile);
+        }
+        axios({
+            method: 'put',
+            url: `${process.env.API_URL}/api/ask/editOneToOne${query}`,
+            headers: TokenUtils.getTokenRequestHeader(token),
+            data: questForm
+        })
+        .then(() => {
+            alert('1대1 문의가 수정되었습니다.');
+            history.push(`/mypage/my-help/${this.state.index}`);
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        })
     }
 
     //TODO : 받은 object의 값에 따라서 답변의 유무, 수정의 가능 유무를 정해서 일부 컴포넌트 렌더링 여부 정하기 
@@ -129,7 +147,7 @@ export class MyHelpDetail extends React.Component{
                     <div className="myhelp-detail-title">
                         <h4>2. 첨부파일</h4>
                     </div>
-                    {this.setPhotoArea}
+                    {this.setPhotoArea()}
                     {
                         this.state.answer === null ? 
                         <button type="button" className="myhelp-detail-button" onClick={this.modifyHelp}>수정하기</button> :

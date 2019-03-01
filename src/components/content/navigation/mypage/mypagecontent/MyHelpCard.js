@@ -47,10 +47,6 @@ export class MyHelpCard extends React.Component{
         this.props.changeCardCheck(this.state.index);
     }
 
-    modifyRequest = (e) => {
-        //TODO : 문의하기 내용 수정하기 처리
-        console.log("선택된 문의내용 수정하기");
-    }
 
     render(){
         const data = this.props.data;
@@ -81,7 +77,7 @@ export class MyHelpCard extends React.Component{
                         isAnswered ? 
                         "" :
                         <Link to={`my-help/${data.index}`}>
-                            <div className="modify-button" onClick={this.modifyRequest}>수정하기</div>
+                            <div className="modify-button">수정하기</div>
                         </Link>       
                     }
                     
