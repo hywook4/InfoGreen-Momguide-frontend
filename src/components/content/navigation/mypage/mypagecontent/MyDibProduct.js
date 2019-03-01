@@ -128,7 +128,6 @@ export class MyDibProduct extends React.Component{
                     }
                 });
             }
-            this.rerenderPage(this.state.currentPage);
         }
         axios({
             method: 'get',
@@ -141,8 +140,10 @@ export class MyDibProduct extends React.Component{
                 mainCategory: this.state.mainCategory,
                 products: res.data.Data,
                 maxPage: res.data.totalPages,
-                deleteList: [ false, false, false, false, false, false, false, false, false, false ]
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false
             })
+            console.log(this.state.currentPage);
             this.rerenderPage(this.state.currentPage);
         })
         .catch((err) => {

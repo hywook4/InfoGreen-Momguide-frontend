@@ -122,8 +122,27 @@ export class MyHouseProduct extends React.Component{
                     }
                 });
             }
-            this.rerenderPage(this.state.currentPage);
         }
+        axios({
+            method: 'get',
+            url: `${process.env.API_URL}/api/auth/homeProduct?isCosmetic=${this.state.mainCategory}&page=${this.state.currentPage}`,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: this.state.currentPage,
+                mainCategory: this.state.mainCategory,
+                products: res.data.Data,
+                maxPage: res.data.totalPages,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false
+            })
+            this.rerenderPage(this.state.currentPage);
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류입니다. 관리자에게 문의해 주시기 바랍니다.')
+        })
+        
     }
 
     changePage = (e, page) => {
