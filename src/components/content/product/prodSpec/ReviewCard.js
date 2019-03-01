@@ -182,7 +182,7 @@ export class ReviewCard extends React.Component {
                                     return <span key={i}>{line}<br/></span>
                                 })}
                             <br/>
-                            <a onClick={(e) => {
+                            <a href='/' onClick={(e) => {
                                 e.preventDefault();
                                 this.onChange('folded', !this.state.folded)
                             }}>{this.state.folded ? '열기' : '펴기'}</a>

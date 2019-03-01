@@ -3,17 +3,25 @@
 
 .slider{
     width: 100%;
-    
     margin: 0 auto 0;
-    float: left;
     position: relative;
     top: 9px;
 }
 
 .slider .slider_inner{
     width: 100%;
-    
     margin: 0 auto;
     float: left;
     position: relative;
+}
+
+.main-banner-slider{
+    width: 980px;
+    height: 300px;
+}
+
+.main-banner-slider-container{
+    width: 980px;
+    height: 300px;
+    margin: 0 auto;
 }
