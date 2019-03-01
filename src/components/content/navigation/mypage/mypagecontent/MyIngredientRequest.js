@@ -80,8 +80,26 @@ export class MyIngredientRequest extends React.Component{
                 headers: TokenUtils.getTokenRequestHeader(token)
             });
             console.log(this.state.currentPage);
-            this.rerenderPage(this.state.currentPage);
         }
+        axios({
+            method: 'get',
+            url: `${process.env.API_URL}/api/ask/ingredAnal?page=${this.state.currentPage}`,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            this.setState({
+                currentPage: this.state.currentPage,
+                products: res.data.Data,
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                checkAll: false,
+                totalPages: res.data.totalPages
+            })
+            this.rerenderPage(this.state.currentPage)
+        })
+        .catch((err) => {
+            alert('알 수 없는 오류입니다. 관리자에게 문의해 주시기 바랍니다.');
+            return;
+        })
     }
 
     changePage = (e, page) => {

@@ -80,8 +80,27 @@ export class MyHelpRequest extends React.Component{
                 headers: TokenUtils.getTokenRequestHeader(token)
             });
             console.log(this.state.currentPage);
-            this.rerenderPage(this.state.currentPage);
         }
+        axios({
+            method: 'get',
+            url: `${process.env.API_URL}/api/ask/oneToOne?page=${this.state.currentPage}`,
+            headers: TokenUtils.getTokenRequestHeader(token)
+        })
+        .then((res) => {
+            console.log(res);
+            this.setState({
+                deleteList: [ false, false, false, false, false, false, false, false, false, false ],
+                currentPage: this.state.currentPage,
+                helps: res.data.Data,
+                maxPage: res.data.totalPages,
+                checkAll: false
+            })
+            console.log(this.state.currentPage);
+            this.rerenderPage(this.state.currentPage);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
     changePage = (e, page) => {
@@ -101,6 +120,7 @@ export class MyHelpRequest extends React.Component{
                 deleteList: [ false, false, false, false, false, false, false, false, false, false ],
                 checkAll: false
             });
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         })
     }
 
@@ -112,7 +132,7 @@ export class MyHelpRequest extends React.Component{
             this.state.helps.length === this.state.deleteList.filter((item) => item === true).length) {
             page -= 1;
         }
-
+        
         query = `?page=${page}`;
         console.log(page);
         axios({
@@ -128,6 +148,7 @@ export class MyHelpRequest extends React.Component{
                 maxPage: res.data.totalPages,
                 checkAll: false
             })
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         })
     }
 
