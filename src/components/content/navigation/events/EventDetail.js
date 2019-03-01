@@ -12,7 +12,7 @@ import CommonUtils from '../../../../util/CommonUtil'
 
 const user = {
     index: 1,
-    imageUrl: 'https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg',
+    imageUrl: null,
     name: '테스트',
     sex: '남자',
     age: '23',
@@ -22,11 +22,11 @@ const user = {
 
 const defaultEvent = {
     index: 1,
-    title: "1",
-    subtitle: "1",
-    content: "1",
-    titleImageUrl: "https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg",
-    contentImageUrl: "https://i.ytimg.com/vi/HBVuKR1MgFE/maxresdefault.jpg",
+    title: "",
+    subtitle: "",
+    content: "",
+    titleImageUrl: null,
+    contentImageUrl: null,
     expirationDate: "2019-01-01 00:00:00",
     created_at: "2019-01-01 00:00:00",
     updated_at: "2019-01-01 00:00:00"
@@ -326,7 +326,7 @@ class EventDetail extends React.Component {
                     });
     
                 } catch(error) {
-                    alert("좋아요 취소 실패");
+                    console.log("좋아요 취소 실패");
                 }
 
                 this.setState({
@@ -344,7 +344,7 @@ class EventDetail extends React.Component {
                     });
     
                 } catch(error) {
-                    alert("좋아요 실패");
+                    console.log("좋아요 실패");
                 }
     
                 this.setState({

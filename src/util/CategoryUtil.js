@@ -34,4 +34,16 @@ CategoryUtils.korSubToEngMain = (korSub) => {
         return null;
 };
 
+CategoryUtils.subEngToKor = (main, sub) => {
+    return categoryObject[main][sub];
+}
+
+CategoryUtils.mainEngToKor = (main) => {
+    if(main === "living"){
+        return "가정용 화학제품";
+    } else if(main === "cosmetic"){
+        return "유아용 화장품";
+    }
+}
+
 export default CategoryUtils;
