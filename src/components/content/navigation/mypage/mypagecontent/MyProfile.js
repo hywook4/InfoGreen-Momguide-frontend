@@ -2,7 +2,7 @@ import React from 'react';
 import './MyProfile.css';
 import { connect } from 'react-redux';
 import * as actions from '../../../../../actions';
-import {FollowCard} from './FollowCard'
+//import {FollowCard} from './FollowCard';
 import history from '../../../../../history/history';
 import TokenUtils from '../../../../../util/TokenUtil';
 

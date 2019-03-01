@@ -1,6 +1,5 @@
 import React from 'react';
 import './MyProducts.css';
-import config from '../../../../../config';
 import axios from 'axios';
 import { MyProductCard } from './MyProductCard'
 import TokenUtils from '../../../../../util/TokenUtil';

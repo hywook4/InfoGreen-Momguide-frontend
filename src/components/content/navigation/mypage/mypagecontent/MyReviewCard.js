@@ -3,7 +3,6 @@ import * as utils from '../../../../../util';
 import axios from 'axios';
 import './MyReview.css';
 import { Link } from 'react-router-dom';
-import { cpus } from 'os';
 class MyReviewCard extends Component {
 
     constructor(props) {

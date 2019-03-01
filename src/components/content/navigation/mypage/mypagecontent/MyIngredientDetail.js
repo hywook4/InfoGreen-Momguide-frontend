@@ -4,7 +4,6 @@ import TokenUtils from '../../../../../util/TokenUtil';
 import axios from 'axios';
 import history from '../../../../../history/history';
 import { TextArea } from 'semantic-ui-react';
-import { isRegExp } from 'util';
 export default class MyIngredientDetail extends React.Component{
 
     constructor(props) {

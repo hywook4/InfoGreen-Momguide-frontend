@@ -1,6 +1,5 @@
 import React from 'react';
 import './OpenRequest.css';
-import config from '../../../../../config';
 import TokenUtils from '../../../../../util/TokenUtil';
 import axios from 'axios';
 import { OpenRequestCard } from './OpenRequestCard'

@@ -2,7 +2,6 @@ import React from 'react';
 import './MyProducts.css';
 import axios from 'axios';
 import TokenUtils from '../../../../../util/TokenUtil';
-import history from '../../../../../history/history';
 import {Link} from 'react-router-dom';
 
 const appendText={
