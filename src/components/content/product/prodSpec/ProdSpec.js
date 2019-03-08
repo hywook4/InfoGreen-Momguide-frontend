@@ -1313,7 +1313,7 @@ export class ProdSpec extends React.Component{
                                     </div>) :
                                     null}
                                 <div className="icon">
-                                    <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`}>
+                                    <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`} target="_blank" rel="noopener noreferrer">
                                         <i className="fa fa-krw" aria-hidden="true" />
                                     </a>
                                     <p className="check-para" style={{fontSize: '9px'}}>가격정보</p>

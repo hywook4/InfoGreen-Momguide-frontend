@@ -3,7 +3,7 @@ import './MainPage.css';
 import './common/CommentCard/Comment.css'
 import Header from './content/header/Header';
 import {Slider} from './content/slider/Slider';
-import {Footer} from './content/footer/Footer';
+import Footer from './content/footer/Footer';
 import Search from './content/search/Search';
 import {Category} from './content/navigation/category/Category';
 import {Events} from './content/navigation/events/Events';
@@ -78,7 +78,7 @@ export class MainPage extends Component {
                                     </div>
                                 </React.Fragment>
                             </Router>
-                        <Footer/>
+                            <Footer/>
                         </div>
                     </div>
                 </div>
