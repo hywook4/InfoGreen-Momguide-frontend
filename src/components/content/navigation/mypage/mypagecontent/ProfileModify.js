@@ -341,8 +341,7 @@ class ProfileModify extends React.Component{
                             </span>
                         </div>
                         <div>
-                            {/* TODO: after merging password reset */}
-                            <Link to="/">
+                            <Link to="/passwordReset">
                                 <button className="profile-modify-password-change">
                                     비밀번호 변경
                                 </button>

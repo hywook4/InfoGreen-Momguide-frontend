@@ -64,7 +64,6 @@
 .tips-card-item img {
     width: 311px; /* 315px = 311px + 2px*2 (border) */
     height: 150px;
-    background: red;
 }
 
 .tips-card-item h5 {

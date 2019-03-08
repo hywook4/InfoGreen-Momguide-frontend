@@ -121,7 +121,7 @@ export class ProdSpec extends React.Component{
             rateAverage = Math.round(res.data.product.rateSum/res.data.product.rateCount*100)/100;
         }
 
-
+        console.log(res.data.ingredient);
         this.setState({
             productData: res.data.product,
             ingredientList: res.data.ingredient,
@@ -471,7 +471,7 @@ export class ProdSpec extends React.Component{
                                 key={ingredient.index}
                                 data={ingredient}
                                 letter={ingredient.ewg}
-                                korName={ingredient.name}
+                                korName={ingredient.korName}
                                 engName={ingredient.engName}
                                 handleClick={this.updateModalData}
                             />);
@@ -1169,7 +1169,7 @@ export class ProdSpec extends React.Component{
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">나쁜 성분 자세히 보기</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle">성분 독성 정보</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -1178,12 +1178,12 @@ export class ProdSpec extends React.Component{
                             <div>
                                 <img alt="" src={dangerIcon1} />
                                 <div>호흡 독성</div>
-                                <div>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</div>
+                                <div>흡입시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</div>
                             </div>
                             <div>
                                 <img alt="" src={dangerIcon2} />
                                 <div>피부 자극</div>
-                                <div>흡입시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</div>
+                                <div>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</div>
                             </div>
                             <div>
                                 <img alt="" src={dangerIcon3} />
@@ -1207,7 +1207,10 @@ export class ProdSpec extends React.Component{
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle2">관심 성분 자세히 보기</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle2">관심 성분</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div className="modal-body">
                             <div>
@@ -1392,7 +1395,7 @@ export class ProdSpec extends React.Component{
 
                             {category === 'living' ?
                                 (<ul className="description-list">
-                                    <li>화장품 전성분 정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량이 높은 순으로 기재됩니다.</li>
+                                    <li>생활화학제품 성분정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량 정보는 포함하지 않습니다.</li>
                                     <li>아래 정보들은 제품 자체의 위해성을 뜻하진 않으며, 해당성분의 노출경로나 함량 따라 유해 여부가 달라질 수 있으니, 참고사항으로 봐주시기
                                         바랍니다.
                                     </li>
@@ -1400,7 +1403,7 @@ export class ProdSpec extends React.Component{
                                     <li>해당 정보를 허가 없이 상업적으로 이용하는 경우, 법적조치를 받을 수 있습니다.</li>
                                 </ul>) :
                                 (<ul className="description-list">
-                                    <li>생활화학제품 성분정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량 정보는 포함하지 않습니다.</li>
+                                    <li>화장품 전성분 정보는 제조 / 유통 업체에서 공개한 자료를 기반으로 제공되며, 함량이 높은 순으로 기재됩니다.</li>
                                     <li>아래 정보들은 제품 자체의 위해성을 뜻하진 않으며, 해당성분의 노출경로나 함량 따라 유해 여부가 달라질 수 있으니, 참고사항으로 봐주시기
                                         바랍니다.
                                     </li>

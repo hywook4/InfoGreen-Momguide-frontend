@@ -83,7 +83,7 @@ export const CosmeticDoughNut = (props)=>{
                 ewgCount(props.data.ingredientList, 'C')],
             backgroundColor: [
                 '#999999',
-                '#72b4a2',
+                '#c0d28b',
                 '#edb246',
                 '#d96357'
             ],
@@ -103,19 +103,19 @@ export const CosmeticDoughNut = (props)=>{
 
             <div className="chart-legend">
                 <div className="cosmetic-chart-legend-icon">
-                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconX.png')} alt=""/>
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconXX.png')} alt=""/>
                     <span className="chart-legend-text">{text.x}</span>
                 </div>
                 <div className="cosmetic-chart-legend-icon">
-                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconA.png')} alt=""/>
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconAA.png')} alt=""/>
                     <span className="chart-legend-text">{text.a}</span>
                 </div>
                 <div className="cosmetic-chart-legend-icon">
-                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconB.png')} alt=""/>
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconBB.png')} alt=""/>
                     <span className="chart-legend-text">{text.b}</span>
                 </div>
                 <div className="cosmetic-chart-legend-icon">
-                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconC.png')} alt=""/>
+                    <img style={{maxWidth: "15px", maxHeight: "15px"}} src={require('../../../../assets/images/icons/iconCC.png')} alt=""/>
                     <span className="chart-legend-text">{text.c}</span>
                 </div>
             </div>

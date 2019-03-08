@@ -240,7 +240,7 @@ ul.nav.nav-pills li a:hover, ul.nav.nav-pills li a:active,  ul.nav.nav-pills li 
 
 .product-card-block{
     width: 100%;
-   
+    min-height: 1000px;
     display: inline-block;
 }
 

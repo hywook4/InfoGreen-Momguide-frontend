@@ -82,11 +82,6 @@ export class ViewMore extends React.Component {
                             </div>
                         </div>
                 </div> 
-                {/* <DescriptionSlider />  */}
-                {/* <Comments />   */}
-                {
-                    // <Paginate />
-                }
             </div>
 
         )

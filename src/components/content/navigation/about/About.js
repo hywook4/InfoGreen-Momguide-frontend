@@ -6,7 +6,7 @@ export class About extends React.Component{
         return(
             <div className="about-container">
                 <div className="about-content">
-                <iframe src="https://www.youtube.com/embed/-kqW1_5Hmpw" frameborder="0" title="about-1"
+                <iframe src="https://www.youtube.com/embed/-kqW1_5Hmpw" frameBorder="0" title="about-1"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
                 className="about-youtube-1" allowfullscreen></iframe>
 

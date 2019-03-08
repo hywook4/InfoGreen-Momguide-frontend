@@ -50,7 +50,7 @@ class Header extends Component {
                             <Link to="/" className="nav-link">홈</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/category" className="nav-link">카테고리</Link>
+                            <Link to={`/category?search=${''}&mainCategory=${''}&subCategory=${''}`} className="nav-link">카테고리</Link>
                         </li>
                         <li className="nav-item">
                             <Link to="/tips" className="nav-link">꿀팁</Link>

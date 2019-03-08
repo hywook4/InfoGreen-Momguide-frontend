@@ -29,7 +29,7 @@ class Search extends React.Component {
     };
 
     onSearch = () => {
-        history.push(`/category/${this.state.search}`);
+        history.push(`/category?search=${this.state.search}`);
     };
 
     onEnter = (e) => {
@@ -47,7 +47,7 @@ class Search extends React.Component {
                     <div className="search_box">
                         <input 
                             type="text"
-                            placeholder="총 400,000개의 제품..."
+                            placeholder="브랜드 or 제품명을 검색하세요."
                             value={this.state.search}
                             onChange={this.onChange}
                             onKeyPress={this.onEnter}

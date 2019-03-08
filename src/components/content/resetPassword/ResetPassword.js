@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CONCEPT_BANNER from '../../../assets/images/banner.png';
 import queryString from 'query-string';
 import './ResetPassword.css';
+import {TokenUtil} from '../../../util';
 import axios from 'axios';
 import history from '../../../history/history';
 
@@ -9,14 +10,37 @@ export class ResetPassword extends Component {
     constructor(props) {
         super(props);
 
+        let headers = null;
+
+        let token = TokenUtil.getLoginToken();
+        if(token === null){
+            token = this.getQueryString();
+            headers = {
+                Authorization: `Bearer ${token}`
+            }
+        } else{
+            headers = TokenUtil.getTokenRequestHeader(token);
+        }
+
         this.state = {
-            newPassword: '',
-            newPasswordCheck: ''
+                newPassword: '',
+                newPasswordCheck: '',
+                token: token,
+                headers: headers
+        }
+
+        // if logged in or get email verified 
+        if(token){
+            
+        } else{
+            alert("접근 권한이 없습니다.");
+            history.push('/');
         }
     }
 
     getQueryString = () => {
         const value = queryString.parse(this.props.location.search);
+        console.log(value.token);
         return value.token;
     }
 
@@ -25,7 +49,6 @@ export class ResetPassword extends Component {
         this.setState({
             newPassword: value
         });
-        console.log(this.state.newPassword);
     };
 
     changeNewPasswordCheck = (e) => {
@@ -33,7 +56,6 @@ export class ResetPassword extends Component {
         this.setState({
             newPasswordCheck: value
         });
-        console.log(this.state.newPasswordCheck);
     };
 
     passwordCompare = () => {
@@ -48,25 +70,29 @@ export class ResetPassword extends Component {
     };
 
     handleSubmitClick = (e) => {
-        if(this.state.newPassword === '' || this.state.newPasswordCheck === '') {
-            alert('새로운 비밀번호를 입력해주세요.');
-            return;
-        }
-        axios({
-            method: 'put',
-            url: process.env.API_URL + '/api/auth/editProfile/resetPassword',
-            headers: {Authorization: 'Bearer ' + this.getQueryString()},
-            data: {
-                password: this.state.newPassword
+        if(this.state.token){
+            if(this.state.newPassword === '' || this.state.newPasswordCheck === '') {
+                alert('새로운 비밀번호를 입력해주세요.');
+                return;
             }
-        })
-        .then(() => {
-            history.push('/');
-        })
-        .catch((err) => {
-            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
-        })
 
+            axios({
+                method: 'put',
+                url: process.env.API_URL + '/api/auth/editProfile/resetPassword',
+                headers: this.state.headers,
+                data: {
+                    password: this.state.newPassword
+                }
+            }).then(()=>{
+                alert('비밀번호가 성공적으로 변경되었습니다.');
+                history.push('/');
+            }).catch((err)=>{
+                alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주시기 바랍니다.');
+            })
+
+        }else{
+            alert("비정상적인 접근입니다.");
+        }
     }
 
     render() {

@@ -2,10 +2,28 @@ import React from 'react';
 import './CategoryMenu.css';
 
 export class CategoryMenu extends React.Component{
-    state = {
-        categorySelect: "", //living or cosmetic
-        categoryDetail: "",
-    };
+    constructor(props) {
+        super(props);
+
+
+        this.state = {
+            categorySelect: props.mainCategory, //living or cosmetic
+            categoryDetail: props.subCategory,
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if(nextProps.mainCategory !== prevState.categorySelect || nextProps.subCategory !== prevState.categoryDetail){
+            return {
+                categorySelect: nextProps.mainCategory,
+                categoryDetail: nextProps.subCategory
+            }
+        } else{
+            return null;
+        }
+    }
+
+
 
     selectCategory(category){
         if(this.state.categorySelect === category){

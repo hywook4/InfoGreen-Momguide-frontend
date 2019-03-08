@@ -109,6 +109,9 @@
     font-size: 19px;
     font-weight: bold;
     color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 68px;
 }
 
 .card-star{
