@@ -136,6 +136,10 @@ p.footer_para span{
     letter-spacing: 1px;
 }
 
+p.footer_para a:hover, p.footer_para span b:hover{
+	text-decoration: none;
+}
+
 p.footer_para span b{
 	padding-left: 20px;
 }

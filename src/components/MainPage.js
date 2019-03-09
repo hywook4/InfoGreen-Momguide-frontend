@@ -24,6 +24,8 @@ import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdS
 import {About} from './content/navigation/about/About';
 import {MyPage} from './content/navigation/mypage/MyPage';
 import {AdditionalReview} from './content/product/prodSpec/AdditionalReview';
+import {License} from './content/term/License';
+import {PersonalInfo} from './content/term/PersonalInfo';
 import history from '../history/history';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Router, Route, Switch} from "react-router-dom"
@@ -74,11 +76,13 @@ export class MainPage extends Component {
                                             <Route path="/passwordReset" component={ResetPassword} />
                                             <Route path="/mypage" component={MyPage} />
                                             <Route path="/additional-review/:id" component={AdditionalReview} />
+                                            <Route path="/license" component={License} />
+                                            <Route path="/personal-info" component={PersonalInfo} />
                                         </Switch>
                                     </div>
-                                </React.Fragment>
+                                    <Footer/>
+                                </React.Fragment>     
                             </Router>
-                            <Footer/>
                         </div>
                     </div>
                 </div>
