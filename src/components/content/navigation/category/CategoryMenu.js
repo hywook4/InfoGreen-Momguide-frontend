@@ -74,7 +74,7 @@ export class CategoryMenu extends React.Component{
                 detail: "dishwashing"
             },
             {
-                category: "탈취제",
+                category: "탈취·방향제",
                 detail: "odor"
             },
             {

@@ -39,7 +39,7 @@ export class ProductSearch extends React.Component {
                 category:'dishwashing'
             },
             {
-                name:'탈취제',
+                name:'탈취·방향제',
                 category:'odor'
             },
             {

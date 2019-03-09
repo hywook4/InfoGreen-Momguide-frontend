@@ -170,9 +170,9 @@ export class Category extends React.Component{
     };
 
 
-    onCategoryClick = async (mainCategory, subCategory) => {
+    onCategoryClick = (mainCategory, subCategory) => {
         if(this.state.mainCategory !== mainCategory){
-            await this.setState({
+            this.setState({
                 careCheck: false,
                 harmCheck: false,
                 highDangerCheck: false,
@@ -187,14 +187,14 @@ export class Category extends React.Component{
         query.subCategory = subCategory;
 
 
-        await this.setState({
+        this.setState({
             mainCategory: mainCategory,
             subCategory: subCategory,
             query: query,
         });
 
         if(mainCategory === ""){
-            await this.setState({
+            this.setState({
                 careCheck: false,
                 harmCheck: false,
                 highDangerCheck: false,
