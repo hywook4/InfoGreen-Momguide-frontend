@@ -20,6 +20,7 @@ import {Product} from './content/product/Product';
 import {LoggedIn} from './content/navigation/request/loggedIn/LoggedIn';
 import {RequestComment} from './content/navigation/request/requestComment/RequestComment';
 import {ContactUs} from './content/navigation/request/contactUs/ContactUs';
+import {Faq} from './content/navigation/request/Faq/Faq';
 import {ProdSpec as ProductSpecification} from './content/product/prodSpec/ProdSpec';
 import {About} from './content/navigation/about/About';
 import {MyPage} from './content/navigation/mypage/MyPage';
@@ -71,6 +72,7 @@ export class MainPage extends Component {
                                             <Route path="/product-details/:category/:id" component={ProductSpecification} />
                                             <Route path="/request/request-comment" component={RequestComment} />
                                             <Route path="/request/contact-us" component={ContactUs} />
+                                            <Route path="/request/faq" component={Faq} />
                                             <Route path="/request/loggedin" component={LoggedIn} />
                                             <Route path="/findpassword" component={FindPassword} />
                                             <Route path="/passwordReset" component={ResetPassword} />
