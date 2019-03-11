@@ -2,7 +2,15 @@ import React from 'react';
 import './ProdSpec.css';
 
 export const LivingIngredientRow = (props) => {
+
     const letter = props.letter ? props.letter : 'X';
+
+    let cautionIcon = null;
+    if(props.data.sr === 'R')
+        cautionIcon = (<img className="caution-icon" src={ require('../../../../assets/images/Asset 144.png') } alt=""/>);
+    else if(props.data.sr === 'S')
+        cautionIcon = (<img className="caution-icon" src={ require('../../../../assets/images/Asset 143.png') } alt=""/>);
+
     return(
         <tr data-toggle="modal" data-target="#exampleModalCenter" onClick={()=>props.handleClick({...props.data})} style={{cursor:'pointer', height: '48px', borderBottom: '1px solid rgba(100, 100, 100, 0.2)'}}>
             <td className="letter-icon-cell">
@@ -15,6 +23,7 @@ export const LivingIngredientRow = (props) => {
             <td className="caution-icon-cell">
                 {(props.data.dsl===true)?(<img className="caution-icon" src={ require('../../../../assets/images/product_spec_icons/caution_canada.png') } alt=""/>):null}
                 {(props.data.epa==='Y')?(<img className="caution-icon" src={ require('../../../../assets/images/product_spec_icons/caution_usa.png') } alt=""/>):null}
+                {cautionIcon}
             </td>
             <td className="harm-icon-cell">
                 {(props.data.harmness)?(<img className="harm-icon" src={ require('../../../../assets/images/common_icons/warning.png') } alt=""/>):null}

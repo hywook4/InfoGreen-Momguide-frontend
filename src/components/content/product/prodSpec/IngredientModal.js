@@ -59,7 +59,7 @@ export class LivingIngredientModal extends React.Component{
                                         <span>인간 노출에 대한 잠재성이 있거나 독성이 있을 수 있음</span>
                                     </div>) : null
                                 }
-                                {(props.allergic === 'R') ?
+                                {(props.sr === 'R') ?
                                     (<div className="popup-icon-level">
                                         <img className="img-responsive icon_img"
                                              src={require('../../../../assets/images/Asset 144.png')}
@@ -68,7 +68,7 @@ export class LivingIngredientModal extends React.Component{
                                         <span>적은 양으로도 사람에 따라 알러지 반응을 일으킬 가능성이 상당히 높음</span>
                                     </div>) : null
                                 }
-                                {(props.allegric === 'S') ?
+                                {(props.sr === 'S') ?
                                     (<div className="popup-icon-level">
                                         <img className="img-responsive icon_img"
                                              src={require('../../../../assets/images/Asset 143.png')}
