@@ -59,7 +59,7 @@
     background-color: lightgray;
 }
 
-.faq-card-title span{
+.faq-card-title span, .faq-card-title-odd span{
     font-size: 12px;
     font-weight: bold;
 }
