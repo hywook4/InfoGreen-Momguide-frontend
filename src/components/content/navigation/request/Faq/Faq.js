@@ -5,45 +5,19 @@ import {FaqCard} from './FaqCard';
 import axios from 'axios';
 
 
-const dummy = [
-    {
-        index: 0,
-        title: 'asdfasdfasdfsadf',
-        content: 'aslfjas;ldkfj;alksdfj;lask\n sakdfjl;askjdf \n sdkfjas;ldfj  s adfkjas  aslkdf asfd klasdf l \n d\n, d\na\nd\ne\n'
-    },
-    {
-        index: 1,
-        title: 'asdfasdfasdfsadf',
-        content: 'aslfjas;ldkfj;alksdfj;lask\n sakdfjl;askjdf \n sdkfjas;ldfj  s adfkjas  aslkdf asfd klasdf l \n d\n, d\na\nd\ne\n'
-    },
-    {
-        index: 2,
-        title: 'asdfasdfasdfsadf',
-        content: 'aslfjas;ldkfj;alksdfj;lask\n sakdfjl;askjdf \n sdkfjas;ldfj  s adfkjas  aslkdf asfd klasdf l \n d\n, d\na\nd\ne\n'
-    },
-    {
-        index: 3,
-        title: 'asdfasdfasdfsadf',
-        content: 'aslfjas;ldkfj;alksdfj;lask\n sakdfjl;askjdf \n sdkfjas;ldfj  s adfkjas  aslkdf asfd klasdf l \n d\n, d\na\nd\ne\n'
-    }
-]
-
 export class Faq extends React.Component{
     state = {
        faqs: []
     };
 
     componentDidMount = () => {
-        axios.get("http://localhost:8080/api/ask/Faq")
+        axios.get(`${process.env.API_URL}/api/ask/Faq`)
         .then((res) => {
             this.setState({
                 faqs: res.data
             })
         });
     }
-
-
-
 
     render = () => {
         
