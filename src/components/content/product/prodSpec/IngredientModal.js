@@ -110,7 +110,7 @@ export class LivingIngredientModal extends React.Component{
                                 {props.echaSkin?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_skin_true.png')} alt=""/>
-                                        <h6>피부 자극</h6>
+                                        <h6>피부 과민성</h6>
                                         <span>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
@@ -240,14 +240,14 @@ export class CosmeticIngredientModal extends React.Component{
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_respitory_true.png')} alt=""/>
                                         <h6>호흡 독성</h6>
-                                        <span>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</span>
+                                        <span>흡입 시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
                                 {props.echaSkin?
                                     <div className="popup-icon-level">
                                         <img className="img-responsive icon_img" src={require('../../../../assets/images/product_spec_icons/ingred_skin_true.png')} alt=""/>
-                                        <h6>피부 자극</h6>
-                                        <span>흡입 시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</span>
+                                        <h6>피부 과민성</h6>
+                                        <span>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</span>
                                     </div>
                                     : null}
                                 {props.echaDev?

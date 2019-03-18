@@ -53,7 +53,7 @@ const cosmeticText = {
     x:'정보없음',
     a:'낮은 위험',
     b:'중간 위험',
-    c: '매우 높은 위험'
+    c: '높은 위험'
 };
 
 export class ProdSpec extends React.Component{
@@ -416,7 +416,7 @@ export class ProdSpec extends React.Component{
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
                          onClick={()=>this.handleIngredientSelect('echaSkin')}
                     />
-                    <div>피부 자극</div>
+                    <div>피부 과민성</div>
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
@@ -1182,7 +1182,7 @@ export class ProdSpec extends React.Component{
                             </div>
                             <div>
                                 <img alt="" src={dangerIcon2} />
-                                <div>피부 자극</div>
+                                <div>피부 과민성</div>
                                 <div>알레르기성 피부 반응을 일으킬 수 있는 성분입니다.</div>
                             </div>
                             <div>
@@ -1223,7 +1223,7 @@ export class ProdSpec extends React.Component{
                             </div>
                             <div>
                                 <img alt="" src={interestIcon3} />
-                                <div>"향로"라고 성분을 표기한 경우로, 구체적인 성분을 알 수 없습니다.</div>
+                                <div>"향료"라고 성분을 표기한 경우로, 구체적인 성분을 알 수 없습니다.</div>
                             </div>
                             <div>
                                 <img alt="" src={interestIcon4} />
