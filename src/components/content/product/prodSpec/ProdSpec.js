@@ -1249,7 +1249,7 @@ export class ProdSpec extends React.Component{
                                 {
                                     this.state.selectedIngredients.map((item, i) =>
                                         (<div key={i}>
-                                            <img alt="" src={item.imgUrl} />
+                                            <img alt="" src={item.imgUrl} style={{width:'84px', height:'53px'}}/>
                                             <div>
                                                 <div>{item.korName}</div>
                                                 <div>{item.engName}</div>
