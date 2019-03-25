@@ -408,7 +408,7 @@ export class ProdSpec extends React.Component{
                          style={{maxHeight:'55px',maxWidth:'55px'}} alt=""
                          onClick={()=>this.handleIngredientSelect('echaBreath')}
                     />
-                    <div>호흡 독성</div>
+                    <div>호흡기 과민성</div>
                 </div>
                 <div className="ingred-icon">
                     <img className="img-fluid"
@@ -1177,7 +1177,7 @@ export class ProdSpec extends React.Component{
                         <div className="modal-body">
                             <div>
                                 <img alt="" src={dangerIcon1} />
-                                <div>호흡 독성</div>
+                                <div>호흡기 과민성</div>
                                 <div>흡입시 알레르기성 반응, 천식 또는 호흡곤란 등을 일으킬 수 있는 성분입니다.</div>
                             </div>
                             <div>
@@ -1249,7 +1249,7 @@ export class ProdSpec extends React.Component{
                                 {
                                     this.state.selectedIngredients.map((item, i) =>
                                         (<div key={i}>
-                                            <img alt="" src={item.imgUrl} style={{width:'84px', height:'53px'}}/>
+                                            <img alt="" src={item.imgUrl} style={{width:'auto', height:'100%'}}/>
                                             <div>
                                                 <div>{item.korName}</div>
                                                 <div>{item.engName}</div>
