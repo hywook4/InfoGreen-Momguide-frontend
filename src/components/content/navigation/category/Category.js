@@ -366,27 +366,27 @@ export class Category extends React.Component{
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline1" 
-                    onClick={(e)=>this.checkChange("careCheck")} defaultChecked={ this.state.careCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("careCheck")} checked={ this.state.careCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline1" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline2" 
-                    onClick={(e)=>this.checkChange("harmCheck")} defaultChecked={ this.state.harmCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("harmCheck")} checked={ this.state.harmCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline2" className="custom-control-label">유해 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline3" 
-                    onClick={(e)=>this.checkChange("highDangerCheck")} defaultChecked={ this.state.highDangerCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("highDangerCheck")} checked={ this.state.highDangerCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline3" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline4" 
-                    onClick={(e)=>this.checkChange("ecoCheck")} defaultChecked={ this.state.ecoCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("ecoCheck")} checked={ this.state.ecoCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline4" className="custom-control-label">친환경 인증 제품</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline5" 
-                    onClick={(e)=>this.checkChange("ingredientCheck")} defaultChecked={ this.state.ingredientCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("ingredientCheck")} checked={ this.state.ingredientCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline5" className="custom-control-label">성분 공개 제품</label>
                 </div>
             </React.Fragment>
@@ -396,17 +396,17 @@ export class Category extends React.Component{
             <React.Fragment>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline6" 
-                    onClick={(e)=>this.checkChange("careCheck")} defaultChecked={ this.state.careCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("careCheck")} checked={ this.state.careCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline6" className="custom-control-label">주의 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline7" 
-                    onClick={(e)=>this.checkChange("highDangerCheck")} defaultChecked={ this.state.highDangerCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("highDangerCheck")} checked={ this.state.highDangerCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline7" className="custom-control-label">높은 위험도 성분 제외</label>
                 </div>
                 <div className="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" className="custom-control-input" id="defaultInline8" 
-                    onClick={(e)=>this.checkChange("middleDangerCheck")} defaultChecked={ this.state.middleDangerCheck ? 'checked' : ''}/>
+                    onChange={(e)=>this.checkChange("middleDangerCheck")} checked={ this.state.middleDangerCheck ? 'checked' : ''}/>
                     <label htmlFor="defaultInline8" className="custom-control-label">중간 위험도 성분 제외</label>
                 </div>
             </React.Fragment>
