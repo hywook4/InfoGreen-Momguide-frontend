@@ -272,7 +272,7 @@ class TipDetail extends React.Component {
                     </div>
                 </div>
                 <div className="tip-detail-content">
-                    <img src={this.state.tip.contentImageUrl} alt="tip-content"></img>
+                    <img src={this.state.tip.contentImageUrl} alt={this.state.tip.title}></img>
                 </div>
 
                 <div className="tip-detail-bottom">

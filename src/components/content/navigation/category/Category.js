@@ -164,6 +164,27 @@ export class Category extends React.Component{
         }
     };
 
+    onSearchClick = () => {
+        this.resetSearchResults(()=>this.searchProduct(this.state.search, this.state.mainCategory, this.state.subCategory, this.state.sort,
+            this.state.careCheck,
+            this.state.harmCheck,
+            this.state.highDangerCheck,
+            this.state.ecoCheck,
+            this.state.ingredientCheck,
+            this.state.middleDangerCheck,
+            this.state.page));
+
+        let query = this.state.query;
+        query.search = this.state.search;
+        
+        this.setState({
+            searchTitle: this.state.search,
+            query: query
+        })
+
+        history.push(`/category?search=${this.state.search}&mainCategory=${this.state.mainCategory}&subCategory=${this.state.subCategory}`); 
+    }
+
     onChange = e => {
         const search = e.target.value.trimLeft();
         this.setState({search: search});
@@ -452,7 +473,7 @@ export class Category extends React.Component{
                                 autoFocus={true}
                                 ref={c => (this._input = c)}
                             />
-                            <i className="fa fa-search" aria-hidden="true" />
+                            <i className="fa fa-search" aria-hidden="true" onClick={this.onSearchClick}/>
                         </div>
                     </div>
 

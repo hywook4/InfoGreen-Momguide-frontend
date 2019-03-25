@@ -1,6 +1,5 @@
 import React from 'react';
 import './Search.css';
-import { Link } from 'react-router-dom';
 import history from '../../../history/history';
 
 class Search extends React.Component {
@@ -29,7 +28,7 @@ class Search extends React.Component {
     };
 
     onSearch = () => {
-        history.push(`/category?search=${this.state.search}`);
+        history.push(`/category?search=${this.state.search}&mainCategory=&subCategory=`);
     };
 
     onEnter = (e) => {
@@ -52,7 +51,7 @@ class Search extends React.Component {
                             onChange={this.onChange}
                             onKeyPress={this.onEnter}
                         />
-                        <Link to='' onClick={this.onSearch}><i className="fa fa-search" aria-hidden="true"/></Link>
+                        <i className="fa fa-search" aria-hidden="true" onClick={this.onSearch}/>
                     </div>
                 </div>
             </div>
