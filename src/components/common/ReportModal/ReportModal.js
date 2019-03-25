@@ -60,8 +60,7 @@ export class ReportModal extends React.Component {
                 dataObj['commentIndex'] = this.props.id;
             }
 
-            console.log(dataObj);
-            console.log(this.props.objUrl);
+          
             await axios({
                 method: 'post',
                 url: `${process.env.API_URL}${this.props.objUrl}`,

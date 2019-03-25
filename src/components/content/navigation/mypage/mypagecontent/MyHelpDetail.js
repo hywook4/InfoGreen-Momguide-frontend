@@ -66,7 +66,6 @@ export class MyHelpDetail extends React.Component{
                     </div>
                 )
             } else {
-                console.log('debug1');
                 return (
                     <div className="myhelp-detail-file-box">
                         <img src={this.state.contentFile} alt="" id="ingred-anal-image" />

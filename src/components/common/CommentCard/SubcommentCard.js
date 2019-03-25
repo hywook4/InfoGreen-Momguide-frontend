@@ -10,7 +10,7 @@ import CommonUtils from '../../../util/CommonUtil'
 export class SubcommentCard extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props.data);
+       
         this.state = {
             user: props.user,
             postType: props.postType,
@@ -51,7 +51,7 @@ export class SubcommentCard extends React.Component {
 
         this.setState({
             editable: !this.state.editable
-        }, console.log(this.state.subcomment))
+        })
     }
 
     onDelete = async () => {

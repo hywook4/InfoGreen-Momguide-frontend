@@ -37,7 +37,7 @@ export class FindPassword extends Component {
             }
             if('token' in res.data) {
                 if(res.data.token !== null) {
-                    console.log('Bearer ' + res.data.token);
+                   
                     axios({
                         method: 'get',
                         url: process.env.API_URL + '/api/auth/info', 

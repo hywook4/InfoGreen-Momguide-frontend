@@ -13,7 +13,7 @@ export class ProductList extends React.Component {
     // This messy part should go through refactoring
     componentDidMount = async ()=> {
         // Search by number of votes
-        console.log(this.props.mainCategory, this.props.subCategory);
+      
 
         let products = await axios.get(`${process.env.API_URL}/api/product/popularRank?mainCategory=${this.props.mainCategory}&subCategory=${this.props.subCategory}`);
         const newState = ({ productByVote: products.data });

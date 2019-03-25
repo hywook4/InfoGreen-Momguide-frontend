@@ -43,10 +43,10 @@ export class MyDibProduct extends React.Component{
         let query = '';
         if(category === 'cosmetic') {
             query = `?isCosmetic=true&page=1`;
-            console.log(query);
+            //console.log(query);
         } else if(category === 'living') {
             query = `?isCosmetic=false&page=1`;
-            console.log(query);
+            //console.log(query);
         }
 
         axios({
@@ -55,7 +55,6 @@ export class MyDibProduct extends React.Component{
             headers: TokenUtils.getTokenRequestHeader(token)
         })
         .then((res) => {
-            console.log('debug');
             this.setState({
                 currentPage: 1,
                 mainCategory: category,
@@ -143,7 +142,6 @@ export class MyDibProduct extends React.Component{
                 deleteList: [ false, false, false, false, false, false, false, false, false, false ],
                 checkAll: false
             })
-            console.log(this.state.currentPage);
             this.rerenderPage(this.state.currentPage);
         })
         .catch((err) => {
@@ -152,7 +150,6 @@ export class MyDibProduct extends React.Component{
     }
 
     changePage = (e, page) => {
-        console.log(this.state.currentPage);
         const token = TokenUtils.getLoginToken();
         let query = '';
         if(this.state.mainCategory === 'cosmetic') {

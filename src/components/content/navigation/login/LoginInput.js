@@ -130,7 +130,7 @@ class LoginInput extends Component {
     }
 
     render() {
-        console.log(this.state.saveId);
+       
         if(this.props.isLogin) {
             history.push('/');
         }

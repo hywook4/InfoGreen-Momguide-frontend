@@ -16,8 +16,7 @@ export class MyHelpCard extends React.Component{
             check: this.props.check,
             index: this.props.index
         })
-        console.log(this.props.index);
-        console.log(this.props.check);
+    
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {

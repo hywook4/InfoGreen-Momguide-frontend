@@ -32,7 +32,7 @@ export class Events extends React.Component {
             nextPageNum: data.data.nextNum
         })
 
-        console.log(Date());
+       
     }
 
     changeTab = async (tab) => {

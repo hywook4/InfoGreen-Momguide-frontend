@@ -23,7 +23,7 @@ export class CommentCard extends React.Component {
             loggedIn = true;
             headers = TokenUtil.getTokenRequestHeader(token);
         }
-        console.log(props.data);
+        
         this.state = {
             comment: props.data,
             postType: props.postType,   // postType.type : 'event or tip'  postType.index : index
@@ -83,7 +83,6 @@ export class CommentCard extends React.Component {
     loadPage = async () => { 
         const nextPage = this.state.subcommentPage + 1;
         let data = await this.getSubcomment(nextPage);
-        console.log(data);
         let subcomments = this.state.subcomments;
         subcomments = subcomments.concat(data.data.childComments);
 
@@ -313,7 +312,6 @@ export class CommentCard extends React.Component {
         
         for(let a = 1; a <= this.state.subcommentPage; a++){
             data = await axios.get(`${process.env.API_URL}/api/${this.state.postType.type}/childComment?index=${this.state.comment.index}&page=${a}`);
-            console.log(data);
             subcomments = subcomments.concat(data.data.childComments);
         }
 

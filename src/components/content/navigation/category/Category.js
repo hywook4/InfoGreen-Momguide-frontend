@@ -216,10 +216,10 @@ export class Category extends React.Component{
 
         history.push(`/category?search=${this.state.search}&mainCategory=${mainCategory}&subCategory=${subCategory}`);
 
-        console.log(this.state.search, mainCategory, subCategory, this.state.sort, this.state.careCheck,
+        /*console.log(this.state.search, mainCategory, subCategory, this.state.sort, this.state.careCheck,
             this.state.harmCheck, this.state.highDangerCheck, this.state.ecoCheck, this.state.ingredientCheck, this.state.middleDangerCheck, 
             this.state.page);
-        
+        */
     };
 
 
