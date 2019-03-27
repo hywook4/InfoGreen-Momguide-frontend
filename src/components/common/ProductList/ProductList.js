@@ -79,7 +79,7 @@ export class ProductList extends React.Component {
                             <ProductCard
                                 payload={product}
                                 key={index}
-                                rank={index+1}
+                                rank={''}
                                 src={encodeURI(`${s3Url}${product.brand}/${product.name}.jpg`.replace(/ /g, '+'))}
                                 name={product.name}
                                 description={product.brand}

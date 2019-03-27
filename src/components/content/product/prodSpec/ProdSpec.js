@@ -929,6 +929,10 @@ export class ProdSpec extends React.Component{
         }, () => {$('#selected-ingredient-modal').modal('show')});
     };
 
+    brandSearch = () =>{
+        history.push(`/category?search=${this.state.productData.brand}&mainCategory=&subCategory=`); 
+    }
+
     render = () => {
         const id = this.props.match.params.id;
         const productData = this.state.productData;
@@ -1281,7 +1285,7 @@ export class ProdSpec extends React.Component{
                                  alt="" />
                         </div>
                         <div className="prod-texts"> {/* all text container */}
-                            <div className="brand-name">{productData.brand}</div>
+                            <div className="brand-name" onClick={this.brandSearch}>{productData.brand}</div>
                             <div className="prod-name">
                                 <h1>{productData.name}</h1>
                             </div>

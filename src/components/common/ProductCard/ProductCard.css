@@ -19,6 +19,7 @@
 }
 
 .product-rank {
+    min-height: 10px;
     font-style: italic;
     font-weight: bold;
     color: #32B8A4;

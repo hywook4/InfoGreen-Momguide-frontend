@@ -1,11 +1,8 @@
-.carousel-inner img {
-}
 
 .slider{
     width: 100%;
     margin: 0 auto 0;
     position: relative;
-    top: 9px;
 }
 
 .slider .slider_inner{

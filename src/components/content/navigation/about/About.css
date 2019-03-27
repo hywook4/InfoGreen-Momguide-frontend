@@ -1,6 +1,6 @@
 .about-container {
     width: 980px;
-    margin: 10px auto;
+    margin: 0px auto;
     min-height: 10px;
     overflow: hidden;
 }
@@ -10,7 +10,7 @@
     height: 5500px;
     min-height: 10px;
     overflow: hidden;
-    margin: 20px 0px;
+    margin: 0px 0px;
     background-image: url("../../../../assets/images/about.png");
     margin-bottom: 200px;
 }

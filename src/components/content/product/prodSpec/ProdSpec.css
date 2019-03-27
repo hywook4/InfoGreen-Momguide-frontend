@@ -58,6 +58,8 @@
     color: gray;
     text-decoration: underline;
     margin-bottom: 5px;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .prod-name {
