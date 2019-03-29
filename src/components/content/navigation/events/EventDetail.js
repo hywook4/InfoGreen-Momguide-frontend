@@ -13,7 +13,7 @@ import CommonUtils from '../../../../util/CommonUtil'
 const user = {
     index: 1,
     imageUrl: null,
-    name: '테스트',
+    name: 'noUser',
     sex: '남자',
     age: '23',
     childAge: '1',
@@ -47,6 +47,7 @@ class EventDetail extends React.Component {
             loggedIn = true;
             headers = TokenUtil.getTokenRequestHeader(token);
         }
+        console.log(props.user);
         // TODO
         this.state = {
             user: user,
@@ -92,9 +93,37 @@ class EventDetail extends React.Component {
 
         const token = TokenUtil.getLoginToken();
         if(token === null) {
+            let logData = {
+                nickName: 'noUser',
+                eventId: event.index,
+                title: event.title
+            }
             
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/event`,
+                data: logData
+            });
         } else{
             const headers = TokenUtil.getTokenRequestHeader(token);
+
+            let res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
+            this.setState({
+                user: res.data
+            })
+
+            let logData = {
+                nickName: res.data.nickName,
+                eventId: event.index,
+                title: event.title
+            }
+            
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/event`,
+                data: logData
+            });
+
 
             try {
                 let data = await axios({

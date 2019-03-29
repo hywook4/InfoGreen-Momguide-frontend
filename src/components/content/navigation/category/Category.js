@@ -5,7 +5,7 @@ import {CategoryMenu} from '../category/CategoryMenu';
 import queryString from 'query-string';
 import axios from 'axios';
 import history from '../../../../history/history'
-import { CategoryUtil } from '../../../../util';
+import { CategoryUtil, TokenUtil } from '../../../../util';
 import CategoryUtils from '../../../../util/CategoryUtil';
 
 
@@ -48,13 +48,13 @@ export class Category extends React.Component{
             sortFocus: "",
             apiStatus: false,
             type: "",
-            query: query 
+            query: query,
+            nickName: "noUser" 
         };
     }
 
-    componentDidMount=()=>{
+    componentDidMount= async ()=>{
         this._mounted = true;
-
         this.scrollListener = window.addEventListener('scroll', (e) => {
             this.handleScroll(e)
         });
@@ -69,6 +69,16 @@ export class Category extends React.Component{
                 this.state.middleDangerCheck,
                 this.state.page));
         }
+
+        let token = TokenUtil.getLoginToken();
+        if(token !== null) {
+            const headers = TokenUtil.getTokenRequestHeader(token);
+            let res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
+            this.setState({
+                nickName: res.data.nickName
+            })
+        }
+
     };
 
     
@@ -159,6 +169,18 @@ export class Category extends React.Component{
                 searchTitle: this.state.search,
                 query: query
             })
+
+            let logData = {
+                nickName: this.state.nickName,
+                search: this.state.search
+            }
+
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/search`,
+                data: logData
+            })
+
 
             history.push(`/category?search=${this.state.search}&mainCategory=${this.state.mainCategory}&subCategory=${this.state.subCategory}`); 
         }

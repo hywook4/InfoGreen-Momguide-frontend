@@ -87,6 +87,43 @@ class TipDetail extends React.Component {
             comments: comments,
             totalCommentPage: data.data.totalPages
         })
+
+        const token = TokenUtil.getLoginToken();
+        if(token === null) {
+            let logData = {
+                nickName: 'noUser',
+                tipId: tip.index,
+                title: tip.title
+            }
+            
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/tip`,
+                data: logData
+            });
+        }
+        else{
+
+            let res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
+            this.setState({
+                user: res.data
+            })
+
+            let logData = {
+                nickName: res.data.nickName,
+                tipId: tip.index,
+                title: tip.title
+            }
+            
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/tip`,
+                data: logData
+            });
+
+
+
+        }
     }
 
     init = async () => {

@@ -107,6 +107,48 @@ export class ProdSpec extends React.Component{
         this.setState(newObj);
     };
 
+    priceLog = () =>{
+        const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
+
+        const token = TokenUtil.getLoginToken();
+        if(token !== null) {
+            let logData = {
+                nickName: this.state.nickname,
+                productId: this.state.productData.index,
+                category: category,
+                subCategory: this.state.productData.category,
+                name: this.state.productData.name,
+                brand: this.state.productData.brand
+            }
+            //console.log(logData);
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/price`,
+                data: logData
+            })
+        }
+        else{
+            let logData = {
+                nickName: 'noUser',
+                productId: this.state.productData.index,
+                category: category,
+                subCategory: this.state.productData.category,
+                name: this.state.productData.name,
+                brand: this.state.productData.brand
+            }
+            //console.log(logData);
+            
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/price`,
+                data: logData
+            })
+        }
+
+        
+
+    }
+
     componentDidMount = async () => {
         const id = this.props.match.params.id;
         const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
@@ -114,6 +156,7 @@ export class ProdSpec extends React.Component{
         let res = await axios.get(`${process.env.API_URL}/api/product/details?category=${category}&productId=${id}`);
         
         let rateAverage = 0;
+        let product = res.data.product;
        
         if(res.data.product.rateCount === 0){
             rateAverage = 0
@@ -121,7 +164,7 @@ export class ProdSpec extends React.Component{
             rateAverage = Math.round(res.data.product.rateSum/res.data.product.rateCount*100)/100;
         }
 
-        console.log(res.data.ingredient);
+        //console.log(res.data.ingredient);
         this.setState({
             productData: res.data.product,
             ingredientList: res.data.ingredient,
@@ -137,6 +180,7 @@ export class ProdSpec extends React.Component{
         if(token !== null) {
             const headers = TokenUtil.getTokenRequestHeader(token);
 
+
             try {
                 res = await axios.get(`${process.env.API_URL}/api/auth/info`, {headers: TokenUtil.getTokenRequestHeader(token)});
                 let newStateObj = {
@@ -147,6 +191,21 @@ export class ProdSpec extends React.Component{
                     imageUrl: res.data.photoUrl,
                     login: true
                 };
+                
+                let logData = {
+                    nickName: res.data.nickName,
+                    productId: product.index,
+                    category: category,
+                    subCategory: product.category,
+                    name: product.name,
+                    brand: product.brand
+                }
+                
+                axios({
+                    method:'post',
+                    url: `${process.env.API_URL}/api/log/product`,
+                    data: logData
+                })
 
                 this.setState(newStateObj);
 
@@ -204,6 +263,24 @@ export class ProdSpec extends React.Component{
             this.setState({
                 reviewApiLoaded: true
             });
+
+            let logData = {
+                nickName: 'noUser',
+                productId: product.index,
+                category: category,
+                subCategory: product.category,
+                name: product.name,
+                brand: product.brand
+            }
+            
+            axios({
+                method:'post',
+                url: `${process.env.API_URL}/api/log/product`,
+                data: logData
+            })
+
+
+
         }
     };
 
@@ -1317,7 +1394,7 @@ export class ProdSpec extends React.Component{
                                     </div>) :
                                     null}
                                 <div className="icon">
-                                    <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`} target="_blank" rel="noopener noreferrer">
+                                    <a href={`${config.PRODUCT_CHECK_URL}${productData.name}`} target="_blank" rel="noopener noreferrer" onClick={this.priceLog}>
                                         <i className="fa fa-krw" aria-hidden="true" />
                                     </a>
                                     <p className="check-para" style={{fontSize: '9px'}}>가격정보</p>
