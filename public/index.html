@@ -76,6 +76,36 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PW2LR5S"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+
+    <script>
+      $(document).ready(function(){
+        if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
+        {
+           
+        }
+        else if(navigator.userAgent.indexOf("Chrome") != -1 )
+        {
+  
+        }
+        else if(navigator.userAgent.indexOf("Safari") != -1)
+        {
+            alert('Safari에서 일부 페이지는 현재 지원하지 않습니다');
+        }
+        else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+        {
+
+        }
+        else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+        {
+            alert('Explorer는 현재 지원하지 않습니다. 다른 브라우져를 이용해 주세요!'); 
+        }  
+        else 
+        {
+            alert('unknown');
+        }
+        return;
+      })
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.

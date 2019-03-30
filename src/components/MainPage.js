@@ -43,6 +43,8 @@ const renderHome=()=>{
 };
 
 export class MainPage extends Component {
+
+    
     render () {
         //localStorage.removeItem('loginToken');
         //sessionStorage.removeItem('loginToken');
