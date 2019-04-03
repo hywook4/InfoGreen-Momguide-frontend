@@ -118,7 +118,7 @@ export class ProdSpec extends React.Component{
         try {
           var successful = document.execCommand('copy');
           var msg = successful ? 'successful' : 'unsuccessful';
-          alert('복사가 되었습니다!');
+          alert('링크가 복사되었습니다.');
           //console.log('Copying text command was ' + msg);
         } catch (err) {
           console.log('Error copying link');
