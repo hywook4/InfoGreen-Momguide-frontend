@@ -1,3 +1,22 @@
+/* FA Icon style */
+.fa-share-alt {
+    color: #32B8A4;
+}
+
+.fa-krw {
+    color: #32B8A4;
+}
+
+.fa-share-alt:hover {
+    color: #299E8C;
+}
+
+.fa-krw:hover {
+    color: #299E8C;
+}
+
+/* end FA Icon style */
+
 .prod-spec {
     width: 980px;
     overflow: hidden;
