@@ -8,8 +8,9 @@
 
 .loggedin{
     width: 100%;
-    height: 70vh;
+    height: 50vh;
     margin: 15vh auto;
+    margin-left: 5vw;
     position: relative;
 }
 
@@ -17,7 +18,6 @@
     margin: 5vh auto;
     width: 980px;
     height: 40vh;
-    
 }
 
 .ingr-anchor{

@@ -87,6 +87,7 @@ export class LoggedIn extends React.Component{
                         <a href="/request/request-comment" className="ingr-anchor" onClick={this.handleLink}>
                             <div className="ingr-anly">
                                 <div className="inr-ingr">
+                                    <img src="" width="56px" height="44px" />
                                     <h2>성분 분석 요청</h2>
                                 </div>
                             </div>
@@ -94,6 +95,7 @@ export class LoggedIn extends React.Component{
                         <Link to="/request/faq" className="ingr-anchor">
                             <div className="ingr-anly">
                                 <div className="inr-ingr">
+                                    <img src="" width="56px" height="44px" />
                                     <h2>FAQ</h2>
                                 </div>
                             </div>
@@ -101,6 +103,7 @@ export class LoggedIn extends React.Component{
                         <a href="/request/contact-us" className="ingr-anchor" onClick={this.handleLink}>
                             <div className="ingr-anly">
                                 <div className="inr-ingr">
+                                    <img src="" width="56px" height="44px" />
                                     <h2>1:1 문의하기</h2>
                                 </div>
                             </div>
