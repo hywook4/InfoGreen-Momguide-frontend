@@ -34,7 +34,7 @@ export class TipEvent extends React.Component {
                                 </Link>
                             </div>
                             <div className="tip-img-wrap-box">
-                                <div className="tip-img-box-left">
+                                <div className="tip-img-left">
                                     {
                                         this.state.tips.length > 0 ?
                                         (<div className="tip-img">
@@ -46,6 +46,9 @@ export class TipEvent extends React.Component {
                                             </Link>
                                         </div>) : null
                                     }
+                                </div>
+
+                                <div className="tip-img-right">
                                     {
                                         this.state.tips.length > 1 ?
                                         (<div className="tip-img">
@@ -53,19 +56,6 @@ export class TipEvent extends React.Component {
                                                 document.body.scrollTop = document.documentElement.scrollTop = 0;
                                             }}>
                                                 <img src={this.state.tips[1].titleImageUrl}
-                                                     className="img-responsive adjust" alt=""/>
-                                            </Link>
-                                        </div>) : null
-                                    }
-                                </div>
-                                <div className="tip-img-box-right">
-                                    {
-                                        this.state.tips.length > 2 ?
-                                        (<div className="tip-img-rotate">
-                                            <Link to={`/tips/${this.state.tips[2].index}`} onClick={() => {
-                                                document.body.scrollTop = document.documentElement.scrollTop = 0;
-                                            }}>
-                                                <img src={this.state.tips[2].titleImageUrl}
                                                      className="img-responsive adjust" alt=""/>
                                             </Link>
                                         </div>) : null
