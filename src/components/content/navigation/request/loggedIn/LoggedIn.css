@@ -1,3 +1,10 @@
+@font-face {
+    font-family: Design House OTF;
+    src: url('../../../../../font/designhouseOTFBold.otf');
+}
+
+
+
 
 .loggedin{
     width: 100%;
@@ -20,25 +27,26 @@
 
 
 .ingr-anly{
-    width: 280px;
-    height: 130px;
+    width: 260px;
+    height: 115px;
     position: relative;
     cursor: pointer;
     text-align: center;
     display: inline-block;
-    border: 2px solid gray;
-    border-radius: 5px;
+    border: 2.5px solid #DADADA;
+    border-radius: 10px;
     padding: 45px 0px;
-    margin-left: 23px;
-    margin-right: 23px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 13vh;
 }
 
 .inr-ingr h2{
     color: gray;
     letter-spacing: 1px;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 900;
+    font-family: Design House OTF;
 }
 
 .ingr-anly:hover, .ingr-anly:hover h2, .ingr-anly:hover p{
