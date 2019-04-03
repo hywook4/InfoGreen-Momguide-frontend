@@ -107,6 +107,33 @@ export class ProdSpec extends React.Component{
         this.setState(newObj);
     };
 
+
+
+    copyToClipboard = (text) => {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+      
+        try {
+          var successful = document.execCommand('copy');
+          var msg = successful ? 'successful' : 'unsuccessful';
+          alert('복사가 되었습니다!');
+          //console.log('Copying text command was ' + msg);
+        } catch (err) {
+          console.log('Error copying link');
+        }
+      
+        document.body.removeChild(textArea);
+    }
+      
+    copyLink = () => {
+        const currentURL = window.location.href;
+        this.copyToClipboard(currentURL);
+    }
+
+
+
     priceLog = () =>{
         const category = CategoryUtil.korSubToEngMain(this.props.match.params.category);
 
@@ -1400,7 +1427,9 @@ export class ProdSpec extends React.Component{
                                     <p className="check-para" style={{fontSize: '9px'}}>가격정보</p>
                                 </div>
                                 <div className="icon">
-                                    <i className="fa fa-share-alt" />
+                                    <a href="javascript:void(0)">
+                                        <i className="fa fa-share-alt" aria-hidden="true" onClick={this.copyLink} />
+                                    </a>
                                     <p style={{fontSize: '9px'}}>링크공유</p>
                                 </div>
                             </div>
