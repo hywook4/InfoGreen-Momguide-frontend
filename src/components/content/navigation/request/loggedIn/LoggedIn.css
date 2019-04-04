@@ -1,9 +1,13 @@
 @font-face {
     font-family: Design House OTF;
-    src: url('../../../../../font/designhouseOTFBold.otf');
+    src: url('../../../../../assets/font/designhouseOTFBold.otf');
 }
 
-
+.icon-box {
+    float: left;
+    margin-left: 20px;
+    margin-top: -10px;
+}
 
 
 .loggedin{
@@ -31,8 +35,8 @@
     height: 115px;
     position: relative;
     cursor: pointer;
-    text-align: center;
     display: inline-block;
+    /* text-align: center; */
     border: 2.5px solid #DADADA;
     border-radius: 10px;
     padding: 45px 0px;
@@ -44,9 +48,23 @@
 .inr-ingr h2{
     color: gray;
     letter-spacing: 1px;
+    float: left;
     font-size: 25px;
     font-weight: 900;
     font-family: Design House OTF;
+}
+
+#faq-text {
+    font-size: 35px;
+    margin-left: 38px;
+}
+
+#search-text {
+    margin-left: 11px;
+}
+
+#onetoone-text {
+    margin-left: 25px;
 }
 
 .ingr-anly:hover, .ingr-anly:hover h2, .ingr-anly:hover p{

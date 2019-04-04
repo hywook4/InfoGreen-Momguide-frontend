@@ -7,6 +7,10 @@ import $ from 'jquery';
 import LoginInput from '../../login/LoginInput';
 import { Link } from 'react-router-dom';
 
+import SEARCH_ICON from '../../../../../assets/images/search-icon.png'
+import FAQ_ICON from '../../../../../assets/images/faq-icon.png'
+import CONTACT_ICON from '../../../../../assets/images/contact-icon.png'
+
 export class LoggedIn extends React.Component{
     constructor(props) {
         super(props);
@@ -85,26 +89,33 @@ export class LoggedIn extends React.Component{
                 <div className="loggedin">
                     <div className="help-row">
                         <a href="/request/request-comment" className="ingr-anchor" onClick={this.handleLink}>
+                            
                             <div className="ingr-anly">
                                 <div className="inr-ingr">
-                                    
-                                    <h2>성분 분석 요청</h2>
+                                    <div className="icon-box">
+                                        <img src={SEARCH_ICON} className="icons" width="56" height="44" />
+                                    </div>
+                                    <h2 id="search-text">성분 분석 요청</h2>
                                 </div>
                             </div>
                         </a>
                         <Link to="/request/faq" className="ingr-anchor">
                             <div className="ingr-anly">
                                 <div className="inr-ingr">
-                                    
-                                    <h2>FAQ</h2>
+                                    <div className="icon-box">
+                                        <img src={FAQ_ICON} className="icons" width="56" height="44" />
+                                    </div>
+                                    <h2 id="faq-text">FAQ</h2>
                                 </div>
                             </div>
                         </Link>
                         <a href="/request/contact-us" className="ingr-anchor" onClick={this.handleLink}>
                             <div className="ingr-anly">
                                 <div className="inr-ingr">
-                                    
-                                    <h2>1:1 문의하기</h2>
+                                    <div className="icon-box">
+                                        <img src={CONTACT_ICON} className="icons" width="56" height="44" />
+                                    </div>
+                                    <h2 id="onetoone-text">1:1 문의하기</h2>
                                 </div>
                             </div>
                         </a>
